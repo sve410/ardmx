@@ -1,4 +1,19 @@
-// include
+// *****************************************************************************************************************************************
+// *****************************************************************************************************************************************
+// **
+// **												Arduino DMX-512 Tester Controller
+// **
+// **	Hardware v0.0
+// **	Firmware v0.7
+// **	Compilado en Arduino IDE v1.0.6
+// **	Libreria Arduino cuatro universos DMX v0.3 Deskontrol.net
+// **	Libreria LCD v1.2.1 Francisco Malpartida
+
+
+
+
+
+// Librerias
 	#include <LiquidCrystal.h>	// libreria para LCD
 	#include <Wire.h>
 	#include <EEPROM.h>
@@ -6,42 +21,42 @@
 	#include <lib_dmx.h>  		// libreria DMX 4 universos deskontrol four universes DMX library  - http://www.deskontrol.net/blog
 		
 // DMX Library
-	#define    DMX512	  (0)    // (250 kbaud - 2 to 512 channels) Standard USITT DMX-512
-	//#define  DMX1024    (1)    // (500 kbaud - 2 to 1024 channels) Completely non standard - TESTED ok
-	//#define  DMX2048    (2)    // (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
+	#define    DMX512	  (0)   // (250 kbaud - 2 to 512 channels) Standard USITT DMX-512
+	//#define  DMX1024    (1)   // (500 kbaud - 2 to 1024 channels) Completely non standard - TESTED ok
+	//#define  DMX2048    (2)   // (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
 
 // Puertos, variables
 	// DMX
-		int DMX_Data_Flux = 2;		// control de flujo de datos para dmx, 0 por default 
-		byte DMX_Values [515];      // array de valores actuales DMX
-		int Canal_Actual = 1;
+		int DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default 
+		byte DMX_Values [515];      	// array de valores actuales DMX
+		int Canal_Actual 		= 1;
 	// Botones cursor
-		int Boton_Up     = 51; 
-		int Boton_Down   = 45;	
-		int Boton_Left   = 53;	
-		int Boton_Right  = 49;	
-		int Boton_Center = 47;	
-		byte LCD_Col_Pos = 0;		// posicion en tiempo real de lcd
-		byte LCD_Row_Pos = 0;		// posicion en tiempo real de lcd
+		int Boton_Up     		= 51; 
+		int Boton_Down   		= 45;	
+		int Boton_Left   		= 53;	
+		int Boton_Right  		= 49;	
+		int Boton_Center		= 47;	
+		byte LCD_Col_Pos 		= 0;	// posicion en tiempo real de lcd
+		byte LCD_Row_Pos 		= 0;	// posicion en tiempo real de lcd
 		byte Cursor_Conf[4][20] = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},		// config de posiciones de lcd Col Row
 								   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 								   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 								   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};		
 	// Botones Numerico Array
-		int Boton_Array_1	= 36;
-		int Boton_Array_2	= 34;
-		int Boton_Array_3	= 32;
-		int Boton_Array_4	= 30;
-		int Boton_Array_A	= 44;	
-		int Boton_Array_B	= 42;
-		int Boton_Array_C   = 40;
-		int Boton_Array_D   = 38;
-		byte Boton_Calc 	= 17;	// valor calculado	# E * F, 17 sin valor calculado
-		byte Num_Col_Pos  	= 0;	// posicion en tiempo real de lcd
-		byte Num_Row_Pos 	= 0;	// posicion en tiempo real de lcd
-		int Num_Val			= 0;	// valor generado al calculo
+		int Boton_Array_1		= 36;
+		int Boton_Array_2		= 34;
+		int Boton_Array_3		= 32;
+		int Boton_Array_4		= 30;
+		int Boton_Array_A		= 44;	
+		int Boton_Array_B		= 42;
+		int Boton_Array_C   	= 40;
+		int Boton_Array_D   	= 38;
+		byte Boton_Calc 		= 17;	// valor calculado	# E * F, 17 sin valor calculado
+		byte Num_Col_Pos  		= 0;	// posicion en tiempo real de lcd
+		byte Num_Row_Pos 		= 0;	// posicion en tiempo real de lcd
+		int Num_Val				= 0;	// valor generado al calculo
 	// LCD
-		int LCD_RS = 8;
+		int LCD_RS = 8;					// puertos de conexion de LCD
 		int LCD_E  = 9;
 		int LCD_D4 = 10;
 		int LCD_D5 = 11;
@@ -57,36 +72,35 @@
 
 void setup() 
 	{
-		// IO
-			// DMX
-				pinMode(DMX_Data_Flux, OUTPUT);
-			// Botones cursor
-				pinMode(Boton_Up,     INPUT_PULLUP);
-				pinMode(Boton_Down,   INPUT_PULLUP);
-				pinMode(Boton_Left,   INPUT_PULLUP);
-				pinMode(Boton_Right,  INPUT_PULLUP);
-				pinMode(Boton_Center, INPUT_PULLUP);
-			// Botones numerico
-				pinMode(Boton_Array_1, OUTPUT);
-				pinMode(Boton_Array_2, OUTPUT);
-				pinMode(Boton_Array_3, OUTPUT);
-				pinMode(Boton_Array_4, OUTPUT);
-				pinMode(Boton_Array_A, INPUT_PULLUP);
-				pinMode(Boton_Array_B, INPUT_PULLUP);
-				pinMode(Boton_Array_C, INPUT_PULLUP);
-				pinMode(Boton_Array_D, INPUT_PULLUP);
-				digitalWrite(Boton_Array_1, HIGH);
-				digitalWrite(Boton_Array_2, HIGH);
-				digitalWrite(Boton_Array_3, HIGH);
-				digitalWrite(Boton_Array_4, HIGH);
-			// LCD
-				pinMode(LCD_RS, OUTPUT);
-				pinMode(LCD_E,  OUTPUT);
-				pinMode(LCD_D7, OUTPUT);
-				pinMode(LCD_D6, OUTPUT);
-				pinMode(LCD_D5, OUTPUT);
-				pinMode(LCD_D4, OUTPUT);
-				lcd.begin(20, 4);				  //tamaño de LCD				
+		// DMX
+			pinMode(DMX_Data_Flux, OUTPUT);
+		// Botones cursor
+			pinMode(Boton_Up,     INPUT_PULLUP);
+			pinMode(Boton_Down,   INPUT_PULLUP);
+			pinMode(Boton_Left,   INPUT_PULLUP);
+			pinMode(Boton_Right,  INPUT_PULLUP);
+			pinMode(Boton_Center, INPUT_PULLUP);
+		// Botones numerico
+			pinMode(Boton_Array_1, OUTPUT);
+			pinMode(Boton_Array_2, OUTPUT);
+			pinMode(Boton_Array_3, OUTPUT);
+			pinMode(Boton_Array_4, OUTPUT);
+			pinMode(Boton_Array_A, INPUT_PULLUP);
+			pinMode(Boton_Array_B, INPUT_PULLUP);
+			pinMode(Boton_Array_C, INPUT_PULLUP);
+			pinMode(Boton_Array_D, INPUT_PULLUP);
+			digitalWrite(Boton_Array_1, HIGH);
+			digitalWrite(Boton_Array_2, HIGH);
+			digitalWrite(Boton_Array_3, HIGH);
+			digitalWrite(Boton_Array_4, HIGH);
+		// LCD
+			pinMode(LCD_RS, OUTPUT);
+			pinMode(LCD_E,  OUTPUT);
+			pinMode(LCD_D7, OUTPUT);
+			pinMode(LCD_D6, OUTPUT);
+			pinMode(LCD_D5, OUTPUT);
+			pinMode(LCD_D4, OUTPUT);
+			lcd.begin(20, 4);					//tamaño de LCD				
 		// DMX
 			ArduinoDmx0.set_tx_address(1);      // poner aqui la direccion de inicio de DMX 
 			ArduinoDmx0.set_tx_channels(512);   // poner aqui el numero de canales a transmitir 
@@ -95,7 +109,7 @@ void setup()
 
 void loop()
 	{
-		digitalWrite(2, HIGH);				// max 485 como salida
+		digitalWrite(2, HIGH);					// max 485 como salida
 		GUI_About();
 		GUI_Memory_Init();
 	}
@@ -103,9 +117,9 @@ void loop()
 void GUI_About()
 	{
 		lcd.clear ();
-		lcd.noBlink();						// ocultar cursor
+		lcd.noBlink();									// ocultar cursor
 		lcd.setCursor(0, 0);
-		for(int numero = 0; numero <= 512; numero ++)
+		for(int numero = 0; numero <= 512; numero ++)	// efecto binario en lcd
 			{
 				lcd.print (numero, BIN);
 				delay (1);
@@ -133,7 +147,7 @@ void GUI_About()
 			lcd.setCursor(0, 3);
 			lcd.print("ID:");
 			lcd.print(ID);
-		delay(2000);  			//retardo de muestra de mensaje
+		delay(2000);  									//retardo de muestra de mensaje
 	}
 
 void Multi_Matrix(int inicial)
@@ -352,9 +366,9 @@ void Cursor_Conf_Clear()
 	
 void GUI_Navegar(byte matrix, int banco)
 	{
-		long Boton_Delay_Cursor  = 300;		// delay de lectura de boton
-		byte LCD_Col_Pos_Ant;				// saber el estado anterior para borrar cursor
-		byte LCD_Row_Pos_Ant;				// saber el estado anterior para borrar cursor
+		long Boton_Delay_Cursor  = 300;			// delay de lectura de boton
+		byte LCD_Col_Pos_Ant;					// saber el estado anterior para borrar cursor
+		byte LCD_Row_Pos_Ant;					// saber el estado anterior para borrar cursor
 		// guardar valor anterior de row col
 			LCD_Col_Pos_Ant = LCD_Col_Pos;
 			LCD_Row_Pos_Ant = LCD_Row_Pos;
@@ -363,116 +377,113 @@ void GUI_Navegar(byte matrix, int banco)
 			lcd.print(">"); 													
 		// navegacion
 			Dibujar:
-				//byte Salida_Navegar = 0;		// salida de lectura de botones
 				byte Dibujar_Cursor = 0;		// saber si dibujar cursor para evitar repeticiones en lcd, 0 no dibujar, 1 dibujar >, 2 dibujar +
-						
-						// Left
-							if (digitalRead(Boton_Left) == LOW)
+				// Left
+					if (digitalRead(Boton_Left) == LOW)
+						{
+							delay (Boton_Delay_Cursor);
+							byte Salida_Left = 0;
+							byte LCD_Col_Pos_Temp = 0;
+							LCD_Col_Pos_Temp = LCD_Col_Pos;
+							while (Salida_Left == 0)
 								{
-									delay (Boton_Delay_Cursor);
-									byte Salida_Left = 0;
-									byte LCD_Col_Pos_Temp = 0;
-									LCD_Col_Pos_Temp = LCD_Col_Pos;
-								
-									while (Salida_Left == 0)
+									if (LCD_Col_Pos_Temp == 0)
 										{
-											if (LCD_Col_Pos_Temp == 0)
-														{
-															LCD_Col_Pos_Temp = 20;
-														}
+											LCD_Col_Pos_Temp = 20;
+										}
 											LCD_Col_Pos_Temp = LCD_Col_Pos_Temp - 1;
-											if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
-												{
-													LCD_Col_Pos = LCD_Col_Pos_Temp;
-													Dibujar_Cursor = 1;
-													Salida_Left = 1;
-												}
-										}
-									goto Salida;
-								}
-						// Right
-							if (digitalRead(Boton_Right) == LOW)
-								{
-									delay(Boton_Delay_Cursor);
-									byte Salida_Right = 0;
-									byte LCD_Col_Pos_Temp = 0;
-									LCD_Col_Pos_Temp = LCD_Col_Pos;
-									while (Salida_Right == 0)
+									if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
 										{
-											LCD_Col_Pos_Temp = LCD_Col_Pos_Temp + 1;
-											if (LCD_Col_Pos_Temp >= 20)
-													{
-														LCD_Col_Pos_Temp = 0;	// regresar al cero
-													}
-											if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
-												{
-													LCD_Col_Pos = LCD_Col_Pos_Temp;
-													Dibujar_Cursor = 1;
-													Salida_Right = 1;
-												}
+											LCD_Col_Pos = LCD_Col_Pos_Temp;
+											Dibujar_Cursor = 1;
+											Salida_Left = 1;
 										}
+								}
 									goto Salida;
-								}
-						// Down
-							if (digitalRead(Boton_Down) == LOW)
+						}
+				// Right
+					if (digitalRead(Boton_Right) == LOW)
+						{
+							delay(Boton_Delay_Cursor);
+							byte Salida_Right = 0;
+							byte LCD_Col_Pos_Temp = 0;
+							LCD_Col_Pos_Temp = LCD_Col_Pos;
+							while (Salida_Right == 0)
 								{
-									delay(Boton_Delay_Cursor);
-									byte Salida_Down = 0;
-									byte LCD_Row_Pos_Temp = 0;
-									LCD_Row_Pos_Temp = LCD_Row_Pos;
-									while (Salida_Down == 0)
+									LCD_Col_Pos_Temp = LCD_Col_Pos_Temp + 1;
+									if (LCD_Col_Pos_Temp >= 20)
 										{
-											LCD_Row_Pos_Temp = LCD_Row_Pos_Temp + 1;
-											if (LCD_Row_Pos_Temp >= 4)
-													{
-														LCD_Row_Pos_Temp = 0;	// regresar al cero
-													}
-											if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
-												{
-													LCD_Row_Pos = LCD_Row_Pos_Temp;
-													Dibujar_Cursor = 1;
-													Salida_Down = 1;
-												}
+											LCD_Col_Pos_Temp = 0;	// regresar al cero
 										}
+									if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
+										{
+											LCD_Col_Pos = LCD_Col_Pos_Temp;
+											Dibujar_Cursor = 1;
+											Salida_Right = 1;
+										}
+								}
+							goto Salida;
+						}
+				// Down
+					if (digitalRead(Boton_Down) == LOW)
+						{
+							delay(Boton_Delay_Cursor);
+							byte Salida_Down = 0;
+							byte LCD_Row_Pos_Temp = 0;
+							LCD_Row_Pos_Temp = LCD_Row_Pos;
+							while (Salida_Down == 0)
+								{
+									LCD_Row_Pos_Temp = LCD_Row_Pos_Temp + 1;
+									if (LCD_Row_Pos_Temp >= 4)
+										{
+											LCD_Row_Pos_Temp = 0;	// regresar al cero
+										}
+									if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
+										{
+											LCD_Row_Pos = LCD_Row_Pos_Temp;
+											Dibujar_Cursor = 1;
+											Salida_Down = 1;
+										}
+								}
 									goto Salida;
-								}
-						// Up
-							if (digitalRead(Boton_Up) == LOW)
+						}
+				// Up
+					if (digitalRead(Boton_Up) == LOW)
+						{
+							delay(Boton_Delay_Cursor);
+							byte Salida_Up = 0;
+							byte LCD_Row_Pos_Temp;
+							LCD_Row_Pos_Temp = LCD_Row_Pos;
+							while (Salida_Up == 0)
 								{
-									delay(Boton_Delay_Cursor);
-									byte Salida_Up = 0;
-									byte LCD_Row_Pos_Temp;
-									LCD_Row_Pos_Temp = LCD_Row_Pos;
-									while (Salida_Up == 0)
+									if (LCD_Row_Pos_Temp <= 0)
 										{
-											if (LCD_Row_Pos_Temp <= 0)
-														{
-															LCD_Row_Pos_Temp = 4;
-														}
-											LCD_Row_Pos_Temp = LCD_Row_Pos_Temp - 1;
-											if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
-												{
-													Dibujar_Cursor = 1;
-													LCD_Row_Pos = LCD_Row_Pos_Temp;
-													Salida_Up = 1;
-												}
+											LCD_Row_Pos_Temp = 4;
 										}
-									goto Salida;
-								}
-						// Center
-							if (digitalRead(Boton_Center) == LOW)
-								{
-									delay(Boton_Delay_Cursor);
-									byte Salida_Center = 0;
-									while (Salida_Center == 0)
+									LCD_Row_Pos_Temp = LCD_Row_Pos_Temp - 1;
+									if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
 										{
-											if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos] == 1)
-												{
-													Dibujar_Cursor = 2;	// dibujar +
-													Salida_Center = 1;
-												}
+											Dibujar_Cursor = 1;
+											LCD_Row_Pos = LCD_Row_Pos_Temp;
+											Salida_Up = 1;
 										}
 								}
+							goto Salida;
+						}
+				// Center
+					if (digitalRead(Boton_Center) == LOW)
+						{
+							delay(Boton_Delay_Cursor);
+							byte Salida_Center = 0;
+							while (Salida_Center == 0)
+								{
+									if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos] == 1)
+										{
+											Dibujar_Cursor = 2;	// dibujar +
+											Salida_Center = 1;
+										}
+								}
+						}
 			Salida:
 				// Dibujar Cursor
 					if (Dibujar_Cursor > 0)
