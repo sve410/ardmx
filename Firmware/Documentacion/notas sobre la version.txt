@@ -1,0 +1,59 @@
+v0.3
+- se cambia la navegacion por coordenadas en arreglo de 2 dimenciones
+- el arreglo no corresponde a los valores dados
+- el paso entre estados de los botnes tarda demaciado
+
+v0.2
+- se liberan las uart no usadas
+- se reace el mapa y gestion de lcd
+- se agrega control de flujo por hardware
+- el LCD se pasa a 4 bits
+- modelo de navegacion por numeracion continua
+
+v0.5
+- CORREGIR - cuando se escribe un numero en la matriz o en unit mayor o menor al limite la variable funciona pero el visual no
+- en multi no hay vispa de posicion
+- CORREGIR - agregar al menu memory "cancel"
+- CORREGIR - hacer los barridos de la memoria mas rapidos
+- CORREGIR - cambiar en GUI unit a "Unitary"
+- CORREGIR - cambiar en GUI multi a "Matrix"
+
+v0.6 Stable
+- CORREGIDO - cambiar en gui unit a "Unitary"
+- CORREGIDO - cambiar en GUI multi a "Matrix"
+- CORREGIDO - hacer los barridos de la memoria mas rapidos, se agrega efecto de carga y no baja la velocidad
+- CORREGIDO - agregar al menu memory "cancel"
+- se agrega 100ms mas a la lectura de los cursores
+- CORREGIDO - cuando se escribe un numero en la matriz o en unit mayor o menor al limite la variable funciona pero el visual no
+- en multi no hay vispa de posicion
+- se agrega lineas bajas cuando se esta escribiendo un numero, se quitaron los ceros
+- se implementa para el caso de los valores A para 255 y B para 000
+- se implementa para los valores la tecla C para ubicar la lampara, parpadea y deja de hacerlo al volverla a precionar
+- se implementa en la matriz el valor C que indica el canal donde esta posicionado el cursor
+
+v0.7 stable
+- actualizacion del texto about
+- actualizacion del texto memory initial
+- se agrego al GUI memory "empty" para borrar la ram
+- se cambio gui_init por gui_about
+- se agrego a about al inicio el efecto del binario corriendo
+- se cambia en unitary control, matrix por control y aunta a gui control options
+- se cambia en matrix control, ubi por con y aunta a gui control options
+- se agrega a control options about
+- se agrega a control opyions Chaser
+- se agrega a control options multiply
+- agregado el control multiply
+- se quita la opcion about es muy repetitiva
+
+v0.8
+- se agrega en el control options config
+- se agrega en el control options el about
+- se retiran los delays del efecto binario en todos los casos
+- se agrega a config el control de pwm del back light
+
+
+
+
+
+
+

@@ -1,0 +1,13 @@
+v0.0
+- CORREGIR - no se necesita el led on, la pantalla ya tieme un led
+- CORREGIR - no hay boton de reset
+- CORREGIR - quitar boton SW
+- CORREGIR - agregar canosn de 5 pin
+- CORREGIR - base de teclado, darle mas soporte
+- CORREGIR - eliminar la fuente de alimentacion regulada
+- CORREGIR - quitar de los conectores las conecciones de arriba, no permiten que cierre bien el arduino
+- CORREGIR - pasar los conectores a la parte de abajo, pesa mucho la placa
+- CORREGIR - agregar capacitores a los botones para el rebote
+
+
+
