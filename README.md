@@ -18,6 +18,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - La simulacion en Proteus de Arduino [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 - Simulacion en Proteus v7.7 SP2
 - Esquematico y PCB en Proteus v8.0 SP1
+- [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 
 ### Firmware v0.8
 - Navegación desde cursor de fácil acceso e intuitivo
@@ -74,6 +75,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Compilador [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
 - Libreria Arduino cuatro universos DMX v0.3 [Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 - Libreria LCD v1.2.1 [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
+- [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 
 ## Licenciamiento
 [GNU General Pubic Licence Version 3](/LICENSE)
