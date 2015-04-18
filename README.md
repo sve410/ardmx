@@ -62,7 +62,3 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 		- Empty (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
 		- Clear (Borrar el universo DMX guardado en la EEPROM)
 		- Cancel (regresar al menú anterior sin cambios)
-
-
-
-
