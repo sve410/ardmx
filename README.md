@@ -20,7 +20,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Esquematico y PCB en Proteus v8.0 SP1
 - [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 
-### Firmware v0.8
+### Firmware v0.1
 - Navegación desde cursor de fácil acceso e intuitivo
 - Inserción rápida de valores desde el teclado numérico
 - Compilado en [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
