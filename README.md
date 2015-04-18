@@ -64,4 +64,4 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
   - Cancel (regresar al menú anterior sin cambios)
 
 ##Licenciamiento
-[GNU General Pubic Licence Version 3](/LICENCE)
+[GNU General Pubic Licence Version 3](/LICENSE)
