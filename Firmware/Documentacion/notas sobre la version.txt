@@ -2,7 +2,7 @@ Firmware
 Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
-v0.8 beta
+v0.2 beta
 - retirar de setup las variables de la vercion y pasarlas directamente a su void
 - checar el tema de el puerto de data flux, no se asigna
 - en gui about retirar el delay en el efecto binario
@@ -10,7 +10,7 @@ v0.8 beta
 - agregar al inicio del programa un about con la vercipon y el autor
 
 
-v0.7 stable
+v0.1 stable
 - actualizacion del texto about
 - actualizacion del texto memory initial
 - se agrego al GUI memory "empty" para borrar la ram
@@ -24,7 +24,7 @@ v0.7 stable
 - agregado el control multiply
 - se quita la opcion about es muy repetitiva
 
-v0.6 Stable
+v0.0 Stable
 - CORREGIDO - cambiar en gui unit a "Unitary"
 - CORREGIDO - cambiar en GUI multi a "Matrix"
 - CORREGIDO - hacer los barridos de la memoria mas rapidos, se agrega efecto de carga y no baja la velocidad
@@ -36,23 +36,3 @@ v0.6 Stable
 - se implementa para el caso de los valores A para 255 y B para 000
 - se implementa para los valores la tecla C para ubicar la lampara, parpadea y deja de hacerlo al volverla a precionar
 - se implementa en la matriz el valor C que indica el canal donde esta posicionado el cursor
-
-v0.5
-- CORREGIR - cuando se escribe un numero en la matriz o en unit mayor o menor al limite la variable funciona pero el visual no
-- en multi no hay vispa de posicion
-- CORREGIR - agregar al menu memory "cancel"
-- CORREGIR - hacer los barridos de la memoria mas rapidos
-- CORREGIR - cambiar en GUI unit a "Unitary"
-- CORREGIR - cambiar en GUI multi a "Matrix"
-
-v0.3
-- se cambia la navegacion por coordenadas en arreglo de 2 dimenciones
-- el arreglo no corresponde a los valores dados
-- el paso entre estados de los botnes tarda demaciado
-
-v0.2
-- se liberan las uart no usadas
-- se reace el mapa y gestion de lcd
-- se agrega control de flujo por hardware
-- el LCD se pasa a 4 bits
-- modelo de navegacion por numeracion continua

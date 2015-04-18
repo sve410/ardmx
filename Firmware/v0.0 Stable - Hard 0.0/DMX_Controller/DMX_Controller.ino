@@ -1,19 +1,55 @@
-// include
-	#include <LiquidCrystal.h>	// libreria para LCD
+// ***************************************************************************************************************************
+// ***************************************************************************************************************************
+// **																														**
+// **										Arduino DMX-512 Tester Controller												**
+// **																														**
+// **	- Firmware v0.0																										**
+// **	- Hardware v0.0																										**
+// **																														**
+// **	- Compilado en Arduino IDE v1.0.6																					**
+// **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
+// **	- Compilado para Arduino Mega 2560 R3																				**
+// **		http://www.arduino.cc/en/Main/ArduinoBoardMega2560																**
+// **	- Libreria Arduino cuatro universos DMX v0.3 - Deskontrol.net														**
+// **		http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)											**
+// **	- Libreria LCD v1.2.1 - Francisco Malpartida																		**
+// **		https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home													**
+// **	- Simulacion en Proteus v7.7 SP2																					**
+// **	- Simulacion en Proteus de Arduino - Microcontrolandos																**
+// **		http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html							**
+// **																														**
+// **	Autor:																												**
+// **																														**
+// **	Daniel Roberto Becerril Angeles																						**
+// **	daniel3514@gmail.com																								**
+// **	Facebook - https://www.facebook.com/daniel.3514																		**
+// **	https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/													**
+// **																														**
+// **	Licenciamiento:																										**
+// **																														**
+// **	GNU General Pubic Licence Version 3																					**
+// **		https://www.gnu.org/copyleft/gpl.html																			**
+// **																														**
+// ***************************************************************************************************************************
+// ***************************************************************************************************************************
+
+// Librerias
+	#include <LiquidCrystal.h>		// libreria para LCD
 	#include <Wire.h>
 	#include <EEPROM.h>
 	#include <string.h>
-	#include <lib_dmx.h>  		// libreria DMX 4 universos deskontrol four universes DMX library  - http://www.deskontrol.net/blog
+	#include <lib_dmx.h>  			// libreria DMX 4 universos deskontrol four universes DMX library  - http://www.deskontrol.net/blog
 		
 // DMX Library
-	#define    DMX512	  (0)    // (250 kbaud - 2 to 512 channels) Standard USITT DMX-512
-	//#define  DMX1024    (1)    // (500 kbaud - 2 to 1024 channels) Completely non standard - TESTED ok
-	//#define  DMX2048    (2)    // (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
+	#define    DMX512	  (0)    	// (250 kbaud - 2 to 512 channels) Standard USITT DMX-512
+	//#define  DMX1024    (1)    	// (500 kbaud - 2 to 1024 channels) Completely non standard - TESTED ok
+	//#define  DMX2048    (2)    	// (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
 
 // Puertos, variables
 	// DMX
 		int DMX_Data_Flux = 2;		// control de flujo de datos para dmx, 0 por default 
 		byte DMX_Values [515];      // array de valores actuales DMX
+		int Canal_Actual = 1;
 	// Botones cursor
 		int Boton_Up     = 51; 
 		int Boton_Down   = 45;	
@@ -49,7 +85,7 @@
 		LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
 	// Versiones
 		const byte Firm_Ver_Ent = 0;
-		const byte Firm_Ver_Dec = 5;
+		const byte Firm_Ver_Dec = 0;
 		const byte Hard_Ver_Ent = 0;
 		const byte Hard_Ver_Dec = 0;
 		const byte ID = 20;
@@ -85,7 +121,7 @@ void setup()
 				pinMode(LCD_D6, OUTPUT);
 				pinMode(LCD_D5, OUTPUT);
 				pinMode(LCD_D4, OUTPUT);
-				lcd.begin(20, 4);				  //tamaño de LCD				
+				lcd.begin(20, 4);				//tamaño de LCD				
 		// DMX
 			ArduinoDmx0.set_tx_address(1);      // poner aqui la direccion de inicio de DMX 
 			ArduinoDmx0.set_tx_channels(512);   // poner aqui el numero de canales a transmitir 
@@ -94,7 +130,7 @@ void setup()
 
 void loop()
 	{
-		digitalWrite(2, HIGH);				// max 485 como salida
+		digitalWrite(2, HIGH);					// max 485 como salida
 		GUI_Init();
 		GUI_Memory_Init();
 	}
@@ -102,7 +138,7 @@ void loop()
 void GUI_Init()
 	{
 		lcd.clear ();
-		lcd.noBlink();						// ocultar cursor
+		lcd.noBlink();							// ocultar cursor
 		lcd.setCursor(1, 0);
 		lcd.print("Tech Inside.com.mx");
 		lcd.setCursor(0, 1);
@@ -125,7 +161,7 @@ void GUI_Init()
 			lcd.setCursor(0, 3);
 			lcd.print("ID:");
 			lcd.print(ID);
-		delay(1500);  			//retardo de muestra de mensaje
+		delay(3000);  							//retardo de muestra de mensaje
 	}
 
 void Multi_Matrix(int inicial)
@@ -153,10 +189,10 @@ void Multi_Matrix(int inicial)
 			Numerico_Write (DMX_Values[inicial + 14], 17, 3);
 	}
 	
-void GUI_Control_Multi()
+void GUI_Control_Matrix()
 	{
 		int Inicial = 1;
-		int Canal_Actual = 1;
+		Canal_Actual = 1;
 		inicio:
 			lcd.clear();
 			lcd.setCursor (0, 0);
@@ -191,7 +227,7 @@ void GUI_Control_Multi()
 				Cursor_Conf[3][16] = 1;
 			// navegar
 		Banco:
-				GUI_Navegar();
+				GUI_Navegar(1, Inicial);
 			// Acciones
 				// Memory
 					if (LCD_Col_Pos == 4 &&  LCD_Row_Pos == 0)
@@ -210,7 +246,7 @@ void GUI_Control_Multi()
 						{
 							Num_Row_Pos = 0;
 							Num_Col_Pos = 13;
-							Numerico_Calc();
+							Numerico_Calc(0);
 							if (Num_Val > 498)	// limite de matriz
 								{
 									Num_Val = 498;
@@ -315,10 +351,16 @@ void GUI_Control_Multi()
 		Salida_DMX:
 			Num_Row_Pos = LCD_Row_Pos;
 			Num_Col_Pos = LCD_Col_Pos + 1;
-			Numerico_Calc();
+			Numerico_Calc(1);
+			if (Num_Val == 612)		// ubicar
+				{
+					Ubicar();
+					Num_Col_Pos = Num_Col_Pos - 4;
+				}
 			if (Num_Val > 255)
 				{
 					Num_Val = 255;
+					Numerico_Write (255, Num_Col_Pos + 2, Num_Row_Pos);
 				}
 			ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
 			DMX_Values[Canal_Actual] = Num_Val;
@@ -336,11 +378,10 @@ void Cursor_Conf_Clear()
 			}
 	}
 	
-void GUI_Navegar()
+void GUI_Navegar(byte matrix, int banco)
 	{
-		// control = unit 0, multi 1
-		// InitMulti = inicial de matrix solo para multi
-		long Boton_Delay_Cursor  = 200;		// delay de lectura de boton
+		// matrix control= 1
+		long Boton_Delay_Cursor  = 300;		// delay de lectura de boton
 		byte LCD_Col_Pos_Ant;				// saber el estado anterior para borrar cursor
 		byte LCD_Row_Pos_Ant;				// saber el estado anterior para borrar cursor
 		
@@ -349,13 +390,7 @@ void GUI_Navegar()
 			LCD_Row_Pos_Ant = LCD_Row_Pos;
 		// Dibujar cursor
 			lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
-			lcd.print(">"); 
-			
-			/*lcd.setCursor (11, 0);
-			lcd.print("Col");
-			lcd.setCursor (11, 1);
-			lcd.print("Row");*/
-																					
+			lcd.print(">"); 													
 		// navegacion
 			Dibujar:
 				byte Salida_Navegar = 0;		// salida de lectura de botones
@@ -380,17 +415,6 @@ void GUI_Navegar()
 												{
 													LCD_Col_Pos = LCD_Col_Pos_Temp;
 													Dibujar_Cursor = 1;
-													
-													/*lcd.setCursor (15, 0);
-													lcd.print("  ");
-													lcd.setCursor (15, 0);
-													lcd.print(LCD_Col_Pos_Temp);
-													
-													lcd.setCursor (15, 1);
-													lcd.print("  ");
-													lcd.setCursor (15, 1);
-													lcd.print(LCD_Row_Pos);*/
-			
 													Salida_Left = 1;
 												}
 										}
@@ -414,17 +438,6 @@ void GUI_Navegar()
 												{
 													LCD_Col_Pos = LCD_Col_Pos_Temp;
 													Dibujar_Cursor = 1;
-													
-													/*lcd.setCursor (15, 0);
-													lcd.print("  ");
-													lcd.setCursor (15, 0);
-													lcd.print(LCD_Col_Pos_Temp);
-													
-													lcd.setCursor (15, 1);
-													lcd.print("  ");
-													lcd.setCursor (15, 1);
-													lcd.print(LCD_Row_Pos);*/
-													
 													Salida_Right = 1;
 												}
 										}
@@ -448,17 +461,6 @@ void GUI_Navegar()
 												{
 													LCD_Row_Pos = LCD_Row_Pos_Temp;
 													Dibujar_Cursor = 1;
-													
-													/*lcd.setCursor (15, 0);
-													lcd.print("  ");
-													lcd.setCursor (15, 0);
-													lcd.print(LCD_Col_Pos);
-													
-													lcd.setCursor (15, 1);
-													lcd.print("  ");
-													lcd.setCursor (15, 1);
-													lcd.print(LCD_Row_Pos_Temp);*/
-													
 													Salida_Down = 1;
 												}
 										}
@@ -481,17 +483,6 @@ void GUI_Navegar()
 											if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
 												{
 													Dibujar_Cursor = 1;
-													
-													/*lcd.setCursor (15, 0);
-													lcd.print("  ");
-													lcd.setCursor (15, 0);
-													lcd.print(LCD_Col_Pos);
-													
-													lcd.setCursor (15, 1);
-													lcd.print("  ");
-													lcd.setCursor (15, 1);
-													lcd.print(LCD_Row_Pos_Temp);*/
-													
 													LCD_Row_Pos = LCD_Row_Pos_Temp;
 													Salida_Up = 1;
 												}
@@ -524,6 +515,103 @@ void GUI_Navegar()
 									// escribir >
 										lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
 										lcd.print(">");
+									// matrix print posicion
+										if (matrix == 1)
+											{
+												// bancos
+													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 0)
+														{
+															lcd.setCursor(1, 0);
+															lcd.print("---");
+														}
+												// Memory
+													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
+														{
+															lcd.setCursor(1, 0);
+															lcd.print("---");
+														}
+												// Unitary
+													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 0)
+														{
+															lcd.setCursor(1, 0);
+															lcd.print("---");
+														}
+												// banco 1
+													if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
+														{
+															Numerico_Write (banco, 1, 0);
+														}
+												// banco 2
+													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 1)
+														{
+															Numerico_Write (banco + 1, 1, 0);
+														}
+												// banco 3
+													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 1)
+														{
+															Numerico_Write (banco + 2, 1, 0);
+														}
+												// banco 4
+													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 1)
+														{
+															Numerico_Write (banco + 3, 1, 0);
+														}
+												// banco 5
+													if (LCD_Col_Pos == 16 && LCD_Row_Pos == 1)
+														{
+															Numerico_Write (banco + 4, 1, 0);
+														}
+												// banco 6
+													if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
+														{
+															Numerico_Write (banco + 5, 1, 0);
+														}
+												// banco 7
+													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 2)
+														{
+															Numerico_Write (banco + 6, 1, 0);
+														}
+												// banco 8
+													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
+														{
+															Numerico_Write (banco + 7, 1, 0);
+														}
+												// banco 9
+													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 2)
+														{
+															Numerico_Write (banco + 8, 1, 0);
+														}
+												// banco 10
+													if (LCD_Col_Pos == 16 && LCD_Row_Pos == 2)
+														{
+															Numerico_Write (banco + 9, 1, 0);
+														}
+												// banco 11
+													if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
+														{
+															Numerico_Write (banco + 10, 1, 0);
+														}
+												// banco 12
+													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 3)
+														{
+															Numerico_Write (banco + 11, 1, 0);
+														}
+												// banco 13
+													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
+														{
+															Numerico_Write (banco + 12, 1, 0);
+														}
+												// banco 14
+													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 3)
+														{
+															Numerico_Write (banco + 13, 1, 0);
+														}
+												// banco 15
+													if (LCD_Col_Pos == 16 && LCD_Row_Pos == 3)
+														{
+															Numerico_Write (banco + 14, 1, 0);
+														}
+											}
 								}
 							else
 								{
@@ -561,16 +649,16 @@ void GUI_Memory_Init()
 			lcd.setCursor (15, 2);
 			lcd.print("Clear");
 		// Cursor
-			LCD_Col_Pos = 1;		// posicion de cursor
+			LCD_Col_Pos = 1;			// posicion de cursor
 			LCD_Row_Pos = 2;
 		// configuracion de cursor	
-			Cursor_Conf_Clear();	// limpiar array
+			Cursor_Conf_Clear();		// limpiar array
 			// Acciones
 				Cursor_Conf[2][1]  = 1;	// Empty
 				Cursor_Conf[2][8]  = 1; // Load
 				Cursor_Conf[2][14] = 1;	// Clear
 		// navegar
-			GUI_Navegar();
+			GUI_Navegar(0, 0);
 		// Acciones
 			// Load
 				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
@@ -599,10 +687,12 @@ void GUI_Memory()
 			lcd.print("Memory:");
 			lcd.setCursor (1, 2);
 			lcd.print("Save");
-			lcd.setCursor (8, 2);
+			lcd.setCursor (7, 2);
 			lcd.print("Load");
-			lcd.setCursor (15, 2);
+			lcd.setCursor (14, 2);
 			lcd.print("Clear");
+			lcd.setCursor (14, 0);
+			lcd.print("Cancel");
 		// Cursor
 			LCD_Col_Pos = 0;			// posicion de cursor
 			LCD_Row_Pos = 2;
@@ -610,18 +700,19 @@ void GUI_Memory()
 			Cursor_Conf_Clear();		// limpiar array
 			// Acciones
 				Cursor_Conf[2][0]  = 1;	// Save
-				Cursor_Conf[2][7]  = 1; // Load
-				Cursor_Conf[2][14] = 1;	// Clear
+				Cursor_Conf[2][6]  = 1; // Load
+				Cursor_Conf[2][13] = 1;	// Clear
+				Cursor_Conf[0][13] = 1;	// Cancel
 		// navegar
-			GUI_Navegar();
+			GUI_Navegar(0, 0);
 		// Acciones
 			// Load
-				if (LCD_Col_Pos == 7 && LCD_Row_Pos == 2)
+				if (LCD_Col_Pos == 6 && LCD_Row_Pos == 2)
 					{
 						EEPROM_Load();
 					}
 			// Clear
-				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
+				if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
 					{
 						EEPROM_Clear();
 					}
@@ -630,19 +721,22 @@ void GUI_Memory()
 					{
 						EEPROM_Save();
 					}
+			// Cancel
+				if (LCD_Col_Pos == 0 && LCD_Row_Pos == 13)
+					{
+
+					}
 	}
 
 void EEPROM_Save()
 	{
 		lcd.clear ();
-		lcd.setCursor (0, 1);
-		lcd.print ("Memory Saving:");
+		lcd.setCursor (17, 1);
 		for(int Canal = 1; Canal <= 512; Canal ++)
 			{
 				EEPROM.write(Canal, DMX_Values[Canal]);          		// lectura desde EEPROM
-				lcd.setCursor (17, 1);
-				lcd.print (Canal);
-				delay (1);
+				lcd.print (Canal, BIN);
+				delay (2);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
@@ -653,15 +747,13 @@ void EEPROM_Save()
 void EEPROM_Load()
 	{
 		lcd.clear ();
-		lcd.setCursor (0, 1);
-		lcd.print ("Memory Loading:");
+		lcd.setCursor (17, 1);
 		for(int Canal = 1; Canal <= 512; Canal ++)
 			{
 				DMX_Values[Canal] = EEPROM.read(Canal);          		// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal]; 	// salida a DMX
-				lcd.setCursor (17, 1);
-				lcd.print (Canal);
-				delay (1);
+				lcd.print (Canal, BIN);
+				delay (2);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
@@ -672,15 +764,14 @@ void EEPROM_Load()
 void EEPROM_Clear()
 	{
 		lcd.clear ();
-		lcd.setCursor (0, 1);
-		lcd.print ("Memory Cleaning:");
+		lcd.setCursor (17, 1);
 		for(int Canal = 0; Canal <= 512; Canal ++)
 			{
 				DMX_Values[Canal] = 0;          		// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
 				EEPROM.write (Canal, 0);				// escritura EEPROM
-				lcd.setCursor (17, 1);
-				lcd.print (Canal);
+				lcd.print (Canal, BIN);
+				delay (2);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
@@ -695,29 +786,27 @@ void GUI_Control_Options()
 			lcd.setCursor (0, 0);
 			lcd.print ("Control Options:");
 			lcd.setCursor (3, 2);
-			lcd.print ("Unit    Multi");
+			lcd.print ("Unitary   Matrix");
 		// Cursor
-			LCD_Col_Pos = 2;		// posicion de cursor
+			LCD_Col_Pos = 2;				// posicion de cursor
 			LCD_Row_Pos = 2;
 		// configuracion de cursor	
-			Cursor_Conf_Clear();	// limpiar array
+			Cursor_Conf_Clear();			// limpiar array
 			// Acciones
-				Cursor_Conf[2][2]   = 1;	// Unit
-				Cursor_Conf[2][10]  = 1; 	// Multi
+				Cursor_Conf[2][2]   = 1;	// Unitary
+				Cursor_Conf[2][12]  = 1; 	// Matrix
 		// navegar
-			GUI_Navegar();
+			GUI_Navegar(0, 0);
 		// Acciones
 			// Unit
 				if (LCD_Col_Pos == 2 && LCD_Row_Pos == 2)
 					{
 						GUI_Control_Unit();
-						delay(10000);
 					}
-			// Multi
-				if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
+			// Matrix
+				if (LCD_Col_Pos == 12 && LCD_Row_Pos == 2)
 					{
-						GUI_Control_Multi();
-						delay(10000);
+						GUI_Control_Matrix();
 					}
 	}
 	
@@ -744,13 +833,13 @@ void Numerico_Write (int valor, int col, int row)
 void GUI_Control_Unit()
 	{
 	Inicio:	
-		int Canal_Actual = 1;
+		Canal_Actual = 1;
 		// GUI
 			lcd.clear ();
 			lcd.setCursor (0, 0);
-			lcd.print ("Control Unit:");
+			lcd.print ("Unitary Control:");
 			lcd.setCursor (14, 2);
-			lcd.print ("Multi");
+			lcd.print ("Matrix");
 			lcd.setCursor (14, 3);
 			lcd.print ("Memory");
 			lcd.setCursor (0, 2);
@@ -766,11 +855,11 @@ void GUI_Control_Unit()
 		// Cursores
 			Cursor_Conf[2][8]  = 1;	// Channel
 			Cursor_Conf[3][8]  = 1;	// Value
-			Cursor_Conf[2][13] = 1; // Multi
+			Cursor_Conf[2][13] = 1; // Matrix
 			Cursor_Conf[3][13] = 1;	// Memory
 		// navegar
 	Navegacion:
-			GUI_Navegar();
+			GUI_Navegar(0, 0);
 		// Acciones
 			//Channel
 				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
@@ -778,14 +867,16 @@ void GUI_Control_Unit()
 						Numerico_Write(Canal_Actual, 9, 2);
 						Num_Row_Pos = 2;
 						Num_Col_Pos = 9;
-						Numerico_Calc();
+						Numerico_Calc (0);
 						if (Num_Val > 512)
 							{
 								Num_Val = 512;
+								Numerico_Write (512, 9, 2);
 							}
 						if (Num_Val < 1)
 							{
 								Num_Val = 1;
+								Numerico_Write (1, 9, 2);
 							}
 						// mostrar valor actual del canal								
 							Canal_Actual = Num_Val;
@@ -796,14 +887,20 @@ void GUI_Control_Unit()
 					{
 						Num_Row_Pos = 3;
 						Num_Col_Pos = 9;
-						Numerico_Calc();
+						Numerico_Calc (1);
+						if (Num_Val == 612)		// ubicar
+							{
+								Ubicar();
+							}
 						if (Num_Val > 255)
 							{
 								Num_Val = 255;
+								Numerico_Write (255, 9, 3);
 							}
 						// Escribr valor en dmx
 							ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
 							DMX_Values[Canal_Actual] = Num_Val;
+						goto Navegacion;
 					}
 			// Memory
 				if (LCD_Col_Pos == 13 && LCD_Row_Pos == 3)
@@ -811,23 +908,40 @@ void GUI_Control_Unit()
 						GUI_Memory();
 						goto Inicio;
 					}
-			// Multi
+			// Matrix
 				if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
 					{
-						GUI_Control_Multi();
+						GUI_Control_Matrix();
 					}
 			goto Navegacion;
 	}
 	
-void Numerico_Calc()
+void Ubicar()
 	{
-	// escritura del numero desde el teclado numerico
+		digitalWrite(Boton_Array_4, LOW);
+		while (digitalRead(Boton_Array_C) == HIGH)
+			{
+				ArduinoDmx0.TxBuffer[Canal_Actual - 1] = 255;
+				Numerico_Write (255, Num_Col_Pos - 2, Num_Row_Pos);
+				delay (100);
+				ArduinoDmx0.TxBuffer[Canal_Actual - 1] = 0;
+				lcd.setCursor (Num_Col_Pos - 2, Num_Row_Pos);
+				lcd.print ("   ");
+				delay (100);
+			}
+		digitalWrite(Boton_Array_4, HIGH);
+		lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+	}
+	
+void Numerico_Calc(byte value)
+	{
+	// escritura del numero desde el teclado numerico si value es 1 entra opcion de A 255 y B 0
 		byte 	Salida			 = 0;
 		int 	Num_Val_Temp_1 	 = 0;
 		int 	Num_Val_Temp_2 	 = 0;
 		int 	Num_Val_Temp_3 	 = 0;
 		lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-		lcd.print("000");
+		lcd.print("___");
 		lcd.blink();								// mostrar cursor
 		Num_Val = 0;
 		Num_Col_Pos = Num_Col_Pos + 2;
@@ -845,12 +959,48 @@ void Numerico_Calc()
 				{
 					goto Salida;					// num val = 0		
 				}
+			if (value == 1)
+				{
+					if (Boton_Calc == 10)			// 255
+						{
+							Num_Val = 255;
+							goto Salida;
+						}
+					if (Boton_Calc == 11)			// 000
+						{
+							Num_Val = 0;
+							goto Salida;
+						}
+					if (Boton_Calc == 12)			// opcion
+						{
+							Num_Val = 612;
+							goto Salida_Option;
+						}
+				}
 		// segundo numero
 			Numerico_Read();						// leer boton
 			if (Boton_Calc == 14)					// enter
 				{
 					Num_Val = Num_Val_Temp_1;	
 					goto Salida;					// num val = num val anterior
+				}
+			if (value == 1)
+				{
+					if (Boton_Calc == 10)			// 255
+						{
+							Num_Val = 255;
+							goto Salida;
+						}
+					if (Boton_Calc == 11)			// 000
+						{
+							Num_Val = 0;
+							goto Salida;
+						}
+					if (Boton_Calc == 12)			// opcion
+						{
+							Num_Val = 612;
+							goto Salida_Option;
+						}
 				}
 			if (Boton_Calc <= 9)
 				{
@@ -871,6 +1021,24 @@ void Numerico_Calc()
 					Num_Val = (Num_Val_Temp_1 * 10) + Num_Val_Temp_2;
 					goto Salida;
 				}
+			if (value == 1)
+				{
+					if (Boton_Calc == 10)			// 255
+						{
+							Num_Val = 255;
+							goto Salida;
+						}
+					if (Boton_Calc == 11)			// 000
+						{
+							Num_Val = 0;
+							goto Salida;
+						}
+					if (Boton_Calc == 12)			// opcion
+						{
+							Num_Val = 612;
+							goto Salida_Option;
+						}
+				}
 			if (Boton_Calc <= 9)
 				{
 					// recorrer numero ya impreso
@@ -886,8 +1054,17 @@ void Numerico_Calc()
 				}
 		Salida:
 			lcd.noBlink();
-			Num_Col_Pos = Num_Col_Pos - 4;
-			lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+			// pintar los ceros antes del numero
+				Numerico_Write (Num_Val, Num_Col_Pos - 2, Num_Row_Pos);
+				Num_Col_Pos = Num_Col_Pos - 4;
+			// regresar el cursor a su ligar
+				lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+		Salida_Option:
+			{
+				lcd.noBlink();
+				lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+				delay(300); // rebote de boton
+			}
 	}
 
 void Numerico_Read()
@@ -1024,25 +1201,7 @@ void Numerico_Read()
 										Boton_Calc = 13;
 										delay(Boton_Delay_Teclado);
 									}
-								delay(Num_Barrido_Time);
+							delay(Num_Barrido_Time);
 							digitalWrite(Boton_Array_4, HIGH);	// lectura linea 4
 			}
 	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
