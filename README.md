@@ -70,7 +70,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 ## Bibliografia
 - Simulacion de Arduino desde Proteus [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 - Compilador [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
-- Libreria Arduino cuatro universos DMX v0.3[Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
+- Libreria Arduino cuatro universos DMX v0.3 [Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 - Libreria LCD v1.2.1 [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
 
 ## Licenciamiento
