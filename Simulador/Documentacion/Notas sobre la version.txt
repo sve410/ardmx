@@ -1,0 +1,5 @@
+Simulador
+Notas Sobre la version
+Proteus v7.7
+
+Hard v0.0 - Firm v0.0 to v0.8
