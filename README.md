@@ -17,7 +17,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Leds de estado de salida DMX
 - La simulacion en Proteus de Arduino [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 - Simulacion en Proteus v7.7 SP2
-- Esquematico y PCD en Proteus v8.0 SP1
+- Esquematico y PCB en Proteus v8.0 SP1
 
 ### Firmware v0.8
 - Navegación desde cursor de fácil acceso e intuitivo
