@@ -78,7 +78,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 
 ## Licenciamiento
-[GNU General Pubic Licence Version 3](/LICENSE)
+[GNU General Public Licence Version 3](/LICENSE)
 
 ## Autor
 Daniel Roberto Becerril Angeles
