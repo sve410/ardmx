@@ -42,23 +42,23 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Control de tiempo en mS del paso entre canales
 - Visualización del canal actual secuenciado
 - Control de inicio y paro de secuencia
-  - Acceso rápido al menú de “Control Options” para cambiar el tipo de control
+- Acceso rápido al menú de “Control Options” para cambiar el tipo de control
 
 #### Modo de Control Multiply:
 - Permite asignar un valor a un número de canales específico, con un salto numérico especifico
 - Valores editables:
-- Value (valor a escribir en los cananles)
-- First Channel (el primer canal donde inicia la multiplicación)
-- Multiply (número de canales a multiplicar)
-- Quantity (cantidad de veces a multiplicar) 
-- Acceso rápido a las opciones de la memoria EEPROM
-- Evaluación del número de multiplicaciones para evitar desbordamientos
-- Visualización del último canal multiplicado
+  - Value (valor a escribir en los cananles)
+  - First Channel (el primer canal donde inicia la multiplicación)
+  - Multiply (número de canales a multiplicar)
+  - Quantity (cantidad de veces a multiplicar) 
+  - Acceso rápido a las opciones de la memoria EEPROM
+  - Evaluación del número de multiplicaciones para evitar desbordamientos
+  - Visualización del último canal multiplicado
 
 ####  Menu de Acceso a memoria
 - Acceso fácil a las opciones de la memoria EEPROM:
-- Save (guarda el universo DMX con los valores actuales)
-- Load (carga desde la memoria los valores del universo DMX guardado)
-- Empty (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
-- Clear (Borrar el universo DMX guardado en la EEPROM)
-- Cancel (regresar al menú anterior sin cambios)
+  - Save (guarda el universo DMX con los valores actuales)
+  - Load (carga desde la memoria los valores del universo DMX guardado)
+  - Empty (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
+  - Clear (Borrar el universo DMX guardado en la EEPROM)
+  - Cancel (regresar al menú anterior sin cambios)
