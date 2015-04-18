@@ -55,10 +55,13 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
   - Evaluación del número de multiplicaciones para evitar desbordamientos
   - Visualización del último canal multiplicado
 
-####  Menu de Acceso a memoria
+#### Menu de Acceso a memoria
 - Acceso fácil a las opciones de la memoria EEPROM:
   - Save (guarda el universo DMX con los valores actuales)
   - Load (carga desde la memoria los valores del universo DMX guardado)
   - Empty (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
   - Clear (Borrar el universo DMX guardado en la EEPROM)
   - Cancel (regresar al menú anterior sin cambios)
+
+##Licenciamiento
+[GNU General Pubic Licence Version 3](/LICENCE)
