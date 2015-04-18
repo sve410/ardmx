@@ -17,10 +17,10 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Leds de estado de salida DMX
 
 ### Firmware v0.8
-- Navegación desde cursor de fácil acceso e intuitivo
-- Inserción rápida de valores desde el teclado numérico
+Navegación desde cursor de fácil acceso e intuitivo
+Inserción rápida de valores desde el teclado numérico
 
-- Menu al arranque para acceso a EEPROM
+- Menu al arranque para acceso a EEPROM:
 	- Empty (dejar la EEPROM intacta sin modificar, los canales están vacios)
 	- Load (cargar los valores guardados del universo DMX desde la EEPROM)
 	- Clear (borrar los valores guardados de la EEPROM y dejar los canales en cero)
