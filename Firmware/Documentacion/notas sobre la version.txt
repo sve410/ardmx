@@ -1,5 +1,6 @@
 Firmware
 Notas sobre la version
+Compilado en Arduino IDE v1.0.6
 
 v0.7 stable
 - actualizacion del texto about
