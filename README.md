@@ -63,5 +63,9 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
   - Clear (Borrar el universo DMX guardado en la EEPROM)
   - Cancel (regresar al menú anterior sin cambios)
 
-##Licenciamiento
+## Licenciamiento
 [GNU General Pubic Licence Version 3](/LICENSE)
+
+## Autor
+Daniel Roberto Becerril Angeles
+[daniel3514@gmail.com](mailto:daniel3514@gmail.com)
