@@ -15,10 +15,14 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Teclado numérico 4x4
 - Salida DMX desde bornera, XLR de 3 pin y XLR de 5 pin
 - Leds de estado de salida DMX
+- La simulacion en Proteus se logro gracias a [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 
 ### Firmware v0.8
 - Navegación desde cursor de fácil acceso e intuitivo
 - Inserción rápida de valores desde el teclado numérico
+- Compilado en [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
+- Libreria Arduino cuatro universos DMX v0.3[Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
+- Libreria LCD v1.2.1 [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
 
 #### Menu al arranque para acceso a EEPROM:
 - Empty (dejar la EEPROM intacta sin modificar, los canales están vacios)
@@ -62,6 +66,15 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
   - Empty (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
   - Clear (Borrar el universo DMX guardado en la EEPROM)
   - Cancel (regresar al menú anterior sin cambios)
+
+## Bibliografia
+- Simulacion de Arduino desde Proteus
+[Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
+- Compilador
+[Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
+- Libreria Arduino cuatro universos DMX v0.3[Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
+- Libreria LCD v1.2.1 
+- [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
 
 ## Licenciamiento
 [GNU General Pubic Licence Version 3](/LICENSE)
