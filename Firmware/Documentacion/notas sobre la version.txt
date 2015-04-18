@@ -1,10 +1,5 @@
+Firmware
 Notas sobre la version
-
-v0.8
-- se agrega en el control options config
-- se agrega en el control options el about
-- se retiran los delays del efecto binario en todos los casos
-- se agrega a config el control de pwm del back light
 
 v0.7 stable
 - actualizacion del texto about
