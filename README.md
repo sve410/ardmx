@@ -15,7 +15,9 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Teclado numérico 4x4
 - Salida DMX desde bornera, XLR de 3 pin y XLR de 5 pin
 - Leds de estado de salida DMX
-- La simulacion en Proteus se logro gracias a [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
+- La simulacion en Proteus de Arduino [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
+- Simulacion en Proteus v7.7 SP2
+- Esquematico y PCD en Proteus v8.0 SP1
 
 ### Firmware v0.8
 - Navegación desde cursor de fácil acceso e intuitivo
