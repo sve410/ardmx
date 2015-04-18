@@ -1,6 +1,30 @@
 Hardware
 Notas sobre la version
 
+v0.1
+- CORREGIDO - no se necesita el led on, la pantalla ya tieme un led
+	    - el led ON se retira, los leds de la salida del dmx indican que esta activo
+- CORREGIDO - no hay boton de reset
+	    - no se requiere el boton de reset, hay un switch de on off
+- CORREGIDO - quitar boton SW de encendido
+	    - se cambio por un switch deslizable
+- CORREGIDO - base de teclado, darle mas soporte
+	    - no requiere mas soporte
+- CORREGIDO - eliminar la fuente de alimentacion regulada
+	    - se elimino la fuente regulada
+- CORREGIDO - quitar de los conectores USB y power del arduino, las conexiones de arriba, no permiten que cierre bien el arduino
+	    - se reubicaron los componentes
+- CORREGIDO - pasar los conectores a la parte de abajo, pesa mucho la placa
+	    - los conectores se pasaron a la parte de abajo
+- CORREGIDO - agregar capacitores ceramicos a los botones para el rebote
+	    - agregados, ceramicos 104, mejoro la estavilidad en la lectura
+- se cambio el conector XLR de 3 pin por conector amphenol de 3 y 5 pin, son mas resistentes
+- los leds de la salida del DMX se cambiaron a la parte de abajo y viendo hacia abajo, molestaba a la vista
+- el pcb se redujo
+- se agrega etapa de potencia para controlar el back light del LCD
+- se agrega conexion para baterias
+- se agrega header para acompletar la coneccion del ardiono, estaba incompleta
+
 v0.0
 - CORREGIR - no se necesita el led on, la pantalla ya tieme un led
 - CORREGIR - no hay boton de reset
@@ -8,6 +32,6 @@ v0.0
 - CORREGIR - agregar canon de 5 pin
 - CORREGIR - base de teclado, darle mas soporte
 - CORREGIR - eliminar la fuente de alimentacion regulada
-- CORREGIR - quitar de los conectores las conecciones de arriba, no permiten que cierre bien el arduino
+- CORREGIR - quitar de los conectores USB y power del arduino, las conexiones de arriba, no permiten que cierre bien el arduino
 - CORREGIR - pasar los conectores a la parte de abajo, pesa mucho la placa
 - CORREGIR - agregar capacitores ceramicos a los botones para el rebote
