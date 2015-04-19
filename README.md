@@ -11,11 +11,24 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 ## Características
 
 ### Hardware v0.1
+- En construccion...
 - LCD de 4x20 con back light controlado por software
 - Alimentación desde USB, baterías o fuente de alimentación externa
 - Teclado de navegación entre las opciones
 - Teclado numérico 4x4
 - Salida DMX desde bornera, XLR de 3 pin y XLR de 5 pin
+- Leds de estado de salida DMX
+- La simulacion en Proteus de Arduino [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
+- Simulacion en Proteus v7.7 SP2
+- Esquematico y PCB en Proteus v8.0 SP1
+- [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
+
+### Hardware v0.0
+- LCD de 4x20 con back light controlado por software
+- Alimentación desde USB o directamente al Arduino
+- Teclado de navegación entre las opciones
+- Teclado numérico 4x4
+- Salida DMX desde bornera y XLR de 3 pin
 - Leds de estado de salida DMX
 - La simulacion en Proteus de Arduino [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 - Simulacion en Proteus v7.7 SP2
