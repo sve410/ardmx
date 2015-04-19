@@ -34,6 +34,8 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Load (cargar los valores guardados del universo DMX desde la EEPROM)
 - Clear (borrar los valores guardados de la EEPROM y dejar los canales en cero)
 
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Initial Memory.JPG?raw=true "Initial Memory")
+
 #### Modo de control Unitary:
 - Permite el acceso rápido a un canal en específico
 - Acceso rápido a las opciones de la memoria EEPROM
