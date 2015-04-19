@@ -49,6 +49,8 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Acceso rápido a las opciones de la memoria EEPROM
 - Acceso rápido al menú de “Control Options” para cambiar el tipo de control
 
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Control Unitary.JPG?raw=true "Control Unitary")
+
 #### Modo de control Matrix: 
 - Permite visualizar una matriz de 3 x 5 con los valores actuales de los diferentes canales
 - Acceso rápido y visualización de espacio actual de la matriz mostrada
@@ -56,12 +58,16 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Acceso rápido al menú de “Control Options” para cambiar el tipo de control
 - Visualización del canal actual en la navegación
 
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Control Matrix.JPG?raw=true "Control Matrix")
+
 #### Modo de control Chaser:
 - Permite hacer una secuencia entre canales específicos
 - Control de tiempo en mS del paso entre canales
 - Visualización del canal actual secuenciado
 - Control de inicio y paro de secuencia
 - Acceso rápido al menú de “Control Options” para cambiar el tipo de control
+
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Control Chaser.JPG?raw=true "Control chaser")
 
 #### Modo de Control Multiply:
 - Permite asignar un valor a un número de canales específico, con un salto numérico especifico
@@ -73,6 +79,8 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
   - Acceso rápido a las opciones de la memoria EEPROM
   - Evaluación del número de multiplicaciones para evitar desbordamientos
   - Visualización del último canal multiplicado
+  
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Control Multiply.JPG?raw=true "Control Multiply")
 
 #### Menu de Acceso a memoria:
 - Acceso fácil a las opciones de la memoria EEPROM:
@@ -81,6 +89,8 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
   - Empty  (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
   - Clear  (Borrar el universo DMX guardado en la EEPROM)
   - Cancel (regresar al menú anterior sin cambios)
+  
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Memory Options.JPG?raw=true "Memory Options")
 
 ## Bibliografia
 - Simulacion de Arduino desde Proteus [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
