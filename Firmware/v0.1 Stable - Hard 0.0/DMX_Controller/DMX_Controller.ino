@@ -146,7 +146,7 @@ void GUI_About()
 			}
 		lcd.clear ();
 		lcd.setCursor(0, 0);
-		lcd.print("http://goo.gl/3mRhTb");
+		lcd.print("http://goo.gl/kdYlj7");
 		lcd.setCursor(0, 1);
 		lcd.print("DMX-512");
 		lcd.setCursor(8, 1);
