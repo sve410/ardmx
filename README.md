@@ -30,6 +30,10 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 
 ![Alt text](/Hardware/v0.0/media/Hard v00 - 4.JPG?raw=true "Hard v00")
 
+![Alt text](/Hardware/v0.0/media/Hard v00 - 5.JPG?raw=true "Hard v00")
+
+![Alt text](/Hardware/v0.0/media/Hard v00 - 6.JPG?raw=true "Hard v00")
+
 ### Firmware v0.1
 - Navegación desde cursor de fácil acceso e intuitivo
 - Inserción rápida de valores desde el teclado numérico
