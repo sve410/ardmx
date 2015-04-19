@@ -31,10 +31,18 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 
 #### Menu al arranque para acceso a EEPROM:
 - Empty (dejar la EEPROM intacta sin modificar, los canales están vacios)
-- Load (cargar los valores guardados del universo DMX desde la EEPROM)
+- Load  (cargar los valores guardados del universo DMX desde la EEPROM)
 - Clear (borrar los valores guardados de la EEPROM y dejar los canales en cero)
 
 ![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Initial Memory.JPG?raw=true "Initial Memory")
+
+#### Modos de control:
+- Unitary  (acceso rápido a un canal en específico)
+- Matrix   (visualizar una matriz de 3 x 5 con los valores actuales de los diferentes canales)
+- Chaser   (hacer una secuencia entre canales específicos)
+- Multiply (asignar un valor a un número de canales específico, con un salto numérico especifico)
+
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/Control Options.JPG?raw=true "Control Options")
 
 #### Modo de control Unitary:
 - Permite el acceso rápido a un canal en específico
@@ -68,10 +76,10 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 
 #### Menu de Acceso a memoria:
 - Acceso fácil a las opciones de la memoria EEPROM:
-  - Save (guarda el universo DMX con los valores actuales)
-  - Load (carga desde la memoria los valores del universo DMX guardado)
-  - Empty (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
-  - Clear (Borrar el universo DMX guardado en la EEPROM)
+  - Save   (guarda el universo DMX con los valores actuales)
+  - Load   (carga desde la memoria los valores del universo DMX guardado)
+  - Empty  (Borrar la memoria RAM con los valores DMX actuales sin afectar la EEPROM)
+  - Clear  (Borrar el universo DMX guardado en la EEPROM)
   - Cancel (regresar al menú anterior sin cambios)
 
 ## Bibliografia
