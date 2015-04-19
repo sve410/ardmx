@@ -9,7 +9,6 @@ v0.2 beta
 - eeprom save, load empty y clear retirar delay de efecto
 - agregar al inicio del programa un about con la vercipon y el autor
 
-
 v0.1 stable
 - actualizacion del texto about
 - actualizacion del texto memory initial
