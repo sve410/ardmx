@@ -129,7 +129,7 @@ void setup()
 
 void loop()
 	{
-		digitalWrite(2, HIGH);					// max 485 como salida
+		digitalWrite(2, HIGH);							// max 485 como salida
 		GUI_About();
 		GUI_Memory_Init();
 	}
@@ -146,7 +146,7 @@ void GUI_About()
 			}
 		lcd.clear ();
 		lcd.setCursor(0, 0);
-		lcd.print("TechInside.com.mx");
+		lcd.print("http://goo.gl/3mRhTb");
 		lcd.setCursor(0, 1);
 		lcd.print("DMX-512");
 		lcd.setCursor(8, 1);
