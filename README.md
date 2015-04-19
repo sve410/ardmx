@@ -27,6 +27,8 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Libreria Arduino cuatro universos DMX v0.3 [Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 - Libreria LCD v1.2.1 [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
 
+![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/About.JPG?raw=true "About")
+
 #### Menu al arranque para acceso a EEPROM:
 - Empty (dejar la EEPROM intacta sin modificar, los canales están vacios)
 - Load (cargar los valores guardados del universo DMX desde la EEPROM)
