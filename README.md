@@ -24,7 +24,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 
 ### Hardware v0.0
-- LCD de 4x20 con back light controlado por software
+- LCD de 4x20
 - Alimentación desde USB o directamente al Arduino
 - Teclado de navegación entre las opciones
 - Teclado numérico 4x4
