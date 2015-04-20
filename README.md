@@ -136,3 +136,4 @@ Daniel Roberto Becerril Angeles
 
 ## Enlaces
 [Instructables](http://www.instructables.com/id/Arduino-DMX-512-Tester-and-Controller/)
+[Hack a Day](https://hackaday.io/project/5342-arduino-dmx-512-tester-and-controller)
