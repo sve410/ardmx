@@ -2,14 +2,21 @@ Firmware
 Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
-v0.2 beta
-- retirar de setup las variables de la vercion y pasarlas directamente a su void
-- checar el tema de el puerto de data flux, no se asigna
-- en gui about retirar el delay en el efecto binario
-- eeprom save, load empty y clear retirar delay de efecto
-- agregar al inicio del programa un about con la vercipon y el autor
+v0.2
+- CORREGIDO - retirar de setup las variables de la vercion y pasarlas directamente a su void
+	    - no hay razon para que sean globales
+- CORREGIDO - en gui about retirar el delay en el efecto binario
+- CORREGIDO - eeprom save, load empty y clear retirar delay de efecto
+	    - se retiro en todos los casos
+- CORREGIDO - agregar al inicio del programa .ino un about
+
 
 v0.1 stable
+- CORREGIR - retirar de setup las variables de la vercion y pasarlas directamente a su void
+- CORREGIR - en gui about retirar el delay en el efecto binario
+- CORREGIR - eeprom save, load empty y clear retirar delay de efecto
+- CORREGIR - agregar al inicio del programa un about
+- CORREGIR - checar el tema de el puerto de data flux, no se asigna
 - actualizacion del texto about
 - actualizacion del texto memory initial
 - se agrego al GUI memory "empty" para borrar la ram
