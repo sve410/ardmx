@@ -9,7 +9,7 @@ v0.2
 - CORREGIDO - eeprom save, load empty y clear retirar delay de efecto
 	    - se retiro en todos los casos
 - CORREGIDO - agregar al inicio del programa .ino un about
-
+- en control chaser se quito el espacio entre delay el numero y x10=mS, parece que fuera una opcion
 
 v0.1 stable
 - CORREGIR - retirar de setup las variables de la vercion y pasarlas directamente a su void

@@ -1018,7 +1018,7 @@ void GUI_Control_Chaser()
 				lcd.setCursor (0, 0);
 				lcd.print ("ChaserCH ---");
 				lcd.setCursor (3, 1);
-				lcd.print ("Delay     x10=mS");
+				lcd.print ("Delay    x10=mS");
 				lcd.setCursor (0, 2);
 				lcd.print ("First CH       Ctrl");
 				lcd.setCursor (0, 3);
