@@ -132,7 +132,9 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 ## Autor
 Daniel Roberto Becerril Angeles
 
-[daniel3514@gmail.com](mailto:daniel3514@gmail.com)
+- [daniel3514@gmail.com](mailto:daniel3514@gmail.com)
+- [Hack a Day](https://hackaday.io/daniel3514)
+- [Instructables](http://www.instructables.com/member/daniel3514/)
 
 ## Enlaces
 - [Instructables](http://www.instructables.com/id/Arduino-DMX-512-Tester-and-Controller/)
