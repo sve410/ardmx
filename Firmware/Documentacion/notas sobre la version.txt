@@ -2,7 +2,14 @@ Firmware
 Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
-v0.2
+v0.3 - Hardware v0.0 - Beta
+- se agrega void Back_Light_En() para encender o apagar el back light desde el teclado numerico
+- se agrega el void Back_Light_Init() para encender o apagar el back light desde la ultima configuracion
+- se agrega a Control Options el menu Config
+- se agrega void GUI_Config() con las opciones de la configuracion y el LCD y la salida al pwm
+- PENDIENTE corregir boton de back light no funciona el cambio
+
+v0.2 - Hardware v0.0 - Stable
 - CORREGIDO - retirar de setup las variables de la vercion y pasarlas directamente a su void
 	    - no hay razon para que sean globales
 - CORREGIDO - en gui about retirar el delay en el efecto binario
@@ -11,7 +18,7 @@ v0.2
 - CORREGIDO - agregar al inicio del programa .ino un about
 - en control chaser se quito el espacio entre delay el numero y x10=mS, parece que fuera una opcion
 
-v0.1 stable
+v0.1 - Hardware v0.0 - Stable
 - CORREGIR - retirar de setup las variables de la vercion y pasarlas directamente a su void
 - CORREGIR - en gui about retirar el delay en el efecto binario
 - CORREGIR - eeprom save, load empty y clear retirar delay de efecto
@@ -30,7 +37,7 @@ v0.1 stable
 - agregado el control multiply
 - se quita la opcion about es muy repetitiva
 
-v0.0 Stable
+v0.0 - Hardware v0.0 - Stable
 - CORREGIDO - cambiar en gui unit a "Unitary"
 - CORREGIDO - cambiar en GUI multi a "Matrix"
 - CORREGIDO - hacer los barridos de la memoria mas rapidos, se agrega efecto de carga y no baja la velocidad
