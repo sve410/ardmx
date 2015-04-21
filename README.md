@@ -146,6 +146,6 @@ Daniel Roberto Becerril Angeles
 - [Hack a Day](https://hackaday.io/daniel3514)
 - [Instructables](http://www.instructables.com/member/daniel3514/)
 
-## Enlaces
+## Enlaces del proyecto
 - [Instructables](http://www.instructables.com/id/Arduino-DMX-512-Tester-and-Controller/)
 - [Hack a Day](https://hackaday.io/project/5342-arduino-dmx-512-tester-and-controller)
