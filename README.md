@@ -65,6 +65,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Si se trata de una entrada de usuario en donde se indica el valor de un canal DMX, se puede presionar (después de dar “enter”) la tecla "A" que escribe directamente "255" (el valor máximo de un canal) o la tecla "B" que escribe directamente "0" (el valor mínimo de un canal)
 - La tecla "C" funciona como un medio para ubicar una luminaria o un canal en específico, solo basta con seleccionar un canal, posicionarse en el valor, dar "enter" y presionar "C", el valor del canal secuenciara entre "000" y "255", para detenerlo volver a presionar "C"
 - Las teclas "*" y "D" aun no están programadas
+- La opcion Ctrl regresa al menu de Control Options
 
 #### Menu al arranque para acceso a EEPROM:
 - Empty (dejar la EEPROM intacta sin modificar, los canales están vacios)
