@@ -34,6 +34,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Simulacion en Proteus v7.7 SP2
 - Esquematico y PCB en Proteus v8.0 SP1
 - [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
+- Aclarar que para este proyecto se utilizó un Arduino Mega hecho en China
 
 ![Alt text](/Hardware/v0.0/media/Hard v00 - 1.JPG?raw=true "Hard v00")
 
@@ -55,6 +56,15 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Libreria LCD v1.2.1 [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
 
 ![Alt text](/Firmware/v0.1 Stable - Hard 0.0/media/About.JPG?raw=true "About")
+
+### Entrada del Usuario
+- El símbolo ">" indica el lugar donde se está posicionado en el menú
+- El símbolo “+” indica que se espera la entrada numérica del usuario
+- La navegación entre los menús, se hace a partir de las teclas del cursor arriba, abajo, derecha, izquierda y centro que aplica como "enter"
+- Cuando se da "enter" en un menú que requiere entrada del usuario aparece "+___" y el cursor parpadeante indicando la entrada del usuario, para este caso se utiliza el teclado numérico, si el numero escrito es menor de 3 dígitos presionar "#" que funciona como un "enter" del teclado numérico
+- Si se trata de una entrada de usuario en donde se indica el valor de un canal DMX, se puede presionar (después de dar “enter”) la tecla "A" que escribe directamente "255" (el valor máximo de un canal) o la tecla "B" que escribe directamente "0" (el valor mínimo de un canal)
+- La tecla "C" funciona como un medio para ubicar una luminaria o un canal en específico, solo basta con seleccionar un canal, posicionarse en el valor, dar "enter" y presionar "C", el valor del canal secuenciara entre "000" y "255", para detenerlo volver a presionar "C"
+- Las teclas "*" y "D" aun no están programadas
 
 #### Menu al arranque para acceso a EEPROM:
 - Empty (dejar la EEPROM intacta sin modificar, los canales están vacios)
