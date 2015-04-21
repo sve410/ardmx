@@ -1,0 +1,1 @@
+- marcar las opciones del LCD
