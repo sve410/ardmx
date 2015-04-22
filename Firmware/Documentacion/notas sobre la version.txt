@@ -2,12 +2,12 @@ Firmware
 Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
-v0.3 - Hardware v0.0 - Beta
+v0.3 - Hardware v0.0 - Stable
 - se agrega void Back_Light_En() para encender o apagar el back light desde el teclado numerico
 - se agrega el void Back_Light_Init() para encender o apagar el back light desde la ultima configuracion
 - se agrega a Control Options el menu Config
 - se agrega void GUI_Config() con las opciones de la configuracion y el LCD y la salida al pwm
-- PENDIENTE corregir boton de back light no funciona el cambio
+- agregado el control del back light a gui_navegar, siempre esta activo
 
 v0.2 - Hardware v0.0 - Stable
 - CORREGIDO - retirar de setup las variables de la vercion y pasarlas directamente a su void

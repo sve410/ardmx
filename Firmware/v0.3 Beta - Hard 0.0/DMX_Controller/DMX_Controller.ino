@@ -162,6 +162,7 @@ void Back_Light_En()
 							analogWrite(Back_Light_PWM, Back_Light_Value);	// encender con el valor de la eeprom
 						}
 					Back_Light_On_Off = 1;
+					goto salida;
 				}
 		// apagar
 			if (Back_Light_On_Off == 1)							// si esta encendida apagarla
@@ -169,6 +170,8 @@ void Back_Light_En()
 					analogWrite(Back_Light_PWM, 0);
 					Back_Light_On_Off = 0;
 				}
+		salida:
+			{}
 	}
 	
 void GUI_About()
