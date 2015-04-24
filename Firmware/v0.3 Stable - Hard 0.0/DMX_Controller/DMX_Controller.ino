@@ -191,21 +191,19 @@ void GUI_About()
 		lcd.clear ();
 		lcd.setCursor(0, 3);
 		lcd.print("http://goo.gl/kdYlj7");
-		lcd.setCursor(2, 0);
-		lcd.print("DMX-512");
+		lcd.setCursor(3, 0);
+		lcd.print("Arduino DMX-512");
 		lcd.setCursor(1, 1);
-		lcd.print("Tester &");
-		lcd.setCursor(0, 2);
-		lcd.print("Controller");
+		lcd.print("Tester & Controller");
 		// Firmware
-			lcd.setCursor(11, 0);
-			lcd.print("Firm:v");
+			lcd.setCursor(0, 2);
+			lcd.print("Firm v");
 			lcd.print(Firm_Ver_Ent);
 			lcd.print(".");
 			lcd.print(Firm_Ver_Dec);
 		// Hardware
-			lcd.setCursor(11, 1);
-			lcd.print("Hard:v");
+			lcd.setCursor(11, 2);
+			lcd.print("Hard v");
 			lcd.print(Hard_Ver_Ent);
 			lcd.print(".");
 			lcd.print(Hard_Ver_Dec);
@@ -254,7 +252,8 @@ void GUI_Control_Matrix()
 			// Row 0
 				Cursor_Conf[0][4]  = 1;	// Memory
 				Cursor_Conf[0][8]  = 1;	// Unit
-				Cursor_Conf[0][12] = 1;	// Banco
+				Cursor_Conf[0][12] = 1;	// Banco Inicial
+				Cursor_Conf[0][16] = 1;	// Banco Final
 			// Row 1
 				Cursor_Conf[1][0]  = 1;
 				Cursor_Conf[1][4]  = 1;
@@ -289,7 +288,7 @@ void GUI_Control_Matrix()
 							GUI_Control_Options();
 							goto inicio;
 						}
-				// Banco
+				// Banco Inicial
 					if (LCD_Col_Pos == 12 && LCD_Row_Pos == 0)
 						{
 							Num_Row_Pos = 0;
@@ -304,6 +303,25 @@ void GUI_Control_Matrix()
 									Num_Val = 1;
 								}
 							Inicial = Num_Val;
+							goto inicio;
+						}
+				// Banco Final
+					if (LCD_Col_Pos == 16 && LCD_Row_Pos == 0)
+						{
+							Num_Row_Pos = 0;
+							Num_Col_Pos = 17;
+							Numerico_Calc(0);
+							if (Num_Val > 512)	// limite de matriz
+								{
+									Inicial = 498;
+									goto inicio;
+								}
+							if (Num_Val < 15)	// limite de matriz
+								{
+									Inicial = 1;
+									goto inicio;
+								}
+							Inicial = Num_Val - 14;
 							goto inicio;
 						}
 				// posicion 1
@@ -933,7 +951,7 @@ void GUI_Config()
 			lcd.print ("dimmer 0-255");
 			lcd.setCursor (15, 3);
 			lcd.print ("Ctrl");
-			lcd.setCursor (15, 1);
+			lcd.setCursor (15, 0);
 			lcd.print ("About");
 		// Cursor
 			LCD_Col_Pos = 14;			// posicion de cursor
@@ -943,7 +961,7 @@ void GUI_Config()
 		// Cursores
 			Cursor_Conf[2][14]  = 1;	// Back Light Value
 			Cursor_Conf[3][14]  = 1;	// exit
-			Cursor_Conf[1][14]  = 1;	// About
+			Cursor_Conf[0][14]  = 1;	// About
 		// navegar
 	Navegacion:
 			GUI_Navegar(0, 0);
@@ -976,10 +994,14 @@ void GUI_Config()
 						GUI_Control_Options();
 					}
 			// About
-				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 1)
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 0)
 					{
 						GUI_About();
-						delay(5000);	// retardo para mostrar el about
+						while (digitalRead(Boton_Center) == HIGH)
+							{
+									// esperamos a que se precione enter
+							}
+						delay(300);	// retardo para el rebote del boton
 						goto Inicio;
 					}
 			goto Navegacion;
