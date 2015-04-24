@@ -84,6 +84,7 @@
 		int LCD_D7				= 13;
 		LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
 		int Back_Light_PWM		= 3;	// salida para PWM de Back Light de LCD
+		int Contrast_PWM		= 4;	// salida para pwm de contraste de LCD
 		byte Back_Light_On_Off	= 0;	// saber si esta encendida o apagada
 
 void setup() 
@@ -971,36 +972,42 @@ void GUI_Config()
 	{
 	Inicio:	
 		byte Back_Light_Value = EEPROM.read(513);
+		byte Contrast_Value = EEPROM.read(514);
 		// GUI
 			lcd.clear ();
 			lcd.setCursor (0, 0);
-			lcd.print ("Config:");
-			lcd.setCursor (0, 2);
-			lcd.print ("LCD BackLight:");
-			Numerico_Write(Back_Light_Value, 15, 2);
+			lcd.print ("LCD Config:");
+			lcd.setCursor (15, 0);
+			lcd.print ("About");
+			lcd.setCursor (3, 1);
+			lcd.print ("Back Light:");
+			Numerico_Write(Back_Light_Value, 15, 1);
+			lcd.setCursor (5, 2);
+			lcd.print ("Contrast:");
+			Numerico_Write(Contrast_Value, 15, 2);
 			lcd.setCursor (0, 3);
 			lcd.print ("dimmer 0-255");
 			lcd.setCursor (15, 3);
 			lcd.print ("Ctrl");
-			lcd.setCursor (15, 0);
-			lcd.print ("About");
+			
 		// Cursor
 			LCD_Col_Pos = 14;			// posicion de cursor
 			LCD_Row_Pos = 2;			// posicion e cursor
 		// configuracion de cursor	
 			Cursor_Conf_Clear();		// limpiar array
 		// Cursores
-			Cursor_Conf[2][14]  = 1;	// Back Light Value
-			Cursor_Conf[3][14]  = 1;	// exit
+			Cursor_Conf[1][14]  = 1;	// Back Light Value
+			Cursor_Conf[2][14]  = 1;	// Contrast Value
+			Cursor_Conf[3][14]  = 1;	// control
 			Cursor_Conf[0][14]  = 1;	// About
 		// navegar
 	Navegacion:
 			GUI_Navegar(0, 0);
 		// Acciones
 			//Back Light Value
-				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 1)
 					{
-						Num_Row_Pos = 2;
+						Num_Row_Pos = 1;
 						Num_Col_Pos = 15;
 						Numerico_Calc (1);
 						if (Num_Val > 255)
@@ -1018,6 +1025,20 @@ void GUI_Config()
 							{
 								Back_Light_On_Off = 1;
 							}
+					}
+			//Contrast Value
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
+					{
+						Num_Row_Pos = 2;
+						Num_Col_Pos = 15;
+						Numerico_Calc (1);
+						if (Num_Val > 255)
+							{
+								Num_Val = 255;
+								Numerico_Write (255, 16, 2);
+							}
+						EEPROM.write(514, Num_Val);				// guardar valor nuevo
+						analogWrite(Contrast_PWM, Num_Val);
 					}
 			// Exit
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)

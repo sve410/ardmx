@@ -1,7 +1,12 @@
 Hardware
 Notas sobre la version
 
-v0.1
+v0.2 - Beta
+- implementacion de control de contraste desde software
+http://www.pcbheaven.com/circuitpages/PWM_LCD_Contrast_Control/
+
+
+v0.1 - Beta
 - CORREGIDO - no se necesita el led on, la pantalla ya tieme un led
 	    - el led ON se retira, los leds de la salida del dmx indican que esta activo
 - CORREGIDO - no hay boton de reset
