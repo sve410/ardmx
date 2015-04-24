@@ -16,6 +16,7 @@ v0.3 - Hardware v0.0 - Stable
 - se cambia en config el menu exit por Ctrl
 - se agrega a control options Memory options
 - se agrega en matrix la opcion de poner el valor final de la matriz
+- se agrega a la lectura numerica centro como enter
 
 v0.2 - Hardware v0.0 - Stable
 - CORREGIDO - retirar de setup las variables de la vercion y pasarlas directamente a su void

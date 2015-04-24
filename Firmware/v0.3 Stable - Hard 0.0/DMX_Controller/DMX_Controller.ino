@@ -1722,5 +1722,12 @@ void Numerico_Read()
 									}
 							delay(Num_Barrido_Time);
 							digitalWrite(Boton_Array_4, HIGH);	// lectura linea 4
+							
+							// Cursor center "enter"
+								if (digitalRead(Boton_Center) == LOW)
+									{
+										Boton_Calc = 14;
+										delay(Boton_Delay_Teclado);
+									}
 			}
 	}
