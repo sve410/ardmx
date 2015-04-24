@@ -587,99 +587,130 @@ void GUI_Navegar(byte matrix, int banco)
 									// matrix print posicion
 										if (matrix == 1)
 											{
-												// bancos
+												// banco inicial
 													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 0)
 														{
 															lcd.setCursor(1, 0);
 															lcd.print("---");
+															goto salida;
+														}
+												// banco  final
+													if (LCD_Col_Pos == 16 && LCD_Row_Pos == 0)
+														{
+															lcd.setCursor(1, 0);
+															lcd.print("---");
+															goto salir;
 														}
 												// Memory
 													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
 														{
 															lcd.setCursor(1, 0);
 															lcd.print("---");
+															goto salida;
 														}
 												// Unitary
 													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 0)
 														{
 															lcd.setCursor(1, 0);
 															lcd.print("---");
+															goto salida;
 														}
 												// banco 1
 													if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
 														{
 															Numerico_Write (banco, 1, 0);
+															goto salida;
 														}
 												// banco 2
 													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 1)
 														{
 															Numerico_Write (banco + 1, 1, 0);
+															goto salida;
 														}
 												// banco 3
 													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 1)
 														{
 															Numerico_Write (banco + 2, 1, 0);
+															goto salida;
 														}
 												// banco 4
 													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 1)
 														{
 															Numerico_Write (banco + 3, 1, 0);
+															goto salida;
 														}
 												// banco 5
 													if (LCD_Col_Pos == 16 && LCD_Row_Pos == 1)
 														{
 															Numerico_Write (banco + 4, 1, 0);
+															goto salida;
 														}
 												// banco 6
 													if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
 														{
 															Numerico_Write (banco + 5, 1, 0);
+															goto salida;
 														}
 												// banco 7
 													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 2)
 														{
 															Numerico_Write (banco + 6, 1, 0);
+															goto salida;
 														}
 												// banco 8
 													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
 														{
 															Numerico_Write (banco + 7, 1, 0);
+															goto salida;
 														}
 												// banco 9
 													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 2)
 														{
 															Numerico_Write (banco + 8, 1, 0);
+															goto salida;
 														}
 												// banco 10
 													if (LCD_Col_Pos == 16 && LCD_Row_Pos == 2)
 														{
 															Numerico_Write (banco + 9, 1, 0);
+															goto salida;
 														}
 												// banco 11
 													if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
 														{
 															Numerico_Write (banco + 10, 1, 0);
+															goto salida;
 														}
 												// banco 12
 													if (LCD_Col_Pos == 4 && LCD_Row_Pos == 3)
 														{
 															Numerico_Write (banco + 11, 1, 0);
+															goto salida;
 														}
 												// banco 13
 													if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
 														{
 															Numerico_Write (banco + 12, 1, 0);
+															goto salida;
 														}
 												// banco 14
 													if (LCD_Col_Pos == 12 && LCD_Row_Pos == 3)
 														{
 															Numerico_Write (banco + 13, 1, 0);
+															goto salida;
 														}
 												// banco 15
 													if (LCD_Col_Pos == 16 && LCD_Row_Pos == 3)
 														{
 															Numerico_Write (banco + 14, 1, 0);
+															goto salida;
 														}
+												// escribir guion de bancos
+												salida:
+													lcd.setCursor(16, 0);
+													lcd.print("-");
+												salir:
+													{}
 											}
 								}
 							else
