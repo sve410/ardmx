@@ -189,28 +189,26 @@ void GUI_About()
 				lcd.print (numero, BIN);
 			}
 		lcd.clear ();
-		lcd.setCursor(0, 0);
+		lcd.setCursor(0, 3);
 		lcd.print("http://goo.gl/kdYlj7");
-		lcd.setCursor(0, 1);
+		lcd.setCursor(2, 0);
 		lcd.print("DMX-512");
-		lcd.setCursor(8, 1);
-		lcd.print("<Controller>");
+		lcd.setCursor(1, 1);
+		lcd.print("Tester &");
+		lcd.setCursor(0, 2);
+		lcd.print("Controller");
 		// Firmware
-			lcd.setCursor(7, 2);
-			lcd.print("Firmware v");
+			lcd.setCursor(11, 0);
+			lcd.print("Firm:v");
 			lcd.print(Firm_Ver_Ent);
 			lcd.print(".");
 			lcd.print(Firm_Ver_Dec);
 		// Hardware
-			lcd.setCursor(7, 3);
-			lcd.print("Hardware v");
+			lcd.setCursor(11, 1);
+			lcd.print("Hard:v");
 			lcd.print(Hard_Ver_Ent);
 			lcd.print(".");
 			lcd.print(Hard_Ver_Dec);
-		// ID
-			lcd.setCursor(0, 3);
-			lcd.print("ID:");
-			lcd.print(ID);
 		delay(2000);  									//retardo de muestra de mensaje
 	}
 
@@ -855,93 +853,106 @@ void EEPROM_Clear()
 	
 void GUI_Control_Options()
 	{
-		// LCD
-			lcd.clear ();
-			lcd.setCursor (0, 0);
-			lcd.print ("Control Options:");
-			lcd.setCursor (2, 2);
-			lcd.print ("Unitary");
-			lcd.setCursor (2, 3);
-			lcd.print ("Matrix");
-			lcd.setCursor (12, 2);
-			lcd.print ("Chaser");
-			lcd.setCursor (12, 3);
-			lcd.print ("Multiply");
-			lcd.setCursor (12, 1);
-			lcd.print ("Config");
-		// Cursor
-			LCD_Col_Pos = 1;				// posicion de cursor
-			LCD_Row_Pos = 2;
-		// configuracion de cursor	
-			Cursor_Conf_Clear();			// limpiar array
+		iniciar:
+			// LCD
+				lcd.clear ();
+				lcd.setCursor (0, 0);
+				lcd.print ("Control Options:");
+				lcd.setCursor (2, 2);
+				lcd.print ("Unitary");
+				lcd.setCursor (2, 3);
+				lcd.print ("Matrix");
+				lcd.setCursor (12, 2);
+				lcd.print ("Chaser");
+				lcd.setCursor (12, 3);
+				lcd.print ("Multiply");
+				lcd.setCursor (12, 1);
+				lcd.print ("Config");
+				lcd.setCursor (2, 1);
+				lcd.print ("Memory");
+			// Cursor
+				LCD_Col_Pos = 1;				// posicion de cursor
+				LCD_Row_Pos = 2;
+			// configuracion de cursor	
+				Cursor_Conf_Clear();			// limpiar array
+				// Acciones
+					Cursor_Conf[2][1]   = 1;	// Unitary
+					Cursor_Conf[3][1]   = 1; 	// Matrix
+					Cursor_Conf[2][11]  = 1; 	// Chaser
+					Cursor_Conf[3][11]  = 1; 	// Multiply
+					Cursor_Conf[1][11]  = 1; 	// Config
+					Cursor_Conf[1][1]  = 1; 	// Memory
+			// navegar
+				GUI_Navegar(0, 0);
 			// Acciones
-				Cursor_Conf[2][1]   = 1;	// Unitary
-				Cursor_Conf[3][1]   = 1; 	// Matrix
-				Cursor_Conf[2][11]  = 1; 	// Chaser
-				Cursor_Conf[3][11]  = 1; 	// Multiply
-				Cursor_Conf[1][11]  = 1; 	// Config
-		// navegar
-			GUI_Navegar(0, 0);
-		// Acciones
-			// Unitary
-				if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
-					{
-						GUI_Control_Unit();
-					}
-			// Matrix
-				if (LCD_Col_Pos == 1 && LCD_Row_Pos == 3)
-					{
-						GUI_Control_Matrix();
-					}
-			// Chaser
-				if (LCD_Col_Pos == 11 && LCD_Row_Pos == 2)
-					{
-						GUI_Control_Chaser();
-					}
-			// Multiply
-				if (LCD_Col_Pos == 11 && LCD_Row_Pos == 3)
-					{
-						GUI_Control_Multiply();
-					}
-			// Config
-				if (LCD_Col_Pos == 11 && LCD_Row_Pos == 1)
-					{
-						GUI_Config();
-					}
+				// Unitary
+					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
+						{
+							GUI_Control_Unit();
+						}
+				// Matrix
+					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 3)
+						{
+							GUI_Control_Matrix();
+						}
+				// Chaser
+					if (LCD_Col_Pos == 11 && LCD_Row_Pos == 2)
+						{
+							GUI_Control_Chaser();
+						}
+				// Multiply
+					if (LCD_Col_Pos == 11 && LCD_Row_Pos == 3)
+						{
+							GUI_Control_Multiply();
+						}
+				// Config
+					if (LCD_Col_Pos == 11 && LCD_Row_Pos == 1)
+						{
+							GUI_Config();
+						}
+				// Config
+					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 1)
+						{
+							GUI_Memory();
+							goto iniciar;
+						}
 	}
 
 void GUI_Config()
 	{
-		Inicio:	
+	Inicio:	
 		byte Back_Light_Value = EEPROM.read(513);
 		// GUI
 			lcd.clear ();
 			lcd.setCursor (0, 0);
 			lcd.print ("Config:");
 			lcd.setCursor (0, 2);
-			lcd.print ("LCD Back Light:");
-			Numerico_Write(Back_Light_Value, 16, 2);
+			lcd.print ("LCD BackLight:");
+			Numerico_Write(Back_Light_Value, 15, 2);
 			lcd.setCursor (0, 3);
-			lcd.print ("000-255");
-			lcd.setCursor (16, 3);
-			lcd.print ("Exit");
+			lcd.print ("dimmer 0-255");
+			lcd.setCursor (15, 3);
+			lcd.print ("Ctrl");
+			lcd.setCursor (15, 1);
+			lcd.print ("About");
 		// Cursor
-			LCD_Col_Pos = 15;			// posicion de cursor
+			LCD_Col_Pos = 14;			// posicion de cursor
 			LCD_Row_Pos = 2;			// posicion e cursor
 		// configuracion de cursor	
 			Cursor_Conf_Clear();		// limpiar array
 		// Cursores
-			Cursor_Conf[2][15]  = 1;	// Back Light Value
-			Cursor_Conf[3][15]  = 1;	// exit
+			Cursor_Conf[2][14]  = 1;	// Back Light Value
+			Cursor_Conf[3][14]  = 1;	// exit
+			Cursor_Conf[1][14]  = 1;	// About
 		// navegar
 	Navegacion:
 			GUI_Navegar(0, 0);
 		// Acciones
 			//Back Light Value
-				if (LCD_Col_Pos == 15 && LCD_Row_Pos == 2)
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
 					{
 						Num_Row_Pos = 2;
-						Num_Col_Pos = 16;
+						Num_Col_Pos = 15;
 						Numerico_Calc (1);
 						if (Num_Val > 255)
 							{
@@ -960,9 +971,16 @@ void GUI_Config()
 							}
 					}
 			// Exit
-				if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3)
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
 					{
 						GUI_Control_Options();
+					}
+			// About
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 1)
+					{
+						GUI_About();
+						delay(5000);	// retardo para mostrar el about
+						goto Inicio;
 					}
 			goto Navegacion;
 	}
