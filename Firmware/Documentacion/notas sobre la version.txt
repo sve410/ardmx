@@ -2,6 +2,20 @@ Firmware
 Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
+v0.5 - Hardware v0.0 - stable
+- CORREGIDO - en matrix no se aplican los cambios en los bancos
+- CORREGIDO - en matrix el valor final del banco se pasa de 512
+- CORREGIDO - en config backlight el valor no se guardaba en eeprom
+- CORREGIDO - en config backlight se recorrian todas las opciones de botones, se agrego mecanismo para sacar del bucle
+- se agrega potenciometro para valores DMX con tecla D solo en valores, para detenerlo precionar # o center
+- analogo agregado a unitary
+- analogo agregado a matrix
+- analogo agregado a config back light
+- analogo agregado a config contrast
+
+v0.4 - Hardware v0.0 - Stable
+- se agrega la funcion para cuando se da enter en un numero para cambiarlo, si de da enter denuevo se quede el numero que estaba
+
 v0.3 - Hardware v0.0 - Stable
 - se agrega void Back_Light_En() para encender o apagar el back light desde el teclado numerico
 - se agrega el void Back_Light_Init() para encender o apagar el back light desde la ultima configuracion
