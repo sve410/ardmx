@@ -123,10 +123,10 @@ void setup()
 			pinMode(Back_Light_PWM,		OUTPUT);
 			lcd.begin(20, 4);										//tamaño de LCD				
 		// DMX
-			DMX_Mode = 1;//EEPROM.read(514);
+			DMX_Mode = 0;//EEPROM.read(514);
 			if (DMX_Mode == 1)
 				{
-					digitalWrite(13, HIGH);
+					digitalWrite(5, HIGH);
 					// DMX Tx
 						ArduinoDmx0.set_tx_address(1);      		// poner aqui la direccion de inicio de DMX 
 						ArduinoDmx0.set_tx_channels(512);   		// poner aqui el numero de canales a transmitir 
@@ -134,7 +134,7 @@ void setup()
 				}
 			if (DMX_Mode == 0)
 				{	
-					digitalWrite(13, LOW);	
+					digitalWrite(5, LOW);	
 					// DMX Rx
 						//ArduinoDmx0.set_control_pin(22);    		// Arduino output pin for MAX485 input/output control (connect to MAX485 pins 2-3) 
 						ArduinoDmx0.set_rx_address(1);      		// set rx0 dmx start address

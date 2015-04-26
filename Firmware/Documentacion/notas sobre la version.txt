@@ -3,6 +3,8 @@ Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
 v0.5 - Hardware v0.0 - stable
+- CORREGIDo - las io no usadas son salidas low
+- CORREGIDO - no inicializa el contraste
 - CORREGIDO - en matrix no se aplican los cambios en los bancos
 - CORREGIDO - en matrix el valor final del banco se pasa de 512
 - CORREGIDO - en config backlight el valor no se guardaba en eeprom

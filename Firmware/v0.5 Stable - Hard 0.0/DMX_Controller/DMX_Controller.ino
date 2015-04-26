@@ -46,7 +46,7 @@
 
 // Puertos, variables
 	// DMX
-		int DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default 
+		//int DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default 
 		int DMX_Values [515];      	// array de valores actuales DMX
 		int Canal_Actual 		= 1;
 	// Botones cursor
@@ -92,7 +92,7 @@
 void setup() 
 	{
 		// DMX
-			pinMode(DMX_Data_Flux, 		OUTPUT);
+			//pinMode(DMX_Data_Flux, 		OUTPUT);
 		// Botones cursor
 			pinMode(Boton_Up,      		INPUT_PULLUP);
 			pinMode(Boton_Down,    		INPUT_PULLUP);
@@ -125,12 +125,88 @@ void setup()
 			ArduinoDmx0.set_tx_address(1);      		// poner aqui la direccion de inicio de DMX 
 			ArduinoDmx0.set_tx_channels(512);   		// poner aqui el numero de canales a transmitir 
 			ArduinoDmx0.init_tx(DMX512);        		// iniciar transmision universo 0, modo estandar DMX512
+		// no conectados
+			pinMode(5, OUTPUT);
+			digitalWrite(5, LOW);
+			pinMode(6, OUTPUT);
+			digitalWrite(6, LOW);
+			pinMode(7, OUTPUT);
+			digitalWrite(7, LOW);
+			pinMode(22, OUTPUT);
+			digitalWrite(22, LOW);
+			pinMode(23, OUTPUT);
+			digitalWrite(23, LOW);
+			pinMode(24, OUTPUT);
+			digitalWrite(24, LOW);
+			pinMode(25, OUTPUT);
+			digitalWrite(25, LOW);
+			pinMode(26, OUTPUT);
+			digitalWrite(26, LOW);
+			pinMode(27, OUTPUT);
+			digitalWrite(27, LOW);
+			pinMode(28, OUTPUT);
+			digitalWrite(28, LOW);
+			pinMode(29, OUTPUT);
+			digitalWrite(29, LOW);
+			pinMode(31, OUTPUT);
+			digitalWrite(31, LOW);
+			pinMode(33, OUTPUT);
+			digitalWrite(33, LOW);
+			pinMode(35, OUTPUT);
+			digitalWrite(35, LOW);
+			pinMode(37, OUTPUT);
+			digitalWrite(37, LOW);
+			pinMode(39, OUTPUT);
+			digitalWrite(39, LOW);
+			pinMode(41, OUTPUT);
+			digitalWrite(41, LOW);
+			pinMode(43, OUTPUT);
+			digitalWrite(43, LOW);
+			pinMode(46, OUTPUT);
+			digitalWrite(46, LOW);
+			pinMode(48, OUTPUT);
+			digitalWrite(48, LOW);
+			pinMode(50, OUTPUT);
+			digitalWrite(50, LOW);
+			pinMode(52, OUTPUT);
+			digitalWrite(52, LOW);
+			pinMode(A0, OUTPUT);
+			digitalWrite(A0, LOW);
+			pinMode(A1, OUTPUT);
+			digitalWrite(A1, LOW);
+			pinMode(A2, OUTPUT);
+			digitalWrite(A2, LOW);
+			pinMode(A3, OUTPUT);
+			digitalWrite(A3, LOW);
+			pinMode(A4, OUTPUT);
+			digitalWrite(A4, LOW);
+			pinMode(A5, OUTPUT);
+			digitalWrite(A5, LOW);
+			pinMode(A6, OUTPUT);
+			digitalWrite(A6, LOW);
+			pinMode(A7, OUTPUT);
+			digitalWrite(A7, LOW);
+			pinMode(A8, OUTPUT);
+			digitalWrite(A8, LOW);
+			pinMode(A9, OUTPUT);
+			digitalWrite(A9, LOW);
+			pinMode(A10, OUTPUT);
+			digitalWrite(A10, LOW);
+			pinMode(A11, OUTPUT);
+			digitalWrite(A11, LOW);
+			pinMode(A12, OUTPUT);
+			digitalWrite(A12, LOW);
+			pinMode(A13, OUTPUT);
+			digitalWrite(A13, LOW);
+			pinMode(A14, OUTPUT);
+			digitalWrite(A14, LOW);
 	}    
 
 void loop()
 	{
 		digitalWrite(2, HIGH);							// max 485 como salida
 		Back_Light_Init();
+		Contrast_Init();
 		GUI_About();
 		GUI_Memory_Init();
 	}
@@ -148,6 +224,13 @@ void Back_Light_Init()
 				{
 					Back_Light_On_Off = 1;
 				}
+	}
+	
+void Contrast_Init()
+	{
+		// ultimo estado del comtrast
+			byte Contrast_Value = EEPROM.read(514);
+			analogWrite(Contrast_PWM, Contrast_Value);
 	}
 	
 void Back_Light_En()
