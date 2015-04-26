@@ -47,8 +47,9 @@
 // Puertos, variables
 	// DMX
 		int DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default 
-		int DMX_Values [515];      	// array de valores actuales DMX
+		int DMX_Values [515];      		// array de valores actuales DMX
 		int Canal_Actual 		= 1;
+		byte DMX_Mode			= 0;
 	// Botones cursor
 		int Boton_Up     		= 51; 
 		int Boton_Down   		= 45;	
@@ -120,16 +121,31 @@ void setup()
 			pinMode(LCD_D5, 			OUTPUT);
 			pinMode(LCD_D4, 			OUTPUT);
 			pinMode(Back_Light_PWM,		OUTPUT);
-			lcd.begin(20, 4);							//tamaño de LCD				
+			lcd.begin(20, 4);										//tamaño de LCD				
 		// DMX
-			ArduinoDmx0.set_tx_address(1);      		// poner aqui la direccion de inicio de DMX 
-			ArduinoDmx0.set_tx_channels(512);   		// poner aqui el numero de canales a transmitir 
-			ArduinoDmx0.init_tx(DMX512);        		// iniciar transmision universo 0, modo estandar DMX512
+			DMX_Mode = 0; //EEPROM.read(514);
+			if (DMX_Mode == 1)
+				{
+					digitalWrite(2, HIGH);
+					// DMX Tx
+						ArduinoDmx0.set_tx_address(1);      		// poner aqui la direccion de inicio de DMX 
+						ArduinoDmx0.set_tx_channels(512);   		// poner aqui el numero de canales a transmitir 
+						ArduinoDmx0.init_tx(DMX512);        		// iniciar transmision universo 0, modo estandar DMX512
+				}
+			if (DMX_Mode == 0)
+				{	
+					digitalWrite(2, LOW);	
+					// DMX Rx
+						//ArduinoDmx0.set_control_pin(22);    		// Arduino output pin for MAX485 input/output control (connect to MAX485 pins 2-3) 
+						ArduinoDmx0.set_rx_address(1);      		// set rx0 dmx start address
+						ArduinoDmx0.set_rx_channels(512);     		// number of rx channels
+						ArduinoDmx0.init_rx(DMX512);        		// starts universe 0 as rx, NEW Parameter DMX mode
+				}
 	}    
 
 void loop()
 	{
-		digitalWrite(2, HIGH);							// max 485 como salida
+		digitalWrite(2, LOW);										// max 485 como salida
 		Back_Light_Init();
 		GUI_About();
 		GUI_Memory_Init();
@@ -196,8 +212,8 @@ void GUI_About()
 		lcd.print("http://goo.gl/kdYlj7");
 		lcd.setCursor(3, 0);
 		lcd.print("Arduino DMX-512");
-		lcd.setCursor(1, 1);
-		lcd.print("Tester & Controller");
+		lcd.setCursor(0, 1);
+		lcd.print("Monitor & Controller");
 		// Firmware
 			lcd.setCursor(0, 2);
 			lcd.print("Firm v");
@@ -237,6 +253,216 @@ void Multi_Matrix(int inicial)
 			Numerico_Write (DMX_Values[inicial + 13], 13, 3);
 			Numerico_Write (DMX_Values[inicial + 14], 17, 3);
 	}
+
+void GUI_Monitor_Matrix()
+	{
+		int Inicial = 1;
+		Canal_Actual = 1;
+		inicio:
+			lcd.clear();
+			lcd.setCursor (0, 0);
+			lcd.print("C--- Mem Ctr    -");
+			Multi_Matrix (Inicial);
+			// Cursor
+				LCD_Col_Pos = 12;		// posicion de cursor
+				LCD_Row_Pos = 0;		// posicion e cursor
+			// configuracion de cursor	
+				Cursor_Conf_Clear();	// limpiar array
+			// Row 0
+				Cursor_Conf[0][4]  = 1;	// Memory
+				Cursor_Conf[0][8]  = 1;	// Unit
+				Cursor_Conf[0][12] = 1;	// Banco Inicial
+				Cursor_Conf[0][16] = 1;	// Banco Final
+			// Row 1
+				Cursor_Conf[1][0]  = 1;
+				Cursor_Conf[1][4]  = 1;
+				Cursor_Conf[1][8]  = 1;
+				Cursor_Conf[1][12] = 1;
+				Cursor_Conf[1][16] = 1;
+			// Row 2
+				Cursor_Conf[2][0]  = 1;
+				Cursor_Conf[2][4]  = 1;
+				Cursor_Conf[2][8]  = 1;
+				Cursor_Conf[2][12] = 1;
+				Cursor_Conf[2][16] = 1;
+			// Row 3
+				Cursor_Conf[3][0]  = 1;
+				Cursor_Conf[3][4]  = 1;
+				Cursor_Conf[3][8]  = 1;
+				Cursor_Conf[3][12] = 1;
+				Cursor_Conf[3][16] = 1;
+			// navegar
+		Banco:
+				GUI_Navegar(1, Inicial);
+			// Acciones
+				// Memory
+					if (LCD_Col_Pos == 4 &&  LCD_Row_Pos == 0)
+						{
+							GUI_Memory();
+							goto inicio;
+						}
+				// Control
+					if (LCD_Col_Pos == 8 &&  LCD_Row_Pos == 0)
+						{
+							GUI_Control_Options();
+							goto inicio;
+						}
+				// Banco Inicial
+					if (LCD_Col_Pos == 12 && LCD_Row_Pos == 0)
+						{
+							Num_Row_Pos = 0;
+							Num_Col_Pos = 13;
+							Num_Val = Inicial;	// para dejar el numero que estaba si no se cambia
+							Numerico_Calc(0);
+							if (Num_Val > 498)	// limite de matriz
+								{
+									Num_Val = 498;
+								}
+							if (Num_Val == 0)	// limite de matriz
+								{
+									Num_Val = 1;
+								}
+							Inicial = Num_Val;
+							goto inicio;
+						}
+				// Banco Final
+					if (LCD_Col_Pos == 16 && LCD_Row_Pos == 0)
+						{
+							Num_Row_Pos = 0;
+							Num_Col_Pos = 17;
+							if (Inicial == 1)
+								Num_Val = 15;
+							else	
+								Num_Val = Inicial - 14;	// para dejar el numero que estaba si no se cambia
+							Numerico_Calc(0);
+							if (Num_Val > 512)		// limite de matriz
+								{
+									Inicial = 498;
+									goto inicio;
+								}
+							if (Num_Val < 15)		// limite de matriz
+								{
+									Inicial = 1;
+									goto inicio;
+								}
+							Inicial = Num_Val - 14;
+							goto inicio;
+						}
+				// posicion 1
+					if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
+						{
+							Canal_Actual = Inicial;
+							goto Salida_DMX;
+						}
+				// posicion 2
+					if (LCD_Col_Pos == 4 && LCD_Row_Pos == 1)
+						{
+							Canal_Actual = Inicial + 1;
+							goto Salida_DMX;
+						}
+				// posicion 3
+					if (LCD_Col_Pos == 8 && LCD_Row_Pos == 1)
+						{
+							Canal_Actual = Inicial + 2;
+							goto Salida_DMX;
+						}
+				// posicion 4
+					if (LCD_Col_Pos == 12 && LCD_Row_Pos == 1)
+						{
+							Canal_Actual = Inicial + 3;
+							goto Salida_DMX;
+						}
+				// posicion 5
+					if (LCD_Col_Pos == 16 && LCD_Row_Pos == 1)
+						{
+							Canal_Actual = Inicial + 4;
+							goto Salida_DMX;
+						}
+				// posicion 6
+					if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
+						{
+							Canal_Actual = Inicial + 5;
+							goto Salida_DMX;
+						}
+				// posicion 7
+					if (LCD_Col_Pos == 4 && LCD_Row_Pos == 2)
+						{
+							Canal_Actual = Inicial + 6;
+							goto Salida_DMX;
+						}
+				// posicion 8
+					if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
+						{
+							Canal_Actual = Inicial + 7;
+							goto Salida_DMX;
+						}
+				// posicion 9
+					if (LCD_Col_Pos == 12 && LCD_Row_Pos == 2)
+						{
+							Canal_Actual = Inicial + 8;
+							goto Salida_DMX;
+						}
+				// posicion 10
+					if (LCD_Col_Pos == 16 && LCD_Row_Pos == 2)
+						{
+							Canal_Actual = Inicial + 9;
+							goto Salida_DMX;
+						}
+				// posicion 11
+					if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
+						{
+							Canal_Actual = Inicial + 10;
+							goto Salida_DMX;
+						}
+				// posicion 12
+					if (LCD_Col_Pos == 4 && LCD_Row_Pos == 3)
+						{
+							Canal_Actual = Inicial + 11;
+							goto Salida_DMX;
+						}
+				// posicion 13
+					if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
+						{
+							Canal_Actual = Inicial + 12;
+							goto Salida_DMX;
+						}
+				// posicion 14
+					if (LCD_Col_Pos == 12 && LCD_Row_Pos == 3)
+						{
+							Canal_Actual = Inicial + 13;
+							goto Salida_DMX;
+						}
+				// posicion 15
+					if (LCD_Col_Pos == 16 && LCD_Row_Pos == 3)
+						{
+							Canal_Actual = Inicial + 14;
+							goto Salida_DMX;
+						}
+		Salida_DMX:
+			Num_Row_Pos = LCD_Row_Pos;
+			Num_Col_Pos = LCD_Col_Pos + 1;
+			Num_Val = DMX_Values[Canal_Actual];		// para dejar el numero que estaba si no se cambia
+			Numerico_Calc(1);
+			if (Num_Val == 612)		// ubicar
+				{
+					Ubicar();
+					Num_Col_Pos = Num_Col_Pos - 4;
+				}
+			if (Num_Val == 712)		// analogo
+				{
+					Analog_Read_DMX(Num_Col_Pos - 2, Num_Row_Pos);
+					Num_Col_Pos = Num_Col_Pos - 4;
+					goto Banco;
+				}
+			if (Num_Val > 255)
+				{
+					Num_Val = 255;
+					Numerico_Write (255, Num_Col_Pos + 2, Num_Row_Pos);
+				}
+			ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
+			DMX_Values[Canal_Actual] = Num_Val;
+			goto Banco;		
+	}
 	
 void GUI_Control_Matrix()
 	{
@@ -245,7 +471,7 @@ void GUI_Control_Matrix()
 		inicio:
 			lcd.clear();
 			lcd.setCursor (0, 0);
-			lcd.print("c--- Mem Ctr    -");
+			lcd.print("C--- Mem Ctr    -");
 			Multi_Matrix (Inicial);
 			// Cursor
 				LCD_Col_Pos = 12;		// posicion de cursor
@@ -921,7 +1147,7 @@ void GUI_Control_Options()
 			// LCD
 				lcd.clear ();
 				lcd.setCursor (0, 0);
-				lcd.print ("Control Options:");
+				lcd.print ("Options:");
 				lcd.setCursor (2, 2);
 				lcd.print ("Unitary");
 				lcd.setCursor (2, 3);
@@ -930,10 +1156,12 @@ void GUI_Control_Options()
 				lcd.print ("Chaser");
 				lcd.setCursor (12, 3);
 				lcd.print ("Multiply");
-				lcd.setCursor (12, 1);
+				lcd.setCursor (12, 0);
 				lcd.print ("Config");
 				lcd.setCursor (2, 1);
 				lcd.print ("Memory");
+				lcd.setCursor (12, 1);
+				lcd.print ("Monitor");
 			// Cursor
 				LCD_Col_Pos = 1;				// posicion de cursor
 				LCD_Row_Pos = 2;
@@ -944,8 +1172,9 @@ void GUI_Control_Options()
 					Cursor_Conf[3][1]   = 1; 	// Matrix
 					Cursor_Conf[2][11]  = 1; 	// Chaser
 					Cursor_Conf[3][11]  = 1; 	// Multiply
-					Cursor_Conf[1][11]  = 1; 	// Config
-					Cursor_Conf[1][1]  = 1; 	// Memory
+					Cursor_Conf[0][11]  = 1; 	// Config
+					Cursor_Conf[1][1]   = 1; 	// Memory
+					Cursor_Conf[1][11]	= 1; 	// Monitor
 			// navegar
 				GUI_Navegar(0, 0);
 			// Acciones
@@ -970,15 +1199,20 @@ void GUI_Control_Options()
 							GUI_Control_Multiply();
 						}
 				// Config
-					if (LCD_Col_Pos == 11 && LCD_Row_Pos == 1)
+					if (LCD_Col_Pos == 11 && LCD_Row_Pos == 0)
 						{
 							GUI_Config();
 						}
-				// Config
+				// Memory
 					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 1)
 						{
 							GUI_Memory();
 							goto iniciar;
+						}
+				// Monitor
+					if (LCD_Col_Pos == 11 && LCD_Row_Pos == 1)
+						{
+							GUI_Monitor_Matrix();
 						}
 	}
 
