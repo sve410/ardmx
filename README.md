@@ -10,12 +10,14 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 
 ## Características
 
-### Hardware v0.1
+### Hardware v0.2
 - En construccion...
-- LCD de 4x20 con back light controlado por software
+- LCD de 4x20 con back light y contraste controlado por software
 - Alimentación desde USB, baterías o fuente de alimentación externa
-- Teclado de navegación entre las opciones
+- Teclado de navegación
 - Teclado numérico 4x4
+- Potenciometro para control analogo
+- Interruptor de on/off
 - Salida DMX desde bornera, XLR de 3 pin y XLR de 5 pin
 - Leds de estado de salida DMX
 - La simulacion en Proteus de Arduino [Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
@@ -48,9 +50,17 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 
 ![Alt text](/Hardware/v0.0/media/Hard v00 - 6.JPG?raw=true "Hard v00")
 
-### Firmware v0.1
+### Firmware v0.5
+- Compatible con Hardware v0.0
 - Navegación desde cursor de fácil acceso e intuitivo
 - Inserción rápida de valores desde el teclado numérico
+- Insercion de valores desde potenciometro analogo
+- Funcion para ubicar luminaria desde el canal seleccionado
+- Acceso rapido a opciones de memoria
+- 4 modos de control DMX
+- Control de iluminacion de LCD back light desde la configuracion
+- Control de contraste de LCD desde la configuracion
+- Acceso rapido desde el teclado al LCD back light
 - Compilado en [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
 - Libreria Arduino cuatro universos DMX v0.3 [Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 - Libreria LCD v1.2.1 [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
