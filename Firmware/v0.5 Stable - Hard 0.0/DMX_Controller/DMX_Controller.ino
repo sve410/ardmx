@@ -47,14 +47,14 @@
 // Puertos, variables
 	// DMX
 		//int DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default 
-		int DMX_Values [515];      	// array de valores actuales DMX
-		int Canal_Actual 		= 1;
+		int  DMX_Values [515];      	// array de valores actuales DMX
+		int  Canal_Actual 		= 1;
 	// Botones cursor
-		int Boton_Up     		= 51; 
-		int Boton_Down   		= 45;	
-		int Boton_Left   		= 53;	
-		int Boton_Right  		= 49;	
-		int Boton_Center		= 47;	
+		int  Boton_Up     		= 51; 
+		int  Boton_Down   		= 45;	
+		int  Boton_Left   		= 53;	
+		int  Boton_Right  		= 49;	
+		int  Boton_Center		= 47;	
 		byte LCD_Col_Pos 		= 0;	// posicion en tiempo real de lcd
 		byte LCD_Row_Pos 		= 0;	// posicion en tiempo real de lcd
 		byte Cursor_Conf[4][20] = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},		// config de posiciones de lcd Col Row
@@ -78,15 +78,15 @@
 	// Potenciometro
 		int  Pot				= A15;	// entrada de potenciometro
 	// LCD
-		int LCD_RS 				= 8;	// puertos de conexion de LCD
-		int LCD_E  				= 9;
-		int LCD_D4 				= 10;
-		int LCD_D5 				= 11;
-		int LCD_D6 				= 12;
-		int LCD_D7				= 13;
+		int  LCD_RS 			= 8;	// puertos de conexion de LCD
+		int  LCD_E  			= 9;
+		int  LCD_D4 			= 10;
+		int  LCD_D5 			= 11;
+		int  LCD_D6 			= 12;
+		int  LCD_D7				= 13;
 		LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
-		int Back_Light_PWM		= 3;	// salida para PWM de Back Light de LCD
-		int Contrast_PWM		= 4;	// salida para pwm de contraste de LCD
+		int  Back_Light_PWM		= 3;	// salida para PWM de Back Light de LCD
+		int  Contrast_PWM		= 4;	// salida para pwm de contraste de LCD
 		byte Back_Light_On_Off	= 0;	// saber si esta encendida o apagada
 
 void setup() 
@@ -1931,16 +1931,21 @@ void Analog_Read_DMX(byte col, byte row)
 		lcd.print("a");									// indicar que es analogo
 		digitalWrite(Boton_Array_3, LOW);				// lectura linea 3
 		lcd.blink();
+		int valores = 0;
 		while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
 			{
 				read = analogRead(Pot);					// lectura desde el potenciometro
 				read = read / 4;						// / 4 porque es de 12 bits
-				Numerico_Write(read, col, row);
-				delay(200);								// retardo de lectura
-				ArduinoDmx0.TxBuffer[Canal_Actual - 1] = read;
-				DMX_Values[Canal_Actual] = read;
+				delay(50);
+				if (valores != read)
+					{
+						Numerico_Write(read, col, row);
+						ArduinoDmx0.TxBuffer[Canal_Actual - 1] = read;
+						DMX_Values[Canal_Actual] = read;
+						valores = read;
+					}
 			}
 		lcd.noBlink();
-		digitalWrite(Boton_Array_3, HIGH);				// lectura linea 3
-		delay(300);										// retraso para center
+		digitalWrite(Boton_Array_3, HIGH);				// lectura linea 3										// retraso para center
+		delay(300);										// delay para salir de la lectura analoga
 	}
