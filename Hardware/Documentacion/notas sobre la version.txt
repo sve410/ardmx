@@ -1,8 +1,12 @@
 Hardware
 Notas sobre la version
 
+v0.3 - Beta
+- back light a pin 13
+
 v0.2 - Beta
 - implementacion de control de contraste desde software
+- implementacion de control de back light desde software
 
 v0.1 - Beta
 - CORREGIDO - no se necesita el led on, la pantalla ya tieme un led
