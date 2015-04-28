@@ -257,7 +257,9 @@ void Back_Light_En()
 					Back_Light_On_Off = 0;
 				}
 		salida:
-			{}
+			{
+				delay(300);										// para impedir repeticion del comando
+			}
 	}
 	
 void GUI_About()
@@ -1082,8 +1084,6 @@ void GUI_Config()
 			lcd.setCursor (5, 2);
 			lcd.print ("Contrast:");
 			Numerico_Write(Contrast_Value, 15, 2);
-			lcd.setCursor (0, 3);
-			lcd.print ("dimmer 0-255");
 			lcd.setCursor (15, 3);
 			lcd.print ("Ctrl");
 			
@@ -1119,7 +1119,7 @@ void GUI_Config()
 										Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
 										Numerico_Write(Num_Val, 15, 1);
 										analogWrite(Back_Light_PWM, Num_Val);
-										delay(200);								// retardo de lectura
+										delay(50);								// retardo de lectura
 									}
 								lcd.noBlink();
 								digitalWrite(Boton_Array_3, HIGH);				// lectura linea 3
@@ -1163,7 +1163,7 @@ void GUI_Config()
 										Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
 										Numerico_Write(Num_Val, 15, 2);
 										analogWrite(Contrast_PWM, Num_Val);
-										delay(200);								// retardo de lectura
+										delay(50);								// retardo de lectura
 									}
 								lcd.noBlink();
 								digitalWrite(Boton_Array_3, HIGH);				// lectura linea 3
