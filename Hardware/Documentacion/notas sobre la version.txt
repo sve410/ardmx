@@ -2,7 +2,7 @@ Hardware
 Notas sobre la version
 
 v0.3 - Beta
-- back light a pin 13
+- back light a pin 13 para efecto en el lcd mientras se actualiza
 
 v0.2 - Beta
 - implementacion de control de contraste desde software
