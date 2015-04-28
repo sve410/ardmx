@@ -1129,7 +1129,7 @@ void GUI_Config()
 						if (Num_Val > 255)
 							{
 								Num_Val = 255;
-								Numerico_Write (255, 16, 2);
+								Numerico_Write (255, 15, 1);
 							}
 						analogWrite(Back_Light_PWM, Num_Val);
 						salida:
@@ -1161,8 +1161,11 @@ void GUI_Config()
 									{
 										Num_Val = analogRead(Pot);				// lectura desde el potenciometro
 										Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
-										Numerico_Write(Num_Val, 15, 2);
-										analogWrite(Contrast_PWM, Num_Val);
+										if (Num_Val > 149)						// limite menor de contraste LCD						
+											{
+												Numerico_Write(Num_Val, 15, 2);
+												analogWrite(Contrast_PWM, Num_Val);
+											}
 										delay(50);								// retardo de lectura
 									}
 								lcd.noBlink();
@@ -1173,11 +1176,16 @@ void GUI_Config()
 						if (Num_Val > 255)
 							{
 								Num_Val = 255;
-								Numerico_Write (255, 16, 2);
+								Numerico_Write (255, 15, 2);
 							}
-							analogWrite(Contrast_PWM, Num_Val);
+						if (Num_Val < 150)
+							{
+								Num_Val = 150;									// limite menor de contraste LCD
+								Numerico_Write (150, 15, 2);
+							}
+						analogWrite(Contrast_PWM, Num_Val);
 						salir:	
-							EEPROM.write(514, Num_Val);				// guardar valor nuevo
+							EEPROM.write(514, Num_Val);							// guardar valor nuevo
 							goto Navegacion;
 					}
 			// Exit
