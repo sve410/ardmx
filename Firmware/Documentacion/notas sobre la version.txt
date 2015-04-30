@@ -3,8 +3,15 @@ Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
 v0.6 - Hardware v0.0 - stable
+- se agrego en chaser el cursor en blink cuando hace la secuencia
 - implementada la funcion de Black Out desde el menu de Memory, pone todos los canales en 0 y los regresa a lo que tenian, para salir dar en center
 - CORREGIDO - en config contraste el limite inferior no se mostraba
+- CORREGIDO - en gui about se retiro variable id, no se usa
+- CORREGIDO - en chaser se quito el label iniciar, no se usa
+- CORREGIDO - en numerico calc se quito la variable salida, no se usa
+- CORREGIDO - en numerico calc se quito la variable Num_Val_Temp_3, no se usa
+- CORREGIDO - en chaser ya no guarda los valores de los cambios aplicados, al salir los regresa a su lugar
+- CORREGIDO - en multiply cuando hace en calculo se cambia apply por calc..
 
 v0.5 - Hardware v0.0 - stable
 - CORREGIDO - los valores limites superiores de config se escribian un caracter despues

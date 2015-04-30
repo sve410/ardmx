@@ -1,6 +1,9 @@
 Hardware
 Notas sobre la version
 
+v0.4 - Beta
+- agregar capacitores al back light y al contraste, parpadea con baja frecuencia
+
 v0.3 - Beta
 - back light a pin 13 para efecto en el lcd mientras se actualiza
 
