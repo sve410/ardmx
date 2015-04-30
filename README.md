@@ -50,13 +50,14 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 
 ![Alt text](/Hardware/v0.0/media/Hard v00 - 6.JPG?raw=true "Hard v00")
 
-### Firmware v0.5
+### Firmware v0.6
 - Compatible con Hardware v0.0
 - Navegación desde cursor de fácil acceso e intuitivo
 - Inserción rápida de valores desde el teclado numérico
 - Insercion de valores desde potenciometro analogo
 - Funcion para ubicar luminaria desde el canal seleccionado
 - Acceso rapido a opciones de memoria
+- Funcion Black Out desde la memoria
 - 4 modos de control DMX
 - Control de iluminacion de LCD back light desde la configuracion
 - Control de contraste de LCD desde la configuracion
@@ -74,8 +75,12 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - Cuando se da "enter" en un menú que requiere entrada del usuario aparece "+___" y el cursor parpadeante indicando la entrada del usuario, para este caso se utiliza el teclado numérico, si el numero escrito es menor de 3 dígitos presionar "#" que funciona como un "enter" del teclado numérico
 - Si se trata de una entrada de usuario en donde se indica el valor de un canal DMX, se puede presionar (después de dar “enter”) la tecla "A" que escribe directamente "255" (el valor máximo de un canal) o la tecla "B" que escribe directamente "0" (el valor mínimo de un canal)
 - La tecla "C" funciona como un medio para ubicar una luminaria o un canal en específico, solo basta con seleccionar un canal, posicionarse en el valor, dar "enter" y presionar "C", el valor del canal secuenciara entre "000" y "255", para detenerlo volver a presionar "C"
-- Las teclas "*" y "D" aun no están programadas
+- Las tecla "*" enciende o apaga el back light
+- Las tecla "D" activa solo para los valores el potenciometro analogo
 - La opcion Ctrl regresa al menu de Control Options
+- El potenciometro analogo permite cambiar los valores
+
+![Alt text](/Firmware/v0.6 Stable - Hard 0.0/Teclado.JPG?raw=true "Teclado")
 
 #### Menu al arranque para acceso a EEPROM:
 - Empty (dejar la EEPROM intacta sin modificar, los canales están vacios)
