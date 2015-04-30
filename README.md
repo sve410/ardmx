@@ -1,6 +1,6 @@
 # Arduino DMX-512 Tester and Controller
 
-![Alt text](/Hardware/v0.0/media/Hardware v00.JPG?raw=true "Hard v00")
+![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hardware v00.JPG?raw=true "Hard v00")
 
 ## Descripción
 Herramienta para controlar y probar iluminación de espectáculos controladas por el protocolo [DMX-512](http://es.wikipedia.org/wiki/Digital_Multiplex), basado en [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560), ideal para hacer pruebas rápidas en instalaciones fijas o temporales de iluminación.
@@ -38,17 +38,17 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 - Aclarar que para este proyecto se utilizó un Arduino Mega hecho en China
 
-![Alt text](/Hardware/v0.0/media/Hard v00 - 1.JPG?raw=true "Hard v00")
+![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hard v00 - 1.JPG?raw=true "Hard v00")
 
-![Alt text](/Hardware/v0.0/media/Hard v00 - 2.JPG?raw=true "Hard v00")
+![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hard v00 - 2.JPG?raw=true "Hard v00")
 
-![Alt text](/Hardware/v0.0/media/Hard v00 - 3.JPG?raw=true "Hard v00")
+![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hard v00 - 3.JPG?raw=true "Hard v00")
 
-![Alt text](/Hardware/v0.0/media/Hard v00 - 4.JPG?raw=true "Hard v00")
+![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hard v00 - 4.JPG?raw=true "Hard v00")
 
-![Alt text](/Hardware/v0.0/media/Hard v00 - 5.JPG?raw=true "Hard v00")
+![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hard v00 - 5.JPG?raw=true "Hard v00")
 
-![Alt text](/Hardware/v0.0/media/Hard v00 - 6.JPG?raw=true "Hard v00")
+![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hard v00 - 6.JPG?raw=true "Hard v00")
 
 ### Firmware v0.6
 - Compatible con Hardware v0.0
