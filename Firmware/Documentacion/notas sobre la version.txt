@@ -12,6 +12,7 @@ v0.6 - Hardware v0.0 - stable
 - CORREGIDO - en numerico calc se quito la variable Num_Val_Temp_3, no se usa
 - CORREGIDO - en chaser ya no guarda los valores de los cambios aplicados, al salir los regresa a su lugar
 - CORREGIDO - en multiply cuando hace en calculo se cambia apply por calc..
+- CORREGIDO - en ubicar se agrega cancelar con center
 
 v0.5 - Hardware v0.0 - stable
 - CORREGIDO - los valores limites superiores de config se escribian un caracter despues

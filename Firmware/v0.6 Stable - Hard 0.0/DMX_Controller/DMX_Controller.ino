@@ -1668,7 +1668,7 @@ void GUI_Control_Unit()
 void Ubicar()
 	{
 		digitalWrite(Boton_Array_4, LOW);
-		while (digitalRead(Boton_Array_C) == HIGH)
+		while (digitalRead(Boton_Array_C) == HIGH && digitalRead(Boton_Center) == HIGH)
 			{
 				ArduinoDmx0.TxBuffer[Canal_Actual - 1] = 255;
 				Numerico_Write (255, Num_Col_Pos - 2, Num_Row_Pos);
@@ -1679,6 +1679,7 @@ void Ubicar()
 				delay (100);
 			}
 		digitalWrite(Boton_Array_4, HIGH);
+		delay(300); // rebote de boton enter
 		lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
 	}
 	
