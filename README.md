@@ -11,7 +11,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 ## Características
 
 ### Hardware v0.2
-- [Notas sobre la version](/Hardware/Documentacion/notas sobre la version.txt)
+- [Notas sobre la version...](/Hardware/Documentacion/notas sobre la version.txt)
 - En construccion...
 - LCD de 4x20 con back light y contraste controlado por software
 - Alimentación desde USB, baterías o fuente de alimentación externa
@@ -27,7 +27,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 - [Arduino Mega 2560 R3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 
 ### Hardware v0.0
-- [Notas sobre la version](/Hardware/Documentacion/notas sobre la version.txt)
+- [Notas sobre la version...](/Hardware/Documentacion/notas sobre la version.txt)
 - LCD de 4x20
 - Alimentación desde USB o directamente al Arduino
 - Teclado de navegación entre las opciones
@@ -53,7 +53,7 @@ La necesidad de tener un sistema portátil para realizar pruebas rápidas en ins
 ![Alt text](/Hardware/v0.0 - stable - Firm v0.0 to v0.6/media/Hard v00 - 6.JPG?raw=true "Hard v00")
 
 ### Firmware v0.6
-- [Notas sobre la version](/Firmware/Documentacion/notas sobre la version.txt)
+- [Notas sobre la version...](/Firmware/Documentacion/notas sobre la version.txt)
 - Compatible con Hardware v0.0
 - Navegación desde cursor de fácil acceso e intuitivo
 - Inserción rápida de valores desde el teclado numérico
