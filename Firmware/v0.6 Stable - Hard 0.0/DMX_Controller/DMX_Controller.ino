@@ -277,7 +277,7 @@ void GUI_About()
 			}
 		lcd.clear ();
 		lcd.setCursor(0, 3);
-		lcd.print("http://goo.gl/kdYlj7");
+		lcd.print("http://goo.gl/5nqJKt");
 		lcd.setCursor(3, 0);
 		lcd.print("Arduino DMX-512");
 		lcd.setCursor(1, 1);
