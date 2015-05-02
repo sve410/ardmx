@@ -17,7 +17,7 @@ Basado en:
 
 ***
 ### Hardware v0.3
-* [Notas sobre la version](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/notas%20sobre%20la%20version.txt)
+[Notas sobre la version](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/notas%20sobre%20la%20version.txt)
 * En construccion...
 * LCD de 4x20 con back light y contraste controlado por software
 * Alimentación desde USB, baterías o fuente de alimentación externa
