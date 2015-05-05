@@ -4,6 +4,9 @@
 Mas informacion en la [Wiki...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki)
 
 ![Arduino DMX-512 Tester and Controller](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.0%20-%20stable%20-%20Firm%20v0.0%20to%20v0.6/media/Hardware%20v00.JPG)
+
+[![YouTube](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v0.6%20Stable%20-%20Hard%200.0/Media/youtube.JPG)](https://www.youtube.com/watch?v=TxBHMpAWDSY)
+
 ***
 
 Una herramienta para controlar y probar iluminación de espectáculos controlada por el protocolo [DMX-512](http://es.wikipedia.org/wiki/Digital_Multiplex), ideal para hacer pruebas rápidas en instalaciones fijas o temporales de iluminación.
