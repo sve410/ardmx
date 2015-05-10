@@ -1,6 +1,8 @@
 ### **Arduino DMX 512 Tester and Controller**
 ***
 
+[English version](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/README%20ENG.md)
+
 Mas informacion en la [Wiki...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki)
 
 ![Arduino DMX-512 Tester and Controller](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.0%20-%20stable%20-%20Firm%20v0.0%20to%20v0.6/media/Hardware%20v00.JPG)
