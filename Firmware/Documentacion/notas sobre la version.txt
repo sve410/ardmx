@@ -2,6 +2,9 @@ Firmware
 Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
+v0.7 - Hardware v0.7 - stable
+- compativilidad con Hardware v0.3
+
 v0.6 - Hardware v0.0 - stable
 - se cambio la url del about apuntando al Wiki
 - se agrego en chaser el cursor en blink cuando hace la secuencia
