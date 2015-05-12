@@ -20,7 +20,7 @@ Based on:
 
 ***
 
-### Hardware v0.3
+### [Hardware v0.3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Hardware-v0.3-ENG)
 [Release Notes...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/notas%20sobre%20la%20version.txt)
 * Under construction...
 * 4x20 LCD with backlight and contrast controlled by software
