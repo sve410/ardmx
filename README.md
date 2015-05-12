@@ -21,7 +21,7 @@ Basado en:
 * [Simulacion de Arduino desde Proteus - Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 
 ***
-### Hardware v0.3
+### [Hardware v0.3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Hardware-v0.3)
 [Notas sobre la version...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/notas%20sobre%20la%20version.txt)
 * En construccion...
 * LCD de 4x20 con back light y contraste controlado por software
