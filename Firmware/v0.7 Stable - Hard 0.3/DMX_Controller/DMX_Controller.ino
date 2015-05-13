@@ -4,7 +4,7 @@
 // **										Arduino DMX-512 Tester Controller												**
 // **																														**
 // **	- Firmware v0.7																										**
-// **	- Hardware v0.3																										**
+// **	- Hardware v0.3	 																									**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
 // **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
@@ -62,14 +62,14 @@
 								   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 								   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};		
 	// Botones Numerico Array
-		int  Boton_Array_1		= 36;
-		int  Boton_Array_2		= 34;
-		int  Boton_Array_3		= 32;
-		int  Boton_Array_4		= 30;
-		int  Boton_Array_A		= 44;	
-		int  Boton_Array_B		= 42;
-		int  Boton_Array_C   	= 40;
-		int  Boton_Array_D   	= 38;
+		int  Boton_Array_1		= 38;//30;//36;
+		int  Boton_Array_2		= 40;//32;//34;
+		int  Boton_Array_3		= 42;//34;//32;
+		int  Boton_Array_4		= 44;//36;//30;
+		int  Boton_Array_A		= 30;//38;//44;	
+		int  Boton_Array_B		= 32;//40;//42;
+		int  Boton_Array_C   	= 34;//42;//40;
+		int  Boton_Array_D   	= 36;//44;//38;
 		byte Boton_Calc 		= 17;	// valor calculado	# E * F, 17 sin valor calculado
 		byte Num_Col_Pos  		= 0;	// posicion en tiempo real de lcd
 		byte Num_Row_Pos 		= 0;	// posicion en tiempo real de lcd
@@ -98,7 +98,7 @@ void setup()
 			pinMode(Boton_Down,    		INPUT_PULLUP);
 			pinMode(Boton_Left,    		INPUT_PULLUP);
 			pinMode(Boton_Right,   		INPUT_PULLUP);
-			pinMode(Boton_Center,  		INPUT_PULLUP);
+			pinMode(11,					INPUT_PULLUP);	//Boton_Center,  		INPUT_PULLUP);
 		// Botones numerico
 			pinMode(Boton_Array_1, 		OUTPUT);
 			pinMode(Boton_Array_2, 		OUTPUT);
@@ -263,9 +263,9 @@ void Back_Light_En()
 void GUI_About()
 	{
 		byte Firm_Ver_Ent = 0;
-		byte Firm_Ver_Dec = 6;
+		byte Firm_Ver_Dec = 7;
 		byte Hard_Ver_Ent = 0;
-		byte Hard_Ver_Dec = 0;
+		byte Hard_Ver_Dec = 3;
 		lcd.clear ();
 		lcd.noBlink();									// ocultar cursor
 		lcd.setCursor(0, 0);
