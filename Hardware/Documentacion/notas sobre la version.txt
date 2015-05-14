@@ -1,11 +1,17 @@
 Hardware
 Notas sobre la version
 
-v0.4 - Beta
-- agregar capacitores al back light y al contraste, parpadea con baja frecuencia
-
 v0.3 - Beta
-- back light a pin 13 para efecto en el lcd mientras se actualiza
+- backlight a pin 13 para efecto en el lcd mientras se actualiza
+- CORREGIDO - implementacion de control de contraste desde software
+- CORREGIDO - implementacion de control de back light desde software
+- CORREGIR - agregar capacitores al backlight y al contraste, parpadea con baja frecuencia
+- CORREGIR - acercar el potenciometro a los pads y marcar el pad del centro
+- CORREGIR - acercar la base del mx485 al borde de la placa para que el teclado no estorbe
+- CORREGIR - la placa del teclado tiene mal ubicado el header de abajo donde pasa el flex del teclado
+- CORREGIR - agregar un diodo rectificador a la entrada de la bateria
+- CORREGIR - agregar serigrafia a top en el pcb
+- CORREGIR - hacer mas grandes los pads del SW
 
 v0.2 - Beta
 - implementacion de control de contraste desde software
@@ -35,7 +41,7 @@ v0.1 - Beta
 - se agrega conexion para baterias
 - se agrega header para acompletar la coneccion del ardiono, estaba incompleta
 
-v0.0
+v0.0 - Beta
 - CORREGIR - no se necesita el led on, la pantalla ya tieme un led
 - CORREGIR - no hay boton de reset
 - CORREGIR - quitar boton SW de encendido
