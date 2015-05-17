@@ -9,7 +9,7 @@ v0.x - Beta
 - el banco 8 solo llegaria a 500 por el contraste y el backlight
 - se agrega a control options el secuencer
 - Memory options se agrega bank con el numero de banco actual
-- initial memori mandaria a elegir el banco
+- initial memory mandaria a elegir el banco
 
 v0.7 - Hardware v0.7 - stable
 - compativilidad con Hardware v0.3
