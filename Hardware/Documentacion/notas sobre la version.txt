@@ -1,6 +1,9 @@
 Hardware
 Notas sobre la version
 
+v0.4 - Beta
+- cambiar potenciometro por encoder
+
 v0.3 - Beta
 - backlight a pin 13 para efecto en el lcd mientras se actualiza
 - CORREGIDO - implementacion de control de contraste desde software

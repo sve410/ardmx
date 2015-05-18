@@ -3,13 +3,29 @@ Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
 v0.x - Beta
-- implementacion de bancos de memoria
 - implementacion de secuenciador desde bancos, al salir quedaria en el banco donde se quedo
 - la configuracion queda en memory options
+- agregar encoder
+
+v0.8 - Beta - Hardware v0.3
+- Agregado GUI_Memory_Bank
 - el banco 8 solo llegaria a 500 por el contraste y el backlight
-- se agrega a control options el secuencer
-- Memory options se agrega bank con el numero de banco actual
-- initial memory mandaria a elegir el banco
+- Los bancos de memoria no aplican a memory empty
+- GUI_Memory_Bank solo actua en cambios de EEPROM
+- Agregado a EEPROM_Clear control de universos guardados
+- Agregado a EEPROM_Clear al final el numero de banco
+- Agregado a EEPROM_Load control de universos guardados
+- Agregado a EEPROM_Load al final el numero de banco
+- Agregado a EEPROM_Save control de universos guardados
+- Agregado a EEPROM_Save al final el numero de banco
+- Agregado a matrix el numero de banco actual, si el banco no se selecciono muestra "-"
+- Agregado a memory options el numero de banco actual, si el banco no se selecciono muestra "-"
+- Agregado a unitary control el numero de banco actual, si el banco no se selecciono muestra "-"
+- Agregado a multiply control el numero de banco actual, si el banco no se selecciono muestra "-"
+- Agregado a GUI Memory la configuracion
+- Agregado a GUI Control Options el numero de banco actual, si el banco no se selecciono muestra "-"
+- Agregado a GUI Control Options la configuracion
+PENDIENTE secuencer
 
 v0.7 - Hardware v0.7 - stable
 - compativilidad con Hardware v0.3
