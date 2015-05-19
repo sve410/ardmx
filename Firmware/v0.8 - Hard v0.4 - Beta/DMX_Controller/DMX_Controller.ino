@@ -1063,7 +1063,207 @@ void GUI_Memory()
 	}
 
 void GUI_Secuencer()
-{}
+	{
+		// secuenciador de bancos guardados en eeprom
+		int Delay_Secuencia = 0;
+		int First_Bank = 1;
+		int Final_Bank = 8;
+		lcd.clear ();
+		// Texto
+			lcd.setCursor (0, 0);
+			lcd.print("Secuencer Banks:  b");
+			if (Universo_Actual == 0)
+				{
+					lcd.print("-");
+				}
+			else
+				{
+					lcd.print(Universo_Actual);
+				}
+			lcd.setCursor (4, 1);
+			lcd.print("Delay 000x100=mS");
+			lcd.setCursor (0, 2);
+			lcd.print("FirstBank 000  Ctrl");
+			lcd.setCursor (0, 3);
+			lcd.print("FinalBank 000  Start");
+		// Cursor
+			LCD_Col_Pos = 9;			// posicion de cursor
+			LCD_Row_Pos = 1;
+		// configuracion de cursor	
+			Cursor_Conf_Clear();		// limpiar array
+			// Acciones
+				Cursor_Conf[1][9]  = 1;	// Delay
+				Cursor_Conf[2][9]  = 1; // First Bank
+				Cursor_Conf[3][9]  = 1;	// Final Bank
+				Cursor_Conf[2][14] = 1;	// Control
+				Cursor_Conf[3][14] = 1;	// start
+		// navegar
+		inicio:
+			GUI_Navegar(0, 0);
+		// Acciones
+			// Delay
+				if (LCD_Col_Pos == 9 && LCD_Row_Pos == 1)
+					{
+						Num_Row_Pos = 1;
+						Num_Col_Pos = 10;
+						Num_Val = Delay_Secuencia;			// para dejar el numero que estaba si no se cambia
+						Numerico_Calc(0);
+						if (Num_Val == 0)
+							{
+								Numerico_Write (1, 10, 1);
+								Delay_Secuencia = 1;
+							}
+						else
+							{
+								Delay_Secuencia = Num_Val;
+							}
+						goto inicio;
+					}
+			// First Bank
+				if (LCD_Col_Pos == 9 && LCD_Row_Pos == 2)
+					{
+						Num_Row_Pos = 2;
+						Num_Col_Pos = 10;
+						Num_Val = First_Bank; 				// para dejar el numero que estaba si no se cambia
+						Numerico_Calc(0);
+						First_Bank = Num_Val;
+						if (Num_Val == 0)
+							{
+								Numerico_Write (1, 10, 2);
+								First_Bank = 1;
+							}
+						if (Num_Val > 8)
+							{
+								Numerico_Write (8, 10, 2);
+								First_Bank = 8;
+							}
+						goto inicio;
+					}
+			// Final Bank
+				if (LCD_Col_Pos == 9 && LCD_Row_Pos == 3)
+					{
+						Num_Row_Pos = 3;
+						Num_Col_Pos = 10;
+						Num_Val = Final_Bank; 				// para dejar el numero que estaba si no se cambia
+						Numerico_Calc(0);
+						Final_Bank = Num_Val;
+						if (Num_Val == 0)
+							{
+								Numerico_Write (1, 10, 2);
+								Final_Bank = 1;
+							}
+						if (Num_Val > 8)
+							{
+								Numerico_Write (8, 10, 2);
+								Final_Bank = 8;
+							}
+						goto inicio;
+					}
+			// Control
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
+					{
+						GUI_Control_Options ();
+					}
+			// start
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
+					{
+						// establecer reversa o adelante
+							byte Adelante_Reversa = 0;				// 0 Adelante, 1 Reversa
+							// adelante
+								if (First_Bank < Final_Bank)
+									{
+										Adelante_Reversa = 0;
+									}
+							// reversa
+								if (Final_Bank < First_Bank)
+									{
+										Adelante_Reversa = 1;
+									}
+						// establecer bancos a secuenciar
+							byte Bancos [9] = {0, 0, 0, 0, 0, 0, 0, 0};
+							for (byte Bank = 1; Bank > 8; Bank ++)
+								{
+									if (First_Bank >= Bank && Final_Bank <= Bank)
+										{
+											Bancos [Bank] = 1;
+										}
+								}
+						// Cargar Bancos en memoria
+							byte Banco_1 [512];
+							byte Banco_2 [512];
+							byte Banco_3 [512];
+							byte Banco_4 [512];
+							byte Banco_5 [512];
+							byte Banco_6 [512];
+							byte Banco_7 [512];
+							byte Banco_8 [512];
+							// Banco 1
+							if (Bancos [1] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_1[Canal] = EEPROM.read(Canal);             	// lectura desde EEPROM
+										}
+								}
+							// Banco 2
+							if (Bancos [2] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_2[Canal] = EEPROM.read(Canal + 512);          // lectura desde EEPROM
+										}
+								}
+							// Banco 3
+							if (Bancos [3] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_3[Canal] = EEPROM.read(Canal + 1024);          // lectura desde EEPROM
+										}
+								}
+							// Banco 4
+							if (Bancos [4] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_4[Canal] = EEPROM.read(Canal + 1536);          // lectura desde EEPROM
+										}
+								}
+							// Banco 5
+							if (Bancos [5] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_5[Canal] = EEPROM.read(Canal + 2048);          // lectura desde EEPROM
+										}
+								}
+							// Banco 6
+							if (Bancos [6] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_6[Canal] = EEPROM.read(Canal + 2560);          // lectura desde EEPROM
+										}
+								}
+							// Banco 7
+							if (Bancos [7] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_7[Canal] = EEPROM.read(Canal + 3072);          // lectura desde EEPROM
+										}
+								}
+							// Banco 8
+							if (Bancos [8] == 1)
+								{
+									for(int Canal = 0; Canal <= 510; Canal ++)					 // dos canales menos
+										{
+											Banco_8[Canal] = EEPROM.read(Canal + 3584);          // lectura desde EEPROM
+										}
+								}
+						// Secuenciar
+					}
+	}
 	
 void Black_Out()
 	{
@@ -1269,78 +1469,77 @@ void EEPROM_Clear()
 	
 void GUI_Control_Options()
 	{
-		iniciar:
-			// LCD
-				lcd.clear ();
-				lcd.setCursor (0, 0);
-				lcd.print ("Control Options:  b");
-				if (Universo_Actual == 0)
+		// LCD
+			lcd.clear ();
+			lcd.setCursor (0, 0);
+			lcd.print ("Control Options:  b");
+			if (Universo_Actual == 0)
+				{
+					lcd.print ("-");
+				}
+			else
+				{
+					lcd.print (Universo_Actual);
+				}
+			lcd.setCursor (2, 1);
+			lcd.print ("Unitary");
+			lcd.setCursor (2, 2);
+			lcd.print ("Matrix");
+			lcd.setCursor (2, 3);
+			lcd.print ("Chaser");
+			lcd.setCursor (11, 3);
+			lcd.print ("Multiply");
+			lcd.setCursor (11, 1);
+			lcd.print ("Config");
+			lcd.setCursor (2, 1);
+			lcd.print ("Memory");
+			lcd.setCursor (11, 2);
+			lcd.print ("Secuencer");
+		// Cursor
+			LCD_Col_Pos = 1;				// posicion de cursor
+			LCD_Row_Pos = 2;
+		// configuracion de cursor	
+			Cursor_Conf_Clear();			// limpiar array
+		// Acciones
+			Cursor_Conf[1][1]   = 1;	// Unitary
+			Cursor_Conf[2][1]   = 1; 	// Matrix
+			Cursor_Conf[3][1]   = 1; 	// Chaser
+			Cursor_Conf[3][10]  = 1; 	// Multiply
+			Cursor_Conf[1][10]  = 1; 	// Config
+			Cursor_Conf[2][10]  = 1; 	// Secuencer
+		// navegar
+			GUI_Navegar(0, 0);
+		// Acciones
+			// Unitary
+				if (LCD_Col_Pos == 1 && LCD_Row_Pos == 1)
 					{
-						lcd.print ("-");
+						GUI_Control_Unit();
 					}
-				else
+			// Matrix
+				if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
 					{
-						lcd.print (Universo_Actual);
+						GUI_Control_Matrix();
 					}
-				lcd.setCursor (2, 1);
-				lcd.print ("Unitary");
-				lcd.setCursor (2, 2);
-				lcd.print ("Matrix");
-				lcd.setCursor (2, 3);
-				lcd.print ("Chaser");
-				lcd.setCursor (11, 3);
-				lcd.print ("Multiply");
-				lcd.setCursor (11, 1);
-				lcd.print ("Config");
-				lcd.setCursor (2, 1);
-				lcd.print ("Memory");
-				lcd.setCursor (11, 2);
-				lcd.print ("Secuencer");
-			// Cursor
-				LCD_Col_Pos = 1;				// posicion de cursor
-				LCD_Row_Pos = 2;
-			// configuracion de cursor	
-				Cursor_Conf_Clear();			// limpiar array
-				// Acciones
-					Cursor_Conf[1][1]   = 1;	// Unitary
-					Cursor_Conf[2][1]   = 1; 	// Matrix
-					Cursor_Conf[3][1]   = 1; 	// Chaser
-					Cursor_Conf[3][10]  = 1; 	// Multiply
-					Cursor_Conf[1][10]  = 1; 	// Config
-					Cursor_Conf[2][10]  = 1; 	// Secuencer
-			// navegar
-				GUI_Navegar(0, 0);
-			// Acciones
-				// Unitary
-					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 1)
-						{
-							GUI_Control_Unit();
-						}
-				// Matrix
-					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
-						{
-							GUI_Control_Matrix();
-						}
-				// Chaser
-					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 3)
-						{
-							GUI_Control_Chaser();
-						}
-				// Multiply
-					if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
-						{
-							GUI_Control_Multiply();
-						}
-				// Config
-					if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
-						{
-							GUI_Config();
-						}
-				// Secuencer
-					if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
-						{
-							GUI_Secuencer();
-						}
+			// Chaser
+				if (LCD_Col_Pos == 1 && LCD_Row_Pos == 3)
+					{
+						GUI_Control_Chaser();
+					}
+			// Multiply
+				if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
+					{
+						GUI_Control_Multiply();
+					}
+			// Config
+				if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
+					{
+						GUI_Config();
+					}
+			// Secuencer
+				if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
+					{
+						GUI_Secuencer();
+					}	
 	}
 
 void GUI_Config()

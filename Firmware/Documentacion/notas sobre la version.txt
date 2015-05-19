@@ -8,6 +8,7 @@ v0.x - Beta
 - agregar encoder
 
 v0.8 - Beta - Hardware v0.3
+- GUI Control Options se quito iniciar:, no se usa
 - Agregado GUI_Memory_Bank
 - el banco 8 solo llegaria a 500 por el contraste y el backlight
 - Los bancos de memoria no aplican a memory empty
@@ -25,7 +26,11 @@ v0.8 - Beta - Hardware v0.3
 - Agregado a GUI Memory la configuracion
 - Agregado a GUI Control Options el numero de banco actual, si el banco no se selecciono muestra "-"
 - Agregado a GUI Control Options la configuracion
-PENDIENTE secuencer
+- Agregado GUI Secuencer
+- GUI Secuencer limitado delay entre 0 y 999 x 100 mS
+- GUI Secuencer limitado final y first entre 1 y 8
+- GUI Secuencer - en contruccion...
+
 
 v0.7 - Hardware v0.7 - stable
 - compativilidad con Hardware v0.3
