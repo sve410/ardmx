@@ -1262,6 +1262,89 @@ void GUI_Secuencer()
 										}
 								}
 						// Secuenciar
+							// sentido de secuenciado
+								if (Adelante_Reversa == 0)		// adelante
+									{
+										for (byte conteo = 1; conteo >= 8; conteo ++)
+											{
+												lcd.setCursor (19, 0);
+												lcd.print(conteo);
+												if (Bancos [conteo] = 1)
+													{
+														for (int canal = 0; canal <= 512; canal ++)
+															{
+																switch (conteo)
+																	{
+																		case 1:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
+																			break;
+																		case 2:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
+																			break;
+																		case 3:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
+																			break;
+																		case 4:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
+																			break;
+																		case 5:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
+																			break;
+																		case 6:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
+																			break;
+																		case 7:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
+																			break;
+																		case 8:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																	}
+															}
+														delay (Delay_Secuencia);
+													}
+											}
+									}
+								if (Adelante_Reversa == 1)		// reversa
+									{
+										for (byte conteo = 8; conteo <= 1; conteo --)
+											{
+												lcd.setCursor (19, 0);
+												lcd.print(conteo);
+												if (Bancos [conteo] = 1)
+													{
+														for (int canal = 0; canal <= 512; canal ++)
+															{
+																switch (conteo)
+																	{
+																		case 1:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
+																			break;
+																		case 2:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
+																			break;
+																		case 3:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
+																			break;
+																		case 4:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
+																			break;
+																		case 5:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
+																			break;
+																		case 6:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
+																			break;
+																		case 7:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
+																			break;
+																		case 8:
+																			ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																	}
+															}
+														delay (Delay_Secuencia);
+													}
+											}
+									}
 					}
 	}
 	
