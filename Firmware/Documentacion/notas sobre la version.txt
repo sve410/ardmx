@@ -8,29 +8,31 @@ v0.x - Beta
 - agregar encoder
 
 v0.8 - Beta - Hardware v0.3
+- CORREGIDO - esta ensimado en control options unitary
 - GUI Control Options se quito iniciar:, no se usa
-- Agregado GUI_Memory_Bank
 - el banco 8 solo llegaria a 500 por el contraste y el backlight
 - Los bancos de memoria no aplican a memory empty
 - GUI_Memory_Bank solo actua en cambios de EEPROM
-- Agregado a EEPROM_Clear control de universos guardados
-- Agregado a EEPROM_Clear al final el numero de banco
-- Agregado a EEPROM_Load control de universos guardados
-- Agregado a EEPROM_Load al final el numero de banco
-- Agregado a EEPROM_Save control de universos guardados
-- Agregado a EEPROM_Save al final el numero de banco
-- Agregado a matrix el numero de banco actual, si el banco no se selecciono muestra "-"
-- Agregado a memory options el numero de banco actual, si el banco no se selecciono muestra "-"
-- Agregado a unitary control el numero de banco actual, si el banco no se selecciono muestra "-"
-- Agregado a multiply control el numero de banco actual, si el banco no se selecciono muestra "-"
-- Agregado a GUI Memory la configuracion
-- Agregado a GUI Control Options el numero de banco actual, si el banco no se selecciono muestra "-"
-- Agregado a GUI Control Options la configuracion
-- Agregado GUI Secuencer
 - GUI Secuencer limitado delay entre 0 y 999 x 100 mS
 - GUI Secuencer limitado final y first entre 1 y 8
-- GUI Secuencer - en contruccion...
-
+- Se quito el efecto binario cuando se usa la memoria
+- AGREGADO - GUI_Memory_Bank
+- AGREGADO - a EEPROM_Clear control de universos guardados
+- AGREGADO - a EEPROM_Clear al final el numero de banco
+- AGREGADO - a EEPROM_Load control de universos guardados
+- AGREGADO - a EEPROM_Load al final el numero de banco
+- AGREGADO - a EEPROM_Save control de universos guardados
+- AGREGADO - a EEPROM_Save al final el numero de banco
+- AGREGADO - a matrix el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a memory options el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a unitary control el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a multiply control el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a GUI Memory la configuracion
+- AGREGADO - a GUI Control Options el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a GUI Control Options la configuracion
+- AGREGADO - GUI Secuencer
+- AGREGADO - retardo cuando entra al banco de memoria
+- AGREGAR - en bancos de memoria poner cancelar y lo que se eligio
 
 v0.7 - Hardware v0.7 - stable
 - compativilidad con Hardware v0.3

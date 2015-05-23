@@ -46,8 +46,8 @@
 
 // Puertos, variables
 	// DMX
-		//int DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default 
-		int  DMX_Values [515];      		// array 1 de valores actuales DMX
+		int DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default 
+		int  DMX_Values [515];      	// array 1 de valores actuales DMX
 		int  Canal_Actual 		= 1;
 		byte Universo_Actual	= 0;
 	// Botones cursor
@@ -886,20 +886,36 @@ void GUI_Memory_Init()
 					}
 	}
 	
-void GUI_Memory_Bank()
+void GUI_Memory_Bank(byte Opcion)
 	{
 		lcd.clear ();
+		delay (200);	// retardo para no seleccionar inmediatamente la opcion del banco
 		// Texto
-			lcd.setCursor (0, 0);
-			lcd.print("SelectMemoryBank:");
+			lcd.setCursor (6, 0);
+			lcd.print("Memory Bank:");
 			lcd.setCursor (1, 1);
 			lcd.print("Bank1  Bank4  Bank7");
 			lcd.setCursor (1, 2);
 			lcd.print("Bank2  Bank5  Bank8");
 			lcd.setCursor (1, 3);
-			lcd.print("Bank3  Bank6");
+			lcd.print("Bank3  Bank6  Exit");
+			switch (Opcion)
+				{
+					case 1:
+						lcd.setCursor (1, 0);
+						lcd.print("Save");
+						break;
+					case 2:
+						lcd.setCursor (1, 0);
+						lcd.print("Load");
+						break;
+					case 3:
+						lcd.setCursor (0, 0);
+						lcd.print("Clear");
+						break;
+				}
 			// Universo Actual
-				lcd.setCursor (18, 0);
+				lcd.setCursor (19, 0);
 				if (Universo_Actual == 0)
 					{
 						lcd.print("-");
@@ -922,6 +938,7 @@ void GUI_Memory_Bank()
 				Cursor_Conf[3][7]   = 1;	// Bank 6
 				Cursor_Conf[1][14]  = 1;	// Bank 7
 				Cursor_Conf[2][14]  = 1;	// Bank 8
+				Cursor_Conf[3][14]  = 1;	// Exit
 		// navegar
 			GUI_Navegar(0, 0);
 		// Acciones
@@ -971,6 +988,12 @@ void GUI_Memory_Bank()
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
 					{
 						Universo_Actual = 8;
+						goto Salida;
+					}
+			// Exit
+				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
+					{
+						
 					}
 		Salida:
 			{
@@ -1374,7 +1397,7 @@ void Black_Out()
 
 void EEPROM_Save()
 	{
-		GUI_Memory_Bank();	// seleccinar banco
+		GUI_Memory_Bank(1);	// seleccinar banco
 		lcd.clear ();
 		lcd.setCursor (17, 1);
 		int EEPROM_Add = 0;
@@ -1413,7 +1436,7 @@ void EEPROM_Save()
 								break;
 						}
 				EEPROM.write(EEPROM_Add, DMX_Values[Canal]);          		// lectura desde EEPROM
-				lcd.print (Canal, BIN);
+				//lcd.print (Canal, BIN);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
@@ -1427,7 +1450,7 @@ void EEPROM_Save()
 void EEPROM_Load()
 	{
 		// guarda los valores en la eeprom
-		GUI_Memory_Bank();	// seleccinar banco
+		GUI_Memory_Bank(2);	// seleccinar banco
 		lcd.clear ();
 		lcd.setCursor (17, 1);
 		int EEPROM_Add = 0;
@@ -1467,7 +1490,7 @@ void EEPROM_Load()
 						}
 				DMX_Values[Canal] = EEPROM.read(EEPROM_Add);          	// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal]; 	// salida a DMX
-				lcd.print (Canal, BIN);
+				//lcd.print (Canal, BIN);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
@@ -1482,23 +1505,27 @@ void EEPROM_Empty()
 	{
 		// solo borra la ram
 		lcd.clear ();
-		lcd.setCursor (17, 1);
+		lcd.setCursor (1, 1);
+		lcd.print ("Memory Emptying...");
+		lcd.setCursor (19, 3);
+		lcd.blink();
 		for(int Canal = 0; Canal <= 512; Canal ++)
 			{
 				DMX_Values[Canal] = 0;          		// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
-				lcd.print (Canal, BIN);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
 		lcd.print ("Memory Emptied!");
 		delay (1000);
+		lcd.setCursor (19, 3);
+		lcd.noBlink();
 	}
 	
 void EEPROM_Clear()
 	{
 		// Pone en ceros la memoria
-		GUI_Memory_Bank();	// seleccinar banco
+		GUI_Memory_Bank(3);	// seleccinar banco
 		lcd.clear ();
 		lcd.setCursor (17, 1);
 		int EEPROM_Add = 0;
@@ -1506,7 +1533,7 @@ void EEPROM_Clear()
 			{
 				DMX_Values[Canal] = 0;          		// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
-				lcd.print (Canal, BIN);
+				//lcd.print (Canal, BIN);
 				// Escritura de universo EEPROM
 					switch (Universo_Actual)
 						{
@@ -1574,8 +1601,6 @@ void GUI_Control_Options()
 			lcd.print ("Multiply");
 			lcd.setCursor (11, 1);
 			lcd.print ("Config");
-			lcd.setCursor (2, 1);
-			lcd.print ("Memory");
 			lcd.setCursor (11, 2);
 			lcd.print ("Secuencer");
 		// Cursor

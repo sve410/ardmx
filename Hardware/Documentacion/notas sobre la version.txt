@@ -13,6 +13,7 @@ v0.4 - Beta
 - AGREGADO - interconectados los pines del arduino de vcc y gnd faltantes
 - CORREGIDO - agregar un diodo rectificador a la entrada de la bateria
 - CORREGIDO - se hizo mas chico el puente que estaba dentro del area del arduino
+- CORREGIDO - los datos de la salida estan alrevez
 
 v0.3 - Beta
 - backlight a pin 13 para efecto en el lcd mientras se actualiza
@@ -26,6 +27,7 @@ v0.3 - Beta
 - CORREGIR - agregar serigrafia a top en el pcb
 - CORREGIR - hacer mas grandes los pads del SW
 - CORREGIR - quitar parte de abajo del soporte del teclado estorba con el flex del teclado
+- CORREGIR - los datos de la salida estan alrevez
 
 v0.2 - Beta
 - implementacion de control de contraste desde software
