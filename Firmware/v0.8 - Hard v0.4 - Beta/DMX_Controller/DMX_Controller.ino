@@ -89,6 +89,9 @@
 		int  Back_Light_PWM		= 13;	// salida para PWM de Back Light de LCD
 		int  Contrast_PWM		= 4;	// salida para pwm de contraste de LCD
 		byte Back_Light_On_Off	= 0;	// saber si esta encendida o apagada
+	// EEPROM
+		int BackLight_Add 	= 4094;		// direccion de eeprom
+		int Contrast_Add	= 4095;		// direccion de eeprom
 
 void setup() 
 	{
@@ -213,7 +216,7 @@ void loop()
 void Back_Light_Init()
 	{
 		// ultimo estado del back light
-		byte Back_Light_Value = EEPROM.read(513);
+		byte Back_Light_Value = EEPROM.read(BackLight_Add);
 		analogWrite(Back_Light_PWM, Back_Light_Value);
 		if (Back_Light_Value == 0)
 			{
@@ -228,7 +231,11 @@ void Back_Light_Init()
 void Contrast_Init()
 	{
 		// ultimo estado del comtrast
-			byte Contrast_Value = EEPROM.read(514);
+			byte Contrast_Value = EEPROM.read(Contrast_Add);
+			if (Contrast_Value < 150)
+				{
+					Contrast_Value = 150;
+				}
 			analogWrite(Contrast_PWM, Contrast_Value);
 	}
 	
@@ -266,34 +273,40 @@ void GUI_About()
 		byte Firm_Ver_Ent = 0;
 		byte Firm_Ver_Dec = 8;
 		byte Hard_Ver_Ent = 0;
-		byte Hard_Ver_Dec = 3;
+		byte Hard_Ver_Dec = 4;
 		lcd.clear ();
-		lcd.noBlink();									// ocultar cursor
-		lcd.setCursor(0, 0);
 		for(int numero = 0; numero <= 512; numero ++)	// efecto binario en lcd
 			{
 				lcd.print (numero, BIN);
 			}
 		lcd.clear ();
-		lcd.setCursor(0, 3);
-		lcd.print("http://goo.gl/5nqJKt");
 		lcd.setCursor(3, 0);
 		lcd.print("Arduino DMX-512");
 		lcd.setCursor(1, 1);
 		lcd.print("Tester & Controller");
 		// Firmware
-			lcd.setCursor(0, 2);
+			lcd.setCursor(0, 3);
 			lcd.print("Firm v");
 			lcd.print(Firm_Ver_Ent);
 			lcd.print(".");
 			lcd.print(Firm_Ver_Dec);
 		// Hardware
-			lcd.setCursor(11, 2);
+			lcd.setCursor(11, 3);
 			lcd.print("Hard v");
 			lcd.print(Hard_Ver_Ent);
 			lcd.print(".");
 			lcd.print(Hard_Ver_Dec);
-		delay(2000);  									//retardo de muestra de mensaje
+		lcd.setCursor(0, 0);
+		lcd.blink();
+		delay (3000);
+		lcd.clear ();
+		lcd.setCursor(3, 1);
+		lcd.print("Open Hardware!");
+		lcd.setCursor(0, 3);
+		lcd.print("http://goo.gl/5nqJKt");
+		lcd.setCursor(0, 0);
+		delay(3000);  									//retardo de muestra de mensaje
+		lcd.noBlink();
 	}
 
 void Multi_Matrix(int inicial)
@@ -845,49 +858,62 @@ void GUI_Navegar(byte matrix, int banco)
 
 void GUI_Memory_Init()
 	{
-		lcd.clear ();
-		// Texto
-			lcd.setCursor (0, 0);
-			lcd.print("Initial Memory:");
-			lcd.setCursor (2, 2);
-			lcd.print("Empty");
-			lcd.setCursor (9, 2);
-			lcd.print("Load");
-			lcd.setCursor (15, 2);
-			lcd.print("Clear");
-		// Cursor
-			LCD_Col_Pos = 1;			// posicion de cursor
-			LCD_Row_Pos = 2;
-		// configuracion de cursor	
-			Cursor_Conf_Clear();		// limpiar array
+		inicio:
+			int salir = 0;
+			lcd.clear ();
+			// Texto
+				lcd.setCursor (0, 0);
+				lcd.print("Initial Memory:");
+				lcd.setCursor (2, 2);
+				lcd.print("Empty");
+				lcd.setCursor (9, 2);
+				lcd.print("Load");
+				lcd.setCursor (15, 2);
+				lcd.print("Clear");
+			// Cursor
+				LCD_Col_Pos = 1;			// posicion de cursor
+				LCD_Row_Pos = 2;
+			// configuracion de cursor	
+				Cursor_Conf_Clear();		// limpiar array
+				// Acciones
+					Cursor_Conf[2][1]  = 1;	// Empty
+					Cursor_Conf[2][8]  = 1; // Load
+					Cursor_Conf[2][14] = 1;	// Clear
+			// navegar
+				GUI_Navegar(0, 0);
 			// Acciones
-				Cursor_Conf[2][1]  = 1;	// Empty
-				Cursor_Conf[2][8]  = 1; // Load
-				Cursor_Conf[2][14] = 1;	// Clear
-		// navegar
-			GUI_Navegar(0, 0);
-		// Acciones
-			// Load
-				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
-					{
-						EEPROM_Load();
-						GUI_Control_Options();
-					}
-			// Clear
-				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
-					{
-						EEPROM_Clear();
-						GUI_Control_Options();
-					}
-			// Empty
-				if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
-					{
-						GUI_Control_Options();
-					}
+				// Load
+					if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
+						{
+							salir = EEPROM_Load();
+							if (salir == 1)
+								{
+									goto inicio;
+								}
+							GUI_Control_Options();
+						}
+				// Clear
+					if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
+						{
+							salir = EEPROM_Clear();
+							if (salir == 1)
+								{
+									goto inicio;
+								}
+							GUI_Control_Options();
+						}
+				// Empty
+					if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
+						{
+							GUI_Control_Options();
+						}
 	}
 	
-void GUI_Memory_Bank(byte Opcion)
+int GUI_Memory_Bank(byte Opcion)
 	{
+		// regresa 1 si se selecciona salir, de lo contrario 0
+		// recibe opcion para pintar en la pantalla lo que se selecciono
+		int salir = 0;
 		lcd.clear ();
 		delay (200);	// retardo para no seleccionar inmediatamente la opcion del banco
 		// Texto
@@ -993,102 +1019,109 @@ void GUI_Memory_Bank(byte Opcion)
 			// Exit
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
 					{
-						
+						salir = 1;
 					}
 		Salida:
-			{
-	
-			}
+			return salir;
 	}
 	
 void GUI_Memory()
 	{
-		lcd.clear ();
-		// Texto
-			lcd.setCursor (0, 0);
-			lcd.print("Memory Options:   b");
-			if (Universo_Actual == 0)
-				{
-					lcd.print("-");
-				}
-			else
-				{
-					lcd.print(Universo_Actual);
-				}
-			lcd.setCursor (1, 2);
-			lcd.print("Save");
-			lcd.setCursor (1, 3);
-			lcd.print("Load");
-			lcd.setCursor (7, 2);
-			lcd.print("Empty");
-			lcd.setCursor (7, 3);
-			lcd.print("Clear");
-			lcd.setCursor (14, 2);
-			lcd.print("Black");
-			lcd.setCursor (14, 3);
-			lcd.print("Cancel");
-			lcd.setCursor (14, 1);
-			lcd.print("Config");
-		// Cursor
-			LCD_Col_Pos = 0;			// posicion de cursor
-			LCD_Row_Pos = 2;
-		// configuracion de cursor	
-			Cursor_Conf_Clear();		// limpiar array
+		iniciar:
+			lcd.clear ();
+			// Texto
+				lcd.setCursor (0, 0);
+				lcd.print("Memory Options:   b");
+				if (Universo_Actual == 0)
+					{
+						lcd.print("-");
+					}
+				else
+					{
+						lcd.print(Universo_Actual);
+					}
+				lcd.setCursor (1, 2);
+				lcd.print("Save");
+				lcd.setCursor (1, 3);
+				lcd.print("Load");
+				lcd.setCursor (7, 2);
+				lcd.print("Empty");
+				lcd.setCursor (7, 3);
+				lcd.print("Clear");
+				lcd.setCursor (14, 2);
+				lcd.print("Black");
+				lcd.setCursor (14, 3);
+				lcd.print("Cancel");
+			// Cursor
+				LCD_Col_Pos = 0;			// posicion de cursor
+				LCD_Row_Pos = 2;
+			// configuracion de cursor	
+				Cursor_Conf_Clear();		// limpiar array
+				// Acciones
+					Cursor_Conf[2][0]  = 1;	// Save
+					Cursor_Conf[3][0]  = 1; // Load
+					Cursor_Conf[3][6]  = 1;	// Clear
+					Cursor_Conf[2][6]  = 1;	// Empty
+					Cursor_Conf[2][13] = 1;	// Black Out
+					Cursor_Conf[3][13] = 1;	// Cancel
+			// navegar
+		regresa:
+				GUI_Navegar(0, 0);
 			// Acciones
-				Cursor_Conf[2][0]  = 1;	// Save
-				Cursor_Conf[3][0]  = 1; // Load
-				Cursor_Conf[3][6]  = 1;	// Clear
-				Cursor_Conf[2][6]  = 1;	// Empty
-				Cursor_Conf[2][13] = 1;	// Black Out
-				Cursor_Conf[3][13] = 1;	// Cancel
-				Cursor_Conf[1][13] = 1;	// Config
-		// navegar
-		inicio:
-			GUI_Navegar(0, 0);
-		// Acciones
-			// Load
-				if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
-					{
-						EEPROM_Load();
-					}
-			// Clear
-				if (LCD_Col_Pos == 6 && LCD_Row_Pos == 3)
-					{
-						EEPROM_Clear();
-					}
-			// Save
-				if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
-					{
-						EEPROM_Save();
-					}
-			// Empty
-				if (LCD_Col_Pos == 6 && LCD_Row_Pos == 2)
-					{
-						EEPROM_Empty();
-					}
-			// Black Out
-				if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
-					{
-						Black_Out();
-						goto inicio;
-					}
-			// Black Out
-				if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
-					{
-						GUI_Config();
-						goto inicio;
-					}
-			// Cancel
-				if (LCD_Col_Pos == 3 && LCD_Row_Pos == 13)
-					{
+				// Load
+					if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
+						{
+							if (EEPROM_Load() == 1)
+								{
+									goto iniciar;
+								}
+							goto salida;
+						}
+				// Clear
+					if (LCD_Col_Pos == 6 && LCD_Row_Pos == 3)
+						{
+							if (EEPROM_Clear() == 1)
+								{
+									goto iniciar;
+								}
+							goto salida;
+						}
+				// Save
+					if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
+						{
+							if (EEPROM_Save() == 1)
+								{
+									goto iniciar;
+								}
+							goto salida;
+						}
+				// Empty
+					if (LCD_Col_Pos == 6 && LCD_Row_Pos == 2)
+						{
+							EEPROM_Empty();
+							goto salida;
+						}
+				// Black Out
+					if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
+						{
+							Black_Out();
+							goto regresa;
+						}
+				// Cancel
+					if (LCD_Col_Pos == 3 && LCD_Row_Pos == 13)
+						{
 
-					}
+						}
+		salida:
+			{
+			
+			}
 	}
 
 void GUI_Secuencer()
 	{
 		// secuenciador de bancos guardados en eeprom
-		int Delay_Secuencia = 0;
+		int Delay_Secuencia = 1;
 		int First_Bank = 1;
 		int Final_Bank = 8;
 		lcd.clear ();
@@ -1129,16 +1162,17 @@ void GUI_Secuencer()
 					{
 						Num_Row_Pos = 1;
 						Num_Col_Pos = 10;
-						Num_Val = Delay_Secuencia;			// para dejar el numero que estaba si no se cambia
+						Num_Val = Delay_Secuencia;					// para dejar el numero que estaba si no se cambia
 						Numerico_Calc(0);
 						if (Num_Val == 0)
 							{
 								Numerico_Write (1, 10, 1);
 								Delay_Secuencia = 1;
+								Numerico_Write (Delay_Secuencia, 10, 1);
 							}
 						else
 							{
-								Delay_Secuencia = Num_Val;
+								Delay_Secuencia = Num_Val;			// por el multiplicador
 							}
 						goto inicio;
 					}
@@ -1147,13 +1181,14 @@ void GUI_Secuencer()
 					{
 						Num_Row_Pos = 2;
 						Num_Col_Pos = 10;
-						Num_Val = First_Bank; 				// para dejar el numero que estaba si no se cambia
+						Num_Val = First_Bank;						// para dejar el numero que estaba si no se cambia
 						Numerico_Calc(0);
 						First_Bank = Num_Val;
 						if (Num_Val == 0)
 							{
 								Numerico_Write (1, 10, 2);
 								First_Bank = 1;
+								Numerico_Write (First_Bank, 10, 2);
 							}
 						if (Num_Val > 8)
 							{
@@ -1167,13 +1202,14 @@ void GUI_Secuencer()
 					{
 						Num_Row_Pos = 3;
 						Num_Col_Pos = 10;
-						Num_Val = Final_Bank; 				// para dejar el numero que estaba si no se cambia
+						Num_Val = Final_Bank; 						// para dejar el numero que estaba si no se cambia
 						Numerico_Calc(0);
 						Final_Bank = Num_Val;
 						if (Num_Val == 0)
 							{
 								Numerico_Write (1, 10, 2);
 								Final_Bank = 1;
+								Numerico_Write (Final_Bank, 10, 3);
 							}
 						if (Num_Val > 8)
 							{
@@ -1190,6 +1226,13 @@ void GUI_Secuencer()
 			// start
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
 					{
+						// LCD
+							lcd.blink();
+							lcd.setCursor (14, 3);
+							lcd.print("+");
+							lcd.setCursor (15, 3);
+							lcd.print("Stop ");
+							lcd.setCursor (19, 3);
 						// establecer reversa o adelante
 							byte Adelante_Reversa = 0;				// 0 Adelante, 1 Reversa
 							// adelante
@@ -1198,17 +1241,30 @@ void GUI_Secuencer()
 										Adelante_Reversa = 0;
 									}
 							// reversa
-								if (Final_Bank < First_Bank)
+								if (First_Bank > Final_Bank)
 									{
 										Adelante_Reversa = 1;
 									}
 						// establecer bancos a secuenciar
 							byte Bancos [9] = {0, 0, 0, 0, 0, 0, 0, 0};
-							for (byte Bank = 1; Bank > 8; Bank ++)
+							if (Adelante_Reversa == 0)
 								{
-									if (First_Bank >= Bank && Final_Bank <= Bank)
+									for (byte Bank = 1; Bank <= 8; Bank ++)
 										{
-											Bancos [Bank] = 1;
+											if (Bank >= First_Bank && Bank <= Final_Bank)
+												{
+													Bancos[Bank] = 1;
+												}
+										}
+								}
+							if (Adelante_Reversa == 1)
+								{
+									for (byte Bank = 8; Bank >= 1; Bank --)
+										{
+											if (Bank <= First_Bank && Bank >= Final_Bank)
+												{
+													Bancos[Bank] = 1;
+												}
 										}
 								}
 						// Cargar Bancos en memoria
@@ -1323,7 +1379,7 @@ void GUI_Secuencer()
 																			ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
 																	}
 															}
-														delay (Delay_Secuencia);
+														delay (Delay_Secuencia * 100);
 													}
 											}
 									}
@@ -1364,10 +1420,17 @@ void GUI_Secuencer()
 																			ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
 																	}
 															}
-														delay (Delay_Secuencia);
+														delay (Delay_Secuencia * 100);
 													}
 											}
 									}
+						// LCD
+							// lcd.noBlink();
+							// lcd.setCursor (14, 3);
+							// lcd.print(">");
+							// lcd.setCursor (15, 3);
+							// lcd.print("Start");
+						goto inicio;
 					}
 	}
 	
@@ -1395,12 +1458,28 @@ void Black_Out()
 		lcd.noBlink();
 	}
 
-void EEPROM_Save()
+int EEPROM_Save()
 	{
-		GUI_Memory_Bank(1);	// seleccinar banco
+		// guarda el universo en la eeprom
+		// regresa 1 si se selecciona exit
+		int cancel = 0;				// regresa 1 si se selecciona salir			
+		int bank;					// regresa 1 si se selecciona salir
+		int EEPROM_Add = 0;			// direccion de eeprom para universos
+		bank = GUI_Memory_Bank(1);	// seleccinar banco
+		if (bank == 1)
+			{
+				cancel = 1;
+				goto salida;
+			}
 		lcd.clear ();
-		lcd.setCursor (17, 1);
-		int EEPROM_Add = 0;
+		lcd.setCursor (1, 1);
+		lcd.print ("Memory Saving...");
+		lcd.setCursor (1, 2);
+		lcd.print ("Bank: ");
+		lcd.setCursor (7, 2);
+		lcd.print (Universo_Actual);
+		lcd.setCursor (19, 3);
+		lcd.blink();
 		for(int Canal = 1; Canal <= 512; Canal ++)
 			{
 				// Escritura de universo EEPROM
@@ -1444,16 +1523,27 @@ void EEPROM_Save()
 		lcd.setCursor (3, 2);
 		lcd.print ("Bank: ");
 		lcd.print (Universo_Actual);
-		delay (1000);
+		lcd.setCursor (19, 3);
+		delay (2000);
+		lcd.noBlink();
+		salida:
+			return cancel;
 	}
 	
-void EEPROM_Load()
+int EEPROM_Load()
 	{
 		// guarda los valores en la eeprom
-		GUI_Memory_Bank(2);	// seleccinar banco
+		// regresa 1 si se selecciona exit
+		int cancel = 0;				// regresa 1 si se selecciona salir			
+		int bank;					// regresa 1 si se selecciona salir
+		int EEPROM_Add = 0;			// seleccion de universo
+		bank = GUI_Memory_Bank(2);	// seleccinar banco
+		if (bank == 1)
+			{
+				cancel = 1;
+				goto salida;
+			}
 		lcd.clear ();
-		lcd.setCursor (17, 1);
-		int EEPROM_Add = 0;
 		for(int Canal = 1; Canal <= 512; Canal ++)
 			{
 				// Escritura de universo EEPROM
@@ -1498,17 +1588,19 @@ void EEPROM_Load()
 		lcd.setCursor (3, 2);
 		lcd.print ("Bank: ");
 		lcd.print (Universo_Actual);
-		delay (1000);
+		lcd.setCursor (19, 3);
+		lcd.blink();
+		delay (2000);
+		lcd.noBlink();
+		salida:
+			return cancel;
 	}
 	
 void EEPROM_Empty()
 	{
 		// solo borra la ram
+		// no hay retorno al menu anterior
 		lcd.clear ();
-		lcd.setCursor (1, 1);
-		lcd.print ("Memory Emptying...");
-		lcd.setCursor (19, 3);
-		lcd.blink();
 		for(int Canal = 0; Canal <= 512; Canal ++)
 			{
 				DMX_Values[Canal] = 0;          		// lectura desde EEPROM
@@ -1517,23 +1609,40 @@ void EEPROM_Empty()
 		lcd.clear ();
 		lcd.setCursor (3, 1);
 		lcd.print ("Memory Emptied!");
-		delay (1000);
+		lcd.setCursor (3, 2);
+		lcd.print ("Bank: RAM");
 		lcd.setCursor (19, 3);
+		lcd.blink();
+		delay (2000);
 		lcd.noBlink();
 	}
 	
-void EEPROM_Clear()
+int EEPROM_Clear()
 	{
 		// Pone en ceros la memoria
-		GUI_Memory_Bank(3);	// seleccinar banco
+		// regresa 1 si se selecciona exit
+		int cancel = 0;				// regresa 1 si se selecciona salir			
+		int bank;					// regresa 1 si se selecciona salir
+		int EEPROM_Add = 0;			// direccion de eeprom para universos
+		bank = GUI_Memory_Bank(3);	// seleccinar banco
+		if (bank == 1)
+			{
+				cancel = 1;
+				goto salida;
+			}
 		lcd.clear ();
-		lcd.setCursor (17, 1);
-		int EEPROM_Add = 0;
+		lcd.setCursor (1, 1);
+		lcd.print ("Memory Cleaning...");
+		lcd.setCursor (1, 2);
+		lcd.print ("Bank: ");
+		lcd.setCursor (7, 2);
+		lcd.print (Universo_Actual);
+		lcd.setCursor (19, 3);
+		lcd.blink();
 		for(int Canal = 0; Canal <= 512; Canal ++)
 			{
 				DMX_Values[Canal] = 0;          		// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
-				//lcd.print (Canal, BIN);
 				// Escritura de universo EEPROM
 					switch (Universo_Actual)
 						{
@@ -1566,7 +1675,7 @@ void EEPROM_Clear()
 									}
 								break;
 						}
-					EEPROM.write (EEPROM_Add, 0);			// escritura EEPROM
+					EEPROM.write (EEPROM_Add, 0);		// escritura EEPROM
 			}
 		lcd.clear ();
 		lcd.setCursor (2, 1);
@@ -1574,7 +1683,11 @@ void EEPROM_Clear()
 		lcd.setCursor (2, 2);
 		lcd.print ("Bank: ");
 		lcd.print (Universo_Actual);
-		delay (1000);
+		lcd.setCursor (19, 3);
+		delay (2000);
+		lcd.noBlink();
+		salida:
+			return cancel;
 	}
 	
 void GUI_Control_Options()
@@ -1653,8 +1766,8 @@ void GUI_Control_Options()
 void GUI_Config()
 	{
 	Inicio:	
-		byte Back_Light_Value = EEPROM.read(513);
-		byte Contrast_Value = EEPROM.read(514);
+		byte Back_Light_Value = EEPROM.read(BackLight_Add);
+		byte Contrast_Value = EEPROM.read(Contrast_Add);
 		// GUI
 			lcd.clear ();
 			lcd.setCursor (0, 0);
@@ -1725,7 +1838,7 @@ void GUI_Config()
 									{
 										Back_Light_On_Off = 1;
 									}
-							EEPROM.write(513, Num_Val);				// guardar valor nuevo
+							EEPROM.write(BackLight_Add, Num_Val);				// guardar valor nuevo
 							goto Navegacion;
 					}
 			//Contrast Value
@@ -1772,7 +1885,7 @@ void GUI_Config()
 							}
 						analogWrite(Contrast_PWM, Num_Val);
 						salir:	
-							EEPROM.write(514, Num_Val);							// guardar valor nuevo
+							EEPROM.write(Contrast_Add, Num_Val);							// guardar valor nuevo
 							goto Navegacion;
 					}
 			// Exit

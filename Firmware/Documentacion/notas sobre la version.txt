@@ -3,26 +3,25 @@ Notas sobre la version
 Compilado en Arduino IDE v1.0.6
 
 v0.x - Beta
-- implementacion de secuenciador desde bancos, al salir quedaria en el banco donde se quedo
-- la configuracion queda en memory options
 - agregar encoder
 
-v0.8 - Beta - Hardware v0.3
+v0.8 - Beta - Hardware v0.3 - v0.4
+- CORREGIDO - Contrast_Init se limita a no menor de 150 el valor del pwm
+- CORREGIDO - GUI_Config solo en control options
 - CORREGIDO - esta ensimado en control options unitary
-- GUI Control Options se quito iniciar:, no se usa
+- CORREGIDO - GUI Control Options se quito iniciar:, no se usa
+- CORREGIDO - se agrego variable global BackLight_Add para direccion de EEPROM
+- CORREGIDO - se agrego variable global Contrast_Add para direccion de EEPROM
 - el banco 8 solo llegaria a 500 por el contraste y el backlight
 - Los bancos de memoria no aplican a memory empty
 - GUI_Memory_Bank solo actua en cambios de EEPROM
-- GUI Secuencer limitado delay entre 0 y 999 x 100 mS
-- GUI Secuencer limitado final y first entre 1 y 8
-- Se quito el efecto binario cuando se usa la memoria
+- GUI_Secuencer limitado delay entre 0 y 999 x 100 mS
+- GUI_Secuencer limitado final y first entre 1 y 8
+- Se quito el efecto binario cuando se usa la memoria EEPROM
+- AGREGADO - a GUI_About bink del cursor
 - AGREGADO - GUI_Memory_Bank
-- AGREGADO - a EEPROM_Clear control de universos guardados
-- AGREGADO - a EEPROM_Clear al final el numero de banco
-- AGREGADO - a EEPROM_Load control de universos guardados
-- AGREGADO - a EEPROM_Load al final el numero de banco
-- AGREGADO - a EEPROM_Save control de universos guardados
-- AGREGADO - a EEPROM_Save al final el numero de banco
+- AGREGADO - GUI_Memory_Bank, regresa 1 si se selecciona salir para regresar al menu anterior
+- AGREGADO - a GUI_Memory_Bank, retardo cuando entra al banco de memoria
 - AGREGADO - a matrix el numero de banco actual, si el banco no se selecciono muestra "-"
 - AGREGADO - a memory options el numero de banco actual, si el banco no se selecciono muestra "-"
 - AGREGADO - a unitary control el numero de banco actual, si el banco no se selecciono muestra "-"
@@ -30,12 +29,33 @@ v0.8 - Beta - Hardware v0.3
 - AGREGADO - a GUI Memory la configuracion
 - AGREGADO - a GUI Control Options el numero de banco actual, si el banco no se selecciono muestra "-"
 - AGREGADO - a GUI Control Options la configuracion
+- AGREGADO - a GUI_EEPROM_Empty la leyenda del banco que se esta modificando "RAM"
+- AGREGADO - a GUI_EEPROM_Empty el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Clear control de universos guardados
+- AGREGADO - a EEPROM_Clear al final y al principio el numero de banco
+- AGREGADO - a EEPROM_Clear el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Clear regresa 1 si se selecciona exit
+- AGREGADO - a EEPROM_Clear mas tiempo para mensaje final
+- AGREGADO - a EEPROM_Load control de universos guardados
+- AGREGADO - a EEPROM_Load, regresa 1 si se selecciona exit
+- AGREGADO - a EEPROM_Load al final el numero de banco
+- AGREGADO - a EEPROM_Load el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Load mas tiempo para mensaje final
+- AGREGADO - a EEPROM_Save control de universos guardados
+- AGREGADO - a EEPROM_Save al final el numero de banco
+- AGREGADO - a EEPROM_Save, regresa 1 si se selecciona exit
+- AGREGADO - a EEPROM_Save el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Save mas tiempo para mensaje final
+- AGREGADO - a GUI_Memory_Init control de universos
+- AGREGADO - a GUI_Memory_Init manejo cuando se selecciona exit en los bancos de memeoria
+- AGREGADO - a GUI_Memory control de salida desde bancos de memoria
+- AGREGADO - a GUI_Memory salida inmediata despues de la lectura de opcion
+- AGREGADO - a GUI_About la leyenda open hardware
+- AGREGADO - a GUI_About mas tiempo para mostrar
 - AGREGADO - GUI Secuencer
-- AGREGADO - retardo cuando entra al banco de memoria
-- AGREGAR - en bancos de memoria poner cancelar y lo que se eligio
 
-v0.7 - Hardware v0.7 - stable
-- compativilidad con Hardware v0.3
+v0.7 - Hardware v0.3 - v0.4 - stable
+- compativilidad con Hardware v0.3 - v0.4
 
 v0.6 - Hardware v0.0 - stable
 - se cambio la url del about apuntando al Wiki
