@@ -6,6 +6,8 @@ v0.x - Beta
 - agregar encoder
 
 v0.8 - Beta - Hardware v0.3 - v0.4
+- CORREGIR - GUI_Secuencer provoca over flow
+- CORREGIDO - GUI_Navegar se cambio la variable Boton_Delay_Cursor de long a int
 - CORREGIDO - Contrast_Init se limita a no menor de 150 el valor del pwm
 - CORREGIDO - GUI_Config solo en control options
 - CORREGIDO - esta ensimado en control options unitary

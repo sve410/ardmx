@@ -566,7 +566,7 @@ void Cursor_Conf_Clear()
 	
 void GUI_Navegar(byte matrix, int banco)
 	{
-		long Boton_Delay_Cursor  = 300;			// delay de lectura de boton
+		int Boton_Delay_Cursor = 300;			// delay de lectura de boton
 		byte LCD_Col_Pos_Ant;					// saber el estado anterior para borrar cursor
 		byte LCD_Row_Pos_Ant;					// saber el estado anterior para borrar cursor
 		// guardar valor anterior de row col
@@ -1153,8 +1153,8 @@ void GUI_Secuencer()
 				Cursor_Conf[3][9]  = 1;	// Final Bank
 				Cursor_Conf[2][14] = 1;	// Control
 				Cursor_Conf[3][14] = 1;	// start
+	inicio:	
 		// navegar
-		inicio:
 			GUI_Navegar(0, 0);
 		// Acciones
 			// Delay
@@ -1221,13 +1221,18 @@ void GUI_Secuencer()
 			// Control
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
 					{
+						// limpiar salida dmx
+						for(int Canal = 0; Canal <= 512; Canal ++)
+							{
+								ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
+							}
 						GUI_Control_Options ();
 					}
 			// start
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
 					{
 						// LCD
-							lcd.blink();
+							// lcd.blink();
 							lcd.setCursor (14, 3);
 							lcd.print("+");
 							lcd.setCursor (15, 3);
@@ -1341,98 +1346,132 @@ void GUI_Secuencer()
 										}
 								}
 						// Secuenciar
-							// sentido de secuenciado
-								if (Adelante_Reversa == 0)		// adelante
-									{
-										for (byte conteo = 1; conteo >= 8; conteo ++)
+										if (Adelante_Reversa == 0)				// adelante
 											{
-												lcd.setCursor (19, 0);
-												lcd.print(conteo);
-												if (Bancos [conteo] = 1)
+												for (byte conteo = 1; conteo <= 8; conteo ++)
 													{
-														for (int canal = 0; canal <= 512; canal ++)
+														if (Bancos [conteo] = 1)
 															{
-																switch (conteo)
+																lcd.setCursor (19, 0);
+																lcd.print(conteo);
+																for (int canal = 0; canal <= 512; canal ++)
 																	{
-																		case 1:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
-																			break;
-																		case 2:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
-																			break;
-																		case 3:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
-																			break;
-																		case 4:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
-																			break;
-																		case 5:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
-																			break;
-																		case 6:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
-																			break;
-																		case 7:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
-																			break;
-																		case 8:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																		switch (conteo)
+																			{
+																				case 1:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
+																					break;
+																				case 2:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
+																					break;
+																				case 3:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
+																					break;
+																				case 4:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
+																					break;
+																				case 5:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
+																					break;
+																				case 6:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
+																					break;
+																				case 7:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
+																					break;
+																				case 8:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																					break;
+																			}
+																		//delay
+																			long delay_contar = Delay_Secuencia;
+																			while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
+																				{	
+																					for (long contar = 0; contar <= delay_contar; contar ++)
+																						{
+																							delayMicroseconds(100);
+																						}
+																					goto Delay_Salir;
+																				}
+																			delay(200);		// rebote de boton
+																			goto inicio;
+																		Delay_Salir:
+																			{
+																				
+																			}
 																	}
 															}
-														delay (Delay_Secuencia * 100);
 													}
 											}
-									}
-								if (Adelante_Reversa == 1)		// reversa
-									{
-										for (byte conteo = 8; conteo <= 1; conteo --)
+										if (Adelante_Reversa == 1)				// reversa
 											{
-												lcd.setCursor (19, 0);
-												lcd.print(conteo);
-												if (Bancos [conteo] = 1)
+												for (byte conteo = 8; conteo >= 1; conteo --)
 													{
-														for (int canal = 0; canal <= 512; canal ++)
+														if (Bancos [conteo] = 1)
 															{
-																switch (conteo)
+																lcd.setCursor (19, 0);
+																lcd.print(conteo);
+																for (int canal = 0; canal <= 512; canal ++)
 																	{
-																		case 1:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
-																			break;
-																		case 2:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
-																			break;
-																		case 3:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
-																			break;
-																		case 4:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
-																			break;
-																		case 5:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
-																			break;
-																		case 6:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
-																			break;
-																		case 7:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
-																			break;
-																		case 8:
-																			ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																		switch (conteo)
+																			{
+																				case 1:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
+																					break;
+																				case 2:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
+																					break;
+																				case 3:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
+																					break;
+																				case 4:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
+																					break;
+																				case 5:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
+																					break;
+																				case 6:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
+																					break;
+																				case 7:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
+																					break;
+																				case 8:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																					break;
+																			}
+																		//delay
+																			long delay_contar = Delay_Secuencia;
+																			while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
+																				{	
+																					for (long contar = 0; contar <= delay_contar; contar ++)
+																						{
+																							delayMicroseconds(100);
+																						}
+																					goto Delay_Salir_rev;
+																				}
+																			delay(200);		// rebote de boton
+																			goto inicio;
+																		Delay_Salir_rev:
+																			{
+																				
+																			}
 																	}
 															}
-														delay (Delay_Secuencia * 100);
 													}
-											}
-									}
+											}							
+					}
+	}
+
 						// LCD
 							// lcd.noBlink();
 							// lcd.setCursor (14, 3);
 							// lcd.print(">");
 							// lcd.setCursor (15, 3);
 							// lcd.print("Start");
-						goto inicio;
-					}
-	}
+						
+					
+
 	
 void Black_Out()
 	{
@@ -1580,7 +1619,6 @@ int EEPROM_Load()
 						}
 				DMX_Values[Canal] = EEPROM.read(EEPROM_Add);          	// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal]; 	// salida a DMX
-				//lcd.print (Canal, BIN);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
