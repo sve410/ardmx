@@ -12,6 +12,7 @@ v0.9 - Beta - Hardware v0.3 - v0.4
 - AGREGADO - lectura de boton "center" en el about
 - AGREGADO - a GUI_Secuencer limite de delay a 100
 - AGREGADO - a GUI_Secuencer en la salida a control regresa al dmx los datos desde la ram
+- AGREGADO - a GUI_Unitary el canal anterior y siguiente en el gui
 
 v0.8 - Beta - Hardware v0.3 - v0.4
 - CORREGIR - GUI_Secuencer provoca over flow y se reinicia, demasiada ram usada

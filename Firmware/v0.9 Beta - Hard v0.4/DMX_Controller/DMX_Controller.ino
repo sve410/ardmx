@@ -2277,6 +2277,12 @@ void GUI_Control_Unit()
 			lcd.setCursor (2, 3);
 			lcd.print ("Value:");
 			Numerico_Write(DMX_Values[1], 9, 3);
+			lcd.setCursor (0, 1);
+			lcd.print ("c002=v");
+			Numerico_Write(DMX_Values[2], 6, 1);
+			lcd.setCursor (11, 1);
+			lcd.print ("c003=v");
+			Numerico_Write(DMX_Values[3], 17, 1);
 		// Cursor
 			LCD_Col_Pos = 8;		// posicion de cursor
 			LCD_Row_Pos = 2;		// posicion e cursor
@@ -2312,6 +2318,28 @@ void GUI_Control_Unit()
 						// mostrar valor actual del canal								
 							Canal_Actual = Num_Val;
 							Numerico_Write(DMX_Values[Canal_Actual], 9, 3);
+						// mostrar anterior y siguiente
+							if (Canal_Actual == 1)
+								{
+									Numerico_Write(2, 1, 1);
+									Numerico_Write(DMX_Values[2], 6, 1);
+									Numerico_Write(3, 12, 1);
+									Numerico_Write(DMX_Values[3], 17, 1);
+								}
+							if (Canal_Actual == 512)
+								{
+									Numerico_Write(510, 1, 1);
+									Numerico_Write(DMX_Values[510], 6, 1);
+									Numerico_Write(511, 12, 1);
+									Numerico_Write(DMX_Values[511], 17, 1);
+								}
+							if (Canal_Actual > 1 && Canal_Actual < 512)
+								{
+									Numerico_Write(Canal_Actual - 1, 1, 1);
+									Numerico_Write(DMX_Values[Canal_Actual - 1], 6, 1);
+									Numerico_Write(Canal_Actual + 1, 12, 1);
+									Numerico_Write(DMX_Values[Canal_Actual + 1], 17, 1);
+								}
 					}
 			// Value
 				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
