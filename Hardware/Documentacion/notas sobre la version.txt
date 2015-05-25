@@ -3,6 +3,7 @@ Notas sobre la version
 
 beta
 - cambiar potenciometro por encoder
+- agregar luz para el teclado
 
 v0.4 - Beta
 - AGREGADO -  la leyenda open hardware a bottom

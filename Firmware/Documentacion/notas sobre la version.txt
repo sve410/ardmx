@@ -4,6 +4,9 @@ Compilado en Arduino IDE v1.0.6
 
 v0.x - Beta
 - agregar encoder
+- agregar memory a control options
+- agregar a memory banks advanced con empty
+- agregar a config luz para teclado
 
 v0.9 - Beta - Hardware v0.3 - v0.4
 - CORREGIDO - GUI_Secuencer se cambio el metodo de lectura de memeoria, se hace en tiempo real, evita over flow
