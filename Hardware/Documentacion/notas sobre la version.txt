@@ -4,6 +4,8 @@ Notas sobre la version
 beta
 - cambiar potenciometro por encoder
 - agregar luz para el teclado
+- agregar optoacoplado a salida de dmx
+- agregar convertidor de dc/dc para alimentar el optoacoplado
 
 v0.4 - Beta
 - AGREGADO -  la leyenda open hardware a bottom
