@@ -1,5 +1,7 @@
 **Firmware**
+
 **Notas sobre la versión**
+
 **Compilado en Arduino IDE v1.0.6**
 
 ***
