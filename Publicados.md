@@ -1,6 +1,7 @@
 ***
 
 **URL**
+
 https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki
 http://www.instructables.com/id/Arduino-DMX-512-Tester-and-Controller/
 http://www.instructables.com/id/Arduino-DMX-512-Tester-and-Controller-ENG/
@@ -17,6 +18,7 @@ http://www.electronics-lab.com/blog/?p=33946
 ***
 
 **Facebook**
+
 https://www.facebook.com/groups/arduinomexico
 https://www.facebook.com/electronicabasicayavanzada
 https://www.facebook.com/groups/makermx
@@ -40,6 +42,7 @@ https://www.facebook.com/zonamaker1
 ***
 
 **Pendiente:**
+
 http://blog.bricogeek.com/	respuesta pendiente
 https://www.facebook.com/ArduinoLecco	intentarlo mas tarde
 https://www.facebook.com/pages/Arduino-UNO-progetti-e-tutorial/258314967678329?ref=%2Ffeed_chaining%2Fwww	pendiente respuesta
@@ -49,4 +52,3 @@ https://www.facebook.com/groups/ingenierosenaudiodfmx	respuesta pendient
 https://www.facebook.com/deskontrol.net		respuesta pendiente
 https://www.facebook.com/OpenSourceHardwareGroup
 https://www.facebook.com/pages/Makertech/1612645288980152
-
