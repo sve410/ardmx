@@ -1,14 +1,18 @@
-Firmware
-Notas sobre la versión
-Compilado en Arduino IDE v1.0.6
+**Firmware**
+**Notas sobre la versión**
+**Compilado en Arduino IDE v1.0.6**
 
-v0.x - Beta
+***
+
+**v0.x - Beta**
 - Agregar encoder
 - Agregar memory a control options
 - Agregar a memory banks advanced con empty
 - agregar a config luz para teclado
 
-v1.0 - Beta - Hardware v0.3 - v0.4
+***
+
+**v1.0 - Beta - Hardware v0.3 - v0.4**
 - CORREGIR  - secuencer no tiene salida de dmx
 - CORREGIDO - GUI_Secuencer se cambió el método de lectura de memoria, se hace en tiempo real, evita over flow
 - CORREGIDO - GUI_Chasser el cursor blink no se mostraba después de stop 
@@ -18,7 +22,9 @@ v1.0 - Beta - Hardware v0.3 - v0.4
 - AGREGADO  - a GUI_Secuencer en la salida a control regresa al dmx los datos desde la ram
 - AGREGADO  - a GUI_Unitary el canal anterior y siguiente en el gui
 
-v0.9 - Beta - Hardware v0.3 - v0.4
+***
+
+**v0.9 - Beta - Hardware v0.3 - v0.4**
 - CORREGIR  - GUI_Secuencer provoca over flow y se reinicia, demasiada ram usada
 - CORREGIDO - GUI_Navegar se cambió la variable Boton_Delay_Cursor de long a int
 - CORREGIDO - Contrast_Init se limita a no menor de 150 el valor del pwm
@@ -69,10 +75,14 @@ v0.9 - Beta - Hardware v0.3 - v0.4
 - Los bancos de memoria no aplican a memory empty
 - GUI_Memory_Bank solo actúa en cambios de EEPROM
 
-v0.8 - Stable - Hardware v0.3 - v0.4
+***
+
+**v0.8 - Stable - Hardware v0.3 - v0.4**
 - compatibilidad con Hardware v0.3 - v0.4
 
-v0.7 - Stable - Hardware v0.0 - v0.2
+***
+
+**v0.7 - Stable - Hardware v0.0 - v0.2**
 - AGREGADO  - en chaser el cursor en blink cuando hace la secuencia
 - AGREGADO  - función de Black Out desde el menú de Memory, pone todos los canales en 0 y los regresa a lo que tenían, para salir dar en center
 - CORREGIDO - en config contraste el límite inferior no se mostraba
@@ -85,7 +95,9 @@ v0.7 - Stable - Hardware v0.0 - v0.2
 - CORREGIDO - en ubicar se agrega cancelar con center
 - CORREGIDO - se cambió la url del about apuntando al Wiki
 
-v0.6 - Stable - Hardware v0.0 - v0.2
+***
+
+**v0.6 - Stable - Hardware v0.0 - v0.2**
 - CORREGIDO - los valores limites superiores de config se escribían un carácter después
 - CORREGIDO - hacer a partir de 155 el dimmer del contraste
 - CORREGIDO - botón * de back light funciona errático - faltaba delay para evitar repetición
@@ -104,10 +116,14 @@ v0.6 - Stable - Hardware v0.0 - v0.2
 - AGREGADO  - análogo a config contrast
 - AGREGADO  - en la lectura análogo mecanismo para escribir el valor solo cuando cambia y no todo el tiempo
 
-v0.5 - Stable - Hardware v0.0 - v0.2
+***
+
+**v0.5 - Stable - Hardware v0.0 - v0.2**
 - AGREGADO  - la función para cuando se da enter en un numero para cambiarlo, si de da enter de nuevo se quede el número que estaba
 
-v0.4 - Stable - Hardware v0.0 - v0.2
+***
+
+**v0.4 - Stable - Hardware v0.0 - v0.2**
 - CORREGIDO - se retira del about el ID
 - CORREGIDO - se cambia en config el menú exit por Ctrl
 - AGREGADO  - void Back_Light_En() para encender o apagar el back light desde el teclado numérico
@@ -123,7 +139,9 @@ v0.4 - Stable - Hardware v0.0 - v0.2
 - AGREGADO  - en matrix la opción de poner el valor final de la matriz
 - AGREGADO  - a la lectura numérica centro como enter
 
-v0.3 - Stable - Hardware v0.0 - v0.2
+***
+
+**v0.3 - Stable - Hardware v0.0 - v0.2**
 - CORREGIDO - retirar de setup las variables de la versión y pasarlas directamente a su void
 	    - no hay razón para que sean globales
 - CORREGIDO - en gui about retirar el delay en el efecto binario
@@ -132,7 +150,9 @@ v0.3 - Stable - Hardware v0.0 - v0.2
 - CORREGIDO - agregar al inicio del programa .ino un about
 - CORREGIDO - en control chaser se quitó el espacio entre delay el número y x10=mS, parece que fuera una opción
 
-v0.2 - Stable - Hardware v0.0 - v0.2
+***
+
+**v0.2 - Stable - Hardware v0.0 - v0.2**
 - CORREGIR  - retirar del setup las variables de la versión y pasarlas directamente a su void
 - CORREGIR  - en GUI_About se retirar el delay en el efecto binario
 - CORREGIR  - eeprom save, load empty y clear retirar el delay de efecto binario
@@ -151,7 +171,9 @@ v0.2 - Stable - Hardware v0.0 - v0.2
 - AGREGADO  - el control multiply
 - AGREGADO  - a about al inicio el efecto del binario corriendo
 
-v0.1 - Stable - Hardware v0.0 - v0.2
+***
+
+**v0.1 - Stable - Hardware v0.0 - v0.2**
 - CORREGIDO - cambiar en gui unit a "Unitary"
 - CORREGIDO - cambiar en GUI multi a "Matrix"
 - CORREGIDO - hacer los barridos de la memoria más rápidos, se agrega efecto de carga y no baja la velocidad
@@ -164,5 +186,7 @@ v0.1 - Stable - Hardware v0.0 - v0.2
 - AGREGADO  - se implementa para los valores la tecla "C" para ubicar la lámpara, parpadea y deja de hacerlo al volverla a presionar
 - AGREGADO  - se implementa en la matriz el valor "C" que indica el canal donde está posicionado el cursor
 
-v0.0 - Beta - Hardware v0.0 - v0.2
+***
+
+**v0.0 - Beta - Hardware v0.0 - v0.2**
 - Hello World !!
