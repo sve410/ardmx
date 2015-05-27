@@ -68,61 +68,61 @@ v0.8 - Beta - Hardware v0.3 - v0.4
 - AGREGADO - a GUI_About mas tiempo para mostrar
 - AGREGADO - GUI Secuencer
 
-v0.7 - Hardware v0.3 - v0.4 - stable
-- compativilidad con Hardware v0.3 - v0.4
+v0.8 - Stable - Hardware v0.3 - v0.4
+- compatibilidad con Hardware v0.3 - v0.4
 
-v0.6 - Hardware v0.0 - stable
-- se cambio la url del about apuntando al Wiki
-- se agrego en chaser el cursor en blink cuando hace la secuencia
-- implementada la funcion de Black Out desde el menú de Memory, pone todos los canales en 0 y los regresa a lo que tenian, para salir dar en center
-- CORREGIDO - en config contraste el limite inferior no se mostraba
-- CORREGIDO - en gui about se retiro variable id, no se usa
-- CORREGIDO - en chaser se quito el label iniciar, no se usa
-- CORREGIDO - en numerico calc se quito la variable salida, no se usa
-- CORREGIDO - en numerico calc se quito la variable Num_Val_Temp_3, no se usa
+v0.7 - Stable - Hardware v0.0 - v0.2
+- AGREGADO  - en chaser el cursor en blink cuando hace la secuencia
+- AGREGADO  - función de Black Out desde el menú de Memory, pone todos los canales en 0 y los regresa a lo que tenían, para salir dar en center
+- CORREGIDO - en config contraste el límite inferior no se mostraba
+- CORREGIDO - en gui about se retiró variable id, no se usa
+- CORREGIDO - en chaser se quitó el label iniciar, no se usa
+- CORREGIDO - en numérico calc se quitó la variable salida, no se usa
+- CORREGIDO - en numérico calc se quitó la variable Num_Val_Temp_3, no se usa
 - CORREGIDO - en chaser ya no guarda los valores de los cambios aplicados, al salir los regresa a su lugar
-- CORREGIDO - en multiply cuando hace en calculo se cambia apply por calc..
+- CORREGIDO - en multiply cuando hace en cálculo se cambia apply por calc..
 - CORREGIDO - en ubicar se agrega cancelar con center
+- CORREGIDO - se cambió la url del about apuntando al Wiki
 
-v0.5 - Hardware v0.0 - stable
-- CORREGIDO - los valores limites superiores de config se escribian un caracter después
-- CORREGIDO - hacer apartir de 155 el dimmer del contraste
-- CORREGIDO - botón * de back light funciona erratico - faltaba delay para evitar repeticion
+v0.6 - Stable - Hardware v0.0 - v0.2
+- CORREGIDO - los valores limites superiores de config se escribían un carácter después
+- CORREGIDO - hacer a partir de 155 el dimmer del contraste
+- CORREGIDO - botón * de back light funciona errático - faltaba delay para evitar repetición
 - CORREGIDO - quitar en config el dimmer 0-255, no aplica al contraste
 - CORREGIDo - las io no usadas son salidas low
 - CORREGIDO - no inicializa el contraste
 - CORREGIDO - en matrix no se aplican los cambios en los bancos
 - CORREGIDO - en matrix el valor final del banco se pasa de 512
 - CORREGIDO - en config backlight el valor no se guardaba en eeprom
-- CORREGIDO - en config backlight se recorrian todas las opciones de botones, se agrego mecanismo para sacar del bucle
-- se agrega potenciometro para valores DMX con tecla D solo en valores, para detenerlo precionar # o center
-- analogo agregado a unitary
-- analogo agregado a matrix
-- analogo agregado a config back light
-- analogo agregado a config contrast
-- se bajo el delay de la lectura analoga para evitar pasos escalonados
-- se agrega en la lectura analogo mecanismo para escribir el valor solo cuando cambia y no todo el tiempo
+- CORREGIDO - en config backlight se recorrían todas las opciones de botones, se agregó mecanismo para sacar del bucle
+- CORREGIDO - se bajó el delay de la lectura análoga para evitar pasos escalonados
+- AGREGADO  - potenciómetro para valores DMX con tecla "D" solo en valores, para detenerlo presionar # o center
+- AGREGADO  - análogo a unitary
+- AGREGADO  - análogo a matrix
+- AGREGADO  - análogo a config back light
+- AGREGADO  - análogo a config contrast
+- AGREGADO  - en la lectura análogo mecanismo para escribir el valor solo cuando cambia y no todo el tiempo
 
-v0.4 - Hardware v0.0 - Stable
-- se agrega la funcion para cuando se da enter en un numero para cambiarlo, si de da enter denuevo se quede el numero que estaba
+v0.5 - Stable - Hardware v0.0 - v0.2
+- AGREGADO  - la función para cuando se da enter en un numero para cambiarlo, si de da enter de nuevo se quede el número que estaba
 
-v0.3 - Hardware v0.0 - Stable
-- se agrega void Back_Light_En() para encender o apagar el back light desde el teclado numerico
-- se agrega el void Back_Light_Init() para encender o apagar el back light desde la ultima configuración
-- se agrega a Control Options el menú Config
-- se agrega void GUI_Config() con las opciones de la configuración y el LCD y la salida al pwm
-- agregado el control del back light a gui_navegar, siempre esta activo
-- se actualiza el about con el nombre del proyecto
-- se retira del about el ID
-- se agrega al config el about
-- se agrega al about desde config espera a que se precione center para salir
-- se agrega al config mas info sobre el backlight
-- se cambia en config el menú exit por Ctrl
-- se agrega a control options Memory options
-- se agrega en matrix la opcion de poner el valor final de la matriz
-- se agrega a la lectura numerica centro como enter
+v0.4 - Stable - Hardware v0.0 - v0.2
+- CORREGIDO - se retira del about el ID
+- CORREGIDO - se cambia en config el menú exit por Ctrl
+- AGREGADO  - void Back_Light_En() para encender o apagar el back light desde el teclado numérico
+- AGREGADO  - void Back_Light_Init() para encender o apagar el back light desde la última configuración
+- AGREGADO  - a Control Options el menú Config
+- AGREGADO  - void GUI_Config() con las opciones de la configuración, el LCD y la salida al pwm
+- AGREGADO  - control del back light a gui_navegar, siempre está activo
+- AGREGADO  - se actualiza el about con el nombre del proyecto
+- AGREGADO  - al config el about
+- AGREGADO  - al about desde config espera a que se presione center para salir
+- AGREGADO  - al config mas info sobre el backlight
+- AGREGADO  - a control options Memory options
+- AGREGADO  - en matrix la opción de poner el valor final de la matriz
+- AGREGADO  - a la lectura numérica centro como enter
 
-v0.3 - Beta - Hardware v0.0
+v0.3 - Stable - Hardware v0.0 - v0.2
 - CORREGIDO - retirar de setup las variables de la versión y pasarlas directamente a su void
 	    - no hay razón para que sean globales
 - CORREGIDO - en gui about retirar el delay en el efecto binario
@@ -131,7 +131,7 @@ v0.3 - Beta - Hardware v0.0
 - CORREGIDO - agregar al inicio del programa .ino un about
 - CORREGIDO - en control chaser se quitó el espacio entre delay el número y x10=mS, parece que fuera una opción
 
-v0.2 - Beta - Hardware v0.0
+v0.2 - Stable - Hardware v0.0 - v0.2
 - CORREGIR  - retirar del setup las variables de la versión y pasarlas directamente a su void
 - CORREGIR  - en GUI_About se retirar el delay en el efecto binario
 - CORREGIR  - eeprom save, load empty y clear retirar el delay de efecto binario
@@ -150,7 +150,7 @@ v0.2 - Beta - Hardware v0.0
 - AGREGADO  - el control multiply
 - AGREGADO  - a about al inicio el efecto del binario corriendo
 
-v0.1 - Beta - Hardware v0.0
+v0.1 - Stable - Hardware v0.0 - v0.2
 - CORREGIDO - cambiar en gui unit a "Unitary"
 - CORREGIDO - cambiar en GUI multi a "Matrix"
 - CORREGIDO - hacer los barridos de la memoria más rápidos, se agrega efecto de carga y no baja la velocidad
@@ -163,5 +163,5 @@ v0.1 - Beta - Hardware v0.0
 - AGREGADO  - se implementa para los valores la tecla "C" para ubicar la lámpara, parpadea y deja de hacerlo al volverla a presionar
 - AGREGADO  - se implementa en la matriz el valor "C" que indica el canal donde está posicionado el cursor
 
-v0.0 - Beta - Hardware v0.0
+v0.0 - Beta - Hardware v0.0 - v0.2
 - Hello World !!
