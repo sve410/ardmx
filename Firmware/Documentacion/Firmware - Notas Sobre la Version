@@ -1,0 +1,165 @@
+Firmware
+Notas sobre la version
+Compilado en Arduino IDE v1.0.6
+
+v0.x - Beta
+- agregar encoder
+- agregar memory a control options
+- agregar a memory banks advanced con empty
+- agregar a config luz para teclado
+
+v0.9 - Beta - Hardware v0.3 - v0.4
+- CORREGIDO - GUI_Secuencer se cambio el metodo de lectura de memeoria, se hace en tiempo real, evita over flow
+- CORREGIDO - GUI_Chasser el cursor blink no se mostraba despues de stop 
+- CORREGIDO - GUI_Control_Options, el cursor no se mostraba en unitary
+- AGREGADO - lectura de boton "center" en el about
+- AGREGADO - a GUI_Secuencer limite de delay a 100
+- AGREGADO - a GUI_Secuencer en la salida a control regresa al dmx los datos desde la ram
+- AGREGADO - a GUI_Unitary el canal anterior y siguiente en el gui
+
+v0.8 - Beta - Hardware v0.3 - v0.4
+- CORREGIR - GUI_Secuencer provoca over flow y se reinicia, demasiada ram usada
+- CORREGIDO - GUI_Navegar se cambio la variable Boton_Delay_Cursor de long a int
+- CORREGIDO - Contrast_Init se limita a no menor de 150 el valor del pwm
+- CORREGIDO - GUI_Config solo en control options
+- CORREGIDO - esta ensimado en control options unitary
+- CORREGIDO - GUI Control Options se quito iniciar:, no se usa
+- CORREGIDO - se agrego variable global BackLight_Add para direccion de EEPROM
+- CORREGIDO - se agrego variable global Contrast_Add para direccion de EEPROM
+- el banco 8 solo llegaria a 500 por el contraste y el backlight
+- Los bancos de memoria no aplican a memory empty
+- GUI_Memory_Bank solo actua en cambios de EEPROM
+- GUI_Secuencer limitado delay entre 0 y 999 x 100 mS
+- GUI_Secuencer limitado final y first entre 1 y 8
+- Se quito el efecto binario cuando se usa la memoria EEPROM
+- AGREGADO - a GUI_About bink del cursor
+- AGREGADO - GUI_Memory_Bank
+- AGREGADO - GUI_Memory_Bank, regresa 1 si se selecciona salir para regresar al menu anterior
+- AGREGADO - a GUI_Memory_Bank, retardo cuando entra al banco de memoria
+- AGREGADO - a matrix el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a memory options el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a unitary control el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a multiply control el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a GUI Memory la configuracion
+- AGREGADO - a GUI Control Options el numero de banco actual, si el banco no se selecciono muestra "-"
+- AGREGADO - a GUI Control Options la configuracion
+- AGREGADO - a GUI_EEPROM_Empty la leyenda del banco que se esta modificando "RAM"
+- AGREGADO - a GUI_EEPROM_Empty el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Clear control de universos guardados
+- AGREGADO - a EEPROM_Clear al final y al principio el numero de banco
+- AGREGADO - a EEPROM_Clear el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Clear regresa 1 si se selecciona exit
+- AGREGADO - a EEPROM_Clear mas tiempo para mensaje final
+- AGREGADO - a EEPROM_Load control de universos guardados
+- AGREGADO - a EEPROM_Load, regresa 1 si se selecciona exit
+- AGREGADO - a EEPROM_Load al final el numero de banco
+- AGREGADO - a EEPROM_Load el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Load mas tiempo para mensaje final
+- AGREGADO - a EEPROM_Save control de universos guardados
+- AGREGADO - a EEPROM_Save al final el numero de banco
+- AGREGADO - a EEPROM_Save, regresa 1 si se selecciona exit
+- AGREGADO - a EEPROM_Save el blink del lcd para saber que esta trabajando
+- AGREGADO - a EEPROM_Save mas tiempo para mensaje final
+- AGREGADO - a GUI_Memory_Init control de universos
+- AGREGADO - a GUI_Memory_Init manejo cuando se selecciona exit en los bancos de memeoria
+- AGREGADO - a GUI_Memory control de salida desde bancos de memoria
+- AGREGADO - a GUI_Memory salida inmediata despues de la lectura de opcion
+- AGREGADO - a GUI_About la leyenda open hardware
+- AGREGADO - a GUI_About mas tiempo para mostrar
+- AGREGADO - GUI Secuencer
+
+v0.7 - Hardware v0.3 - v0.4 - stable
+- compativilidad con Hardware v0.3 - v0.4
+
+v0.6 - Hardware v0.0 - stable
+- se cambio la url del about apuntando al Wiki
+- se agrego en chaser el cursor en blink cuando hace la secuencia
+- implementada la funcion de Black Out desde el menu de Memory, pone todos los canales en 0 y los regresa a lo que tenian, para salir dar en center
+- CORREGIDO - en config contraste el limite inferior no se mostraba
+- CORREGIDO - en gui about se retiro variable id, no se usa
+- CORREGIDO - en chaser se quito el label iniciar, no se usa
+- CORREGIDO - en numerico calc se quito la variable salida, no se usa
+- CORREGIDO - en numerico calc se quito la variable Num_Val_Temp_3, no se usa
+- CORREGIDO - en chaser ya no guarda los valores de los cambios aplicados, al salir los regresa a su lugar
+- CORREGIDO - en multiply cuando hace en calculo se cambia apply por calc..
+- CORREGIDO - en ubicar se agrega cancelar con center
+
+v0.5 - Hardware v0.0 - stable
+- CORREGIDO - los valores limites superiores de config se escribian un caracter despues
+- CORREGIDO - hacer apartir de 155 el dimmer del contraste
+- CORREGIDO - boton * de back light funciona erratico - faltaba delay para evitar repeticion
+- CORREGIDO - quitar en config el dimmer 0-255, no aplica al contraste
+- CORREGIDo - las io no usadas son salidas low
+- CORREGIDO - no inicializa el contraste
+- CORREGIDO - en matrix no se aplican los cambios en los bancos
+- CORREGIDO - en matrix el valor final del banco se pasa de 512
+- CORREGIDO - en config backlight el valor no se guardaba en eeprom
+- CORREGIDO - en config backlight se recorrian todas las opciones de botones, se agrego mecanismo para sacar del bucle
+- se agrega potenciometro para valores DMX con tecla D solo en valores, para detenerlo precionar # o center
+- analogo agregado a unitary
+- analogo agregado a matrix
+- analogo agregado a config back light
+- analogo agregado a config contrast
+- se bajo el delay de la lectura analoga para evitar pasos escalonados
+- se agrega en la lectura analogo mecanismo para escribir el valor solo cuando cambia y no todo el tiempo
+
+v0.4 - Hardware v0.0 - Stable
+- se agrega la funcion para cuando se da enter en un numero para cambiarlo, si de da enter denuevo se quede el numero que estaba
+
+v0.3 - Hardware v0.0 - Stable
+- se agrega void Back_Light_En() para encender o apagar el back light desde el teclado numerico
+- se agrega el void Back_Light_Init() para encender o apagar el back light desde la ultima configuracion
+- se agrega a Control Options el menu Config
+- se agrega void GUI_Config() con las opciones de la configuracion y el LCD y la salida al pwm
+- agregado el control del back light a gui_navegar, siempre esta activo
+- se actualiza el about con el nombre del proyecto
+- se retira del about el ID
+- se agrega al config el about
+- se agrega al about desde config espera a que se precione center para salir
+- se agrega al config mas info sobre el backlight
+- se cambia en config el menu exit por Ctrl
+- se agrega a control options Memory options
+- se agrega en matrix la opcion de poner el valor final de la matriz
+- se agrega a la lectura numerica centro como enter
+
+v0.2 - Hardware v0.0 - Stable
+- CORREGIDO - retirar de setup las variables de la vercion y pasarlas directamente a su void
+	    - no hay razon para que sean globales
+- CORREGIDO - en gui about retirar el delay en el efecto binario
+- CORREGIDO - eeprom save, load empty y clear retirar delay de efecto
+	    - se retiro en todos los casos
+- CORREGIDO - agregar al inicio del programa .ino un about
+- en control chaser se quito el espacio entre delay el numero y x10=mS, parece que fuera una opcion
+
+v0.1 - Hardware v0.0 - Stable
+- CORREGIR - retirar de setup las variables de la vercion y pasarlas directamente a su void
+- CORREGIR - en gui about retirar el delay en el efecto binario
+- CORREGIR - eeprom save, load empty y clear retirar delay de efecto
+- CORREGIR - agregar al inicio del programa un about
+- CORREGIR - checar el tema de el puerto de data flux, no se asigna
+- actualizacion del texto about
+- actualizacion del texto memory initial
+- se agrego al GUI memory "empty" para borrar la ram
+- se cambio gui_init por gui_about
+- se agrego a about al inicio el efecto del binario corriendo
+- se cambia en unitary control, matrix por control y aunta a gui control options
+- se cambia en matrix control, ubi por con y aunta a gui control options
+- se agrega a control options about
+- se agrega a control opyions Chaser
+- se agrega a control options multiply
+- agregado el control multiply
+- se quita la opcion about es muy repetitiva
+
+v0.0 - Hardware v0.0 - Stable
+- CORREGIDO - cambiar en gui unit a "Unitary"
+- CORREGIDO - cambiar en GUI multi a "Matrix"
+- CORREGIDO - hacer los barridos de la memoria mas rapidos, se agrega efecto de carga y no baja la velocidad
+- CORREGIDO - agregar al menu memory "cancel"
+- se agrega 100ms mas a la lectura de los cursores
+- CORREGIDO - cuando se escribe un numero en la matriz o en unit mayor o menor al limite la variable funciona pero el visual no
+- en multi no hay vispa de posicion
+- se agrega lineas bajas cuando se esta escribiendo un numero, se quitaron los ceros
+- se implementa para el caso de los valores A para 255 y B para 000
+- se implementa para los valores la tecla C para ubicar la lampara, parpadea y deja de hacerlo al volverla a precionar
+- se implementa en la matriz el valor C que indica el canal donde esta posicionado el cursor
+
