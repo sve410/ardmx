@@ -8,17 +8,18 @@ v0.x - Beta
 - Agregar a memory banks advanced con empty
 - agregar a config luz para teclado
 
-v0.9 - Beta - Hardware v0.3 - v0.4
+v1.0 - Beta - Hardware v0.3 - v0.4
+- CORREGIR  - secuencer no tiene salida de dmx
 - CORREGIDO - GUI_Secuencer se cambió el método de lectura de memoria, se hace en tiempo real, evita over flow
 - CORREGIDO - GUI_Chasser el cursor blink no se mostraba después de stop 
 - CORREGIDO - GUI_Control_Options, el cursor no se mostraba en unitary
-- AGREGADO - lectura de botón "center" en el about
-- AGREGADO - a GUI_Secuencer límite de delay a 100
-- AGREGADO - a GUI_Secuencer en la salida a control regresa al dmx los datos desde la ram
-- AGREGADO - a GUI_Unitary el canal anterior y siguiente en el gui
+- AGREGADO  - lectura de botón "center" en el about
+- AGREGADO  - a GUI_Secuencer límite de delay a 100
+- AGREGADO  - a GUI_Secuencer en la salida a control regresa al dmx los datos desde la ram
+- AGREGADO  - a GUI_Unitary el canal anterior y siguiente en el gui
 
-v0.8 - Beta - Hardware v0.3 - v0.4
-- CORREGIR - GUI_Secuencer provoca over flow y se reinicia, demasiada ram usada
+v0.9 - Beta - Hardware v0.3 - v0.4
+- CORREGIR  - GUI_Secuencer provoca over flow y se reinicia, demasiada ram usada
 - CORREGIDO - GUI_Navegar se cambió la variable Boton_Delay_Cursor de long a int
 - CORREGIDO - Contrast_Init se limita a no menor de 150 el valor del pwm
 - CORREGIDO - GUI_Config solo en control options
@@ -26,47 +27,47 @@ v0.8 - Beta - Hardware v0.3 - v0.4
 - CORREGIDO - GUI Control Options se quitó iniciar:, no se usa
 - CORREGIDO - se agregó variable global BackLight_Add para dirección de EEPROM
 - CORREGIDO - se agregó variable global Contrast_Add para dirección de EEPROM
+- CORREGIDO - Se quitó el efecto binario cuando se usa la memoria EEPROM
+- AGREGADO  - GUI_Secuencer limitado delay entre 0 y 999 x 100 mS
+- AGREGADO  - GUI_Secuencer limitado final y first entre 1 y 8
+- AGREGADO  - a GUI_About bink del cursor
+- AGREGADO  - GUI_Memory_Bank
+- AGREGADO  - GUI_Memory_Bank, regresa 1 si se selecciona salir para regresar al menú anterior
+- AGREGADO  - a GUI_Memory_Bank, retardo cuando entra al banco de memoria
+- AGREGADO  - a matrix el número de banco actual, si el banco no se seleccionó muestra "-"
+- AGREGADO  - a memory options el número de banco actual, si el banco no se seleccionó muestra "-"
+- AGREGADO  - a unitary control el número de banco actual, si el banco no se seleccionó muestra "-"
+- AGREGADO  - a multiply control el número de banco actual, si el banco no se seleccionó muestra "-"
+- AGREGADO  - a GUI Memory la configuración
+- AGREGADO  - a GUI Control Options el número de banco actual, si el banco no se seleccionó muestra "-"
+- AGREGADO  - a GUI Control Options la configuración
+- AGREGADO  - a GUI_EEPROM_Empty la leyenda del banco que se está modificando "RAM"
+- AGREGADO  - a GUI_EEPROM_Empty el blink del lcd para saber que está trabajando
+- AGREGADO  - a EEPROM_Clear control de universos guardados
+- AGREGADO  - a EEPROM_Clear al final y al principio el número de banco
+- AGREGADO  - a EEPROM_Clear el blink del lcd para saber que está trabajando
+- AGREGADO  - a EEPROM_Clear regresa 1 si se selecciona éxito
+- AGREGADO  - a EEPROM_Clear más tiempo para mensaje final
+- AGREGADO  - a EEPROM_Load control de universos guardados
+- AGREGADO  - a EEPROM_Load, regresa 1 si se selecciona exit
+- AGREGADO  - a EEPROM_Load al final el número de banco
+- AGREGADO  - a EEPROM_Load el blink del lcd para saber que está trabajando
+- AGREGADO  - a EEPROM_Load más tiempo para mensaje final
+- AGREGADO  - a EEPROM_Save control de universos guardados
+- AGREGADO  - a EEPROM_Save al final el número de banco
+- AGREGADO  - a EEPROM_Save, regresa 1 si se selecciona exit
+- AGREGADO  - a EEPROM_Save el blink del lcd para saber que está trabajando
+- AGREGADO  - a EEPROM_Save más tiempo para mensaje final
+- AGREGADO  - a GUI_Memory_Init control de universos
+- AGREGADO  - a GUI_Memory_Init manejo cuando se selecciona exit en los bancos de memoria
+- AGREGADO  - a GUI_Memory control de salida desde bancos de memoria
+- AGREGADO  - a GUI_Memory salida inmediata después de la lectura de opción
+- AGREGADO  - a GUI_About la leyenda open hardware
+- AGREGADO  - a GUI_About más tiempo para mostrar
+- AGREGADO  - GUI Secuencer
 - el banco 8 solo llegaría a 500 por el contraste y el backlight
 - Los bancos de memoria no aplican a memory empty
 - GUI_Memory_Bank solo actúa en cambios de EEPROM
-- GUI_Secuencer limitado delay entre 0 y 999 x 100 mS
-- GUI_Secuencer limitado final y first entre 1 y 8
-- Se quitó el efecto binario cuando se usa la memoria EEPROM
-- AGREGADO - a GUI_About bink del cursor
-- AGREGADO - GUI_Memory_Bank
-- AGREGADO - GUI_Memory_Bank, regresa 1 si se selecciona salir para regresar al menú anterior
-- AGREGADO - a GUI_Memory_Bank, retardo cuando entra al banco de memoria
-- AGREGADO - a matrix el número de banco actual, si el banco no se seleccionó muestra "-"
-- AGREGADO - a memory options el número de banco actual, si el banco no se seleccionó muestra "-"
-- AGREGADO - a unitary control el número de banco actual, si el banco no se seleccionó muestra "-"
-- AGREGADO - a multiply control el número de banco actual, si el banco no se seleccionó muestra "-"
-- AGREGADO - a GUI Memory la configuración
-- AGREGADO - a GUI Control Options el número de banco actual, si el banco no se seleccionó muestra "-"
-- AGREGADO - a GUI Control Options la configuración
-- AGREGADO - a GUI_EEPROM_Empty la leyenda del banco que se está modificando "RAM"
-- AGREGADO - a GUI_EEPROM_Empty el blink del lcd para saber que está trabajando
-- AGREGADO - a EEPROM_Clear control de universos guardados
-- AGREGADO - a EEPROM_Clear al final y al principio el número de banco
-- AGREGADO - a EEPROM_Clear el blink del lcd para saber que está trabajando
-- AGREGADO - a EEPROM_Clear regresa 1 si se selecciona éxito
-- AGREGADO - a EEPROM_Clear mas tiempo para mensaje final
-- AGREGADO - a EEPROM_Load control de universos guardados
-- AGREGADO - a EEPROM_Load, regresa 1 si se selecciona exit
-- AGREGADO - a EEPROM_Load al final el numero de banco
-- AGREGADO - a EEPROM_Load el blink del lcd para saber que esta trabajando
-- AGREGADO - a EEPROM_Load mas tiempo para mensaje final
-- AGREGADO - a EEPROM_Save control de universos guardados
-- AGREGADO - a EEPROM_Save al final el numero de banco
-- AGREGADO - a EEPROM_Save, regresa 1 si se selecciona exit
-- AGREGADO - a EEPROM_Save el blink del lcd para saber que esta trabajando
-- AGREGADO - a EEPROM_Save mas tiempo para mensaje final
-- AGREGADO - a GUI_Memory_Init control de universos
-- AGREGADO - a GUI_Memory_Init manejo cuando se selecciona exit en los bancos de memoria
-- AGREGADO - a GUI_Memory control de salida desde bancos de memoria
-- AGREGADO - a GUI_Memory salida inmediata después de la lectura de opcion
-- AGREGADO - a GUI_About la leyenda open hardware
-- AGREGADO - a GUI_About mas tiempo para mostrar
-- AGREGADO - GUI Secuencer
 
 v0.8 - Stable - Hardware v0.3 - v0.4
 - compatibilidad con Hardware v0.3 - v0.4
