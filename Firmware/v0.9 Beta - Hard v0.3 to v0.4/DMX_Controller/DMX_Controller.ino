@@ -3,8 +3,8 @@
 // **																														**
 // **										Arduino DMX-512 Tester Controller												**
 // **																														**
-// **	- Firmware v0.8																										**
-// **	- Hardware v0.3	 																									**
+// **	- Firmware v0.9																										**
+// **	- Hardware v0.3	- v0.4 																								**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
 // **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
@@ -271,7 +271,7 @@ void Back_Light_En()
 void GUI_About()
 	{
 		byte Firm_Ver_Ent = 0;
-		byte Firm_Ver_Dec = 8;
+		byte Firm_Ver_Dec = 9;
 		byte Hard_Ver_Ent = 0;
 		byte Hard_Ver_Dec = 4;
 		lcd.clear ();
