@@ -1,13 +1,18 @@
-Hardware
-Notas sobre la versión
+**Hardware**
 
-beta
+**Notas sobre la versión**
+
+***
+
+**Beta**
 - cambiar potenciómetro por encoder
 - agregar luz para el teclado
 - agregar opto acoplado a salida de dmx
 - agregar convertidor de dc/dc para alimentar el opto acoplado
 
-v0.4 - Beta - Firm v0.9 to v1.0
+***
+
+**v0.4 - Beta - Firm v0.9 to v1.0**
 - CORREGIDO - hacer más grandes los pads del SW
 - CORREGIDO - quitar parte de abajo del soporte del teclado estorba con el flex del teclado
 - CORREGIDO - recorrida la bornera de la conexión dmx hacia el arduino, queda más centrada
@@ -18,7 +23,9 @@ v0.4 - Beta - Firm v0.9 to v1.0
 - AGREGADO  - interconectados los pines del arduino de vcc y gnd faltantes
 - AGREGADO  -  la leyenda open hardware a bottom
 
-v0.3 - Beta - Firm v0.0 to v0.8
+***
+
+**v0.3 - Beta - Firm v0.0 to v0.8**
 - AGREGADO  - backlight a pin 13 para efecto en el lcd mientras se actualiza
 - AGREGADO  - control de contraste desde software
 - AGREGADO  - control de back light desde software
@@ -32,11 +39,15 @@ v0.3 - Beta - Firm v0.0 to v0.8
 - CORREGIR  - quitar parte de abajo del soporte del teclado estorba con el flex del teclado
 - CORREGIR  - los datos de la salida están al revés
 
-v0.2 - Beta - Firm v0.0 to v0.8
+***
+
+**v0.2 - Beta - Firm v0.0 to v0.8**
 - AGREGADO  - control de contraste desde software
 - AGREGADO  - control de back light desde software
 
-v0.1 - Beta - Firm v0.0 to v0.8
+***
+
+**v0.1 - Beta - Firm v0.0 to v0.8**
 - CORREGIDO - no se necesita el led on, la pantalla ya tiene un led
 	    - el led ON se retira, los leds de la salida del dmx indican que está activo
 - CORREGIDO - no hay botón de reset
@@ -60,7 +71,9 @@ v0.1 - Beta - Firm v0.0 to v0.8
 - AGREGADO  - conexión para baterías
 - AGREGADO  - header para completar la conexión del arduino, estaba incompleta
 
-v0.0 - Beta - Firm v0.0 to v0.8
+***
+
+**v0.0 - Beta - Firm v0.0 to v0.8**
 - CORREGIR  - no se necesita el led on, la pantalla ya tiene un led
 - CORREGIR  - no hay botón de reset
 - CORREGIR  - quitar botón SW de encendido
