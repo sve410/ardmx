@@ -3,8 +3,8 @@
 // **																														**
 // **										Arduino DMX-512 Tester Controller												**
 // **																														**
-// **	- Firmware v0.9																										**
-// **	- Hardware v0.3	- v0.4																								**
+// **	- Firmware v0.8																										**
+// **	- Hardware v0.3	 																									**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
 // **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
@@ -271,7 +271,7 @@ void Back_Light_En()
 void GUI_About()
 	{
 		byte Firm_Ver_Ent = 0;
-		byte Firm_Ver_Dec = 9;
+		byte Firm_Ver_Dec = 8;
 		byte Hard_Ver_Ent = 0;
 		byte Hard_Ver_Dec = 4;
 		lcd.clear ();
@@ -280,7 +280,6 @@ void GUI_About()
 				lcd.print (numero, BIN);
 			}
 		lcd.clear ();
-		lcd.blink ();
 		lcd.setCursor(3, 0);
 		lcd.print("Arduino DMX-512");
 		lcd.setCursor(1, 1);
@@ -297,24 +296,17 @@ void GUI_About()
 			lcd.print(Hard_Ver_Ent);
 			lcd.print(".");
 			lcd.print(Hard_Ver_Dec);
-			lcd.setCursor(2, 0);
-		while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
-			{
-
-			}
-		delay (300);	// rebote de boton
-			lcd.clear ();
-			lcd.setCursor(3, 1);
-			lcd.print("Open Hardware!");
-			lcd.setCursor(0, 3);
-			lcd.print("http://goo.gl/5nqJKt");
-			lcd.setCursor(2, 1);
- 		while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
-			{
-			
-			}	
-		delay (300);	// rebote de boton
-		lcd.noBlink ();
+		lcd.setCursor(0, 0);
+		lcd.blink();
+		delay (3000);
+		lcd.clear ();
+		lcd.setCursor(3, 1);
+		lcd.print("Open Hardware!");
+		lcd.setCursor(0, 3);
+		lcd.print("http://goo.gl/5nqJKt");
+		lcd.setCursor(0, 0);
+		delay(3000);  									//retardo de muestra de mensaje
+		lcd.noBlink();
 	}
 
 void Multi_Matrix(int inicial)
@@ -1145,11 +1137,11 @@ void GUI_Secuencer()
 					lcd.print(Universo_Actual);
 				}
 			lcd.setCursor (4, 1);
-			lcd.print("Delay 001x100=mS");
+			lcd.print("Delay 000x100=mS");
 			lcd.setCursor (0, 2);
-			lcd.print("FirstBank 001  Ctrl");
+			lcd.print("FirstBank 000  Ctrl");
 			lcd.setCursor (0, 3);
-			lcd.print("FinalBank 008  Start");
+			lcd.print("FinalBank 000  Start");
 		// Cursor
 			LCD_Col_Pos = 9;			// posicion de cursor
 			LCD_Row_Pos = 1;
@@ -1162,9 +1154,6 @@ void GUI_Secuencer()
 				Cursor_Conf[2][14] = 1;	// Control
 				Cursor_Conf[3][14] = 1;	// start
 	inicio:	
-		lcd.setCursor (15, 3);
-		lcd.print("Start");
-		lcd.noBlink();
 		// navegar
 			GUI_Navegar(0, 0);
 		// Acciones
@@ -1185,11 +1174,6 @@ void GUI_Secuencer()
 							{
 								Delay_Secuencia = Num_Val;			// por el multiplicador
 							}
-						if (Num_Val > 100)
-							{
-								Delay_Secuencia = 100;
-								Numerico_Write (Delay_Secuencia, 10, 1);
-							}
 						goto inicio;
 					}
 			// First Bank
@@ -1202,6 +1186,7 @@ void GUI_Secuencer()
 						First_Bank = Num_Val;
 						if (Num_Val == 0)
 							{
+								Numerico_Write (1, 10, 2);
 								First_Bank = 1;
 								Numerico_Write (First_Bank, 10, 2);
 							}
@@ -1222,6 +1207,7 @@ void GUI_Secuencer()
 						Final_Bank = Num_Val;
 						if (Num_Val == 0)
 							{
+								Numerico_Write (1, 10, 2);
 								Final_Bank = 1;
 								Numerico_Write (Final_Bank, 10, 3);
 							}
@@ -1235,30 +1221,23 @@ void GUI_Secuencer()
 			// Control
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
 					{
-						// restablecer salida dmx como estaba antes de entrar
+						// limpiar salida dmx
 						for(int Canal = 0; Canal <= 512; Canal ++)
 							{
-								ArduinoDmx0.TxBuffer[Canal] = DMX_Values[Canal]; 		// salida a DMX
+								ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
 							}
 						GUI_Control_Options ();
 					}
 			// start
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
 					{
-						// validar
-							if (First_Bank == Final_Bank)
-								{
-									First_Bank = 1;
-									Numerico_Write (First_Bank, 10, 2);
-									Final_Bank = 8;
-									Numerico_Write (Final_Bank, 10, 2);
-									goto inicio;
-								}
 						// LCD
+							// lcd.blink();
 							lcd.setCursor (14, 3);
 							lcd.print("+");
 							lcd.setCursor (15, 3);
 							lcd.print("Stop ");
+							lcd.setCursor (19, 3);
 						// establecer reversa o adelante
 							byte Adelante_Reversa = 0;				// 0 Adelante, 1 Reversa
 							// adelante
@@ -1293,161 +1272,207 @@ void GUI_Secuencer()
 												}
 										}
 								}
-						//Secuenciar
-							byte value = 0;
-							lcd.blink();
-							if (Adelante_Reversa == 0)				// adelante
+						// Cargar Bancos en memoria
+							byte Banco_1 [512];
+							byte Banco_2 [512];
+							byte Banco_3 [512];
+							byte Banco_4 [512];
+							byte Banco_5 [512];
+							byte Banco_6 [512];
+							byte Banco_7 [512];
+							byte Banco_8 [512];
+							// Banco 1
+							if (Bancos [1] == 1)
 								{
-									contar:
-									for (byte conteo = 1; conteo <= 8; conteo ++)
+									for(int Canal = 0; Canal <= 512; Canal ++)
 										{
-											if (Bancos [conteo] = 1)
-												{
-													lcd.setCursor (19, 0);
-													lcd.print(conteo);
-													lcd.setCursor (19, 3);
-													for (int canal = 0; canal <= 511; canal ++)
-														{
-															switch (conteo)
-																{
-																	case 1:
-																		value = EEPROM.read(canal);
-																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-																		break;
-																	case 2:
-																		value = EEPROM.read(canal + 512);
-																		ArduinoDmx0.TxBuffer[canal + 512] = value; 		// salida a DMX
-																		break;
-																	case 3:
-																		value = EEPROM.read(canal + 1024);
-																		ArduinoDmx0.TxBuffer[canal + 1024] = value; 	// salida a DMX
-																		break;
-																	case 4:
-																		value = EEPROM.read(canal + 1536);
-																		ArduinoDmx0.TxBuffer[canal + 1536] = value; 	// salida a DMX
-																		break;
-																	case 5:
-																		value = EEPROM.read(canal + 2048);
-																		ArduinoDmx0.TxBuffer[canal + 2048] = value; 	// salida a DMX
-																		break;
-																	case 6:
-																		value = EEPROM.read(canal + 2560);
-																		ArduinoDmx0.TxBuffer[canal + 2560] = value; 	// salida a DMX
-																		break;
-																	case 7:
-																		value = EEPROM.read(canal + 3072);
-																		ArduinoDmx0.TxBuffer[canal + 3072] = value; 	// salida a DMX
-																		break;
-																	case 8:
-																		value = EEPROM.read(canal + 3584);
-																		ArduinoDmx0.TxBuffer[canal + 3584] = value; 	// salida a DMX
-																		break;
-																}
-																
-														}
-													//delay
-														long delay_contar = Delay_Secuencia * 100;
-														while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
-															{	
-																for (long contar = 0; contar <= delay_contar; contar ++)
-																	{
-																		delay(1);
-																		if (digitalRead(Boton_Center) == LOW)
-																			{
-																				goto salida;
-																			}
-																	}
-																goto Delay_Salir;
-															}
-													salida:
-														delay(500);												// rebote de boton
-														goto inicio;
-													Delay_Salir:
-														{
-																				
-														}
-												}
+											Banco_1[Canal] = EEPROM.read(Canal);             	// lectura desde EEPROM
 										}
-									goto contar;
 								}
-							if (Adelante_Reversa == 1)				// reversa
+							// Banco 2
+							if (Bancos [2] == 1)
 								{
-									contar_rev:
-									for (byte conteo = 8; conteo >= 1; conteo --)
+									for(int Canal = 0; Canal <= 512; Canal ++)
 										{
-											if (Bancos [conteo] = 1)
-												{
-													lcd.setCursor (19, 0);
-													lcd.print(conteo);
-													lcd.setCursor (19, 3);
-													for (int canal = 0; canal <= 511; canal ++)
-														{
-															switch (conteo)
-																{
-																	case 1:
-																		value = EEPROM.read(canal);
-																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-																		break;
-																	case 2:
-																		value = EEPROM.read(canal + 512);
-																		ArduinoDmx0.TxBuffer[canal + 512] = value; 		// salida a DMX
-																		break;
-																	case 3:
-																		value = EEPROM.read(canal + 1024);
-																		ArduinoDmx0.TxBuffer[canal + 1024] = value; 	// salida a DMX
-																		break;
-																	case 4:
-																		value = EEPROM.read(canal + 1536);
-																		ArduinoDmx0.TxBuffer[canal + 1536] = value; 	// salida a DMX
-																		break;
-																	case 5:
-																		value = EEPROM.read(canal + 2048);
-																		ArduinoDmx0.TxBuffer[canal + 2048] = value; 	// salida a DMX
-																		break;
-																	case 6:
-																		value = EEPROM.read(canal + 2560);
-																		ArduinoDmx0.TxBuffer[canal + 2560] = value; 	// salida a DMX
-																		break;
-																	case 7:
-																		value = EEPROM.read(canal + 3072);
-																		ArduinoDmx0.TxBuffer[canal + 3072] = value; 	// salida a DMX
-																		break;
-																	case 8:
-																		value = EEPROM.read(canal + 3584);
-																		ArduinoDmx0.TxBuffer[canal + 3584] = value; 	// salida a DMX
-																		break;
-																}
-																
-														}
-													//delay
-														long delay_contar = Delay_Secuencia * 100;
-														while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
-															{	
-																for (long contar = 0; contar <= delay_contar; contar ++)
-																	{
-																		delay(1);
-																		if (digitalRead(Boton_Center) == LOW)
-																			{
-																				goto salida_rev;
-																			}
-																	}
-																goto Delay_Salir_rev;
-															}
-														salida_rev:
-															delay(500);												// rebote de boton
-															goto inicio;
-														Delay_Salir_rev:
+											Banco_2[Canal] = EEPROM.read(Canal + 512);          // lectura desde EEPROM
+										}
+								}
+							// Banco 3
+							if (Bancos [3] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_3[Canal] = EEPROM.read(Canal + 1024);          // lectura desde EEPROM
+										}
+								}
+							// Banco 4
+							if (Bancos [4] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_4[Canal] = EEPROM.read(Canal + 1536);          // lectura desde EEPROM
+										}
+								}
+							// Banco 5
+							if (Bancos [5] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_5[Canal] = EEPROM.read(Canal + 2048);          // lectura desde EEPROM
+										}
+								}
+							// Banco 6
+							if (Bancos [6] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_6[Canal] = EEPROM.read(Canal + 2560);          // lectura desde EEPROM
+										}
+								}
+							// Banco 7
+							if (Bancos [7] == 1)
+								{
+									for(int Canal = 0; Canal <= 512; Canal ++)
+										{
+											Banco_7[Canal] = EEPROM.read(Canal + 3072);          // lectura desde EEPROM
+										}
+								}
+							// Banco 8
+							if (Bancos [8] == 1)
+								{
+									for(int Canal = 0; Canal <= 510; Canal ++)					 // dos canales menos
+										{
+											Banco_8[Canal] = EEPROM.read(Canal + 3584);          // lectura desde EEPROM
+										}
+								}
+						// Secuenciar
+										if (Adelante_Reversa == 0)				// adelante
+											{
+												for (byte conteo = 1; conteo <= 8; conteo ++)
+													{
+														if (Bancos [conteo] = 1)
 															{
+																lcd.setCursor (19, 0);
+																lcd.print(conteo);
+																for (int canal = 0; canal <= 512; canal ++)
+																	{
+																		switch (conteo)
+																			{
+																				case 1:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
+																					break;
+																				case 2:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
+																					break;
+																				case 3:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
+																					break;
+																				case 4:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
+																					break;
+																				case 5:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
+																					break;
+																				case 6:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
+																					break;
+																				case 7:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
+																					break;
+																				case 8:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																					break;
+																			}
+																		//delay
+																			long delay_contar = Delay_Secuencia;
+																			while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
+																				{	
+																					for (long contar = 0; contar <= delay_contar; contar ++)
+																						{
+																							delayMicroseconds(100);
+																						}
+																					goto Delay_Salir;
+																				}
+																			delay(200);		// rebote de boton
+																			goto inicio;
+																		Delay_Salir:
+																			{
 																				
+																			}
+																	}
 															}
-												}	
-										}
-									goto contar_rev;
-								}
+													}
+											}
+										if (Adelante_Reversa == 1)				// reversa
+											{
+												for (byte conteo = 8; conteo >= 1; conteo --)
+													{
+														if (Bancos [conteo] = 1)
+															{
+																lcd.setCursor (19, 0);
+																lcd.print(conteo);
+																for (int canal = 0; canal <= 512; canal ++)
+																	{
+																		switch (conteo)
+																			{
+																				case 1:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_1[canal]; 	// salida a DMX
+																					break;
+																				case 2:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_2[canal]; 	// salida a DMX
+																					break;
+																				case 3:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_3[canal]; 	// salida a DMX
+																					break;
+																				case 4:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_4[canal]; 	// salida a DMX
+																					break;
+																				case 5:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_5[canal]; 	// salida a DMX
+																					break;
+																				case 6:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_6[canal]; 	// salida a DMX
+																					break;
+																				case 7:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_7[canal]; 	// salida a DMX
+																					break;
+																				case 8:
+																					ArduinoDmx0.TxBuffer[canal] = Banco_8[canal]; 	// salida a DMX
+																					break;
+																			}
+																		//delay
+																			long delay_contar = Delay_Secuencia;
+																			while (digitalRead(Boton_Center) == HIGH)				// lectura del boton centro
+																				{	
+																					for (long contar = 0; contar <= delay_contar; contar ++)
+																						{
+																							delayMicroseconds(100);
+																						}
+																					goto Delay_Salir_rev;
+																				}
+																			delay(200);		// rebote de boton
+																			goto inicio;
+																		Delay_Salir_rev:
+																			{
+																				
+																			}
+																	}
+															}
+													}
+											}							
 					}
-				goto inicio;
 	}
 
+						// LCD
+							// lcd.noBlink();
+							// lcd.setCursor (14, 3);
+							// lcd.print(">");
+							// lcd.setCursor (15, 3);
+							// lcd.print("Start");
+						
+					
+
+	
 void Black_Out()
 	{
 		lcd.setCursor (19, 2);
@@ -1529,6 +1554,7 @@ int EEPROM_Save()
 								break;
 						}
 				EEPROM.write(EEPROM_Add, DMX_Values[Canal]);          		// lectura desde EEPROM
+				//lcd.print (Canal, BIN);
 			}
 		lcd.clear ();
 		lcd.setCursor (3, 1);
@@ -1729,10 +1755,10 @@ void GUI_Control_Options()
 			lcd.setCursor (11, 2);
 			lcd.print ("Secuencer");
 		// Cursor
-			LCD_Col_Pos = 1;			// posicion de cursor
-			LCD_Row_Pos = 1;
+			LCD_Col_Pos = 1;				// posicion de cursor
+			LCD_Row_Pos = 2;
 		// configuracion de cursor	
-			Cursor_Conf_Clear();		// limpiar array
+			Cursor_Conf_Clear();			// limpiar array
 		// Acciones
 			Cursor_Conf[1][1]   = 1;	// Unitary
 			Cursor_Conf[2][1]   = 1; 	// Matrix
@@ -1910,6 +1936,11 @@ void GUI_Config()
 				if (LCD_Col_Pos == 14 && LCD_Row_Pos == 0)
 					{
 						GUI_About();
+						while (digitalRead(Boton_Center) == HIGH)
+							{
+									// esperamos a que se precione enter
+							}
+						delay(300);	// retardo para el rebote del boton
 						goto Inicio;
 					}
 			goto Navegacion;
@@ -2162,14 +2193,13 @@ void GUI_Control_Chaser()
 															canal = First;
 														}
 													Numerico_Write (canal, 9, 0);
-													lcd.setCursor(19,3);
 													// apagar lo anterior
 														for (long contar = First; contar <= Final; contar ++)
 															{
 																ArduinoDmx0.TxBuffer[contar - 1] = 0;
 															}
 													// encender el siguiente
-													ArduinoDmx0.TxBuffer[canal - 1] = 255;
+														ArduinoDmx0.TxBuffer[canal - 1] = 255;
 													Delay_Cont = 0;
 													canal = canal + 1;
 												}
@@ -2277,12 +2307,6 @@ void GUI_Control_Unit()
 			lcd.setCursor (2, 3);
 			lcd.print ("Value:");
 			Numerico_Write(DMX_Values[1], 9, 3);
-			lcd.setCursor (0, 1);
-			lcd.print ("c002=v");
-			Numerico_Write(DMX_Values[2], 6, 1);
-			lcd.setCursor (11, 1);
-			lcd.print ("c003=v");
-			Numerico_Write(DMX_Values[3], 17, 1);
 		// Cursor
 			LCD_Col_Pos = 8;		// posicion de cursor
 			LCD_Row_Pos = 2;		// posicion e cursor
@@ -2318,28 +2342,6 @@ void GUI_Control_Unit()
 						// mostrar valor actual del canal								
 							Canal_Actual = Num_Val;
 							Numerico_Write(DMX_Values[Canal_Actual], 9, 3);
-						// mostrar anterior y siguiente
-							if (Canal_Actual == 1)
-								{
-									Numerico_Write(2, 1, 1);
-									Numerico_Write(DMX_Values[2], 6, 1);
-									Numerico_Write(3, 12, 1);
-									Numerico_Write(DMX_Values[3], 17, 1);
-								}
-							if (Canal_Actual == 512)
-								{
-									Numerico_Write(510, 1, 1);
-									Numerico_Write(DMX_Values[510], 6, 1);
-									Numerico_Write(511, 12, 1);
-									Numerico_Write(DMX_Values[511], 17, 1);
-								}
-							if (Canal_Actual > 1 && Canal_Actual < 512)
-								{
-									Numerico_Write(Canal_Actual - 1, 1, 1);
-									Numerico_Write(DMX_Values[Canal_Actual - 1], 6, 1);
-									Numerico_Write(Canal_Actual + 1, 12, 1);
-									Numerico_Write(DMX_Values[Canal_Actual + 1], 17, 1);
-								}
 					}
 			// Value
 				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
@@ -2713,6 +2715,6 @@ void Analog_Read_DMX(byte col, byte row)
 					}
 			}
 		lcd.noBlink();
-		digitalWrite(Boton_Array_3, HIGH);				// lectura linea 3
+		digitalWrite(Boton_Array_3, HIGH);				// lectura linea 3										// retraso para center
 		delay(300);										// delay para salir de la lectura analoga
 	}
