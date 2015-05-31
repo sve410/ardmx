@@ -1301,13 +1301,19 @@ void GUI_Secuencer()
 									contar:
 									for (byte conteo = 1; conteo <= 8; conteo ++)
 										{
-											if (Bancos [conteo] = 1)
+											if (Bancos [conteo] == 1)
 												{
 													lcd.setCursor (19, 0);
 													lcd.print(conteo);
 													lcd.setCursor (19, 3);
 													for (int canal = 0; canal <= 511; canal ++)
-														{
+														{				
+															if (conteo == 1)
+															{
+																value = EEPROM.read(canal);
+																ArduinoDmx0.TxBuffer[0] = 255; 			// salida a DMX
+																
+															}
 															switch (conteo)
 																{
 																	case 1:
@@ -1316,31 +1322,31 @@ void GUI_Secuencer()
 																		break;
 																	case 2:
 																		value = EEPROM.read(canal + 512);
-																		ArduinoDmx0.TxBuffer[canal + 512] = value; 		// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 3:
 																		value = EEPROM.read(canal + 1024);
-																		ArduinoDmx0.TxBuffer[canal + 1024] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 4:
 																		value = EEPROM.read(canal + 1536);
-																		ArduinoDmx0.TxBuffer[canal + 1536] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 5:
 																		value = EEPROM.read(canal + 2048);
-																		ArduinoDmx0.TxBuffer[canal + 2048] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 6:
 																		value = EEPROM.read(canal + 2560);
-																		ArduinoDmx0.TxBuffer[canal + 2560] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 7:
 																		value = EEPROM.read(canal + 3072);
-																		ArduinoDmx0.TxBuffer[canal + 3072] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 8:
 																		value = EEPROM.read(canal + 3584);
-																		ArduinoDmx0.TxBuffer[canal + 3584] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																}
 																
@@ -1375,7 +1381,7 @@ void GUI_Secuencer()
 									contar_rev:
 									for (byte conteo = 8; conteo >= 1; conteo --)
 										{
-											if (Bancos [conteo] = 1)
+											if (Bancos [conteo] == 1)
 												{
 													lcd.setCursor (19, 0);
 													lcd.print(conteo);
@@ -1390,31 +1396,31 @@ void GUI_Secuencer()
 																		break;
 																	case 2:
 																		value = EEPROM.read(canal + 512);
-																		ArduinoDmx0.TxBuffer[canal + 512] = value; 		// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 3:
 																		value = EEPROM.read(canal + 1024);
-																		ArduinoDmx0.TxBuffer[canal + 1024] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 4:
 																		value = EEPROM.read(canal + 1536);
-																		ArduinoDmx0.TxBuffer[canal + 1536] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 5:
 																		value = EEPROM.read(canal + 2048);
-																		ArduinoDmx0.TxBuffer[canal + 2048] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 6:
 																		value = EEPROM.read(canal + 2560);
-																		ArduinoDmx0.TxBuffer[canal + 2560] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																	case 7:
 																		value = EEPROM.read(canal + 3072);
-																		ArduinoDmx0.TxBuffer[canal + 3072] = value; 	// salida a DMX
-																		break;
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+																		break;	
 																	case 8:
 																		value = EEPROM.read(canal + 3584);
-																		ArduinoDmx0.TxBuffer[canal + 3584] = value; 	// salida a DMX
+																		ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
 																		break;
 																}
 																
@@ -1494,7 +1500,7 @@ int EEPROM_Save()
 		lcd.print (Universo_Actual);
 		lcd.setCursor (19, 3);
 		lcd.blink();
-		for(int Canal = 1; Canal <= 512; Canal ++)
+		for(int Canal = 0; Canal <= 511; Canal ++)
 			{
 				// Escritura de universo EEPROM
 					switch (Universo_Actual)
@@ -1557,7 +1563,7 @@ int EEPROM_Load()
 				goto salida;
 			}
 		lcd.clear ();
-		for(int Canal = 1; Canal <= 512; Canal ++)
+		for(int Canal = 0; Canal <= 511; Canal ++)
 			{
 				// Escritura de universo EEPROM
 					switch (Universo_Actual)
@@ -1651,7 +1657,7 @@ int EEPROM_Clear()
 		lcd.print (Universo_Actual);
 		lcd.setCursor (19, 3);
 		lcd.blink();
-		for(int Canal = 0; Canal <= 512; Canal ++)
+		for(int Canal = 0; Canal <= 511; Canal ++)
 			{
 				DMX_Values[Canal] = 0;          		// lectura desde EEPROM
 				ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
