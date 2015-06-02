@@ -1,0 +1,37 @@
+﻿Merge remote-tracking branch 'origin/master'
+
+Conflicts:
+	Social/Publicados.md
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 2 and 4 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# Changes to be committed:
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9320.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9399.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9400.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9401.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9402.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9403.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9404.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9405.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9406.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9408.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9409.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9410.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9412.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9413.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9414.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9415.JPG
+#	new file:   Hardware/v0.3 - beta - Firm v0.9 to v1.0/media/IMG_9417.JPG
+#	new file:   Social/HackaDay - Atmel Arduino 1.jpg
+#	deleted:    Social/Publicados.md
+#
+# Untracked files:
+#	fq4v1xot.jwr.txt
+#
+
