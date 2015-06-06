@@ -16,6 +16,7 @@
 
 **v1.0 - Beta - Hardware v0.3 - v0.4**
 - CORREGIR  - secuencer no tiene salida de dmx
+- CORREGIDO - tabulacion
 - CORREGIDO - GUI_Secuencer se cambió el método de lectura de memoria, se hace en tiempo real, evita over flow
 - CORREGIDO - GUI_Chasser el cursor blink no se mostraba después de stop 
 - CORREGIDO - GUI_Control_Options, el cursor no se mostraba en unitary
