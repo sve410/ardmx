@@ -2422,12 +2422,12 @@ void Numerico_Calc(byte value)
   int 	Num_Val_Temp_2 	 = 0;
   lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
   lcd.print("___");
-  lcd.blink();								// mostrar cursor
+  lcd.blink();						// mostrar cursor
   //Num_Val = 0;
   Num_Col_Pos = Num_Col_Pos + 2;
   lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
   // primer numero
-  Numerico_Read();						// leer boton
+  Numerico_Read();					// leer boton
   if (Boton_Calc <= 9)
   {
     lcd.print (Boton_Calc);			// escribir valor calculado
@@ -2435,58 +2435,58 @@ void Numerico_Calc(byte value)
     Num_Val = Boton_Calc;			// valor calculado
     Num_Val_Temp_1 = Boton_Calc;	// valor temporal para el acarreo
   }
-  if (Boton_Calc == 14)					// enter
+  if (Boton_Calc == 14)			// enter
   {
-    goto Salida;					// num val = 0		
+    goto Salida;				// num val = 0		
   }
-  if (value == 1)							// si es un valor
+  if (value == 1)				// si es un valor
   {
-    if (Boton_Calc == 10)			// 255
+    if (Boton_Calc == 10)		// 255
     {
       Num_Val = 255;
       goto Salida;
     }
-    if (Boton_Calc == 11)			// 000
+    if (Boton_Calc == 11)		// 000
     {
       Num_Val = 0;
       goto Salida;
     }
-    if (Boton_Calc == 12)			// ubicar
+    if (Boton_Calc == 12)		// ubicar
     {
       Num_Val = 612;
       goto Salida_Option;
     }
-    if (Boton_Calc == 13)			// analogo
+    if (Boton_Calc == 13)		// analogo
     {
       Num_Val = 712;
       goto Salida_Option;
     }
   }
   // segundo numero
-  Numerico_Read();						// leer boton
-  if (Boton_Calc == 14)					// enter
+  Numerico_Read();				// leer boton
+  if (Boton_Calc == 14)			// enter
   {
     Num_Val = Num_Val_Temp_1;	
-    goto Salida;					// num val = num val anterior
+    goto Salida;				// num val = num val anterior
   }
-  if (value == 1)							// si es un valor
+  if (value == 1)				// si es un valor
   {
-    if (Boton_Calc == 10)			// 255
+    if (Boton_Calc == 10)		// 255
     {
       Num_Val = 255;
       goto Salida;
     }
-    if (Boton_Calc == 11)			// 000
+    if (Boton_Calc == 11)		// 000
     {
       Num_Val = 0;
       goto Salida;
     }
-    if (Boton_Calc == 12)			// ubicar
+    if (Boton_Calc == 12)		// ubicar
     {
       Num_Val = 612;
       goto Salida_Option;
     }
-    if (Boton_Calc == 13)			// analogo
+    if (Boton_Calc == 13)		// analogo
     {
       Num_Val = 712;
       goto Salida_Option;
@@ -2505,30 +2505,30 @@ void Numerico_Calc(byte value)
     lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
   }
   // Tercer numero
-  Numerico_Read();						// leer boton
-  if (Boton_Calc == 14)					// enter
+  Numerico_Read();				// leer boton
+  if (Boton_Calc == 14)			// enter
   {	
     Num_Val = (Num_Val_Temp_1 * 10) + Num_Val_Temp_2;
     goto Salida;
   }
-  if (value == 1)							// si es un valor
+  if (value == 1)				// si es un valor
   {
-    if (Boton_Calc == 10)			// 255
+    if (Boton_Calc == 10)		// 255
 	{
       Num_Val = 255;
       goto Salida;
     }
-    if (Boton_Calc == 11)			// 000
+    if (Boton_Calc == 11)		// 000
     {
       Num_Val = 0;
       goto Salida;
     }
-    if (Boton_Calc == 12)			// ubicar
+    if (Boton_Calc == 12)		// ubicar
     {
       Num_Val = 612;
       goto Salida_Option;
     }
-    if (Boton_Calc == 13)			// analogo
+    if (Boton_Calc == 13)		// analogo
     {
       Num_Val = 712;
       goto Salida_Option;
@@ -2564,7 +2564,7 @@ Salida_Option:
 
 void Numerico_Read()
 {
-  long Num_Barrido_Time = 5;			// tiempo entre barrido de keys
+  long Num_Barrido_Time = 5;		// tiempo entre barrido de keys
   Boton_Calc = 17;					// limpiar valor para lectura
   while (Boton_Calc == 17)			// valor calculado	# E * F, 17 sin valor calculado
   {	
@@ -2711,14 +2711,14 @@ void Analog_Read_DMX(byte col, byte row)
   // escritura del numero desde el potenciometro aplica a dmx
   int read;
   lcd.setCursor (col - 1, row);
-  lcd.print("a");									// indicar que es analogo
-  digitalWrite(Boton_Array_3, LOW);				// lectura linea 3
+  lcd.print("a");						// indicar que es analogo
+  digitalWrite(Boton_Array_3, LOW);		// lectura linea 3
   lcd.blink();
   int valores = 0;
   while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
   {
-    read = analogRead(Pot);					// lectura desde el potenciometro
-    read = read / 4;						// / 4 porque es de 12 bits
+    read = analogRead(Pot);				// lectura desde el potenciometro
+    read = read / 4;					// / 4 porque es de 12 bits
     delay(50);
     if (valores != read)
     {
@@ -2729,7 +2729,7 @@ void Analog_Read_DMX(byte col, byte row)
     }
   }
   lcd.noBlink();
-  digitalWrite(Boton_Array_3, HIGH);				// lectura linea 3
-  delay(300);										// delay para salir de la lectura analoga
+  digitalWrite(Boton_Array_3, HIGH);	// lectura linea 3
+  delay(300);							// delay para salir de la lectura analoga
 }
 
