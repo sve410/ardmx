@@ -1727,7 +1727,7 @@ void EEPROM_Clear_All()
 	lcd.blink();
 	for(int Canal = 0; Canal <= 4093; Canal ++)
 	{
-		EEPROM.write (EEPROM_Add, 0);			// escritura EEPROM
+		EEPROM.write (Canal, 0);				// escritura EEPROM
 		if (Canal <= 511)
 		{
 			DMX_Values[Canal + 1] = 0;        
