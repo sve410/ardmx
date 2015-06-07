@@ -7,7 +7,7 @@
 // **	- Hardware v0.3	- v0.4																								**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
-// ** - Editado en Sublime Text 2																							**
+// ** 	- Editado en Note++																									**
 // **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
 // **	- Compilado para Arduino Mega 2560 R3																				**
 // **		http://www.arduino.cc/en/Main/ArduinoBoardMega2560																**
@@ -34,7 +34,7 @@
 // ***************************************************************************************************************************
 
 // Librerias
-#include <LiquidCrystal.h>		// libreria para LCD
+#include <LiquidCrystal.h>			// libreria para LCD
 #include <Wire.h>
 #include <EEPROM.h>
 #include <string.h>
@@ -42,8 +42,8 @@
 
 // DMX Library
 #define    DMX512	  (0)  	 		// (250 kbaud - 2 to 512 channels) Standard USITT DMX-512
-//#define  DMX1024  (1)   		// (500 kbaud - 2 to 1024 channels) Completely non standard - TESTED ok
-//#define  DMX2048  (2)   		// (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
+//#define  DMX1024  (1)   			// (500 kbaud - 2 to 1024 channels) Completely non standard - TESTED ok
+//#define  DMX2048  (2)   			// (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
 
 // Puertos, variables
 // DMX
@@ -57,8 +57,8 @@ int  Boton_Down   		= 12;
 int  Boton_Left  			= 8;	
 int  Boton_Right  		= 10;	
 int  Boton_Center			= 11;	
-byte LCD_Col_Pos 			= 0;		// posicion en tiempo real de lcd
-byte LCD_Row_Pos 			= 0;		// posicion en tiempo real de lcd
+byte LCD_Col_Pos 			= 0;	// posicion en tiempo real de lcd
+byte LCD_Row_Pos 			= 0;	// posicion en tiempo real de lcd
 // config de posiciones de lcd Col Row
 byte Cursor_Conf[4][20] = {
 													{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0  },		
@@ -75,64 +75,64 @@ int  Boton_Array_A	= 30;
 int  Boton_Array_B	= 32;
 int  Boton_Array_C  = 34;
 int  Boton_Array_D  = 36;
-byte Boton_Calc 		= 17;				// valor calculado	# E * F, 17 sin valor calculado
-byte Num_Col_Pos  	= 0;				// posicion en tiempo real de lcd
-byte Num_Row_Pos 		= 0;				// posicion en tiempo real de lcd
-int  Num_Val				= 0;				// valor generado al calculo
+byte Boton_Calc 	= 17;		// valor calculado	# E * F, 17 sin valor calculado
+byte Num_Col_Pos  	= 0;		// posicion en tiempo real de lcd
+byte Num_Row_Pos 	= 0;		// posicion en tiempo real de lcd
+int  Num_Val			= 0;	// valor generado al calculo
 long Boton_Delay_Teclado = 100;	// delay de lectura de boton
 // Potenciometro
-int  Pot						= A15;			// entrada de potenciometro
+int  Pot			= A15;		// entrada de potenciometro
 // LCD
-int  LCD_RS 				= 43;				// puertos de conexion de LCD
-int  LCD_E  				= 45;
-int  LCD_D4 				= 47;
-int  LCD_D5 				= 49;
-int  LCD_D6 				= 51;
-int  LCD_D7					= 53;
+int  LCD_RS 		= 43;		// puertos de conexion de LCD
+int  LCD_E  		= 45;
+int  LCD_D4 		= 47;
+int  LCD_D5 		= 49;
+int  LCD_D6 		= 51;
+int  LCD_D7			= 53;
 LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
-int  Back_Light_PWM	= 13;				// salida para PWM de Back Light de LCD
-int  Contrast_PWM		= 4;				// salida para pwm de contraste de LCD
-byte Back_Light_On_Off	= 0;		// saber si esta encendida o apagada
+int  Back_Light_PWM	= 13;		// salida para PWM de Back Light de LCD
+int  Contrast_PWM		= 4;	// salida para pwm de contraste de LCD
+byte Back_Light_On_Off	= 0;	// saber si esta encendida o apagada
 // EEPROM
-int BackLight_Add 	= 4094;			// direccion de eeprom
-int Contrast_Add		= 4095;			// direccion de eeprom
+int BackLight_Add 		= 4094;	// direccion de eeprom
+int Contrast_Add		= 4095;	// direccion de eeprom
 
 void setup() 
 {
 	// DMX
 	// pinMode(DMX_Data_Flux, 	OUTPUT);
 	// Botones cursor
-	pinMode(Boton_Up,      			INPUT_PULLUP);
-	pinMode(Boton_Down,    			INPUT_PULLUP);
-	pinMode(Boton_Left,    			INPUT_PULLUP);
-	pinMode(Boton_Right,   			INPUT_PULLUP);
-	pinMode(11,									INPUT_PULLUP);	//Boton_Center, INPUT_PULLUP);
+	pinMode(Boton_Up,      	INPUT_PULLUP);
+	pinMode(Boton_Down,    	INPUT_PULLUP);
+	pinMode(Boton_Left,    	INPUT_PULLUP);
+	pinMode(Boton_Right,   	INPUT_PULLUP);
+	pinMode(11,				INPUT_PULLUP);	//Boton_Center, INPUT_PULLUP);
 	// Botones numerico
-	pinMode(Boton_Array_1, 			OUTPUT);
-	pinMode(Boton_Array_2, 			OUTPUT);
-	pinMode(Boton_Array_3, 			OUTPUT);
-	pinMode(Boton_Array_4,			OUTPUT);
-	pinMode(Boton_Array_A, 			INPUT_PULLUP);
-	pinMode(Boton_Array_B, 			INPUT_PULLUP);
-	pinMode(Boton_Array_C, 			INPUT_PULLUP);
-	pinMode(Boton_Array_D, 			INPUT_PULLUP);
+	pinMode(Boton_Array_1, 	OUTPUT);
+	pinMode(Boton_Array_2, 	OUTPUT);
+	pinMode(Boton_Array_3, 	OUTPUT);
+	pinMode(Boton_Array_4,	OUTPUT);
+	pinMode(Boton_Array_A, 	INPUT_PULLUP);
+	pinMode(Boton_Array_B, 	INPUT_PULLUP);
+	pinMode(Boton_Array_C, 	INPUT_PULLUP);
+	pinMode(Boton_Array_D, 	INPUT_PULLUP);
 	digitalWrite(Boton_Array_1, HIGH);
 	digitalWrite(Boton_Array_2, HIGH);
 	digitalWrite(Boton_Array_3, HIGH);
 	digitalWrite(Boton_Array_4, HIGH);
 	// LCD
-	pinMode(LCD_RS, 						OUTPUT);
-	pinMode(LCD_E,  						OUTPUT);
-	pinMode(LCD_D7, 						OUTPUT);
-	pinMode(LCD_D6, 						OUTPUT);
-	pinMode(LCD_D5, 						OUTPUT);
-	pinMode(LCD_D4, 						OUTPUT);
-	pinMode(Back_Light_PWM,			OUTPUT);
-	lcd.begin(20, 4);													//tamaño de LCD				
+	pinMode(LCD_RS, 		OUTPUT);
+	pinMode(LCD_E,  		OUTPUT);
+	pinMode(LCD_D7, 		OUTPUT);
+	pinMode(LCD_D6, 		OUTPUT);
+	pinMode(LCD_D5, 		OUTPUT);
+	pinMode(LCD_D4, 		OUTPUT);
+	pinMode(Back_Light_PWM,	OUTPUT);
+	lcd.begin(20, 4);					//tamaño de LCD				
 	// DMX
-	ArduinoDmx0.set_tx_address(1);      			// poner aqui la direccion de inicio de DMX 
-	ArduinoDmx0.set_tx_channels(512);   			// poner aqui el numero de canales a transmitir 
-	ArduinoDmx0.init_tx(DMX512);        			// iniciar transmision universo 0, modo estandar DMX512
+	ArduinoDmx0.set_tx_address(1);      // poner aqui la direccion de inicio de DMX 
+	ArduinoDmx0.set_tx_channels(512);   // poner aqui el numero de canales a transmitir 
+	ArduinoDmx0.init_tx(DMX512);        // iniciar transmision universo 0, modo estandar DMX512
 	// no conectados
 	pinMode(5, OUTPUT);
 	digitalWrite(5, LOW);
@@ -247,11 +247,11 @@ void Back_Light_En()
 {
 	byte Back_Light_Value = EEPROM.read(513);	// lectura del ultimo valor desde la eeprom, 513 es donde se guarda el valor
 	// encender
-	if (Back_Light_On_Off == 0)								// si esta apagada encenderla
+	if (Back_Light_On_Off == 0)					// si esta apagada encenderla
 	{
-		if (Back_Light_Value == 0)							// la encendemos de todos modos
+		if (Back_Light_Value == 0)				// la encendemos de todos modos
 		{
-			analogWrite(Back_Light_PWM, 127);			// aqui el valor a encender en el caso que se haya establecido apagado el back light
+			analogWrite(Back_Light_PWM, 127);	// aqui el valor a encender en el caso que se haya establecido apagado el back light
 		}
 		if (Back_Light_Value > 0)
 		{
@@ -261,13 +261,13 @@ void Back_Light_En()
 		goto salida;
 	}
 	// apagar
-	if (Back_Light_On_Off == 1)								// si esta encendida apagarla
+	if (Back_Light_On_Off == 1)					// si esta encendida apagarla
 	{
 		analogWrite(Back_Light_PWM, 0);
 		Back_Light_On_Off = 0;
 	}
 	salida:
-	delay(300);																// para impedir repeticion del comando
+	delay(300);									// para impedir repeticion del comando
 }
 
 void GUI_About()
@@ -365,10 +365,10 @@ void GUI_Control_Matrix()
 	}
 	Multi_Matrix (Inicial);
 	// Cursor
-	LCD_Col_Pos = 12;				// posicion de cursor
-	LCD_Row_Pos = 0;				// posicion e cursor
+	LCD_Col_Pos = 12;		// posicion de cursor
+	LCD_Row_Pos = 0;		// posicion e cursor
 	// configuracion de cursor	
-	Cursor_Conf_Clear();		// limpiar array
+	Cursor_Conf_Clear();	// limpiar array
 	// Row 0
 	Cursor_Conf[0][4]  = 1;	// Memory
 	Cursor_Conf[0][8]  = 1;	// Unit
@@ -582,9 +582,9 @@ void Cursor_Conf_Clear()
 
 void GUI_Navegar(byte matrix, int banco)
 {
-	int Boton_Delay_Cursor = 300;				// delay de lectura de boton
-	byte LCD_Col_Pos_Ant;								// saber el estado anterior para borrar cursor
-	byte LCD_Row_Pos_Ant;								// saber el estado anterior para borrar cursor
+	int Boton_Delay_Cursor = 300;		// delay de lectura de boton
+	byte LCD_Col_Pos_Ant;				// saber el estado anterior para borrar cursor
+	byte LCD_Row_Pos_Ant;				// saber el estado anterior para borrar cursor
 	// guardar valor anterior de row col
 	LCD_Col_Pos_Ant = LCD_Col_Pos;
 	LCD_Row_Pos_Ant = LCD_Row_Pos;
@@ -593,7 +593,7 @@ void GUI_Navegar(byte matrix, int banco)
 	lcd.print(">"); 													
 	// navegacion
 	Dibujar:
-	byte Dibujar_Cursor = 0;						// saber si dibujar cursor para evitar repeticiones en lcd, 0 no dibujar, 1 dibujar >, 2 dibujar +
+	byte Dibujar_Cursor = 0;			// saber si dibujar cursor para evitar repeticiones en lcd, 0 no dibujar, 1 dibujar >, 2 dibujar +
 	// LCD Back Light *
 	digitalWrite(Boton_Array_1, LOW);		// lectura linea 1
 	if (digitalRead(Boton_Array_D) == LOW)
@@ -869,9 +869,7 @@ Salida:
 		}
 	}
 	goto Dibujar;
-	Salir: 
-	{
-	}
+	Salir: {}
 }
 
 void GUI_Memory_Init()
@@ -889,10 +887,10 @@ void GUI_Memory_Init()
 	lcd.setCursor (15, 2);
 	lcd.print("Clear");
 	// Cursor
-	LCD_Col_Pos = 1;					// posicion de cursor
+	LCD_Col_Pos = 1;			// posicion de cursor
 	LCD_Row_Pos = 2;
 	// configuracion de cursor	
-	Cursor_Conf_Clear();			// limpiar array
+	Cursor_Conf_Clear();		// limpiar array
 	// Acciones
 	Cursor_Conf[2][1]  = 1;		// Empty
 	Cursor_Conf[2][8]  = 1; 	// Load
@@ -969,13 +967,13 @@ int GUI_Memory_Bank(byte Opcion)
 		lcd.print(Universo_Actual);
 	}
 	// Cursor inicial
-	LCD_Col_Pos = 0;					// posicion de cursor
+	LCD_Col_Pos = 0;			// posicion de cursor
 	LCD_Row_Pos = 1;
 	// configuracion de cursor	
-	Cursor_Conf_Clear();			// limpiar array
+	Cursor_Conf_Clear();		// limpiar array
 	// Acciones
 	Cursor_Conf[1][0]   = 1;	// Bank 1
-	Cursor_Conf[2][0]   = 1;  // Bank 2
+	Cursor_Conf[2][0]   = 1;  	// Bank 2
 	Cursor_Conf[3][0]   = 1;	// Bank 3
 	Cursor_Conf[1][7]   = 1;	// Bank 4
 	Cursor_Conf[2][7]   = 1;	// Bank 5
@@ -1630,7 +1628,7 @@ void EEPROM_Empty()
 	for(int Canal = 1; Canal <= 512; Canal ++)
 	{
 		DMX_Values[Canal] = 0;          		// lectura desde EEPROM
-		ArduinoDmx0.TxBuffer[Canal - 1] = 0; 		// salida a DMX
+		ArduinoDmx0.TxBuffer[Canal - 1] = 0; 	// salida a DMX
 	}
 	lcd.clear ();
 	lcd.setCursor (3, 1);
@@ -1777,7 +1775,7 @@ void GUI_Control_Options()
 	lcd.print ("Memory");
 	// Cursor
 	LCD_Col_Pos = 1;			// posicion de cursor
-	LCD_Row_Pos = 1;
+	LCD_Row_Pos = 2;
 	// configuracion de cursor	
 	Cursor_Conf_Clear();		// limpiar array
 	// Acciones
