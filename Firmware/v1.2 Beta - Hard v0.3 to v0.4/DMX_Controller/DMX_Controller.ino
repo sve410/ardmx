@@ -1711,7 +1711,7 @@ void EEPROM_Load_Init()
 	lcd.setCursor (3, 2);
 	lcd.print ("Bank: ");
 	lcd.print (Universo_Actual);
-	lcd.setCursor (19, 3);
+	lcd.setCursor (10, 2);
 	lcd.blink();
 	delay (2000);
 	lcd.noBlink();
