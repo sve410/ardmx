@@ -12,9 +12,27 @@
 
 ***
 
+**v1.2 - Beta - Hardware v0.3 - v0.4**
+- AGREGADO  - al arranque toma el banco de la eeprom previamente elejido desde config
+- AGREGADO  - a config el banco que lee a arranque
+- AGREGADO  - al about el banco actual
+- AGREGADO  - a about reacomodo de datos
+- AGREGADO  - a about licencias open source
+- AGREGADO  - a initial memory el bank actual
+- AGREGADO  - en EEPROM add 4093 para guardar banco a correr al inicio
+- AGREGADO  - Bank 8 solo tiene 509 canales disponibles
+- AGREGADO  - a EEPROM Load el limite en bank 8 de 4092
+- AGREGADO  - a EEPROM Save el limite en bank 8 de 4092
+- CORREGIDO - GUI Config de LCD config solo a config
+- CORREGIDO - GUI Config de Control a exit
+- AGREGADO  - a GUI Config opcion bank init
+- AGREGADO  - EEPROM_Load_Init para cargar el universo precnfigurado al inicio
+
+***
+
 **v1.1 - Beta - Hardware v0.3 - v0.4**
 - AGREGADO  - memory a control options
-- AGREGADO  - a memory gui ClearAll para borrar todos los bancos
+- AGREGADO  - a memory gui ClearAll para borrar todos los bancos de la eeprom
 - AGREGADO  - a memory gui reacomodo de menues
 
 ***
@@ -202,3 +220,5 @@
 
 **v0.0 - Beta - Hardware v0.0 - v0.2**
 - Hello World !!
+
+***
