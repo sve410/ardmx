@@ -322,11 +322,11 @@ void GUI_About()
 	lcd.setCursor(3, 0);
 	lcd.print("Open Hardware!");
 	lcd.setCursor(0, 1);
-	lcd.print("Firm:GNU GPL v3.0");
+	lcd.print("Firm: GNU GPL v3");
 	lcd.setCursor(0, 2);
-	lcd.print("Hard:OSHW    v1.0");
+	lcd.print("Hard: OSHW    v1");
 	lcd.setCursor(0, 3);
-	lcd.print("http://goo.gl/5nqJKt");
+	lcd.print("Wiki: goo.gl/5nqJKt");
 	lcd.setCursor(2, 1);
 	// bank
 	lcd.setCursor(18, 1);

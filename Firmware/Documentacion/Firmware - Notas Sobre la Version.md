@@ -27,6 +27,7 @@
 - CORREGIDO - GUI Config de Control a exit
 - AGREGADO  - a GUI Config opcion bank init
 - AGREGADO  - EEPROM_Load_Init para cargar el universo precnfigurado al inicio
+- CORREGIDO - GUI about cambio de disposicion y url por wiki
 
 ***
 
