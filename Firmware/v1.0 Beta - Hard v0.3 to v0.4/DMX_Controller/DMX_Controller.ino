@@ -48,7 +48,7 @@
 // Puertos, variables
 // DMX
 int 	DMX_Data_Flux 	= 2;		// control de flujo de datos para dmx, 0 por default 
-int  	DMX_Values 			[515];  // array 1 de valores actuales DMX
+int  	DMX_Values 			[515];  // array de valores actuales DMX
 int  	Canal_Actual 		= 1;
 byte 	Universo_Actual	= 0;
 // Botones cursor
@@ -1142,6 +1142,7 @@ void GUI_Secuencer()
 	int First_Bank 			= 1;
 	int Final_Bank 			= 8;
 	lcd.clear ();
+
 	// Texto
 	lcd.setCursor (0, 0);
 	lcd.print("Secuencer Banks:  b");
@@ -1174,8 +1175,10 @@ void GUI_Secuencer()
 	lcd.setCursor (15, 3);
 	lcd.print("Start");
 	lcd.noBlink();
+
 	// navegar
 	GUI_Navegar(0, 0);
+
 	// Acciones
 	// Delay
 	if (LCD_Col_Pos == 9 && LCD_Row_Pos == 1)
@@ -1307,79 +1310,74 @@ void GUI_Secuencer()
 		lcd.blink();
 		if (Adelante_Reversa == 0)										// adelante
 		{
-contar:
-		for (byte conteo = 1; conteo <= 8; conteo ++)
-		{
-			if (Bancos [conteo] == 1)
+			contar:
+			for (byte conteo = 1; conteo <= 8; conteo ++)
 			{
-				lcd.setCursor (19, 0);
-				lcd.print(conteo);
-				lcd.setCursor (19, 3);
-				for (int canal = 0; canal <= 511; canal ++)
-				{				
-					if (conteo == 1)
-					{
-						value = EEPROM.read(canal);
-						ArduinoDmx0.TxBuffer[0] = 255; 				// salida a DMX
-					}
-					switch (conteo)
-					{
-						case 1:
-							value = EEPROM.read(canal);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-						case 2:
-							value = EEPROM.read(canal + 512);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-						case 3:
-							value = EEPROM.read(canal + 1024);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-						case 4:
-							value = EEPROM.read(canal + 1536);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-						case 5:
-							value = EEPROM.read(canal + 2048);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-						case 6:
-							value = EEPROM.read(canal + 2560);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-						case 7:
-							value = EEPROM.read(canal + 3072);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-						case 8:
-							value = EEPROM.read(canal + 3584);
-							ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
-							break;
-					}
-				}
-				//delay
-				long delay_contar = Delay_Secuencia * 100;
-				while (digitalRead(Boton_Center) == HIGH)		// lectura del boton centro
-				{	
-					for (long contar = 0; contar <= delay_contar; contar ++)
-					{
-						delay(1);
-						if (digitalRead(Boton_Center) == LOW)
+				if (Bancos [conteo] == 1)
+				{
+					lcd.setCursor (19, 0);
+					lcd.print(conteo);
+					lcd.setCursor (19, 3);
+					for (int canal = 0; canal <= 511; canal ++)
+					{				
+						switch (conteo)
 						{
-							goto salida;
+							case 1:
+								value = EEPROM.read(canal);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
+							case 2:
+								value = EEPROM.read(canal + 512);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
+							case 3:
+								value = EEPROM.read(canal + 1024);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
+							case 4:
+								value = EEPROM.read(canal + 1536);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
+							case 5:
+								value = EEPROM.read(canal + 2048);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
+		 					case 6:
+								value = EEPROM.read(canal + 2560);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
+							case 7:
+								value = EEPROM.read(canal + 3072);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
+							case 8:
+								value = EEPROM.read(canal + 3584);
+								ArduinoDmx0.TxBuffer[canal] = value; 	// salida a DMX
+								break;
 						}
 					}
-					goto Delay_Salir;
+					//delay
+					long delay_contar = Delay_Secuencia * 100;
+					while (digitalRead(Boton_Center) == HIGH)			// lectura del boton centro
+					{	
+						for (long contar = 0; contar <= delay_contar; contar ++)
+						{
+							delay(1);
+							if (digitalRead(Boton_Center) == LOW)
+							{
+								goto salida;
+							}
+						}
+						goto Delay_Salir;
+					}
+					salida:
+					delay(500);						// rebote de boton
+					goto inicio;
+					Delay_Salir: {}
 				}
-salida:
-				delay(500);							// rebote de boton
-				goto inicio;
-Delay_Salir: {}
 			}
 		}
 		goto contar;
-	}
 		if (Adelante_Reversa == 1)	// reversa
 		{
 			contar_rev:
@@ -1395,39 +1393,38 @@ Delay_Salir: {}
 						switch (conteo)
 						{
 							case 1:
-							value = EEPROM.read(canal);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;
+								value = EEPROM.read(canal);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;
 							case 2:
-							value = EEPROM.read(canal + 512);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;
+								value = EEPROM.read(canal + 512);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;
 							case 3:
-							value = EEPROM.read(canal + 1024);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;
+								value = EEPROM.read(canal + 1024);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;
 							case 4:
-							value = EEPROM.read(canal + 1536);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;
+								value = EEPROM.read(canal + 1536);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;
 							case 5:
-							value = EEPROM.read(canal + 2048);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;
+								value = EEPROM.read(canal + 2048);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;
 							case 6:
-							value = EEPROM.read(canal + 2560);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;
+								value = EEPROM.read(canal + 2560);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;
 							case 7:
-							value = EEPROM.read(canal + 3072);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;	
+								value = EEPROM.read(canal + 3072);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;	
 							case 8:
-							value = EEPROM.read(canal + 3584);
-							ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
-							break;
+								value = EEPROM.read(canal + 3584);
+								ArduinoDmx0.TxBuffer[canal] = value; 			// salida a DMX
+								break;
 						}
-
 					}
 					//delay
 					long delay_contar = Delay_Secuencia * 100;
@@ -1446,9 +1443,7 @@ Delay_Salir: {}
 					salida_rev:
 					delay(500);													// rebote de boton
 					goto inicio;
-					Delay_Salir_rev: 
-					{
-					}
+					Delay_Salir_rev: {}
 				}	
 			}
 			goto contar_rev;
@@ -1508,35 +1503,35 @@ int EEPROM_Save()
 		switch (Universo_Actual)
 		{
 			case 1:
-			EEPROM_Add = 0 + Canal;
-			break;
+				EEPROM_Add = 0 + Canal;
+				break;
 			case 2:
-			EEPROM_Add = 512 + Canal;
-			break;
+				EEPROM_Add = 512 + Canal;
+				break;
 			case 3:
-			EEPROM_Add = 1024 + Canal;
-			break;
+				EEPROM_Add = 1024 + Canal;
+				break;
 			case 4:
-			EEPROM_Add = 1536 + Canal;
-			break;
+				EEPROM_Add = 1536 + Canal;
+				break;
 			case 5:
-			EEPROM_Add = 2048 + Canal;
-			break;
+				EEPROM_Add = 2048 + Canal;
+				break;
 			case 6:
-			EEPROM_Add = 2560 + Canal;
-			break;
+				EEPROM_Add = 2560 + Canal;
+				break;
 			case 7:
-			EEPROM_Add = 3072 + Canal;
-			break;
+				EEPROM_Add = 3072 + Canal;
+				break;
 			case 8:
-			EEPROM_Add = 3584 + Canal;
-			if (EEPROM_Add > 4093)
-			{
-				EEPROM_Add = 4093;
-			}
-			break;
+				EEPROM_Add = 3584 + Canal;
+				if (EEPROM_Add > 4093)
+				{
+					EEPROM_Add = 4093;
+				}
+				break;
 		}
-		EEPROM.write(EEPROM_Add, DMX_Values[Canal]);          		// lectura desde EEPROM
+		EEPROM.write(EEPROM_Add, DMX_Values[Canal + 1]);          		// lectura desde EEPROM
 	}
 	lcd.clear ();
 	lcd.setCursor (3, 1);
@@ -1565,39 +1560,39 @@ int EEPROM_Load()
 		goto salida;
 	}
 	lcd.clear ();
-	for(int Canal = 0; Canal <= 511; Canal ++)
+	for(int Canal = 1; Canal <= 512; Canal ++)
 	{
 		// Escritura de universo EEPROM
 		switch (Universo_Actual)
 		{
 			case 1:
-			EEPROM_Add = 0 + Canal;
-			break;
+				EEPROM_Add = 0 + Canal - 1;
+				break;
 			case 2:
-			EEPROM_Add = 512 + Canal;
-			break;
+				EEPROM_Add = 512 + Canal - 1;
+				break;
 			case 3:
-			EEPROM_Add = 1024 + Canal;
-			break;
+				EEPROM_Add = 1024 + Canal - 1;
+				break;
 			case 4:
-			EEPROM_Add = 1536 + Canal;
-			break;
+				EEPROM_Add = 1536 + Canal - 1;
+				break;
 			case 5:
-			EEPROM_Add = 2048 + Canal;
-			break;
+				EEPROM_Add = 2048 + Canal - 1;
+				break;
 			case 6:
-			EEPROM_Add = 2560 + Canal;
-			break;
+				EEPROM_Add = 2560 + Canal - 1;
+				break;
 			case 7:
-			EEPROM_Add = 3072 + Canal;
-			break;
+				EEPROM_Add = 3072 + Canal - 1;
+				break;
 			case 8:
-			EEPROM_Add = 3584 + Canal;
-			if (EEPROM_Add > 4093)
-			{
-				EEPROM_Add = 4093;
-			}
-			break;
+				EEPROM_Add = 3584 + Canal - 1;
+				if (EEPROM_Add > 4093)
+				{
+					EEPROM_Add = 4093;
+				}
+				break;
 		}
 		DMX_Values[Canal] = EEPROM.read(EEPROM_Add);          	// lectura desde EEPROM
 		ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal]; 	// salida a DMX
@@ -1621,10 +1616,10 @@ void EEPROM_Empty()
 	// solo borra la ram
 	// no hay retorno al menu anterior
 	lcd.clear ();
-	for(int Canal = 0; Canal <= 512; Canal ++)
+	for(int Canal = 1; Canal <= 512; Canal ++)
 	{
 		DMX_Values[Canal] = 0;          		// lectura desde EEPROM
-		ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
+		ArduinoDmx0.TxBuffer[Canal - 1] = 0; 		// salida a DMX
 	}
 	lcd.clear ();
 	lcd.setCursor (3, 1);
@@ -1639,13 +1634,13 @@ void EEPROM_Empty()
 
 int EEPROM_Clear()
 {
-	// Pone en ceros la memoria
+	// Pone en ceros la memoria EEPROM
 	// regresa 1 si se selecciona exit
 	int cancel = 0;				// regresa 1 si se selecciona salir			
 	int bank;					// regresa 1 si se selecciona salir
 	int EEPROM_Add = 0;			// direccion de eeprom para universos
 	bank = GUI_Memory_Bank(3);	// seleccinar banco
-	if (bank == 1)
+	if (bank == 1)				// si se selecciono salir
 	{
 		cancel = 1;
 		goto salida;
@@ -1667,33 +1662,33 @@ int EEPROM_Clear()
 		switch (Universo_Actual)
 		{
 			case 1:
-			EEPROM_Add = 0 + Canal;
-			break;
+				EEPROM_Add = 0 + Canal;
+				break;
 			case 2:
-			EEPROM_Add = 512 + Canal;
-			break;
+				EEPROM_Add = 512 + Canal;
+				break;
 			case 3:
-			EEPROM_Add = 1024 + Canal;
-			break;
+				EEPROM_Add = 1024 + Canal;
+				break;
 			case 4:
-			EEPROM_Add = 1536 + Canal;
-			break;
+				EEPROM_Add = 1536 + Canal;
+				break;
 			case 5:
-			EEPROM_Add = 2048 + Canal;
-			break;
+				EEPROM_Add = 2048 + Canal;
+				break;
 			case 6:
-			EEPROM_Add = 2560 + Canal;
-			break;
+				EEPROM_Add = 2560 + Canal;
+				break;
 			case 7:
-			EEPROM_Add = 3072 + Canal;
-			break;
+				EEPROM_Add = 3072 + Canal;
+				break;
 			case 8:
-			EEPROM_Add = 3584 + Canal;
-			if (EEPROM_Add > 4093)
-			{
-				EEPROM_Add = 4093;
-			}
-			break;
+				EEPROM_Add = 3584 + Canal;
+				if (EEPROM_Add > 4093)
+				{
+					EEPROM_Add = 4093;
+				}
+				break;
 		}
 		EEPROM.write (EEPROM_Add, 0);		// escritura EEPROM
 	}
