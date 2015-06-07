@@ -1,35 +1,35 @@
 // ***************************************************************************************************************************
 // ***************************************************************************************************************************
-// **				                                                                                                                **
-// **																			Arduino DMX-512 Tester Controller												                          **
-// **																														                                                            **
-// **	- Firmware v1.0																																																				**
-// **	- Hardware v0.3	- v0.4																																																**
-// **																																																												**
-// **	- Compilado en Arduino IDE v1.0.6																																											**
-// ** - Editado en Sublime Text 2																																														**
-// **		http://www.arduino.cc/en/Main/OldSoftwareReleases																																		**
-// **	- Compilado para Arduino Mega 2560 R3																																									**
-// **		http://www.arduino.cc/en/Main/ArduinoBoardMega2560																																	**
-// **	- Libreria Arduino cuatro universos DMX v0.3 - Deskontrol.net																													**
-// **		http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)																							**
-// **	- Libreria LCD v1.2.1 - Francisco Malpartida																																					**
-// **		https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home																												**
-// **	- Simulacion en Proteus v7.7 SP2																																											**
-// **	- Simulacion en Proteus de Arduino - Microcontrolandos																																**
-// **		http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html																**
-// **																																																												**
-// **	Autor:																																																								**
-// **																																																												**
-// **	Daniel Roberto Becerril Angeles																																												**
-// **	daniel3514@gmail.com																																																	**
-// **	https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki																									**
-// **																																																												**
-// **	Licenciamiento:																																																				**
-// **																																																												**
-// **	GNU General Pubic Licence Version 3																																										**
-// **		https://www.gnu.org/copyleft/gpl.html																																								**
-// **																																																												**
+// **				                                                                                                        **
+// **											Arduino DMX-512 Tester Controller				                            **
+// **																	                                                    **
+// **	- Firmware v1.1																										**
+// **	- Hardware v0.3	- v0.4																								**
+// **																														**
+// **	- Compilado en Arduino IDE v1.0.6																					**
+// ** - Editado en Sublime Text 2																							**
+// **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
+// **	- Compilado para Arduino Mega 2560 R3																				**
+// **		http://www.arduino.cc/en/Main/ArduinoBoardMega2560																**
+// **	- Libreria Arduino cuatro universos DMX v0.3 - Deskontrol.net														**
+// **		http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)											**
+// **	- Libreria LCD v1.2.1 - Francisco Malpartida																		**
+// **		https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home													**
+// **	- Simulacion en Proteus v7.7 SP2																					**
+// **	- Simulacion en Proteus de Arduino - Microcontrolandos																**
+// **		http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html							**
+// **																														**
+// **	Autor:																												**
+// **																														**
+// **	Daniel Roberto Becerril Angeles																						**
+// **	daniel3514@gmail.com																								**
+// **	https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki												**
+// **																														**
+// **	Licenciamiento:																										**
+// **																														**
+// **	GNU General Pubic Licence Version 3																					**
+// **		https://www.gnu.org/copyleft/gpl.html																			**
+// **																														**
 // ***************************************************************************************************************************
 // ***************************************************************************************************************************
 
@@ -273,7 +273,7 @@ void Back_Light_En()
 void GUI_About()
 {
 	byte Firm_Ver_Ent = 1;
-	byte Firm_Ver_Dec = 0;
+	byte Firm_Ver_Dec = 1;
 	byte Hard_Ver_Ent = 0;
 	byte Hard_Ver_Dec = 4;
 	lcd.clear ();
@@ -419,7 +419,7 @@ void GUI_Control_Matrix()
 		{
 			Num_Val = 498;
 		}
-		if (Num_Val == 0)		// limite de matriz
+		if (Num_Val == 0)	// limite de matriz
 		{
 			Num_Val = 1;
 		}
@@ -440,12 +440,12 @@ void GUI_Control_Matrix()
 			Num_Val = Inicial - 14;	// para dejar el numero que estaba si no se cambia
 			Numerico_Calc(0);
 		}	
-		if (Num_Val > 512)				// limite de matriz
+		if (Num_Val > 512)			// limite de matriz
 		{
 			Inicial = 498;
 			goto inicio;
 		}
-		if (Num_Val < 15)					// limite de matriz
+		if (Num_Val < 15)			// limite de matriz
 		{
 			Inicial = 1;
 			goto inicio;
@@ -548,12 +548,12 @@ void GUI_Control_Matrix()
 	Num_Col_Pos = LCD_Col_Pos + 1;
 	Num_Val = DMX_Values[Canal_Actual];		// para dejar el numero que estaba si no se cambia
 	Numerico_Calc(1);
-	if (Num_Val == 612)										// ubicar
+	if (Num_Val == 612)						// ubicar
 	{
 		Ubicar();
 		Num_Col_Pos = Num_Col_Pos - 4;
 	}
-	if (Num_Val == 712)										// analogo
+	if (Num_Val == 712)						// analogo
 	{
 		Analog_Read_DMX(Num_Col_Pos - 2, Num_Row_Pos);
 		Num_Col_Pos = Num_Col_Pos - 4;
@@ -1049,7 +1049,7 @@ void GUI_Memory()
 	lcd.clear ();
 	// Texto
 	lcd.setCursor (0, 0);
-	lcd.print("Memory Options:   b");
+	lcd.print("Memory:          b");
 	if (Universo_Actual == 0)
 	{
 		lcd.print("-");
@@ -1058,36 +1058,39 @@ void GUI_Memory()
 	{
 		lcd.print(Universo_Actual);
 	}
-	lcd.setCursor (1, 2);
+	lcd.setCursor (1, 1);
 	lcd.print("Save");
-	lcd.setCursor (1, 3);
+	lcd.setCursor (1, 2);
 	lcd.print("Load");
-	lcd.setCursor (7, 2);
-	lcd.print("Empty");
-	lcd.setCursor (7, 3);
+	lcd.setCursor (1, 3);
 	lcd.print("Clear");
-	lcd.setCursor (14, 2);
-	lcd.print("Black");
-	lcd.setCursor (14, 3);
-	lcd.print("Cancel");
+	lcd.setCursor (7, 2);
+	lcd.print("ClearAll");
+	lcd.setCursor (7, 1);
+	lcd.print("BlackOut");
+	lcd.setCursor (16, 3);
+	lcd.print("Exit");
+	lcd.setCursor (7, 3);
+	lcd.print("EmptyRAM");
 	// Cursor
 	LCD_Col_Pos = 0;		// posicion de cursor
-	LCD_Row_Pos = 2;
+	LCD_Row_Pos = 1;
 	// configuracion de cursor	
 	Cursor_Conf_Clear();	// limpiar array
 	// Acciones
-	Cursor_Conf[2][0]  = 1;	// Save
-	Cursor_Conf[3][0]  = 1; // Load
-	Cursor_Conf[3][6]  = 1;	// Clear
-	Cursor_Conf[2][6]  = 1;	// Empty
-	Cursor_Conf[2][13] = 1;	// Black Out
-	Cursor_Conf[3][13] = 1;	// Cancel
+	Cursor_Conf[1][0]  = 1;	// Save
+	Cursor_Conf[2][0]  = 1; // Load
+	Cursor_Conf[3][0]  = 1;	// Clear
+	Cursor_Conf[2][6]  = 1;	// Clear All
+	Cursor_Conf[3][6]  = 1;	// Empty RAM
+	Cursor_Conf[1][6]  = 1;	// Black Out
+	Cursor_Conf[3][15] = 1;	// Exit
 	// navegar
 	regresa:
 	GUI_Navegar(0, 0);
 	// Acciones
 	// Load
-	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
+	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
 	{
 		if (EEPROM_Load() == 1)
 		{
@@ -1096,7 +1099,7 @@ void GUI_Memory()
 		goto salida;
 	}
 	// Clear
-	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 3)
+	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
 	{
 		if (EEPROM_Clear() == 1)
 		{
@@ -1104,8 +1107,14 @@ void GUI_Memory()
 		}
 		goto salida;
 	}
+	// Clear All
+	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 2)
+	{
+		EEPROM_Clear_All();
+		goto salida;
+	}
 	// Save
-	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
+	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
 	{
 		if (EEPROM_Save() == 1)
 		{
@@ -1113,26 +1122,24 @@ void GUI_Memory()
 		}
 		goto salida;
 	}
-	// Empty
-	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 2)
+	// Empty RAM
+	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 3)
 	{
 		EEPROM_Empty();
 		goto salida;
 	}
 	// Black Out
-	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
+	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 1)
 	{
 		Black_Out();
 		goto regresa;
 	}
-	// Cancel
-	if (LCD_Col_Pos == 3 && LCD_Row_Pos == 13)
+	// Exit
+	if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3)
 	{
 
 	}
-	salida: 
-	{
-	}
+	salida: {}
 }
 
 void GUI_Control_Secuencer()
@@ -1458,7 +1465,7 @@ void GUI_Control_Secuencer()
 
 void Black_Out()
 {
-	lcd.setCursor (19, 2);
+	lcd.setCursor (15, 1);
 	lcd.blink();
 	// limpiar universo
 	for(int Canal = 1; Canal <= 512; Canal ++)
@@ -1475,7 +1482,7 @@ void Black_Out()
 	{
 		ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal];
 	}
-	lcd.setCursor (13, 2);
+	lcd.setCursor (6, 2);
 	lcd.noBlink();
 }
 
@@ -1709,12 +1716,43 @@ int EEPROM_Clear()
 	return cancel;
 }
 
+void EEPROM_Clear_All()
+{
+	// Pone en ceros la memoria EEPROM toda
+	int EEPROM_Add = 0;			// direccion de eeprom para universos
+	lcd.clear ();
+	lcd.setCursor (1, 1);
+	lcd.print ("All");
+	lcd.setCursor (1, 2);
+	lcd.print ("Memory Cleaning...");
+	lcd.setCursor (19, 2);
+	lcd.blink();
+	for(int Canal = 0; Canal <= 4093; Canal ++)
+	{
+		EEPROM.write (EEPROM_Add, 0);			// escritura EEPROM
+		if (Canal <= 511)
+		{
+			DMX_Values[Canal + 1] = 0;        
+			ArduinoDmx0.TxBuffer[Canal] = 0; 	// salida a DMX
+		}
+	}
+	lcd.clear ();
+	lcd.noBlink();
+	lcd.setCursor (2, 2);
+	lcd.print ("Memory Cleaned!");
+	lcd.setCursor (2, 1);
+	lcd.print ("All");
+	Universo_Actual = 0;
+	delay (1000);
+}
+
 void GUI_Control_Options()
 {
+	inicio:
 	// LCD
 	lcd.clear ();
 	lcd.setCursor (0, 0);
-	lcd.print ("Control Options:  b");
+	lcd.print ("Control:          b");
 	if (Universo_Actual == 0)
 	{
 		lcd.print ("-");
@@ -1731,10 +1769,12 @@ void GUI_Control_Options()
 	lcd.print ("Chaser");
 	lcd.setCursor (11, 3);
 	lcd.print ("Multiply");
-	lcd.setCursor (11, 1);
+	lcd.setCursor (11, 0);
 	lcd.print ("Config");
 	lcd.setCursor (11, 2);
 	lcd.print ("Secuencer");
+	lcd.setCursor (11, 1);
+	lcd.print ("Memory");
 	// Cursor
 	LCD_Col_Pos = 1;			// posicion de cursor
 	LCD_Row_Pos = 1;
@@ -1745,8 +1785,9 @@ void GUI_Control_Options()
 	Cursor_Conf[2][1]   = 1; 	// Matrix
 	Cursor_Conf[3][1]   = 1; 	// Chaser
 	Cursor_Conf[3][10]  = 1; 	// Multiply
-	Cursor_Conf[1][10]  = 1; 	// Config
+	Cursor_Conf[0][10]  = 1; 	// Config
 	Cursor_Conf[2][10]  = 1; 	// Secuencer
+	Cursor_Conf[1][10]  = 1; 	// Memory
 	// navegar
 	GUI_Navegar(0, 0);
 	// Acciones
@@ -1771,7 +1812,7 @@ void GUI_Control_Options()
 		GUI_Control_Multiply();
 	}
 	// Config
-	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
+	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 0)
 	{
 		GUI_Config();
 	}
@@ -1779,6 +1820,12 @@ void GUI_Control_Options()
 	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
 	{
 		GUI_Control_Secuencer();
+	}	
+	// Memory
+	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
+	{
+		GUI_Memory();
+		goto inicio;
 	}	
 }
 
