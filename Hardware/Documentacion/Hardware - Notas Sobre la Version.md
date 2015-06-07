@@ -12,7 +12,7 @@
 
 ***
 
-**v0.4 - Beta - Firm v0.9 to v1.0**
+**v0.4 - Beta - Firm v0.9 to v1.1**
 - CORREGIDO - hacer más grandes los pads del SW
 - CORREGIDO - quitar parte de abajo del soporte del teclado estorba con el flex del teclado
 - CORREGIDO - recorrida la bornera de la conexión dmx hacia el arduino, queda más centrada
