@@ -12,7 +12,7 @@
 
 ***
 
-**v1.2 - Beta - Hardware v0.3 - v0.4**
+**v1.2 - Stable - Hardware v0.3 - v0.4**
 - AGREGADO  - al arranque toma el banco de la eeprom previamente elejido desde config
 - AGREGADO  - a config el banco que lee a arranque
 - AGREGADO  - al about el banco actual
