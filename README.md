@@ -11,7 +11,7 @@ Mas informacion en la [Wiki...](https://github.com/daniel3514/Arduino-DMX-512-Te
 
 ***
 
-Una herramienta para controlar y probar iluminación de espectáculos controlada por el protocolo [DMX-512](http://es.wikipedia.org/wiki/Digital_Multiplex), ideal para hacer pruebas rápidas en instalaciones fijas o temporales de iluminación.
+Una herramienta para probar y controlar iluminación de espectáculos a travez del protocolo [DMX-512](http://es.wikipedia.org/wiki/Digital_Multiplex), ideal para hacer pruebas rápidas en instalaciones fijas o temporales de iluminación.
 Este proyecto surge por la necesidad de tener un sistema portátil para realizar pruebas rápidas en instalaciones de iluminación, sin la necesidad de instalar consolas de iluminación, interfaces o computadoras en ambientes al intemperie, hostiles o de difícil acceso.
 
 Basado en:
@@ -21,15 +21,15 @@ Basado en:
 * [Simulacion de Arduino desde Proteus - Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 
 ***
-### [Hardware v0.3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Hardware-v0.3)
+### Hardware v0.4
 [Notas sobre la version...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/notas%20sobre%20la%20version.txt)
-* En construccion...
-* LCD de 4x20 con back light y contraste controlado por software
+* Compatible con Firmware v0.9 - v1.2
+* LCD de 4x20 con backlight y contraste controlado por software
 * Alimentación desde USB, baterías o fuente de alimentación externa
 * Teclado de navegación
 * Teclado numérico 4x4
 * Potenciometro para control analogo
-* Interruptor de on/off
+* Interruptor de on/off (no aplica en alimentacion por USB)
 * Salida DMX desde bornera, XLR de 3 pin y XLR de 5 pin
 * Leds de estado de salida DMX
 * Simulacion en Proteus v7.7 SP2
@@ -37,10 +37,10 @@ Basado en:
 
 ***
 
-### [Firmware v0.6](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6)
+### Firmware v1.2
 
 [Notas sobre la versión...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/Documentacion/notas%20sobre%20la%20version.txt)
-* Compatible con [Hardware v0.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Hardware-v0.0)
+* Compatible con Hardware v0.3 - v0.4
 * Navegación desde cursor de fácil acceso e intuitivo
 * Inserción rápida de valores desde el teclado numérico
 * Inserción de valores desde potenciometro análogo
