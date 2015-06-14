@@ -2601,58 +2601,58 @@ void Numerico_Calc(byte value)
 		Num_Val = Boton_Calc;			// valor calculado
 		Num_Val_Temp_1 = Boton_Calc;	// valor temporal para el acarreo
 	}
-	if (Boton_Calc == 14)			// enter
+	if (Boton_Calc == 14)		// enter
 	{
-		goto Salida;				// num val = 0		
+		goto Salida;			// num val = 0		
 	}
 	if (value == 1)				// si es un valor
 	{
-		if (Boton_Calc == 10)		// 255
+		if (Boton_Calc == 10)	// 255
 		{
 			Num_Val = 255;
 			goto Salida;
 		}
-		if (Boton_Calc == 11)		// 000
+		if (Boton_Calc == 11)	// 000
 		{
 			Num_Val = 0;
 			goto Salida;
 		}
-		if (Boton_Calc == 12)		// ubicar
+		if (Boton_Calc == 12)	// ubicar
 		{
 			Num_Val = 612;
 			goto Salida_Option;
 		}
-		if (Boton_Calc == 13)		// analogo
+		if (Boton_Calc == 13)	// analogo
 		{
 			Num_Val = 712;
 			goto Salida_Option;
 		}
 	}
 	// segundo numero
-	Numerico_Read();				// leer boton
-	if (Boton_Calc == 14)			// enter
+	Numerico_Read();			// leer boton
+	if (Boton_Calc == 14)		// enter
 	{
 		Num_Val = Num_Val_Temp_1;	
-		goto Salida;				// num val = num val anterior
+		goto Salida;			// num val = num val anterior
 	}
 	if (value == 1)				// si es un valor
 	{
-		if (Boton_Calc == 10)		// 255
+		if (Boton_Calc == 10)	// 255
 		{
 			Num_Val = 255;
 			goto Salida;
 		}
-		if (Boton_Calc == 11)		// 000
+		if (Boton_Calc == 11)	// 000
 		{
 			Num_Val = 0;
 			goto Salida;
 		}
-		if (Boton_Calc == 12)		// ubicar
+		if (Boton_Calc == 12)	// ubicar
 		{
 			Num_Val = 612;
 			goto Salida_Option;
 		}
-		if (Boton_Calc == 13)		// analogo
+		if (Boton_Calc == 13)	// analogo
 		{
 			Num_Val = 712;
 			goto Salida_Option;
@@ -2671,30 +2671,30 @@ void Numerico_Calc(byte value)
 		lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
 	}
 	// Tercer numero
-	Numerico_Read();				// leer boton
-	if (Boton_Calc == 14)			// enter
+	Numerico_Read();			// leer boton
+	if (Boton_Calc == 14)		// enter
 	{	
 		Num_Val = (Num_Val_Temp_1 * 10) + Num_Val_Temp_2;
 		goto Salida;
 	}
 	if (value == 1)				// si es un valor
 	{
-		if (Boton_Calc == 10)		// 255
+		if (Boton_Calc == 10)	// 255
 		{
 			Num_Val = 255;
 			goto Salida;
 		}
-		if (Boton_Calc == 11)		// 000
+		if (Boton_Calc == 11)	// 000
 		{
 			Num_Val = 0;
 			goto Salida;
 		}
-		if (Boton_Calc == 12)		// ubicar
+		if (Boton_Calc == 12)	// ubicar
 		{
 			Num_Val = 612;
 			goto Salida_Option;
 		}
-		if (Boton_Calc == 13)		// analogo
+		if (Boton_Calc == 13)	// analogo
 		{
 			Num_Val = 712;
 			goto Salida_Option;
@@ -2716,7 +2716,7 @@ void Numerico_Calc(byte value)
 	Salida:
 	lcd.noBlink();
 	// pintar los ceros antes del numero
-	Numerico_Write (Num_Val, Num_Col_Pos - 2, Num_Row_Pos);
+	Numerico_Write (Num_Val, Num_Col_Pos - 2, Num_Row_Pos); 
 	Num_Col_Pos = Num_Col_Pos - 4;
 	// regresar el cursor a su ligar
 	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
@@ -2731,8 +2731,8 @@ void Numerico_Calc(byte value)
 void Numerico_Read()
 {
 	long Num_Barrido_Time = 5;		// tiempo entre barrido de keys
-	Boton_Calc = 17;					// limpiar valor para lectura
-	while (Boton_Calc == 17)			// valor calculado	# E * F, 17 sin valor calculado
+	Boton_Calc = 17;				// limpiar valor para lectura
+	while (Boton_Calc == 17)		// valor calculado	# E * F, 17 sin valor calculado
 	{	
 		// Barrido
 		// Linea 1
@@ -2878,13 +2878,13 @@ void Analog_Read_DMX(byte col, byte row)
 	int read;
 	lcd.setCursor (col - 1, row);
 	lcd.print("a");						// indicar que es analogo
-	digitalWrite(Boton_Array_3, LOW);		// lectura linea 3
+	digitalWrite(Boton_Array_3, LOW);	// lectura linea 3
 	lcd.blink();
 	int valores = 0;
 	while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
 	{
-		read = analogRead(Pot);				// lectura desde el potenciometro
-		read = read / 4;					// / 4 porque es de 12 bits
+		read = analogRead(Pot);			// lectura desde el potenciometro
+		read = read / 4;				// / 4 porque es de 12 bits
 		delay(50);
 		if (valores != read)
 		{
@@ -2894,7 +2894,7 @@ void Analog_Read_DMX(byte col, byte row)
 		 valores = read;
 	 }
  }
- lcd.noBlink();
+	lcd.noBlink();
 	digitalWrite(Boton_Array_3, HIGH);	// lectura linea 3
 	delay(300);							// delay para salir de la lectura analoga
 }
