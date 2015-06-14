@@ -70,6 +70,7 @@ Basado en:
 - Copyright (C) 2015
 - Daniel Roberto Becerril Angeles
 - [daniel3514@gmail.com](mailto:daniel3514@gmail.com)
+
 - [Tech Inside](http://www.techinside.com.mx)
 - [Hack a Day](https://hackaday.io/daniel3514)
 - [Instructables](http://www.instructables.com/member/daniel3514/)
