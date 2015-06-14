@@ -43,7 +43,9 @@ Basado en:
 * Bancos de memoria para almacenar 8 universos DMX
 * Lectura desde la EEPROM al arranque de universo DMX preseleccionado
 * Seleccion de opciones de memoria al arranque 
-* 5 modos de control DMX: Unitary, Matrix, Chaser, Secuencer, Multiply
+* Control DMX Unitary, permite seleccionar un canal especifico, ademas de mostrar los valores de los canales anterior y siguiente
+* Control DMX Matrix, muestra una matriz de 3 x 5 con los valores de los canales mostrados
+* sw Chaser, Secuencer, Multiply
 ** test
 * Función para ubicar luminaria desde el canal seleccionado
 * Acceso rápido a opciones de memoria
