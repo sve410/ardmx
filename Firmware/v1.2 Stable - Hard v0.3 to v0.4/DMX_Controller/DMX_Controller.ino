@@ -291,7 +291,7 @@ void Back_Light_En()
 
 void GUI_Licence()
 {
-	int retardo = 1000;
+	int retardo = 4000;
 	lcd.clear ();
 	lcd.setCursor(0, 0);
 	lcd.print("  This program is");
