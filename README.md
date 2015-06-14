@@ -1,13 +1,9 @@
 ### **Arduino DMX 512 Tester and Controller**
 ***
 
-[English version](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/README%20ENG.md)
+English version
 
 Mas informacion en la [Wiki...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki)
-
-![Arduino DMX-512 Tester and Controller](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.0%20-%20stable%20-%20Firm%20v0.0%20to%20v0.6/media/Hardware%20v00.JPG)
-
-[![YouTube](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v0.6%20Stable%20-%20Hard%200.0/Media/youtube.JPG)](https://www.youtube.com/watch?v=TxBHMpAWDSY)
 
 ***
 
@@ -22,7 +18,7 @@ Basado en:
 
 ***
 ### Hardware v0.4
-[Notas sobre la version...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/notas%20sobre%20la%20version.txt)
+[Notas sobre la version...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/Hardware%20-%20Notas%20Sobre%20la%20Version.md)
 * Compatible con Firmware v0.9 - v1.2
 * LCD de 4x20 con backlight y contraste controlado por software
 * Alimentación desde USB, baterías o fuente de alimentación externa
@@ -39,15 +35,20 @@ Basado en:
 
 ### Firmware v1.2
 
-[Notas sobre la versión...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/Documentacion/notas%20sobre%20la%20version.txt)
+[Notas sobre la versión...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/Documentacion/Firmware%20-%20Notas%20Sobre%20la%20Version.md)
 * Compatible con Hardware v0.3 - v0.4
 * Navegación desde cursor de fácil acceso e intuitivo
 * Inserción rápida de valores desde el teclado numérico
 * Inserción de valores desde potenciometro análogo
+* Bancos de memoria para almacenar 8 universos DMX
+* Lectura desde la EEPROM al arranque de universo DMX preseleccionado
+* Seleccion de opciones de memoria al arranque 
+* 5 modos de control DMX: Unitary, Matrix, Chaser, Secuencer, Multiply
+** test
 * Función para ubicar luminaria desde el canal seleccionado
 * Acceso rápido a opciones de memoria
 * Función de [Black Out](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#memory-options) desde el menú "[Memory](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#memory-options)"
-* 4 modos de control DMX "[Control Options](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#control-options)": [Unitary](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#unitary-control), [Matrix](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#matrix-control), [Multiply](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#multiply-control), [Chaser](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#chaser-control) y [Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#Config)
+
 * Control de iluminación de LCD back light desde el menu "[Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#config)"
 * Control de contraste de LCD desde desde el menu "[Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#config)"
 * Acceso rápido desde el [teclado](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#entrada-del-usuario) al LCD back light
