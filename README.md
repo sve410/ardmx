@@ -67,8 +67,8 @@ Basado en:
 * [Open Source Hardware (OSHW) v1.0](http://www.oshwa.org/definition/)
 
 ## Autor
--Copyright (C) 2015
--Daniel Roberto Becerril Angeles
+- Copyright (C) 2015
+- Daniel Roberto Becerril Angeles
 
 - [daniel3514@gmail.com](mailto:daniel3514@gmail.com)
 - [Tech Inside](http://www.techinside.com.mx)
