@@ -64,6 +64,7 @@ Basado en:
 
 ## Licenciamiento
 [GNU General Public Licence Version 3](/LICENSE)
+[Open Source Hardware (OSHW) v1.0](http://www.oshwa.org/definition/)
 
 ## Autor
 Daniel Roberto Becerril Angeles
