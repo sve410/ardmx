@@ -21,15 +21,33 @@
 // **																														**
 // **	Autor:																												**
 // **																														**
-// **	Daniel Roberto Becerril Angeles																						**
+// **	Copyright (C) 2015 - Daniel Roberto Becerril Angeles																**
 // **	daniel3514@gmail.com																								**
 // **	https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki												**
 // **																														**
 // **	Licenciamiento:																										**
 // **																														**
-// **	Firmware:																											**
-// **	GNU General Pubic Licence Version 3																					**
+// **	Firmware:																											**		
+// **		GNU General Pubic Licence Version v3																			**
 // **		https://www.gnu.org/copyleft/gpl.html																			**
+// **																														**
+// **	Hardware:																											**
+// **		Open Source Hardware (OSHW) v1.0																				**
+// **		http://freedomdefined.org/OSHW#Licenses_and_Hardware															**
+// **		http://www.oshwa.org/definition/																				**
+// **																														**
+// **	Este programa es software libre: usted puede redistribuirlo y / o modificarlo bajo los términos de la 				**
+// **	Licencia Pública General GNU publicada por la Free Software Foundation, bien de la versión 3 de la Licencia, 		**
+// **	o (A su elección) cualquier versión posterior.																		**
+// **																														**
+// **   Este programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; ni siquiera la garantía 	**
+// **	implícita de COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Vea el GNU General Public License 			**
+// **	para más detalles.																									**
+// **																														**
+// ** 	Esto es software libre, y le invitamos a redistribuirlo bajo ciertas condiciones									**
+// **																														**
+// **   Debería haber recibido una copia de la Licencia Pública General GNU													**
+// **   junto con este programa. Si no es así, consulte <http://www.gnu.org/licenses/>.										**
 // **																														**
 // ***************************************************************************************************************************
 // ***************************************************************************************************************************
@@ -269,6 +287,63 @@ void Back_Light_En()
 	}
 	salida:
 	delay(300);									// para impedir repeticion del comando
+}
+
+void GUI_Licence()
+{
+	int retardo = 1000;
+	lcd.clear ();
+	lcd.setCursor(0, 0);
+	lcd.print("  This program is");
+	lcd.setCursor(0, 1);
+	lcd.print("distributed in the");
+	lcd.setCursor(0, 2);
+	lcd.print("hope that it will be");
+	lcd.setCursor(0, 3);
+	lcd.print("useful, but");
+	delay(retardo);
+	
+	lcd.clear ();
+	lcd.setCursor(0, 0);
+	lcd.print("WITHOUT ANY WARRANTY");
+	lcd.setCursor(0, 1);
+	lcd.print("without even the");
+	lcd.setCursor(0, 2);
+	lcd.print("implied warranty of");
+	lcd.setCursor(0, 3);
+	lcd.print("MERCHANTABILITY of");
+	delay(retardo);
+	
+	lcd.clear ();
+	lcd.setCursor(0, 0);
+	lcd.print("FITNESS FOR A");
+	lcd.setCursor(0, 1);
+	lcd.print("PARTICULAR PORPUSE.");
+	lcd.setCursor(0, 2);
+	lcd.print("    This is free ");
+	lcd.setCursor(0, 3);
+	lcd.print("software and you are");
+	delay(retardo);
+	
+	lcd.clear ();
+	lcd.setCursor(0, 0);
+	lcd.print("welcome to");
+	lcd.setCursor(0, 1);
+	lcd.print("redistribute it");
+	lcd.setCursor(0, 2);
+	lcd.print("under certain");
+	lcd.setCursor(0, 3);
+	lcd.print("conditions");
+	delay(retardo);
+	
+	lcd.clear ();
+	lcd.setCursor(0, 0);
+	lcd.print("See the GNU GENERAL");
+	lcd.setCursor(0, 1);
+	lcd.print("PUBLIC LICENCE");
+	lcd.setCursor(0, 2);
+	lcd.print("for more details...");
+	delay(retardo);	
 }
 
 void GUI_About()
@@ -2092,6 +2167,7 @@ void GUI_Config()
 	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
 	{
 		GUI_About();
+		GUI_Licence();
 		goto Inicio;
 	}
 	goto Navegacion;
