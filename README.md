@@ -45,15 +45,17 @@ Basado en:
 * Seleccion de opciones de memoria al arranque 
 * Control DMX Unitary, permite seleccionar un canal especifico, ademas de mostrar los valores de los canales anterior y siguiente
 * Control DMX Matrix, muestra una matriz de 3 x 5 con los valores de los canales mostrados
-* sw Chaser, Secuencer, Multiply
-** test
+* Control DMX Chaser, permite secuenciar canales seleccionados, con un tiempo seleccionado
+* Control DMX Secuencer, permite secuenciar entre los universos guardados en la memoria EEPROM con un tiempo seleccionado
+* Control DMX Multiply, permite llenar valores multiplicando los canales seleccionados
 * Función para ubicar luminaria desde el canal seleccionado
 * Acceso rápido a opciones de memoria
-* Función de [Black Out](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#memory-options) desde el menú "[Memory](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#memory-options)"
-
-* Control de iluminación de LCD back light desde el menu "[Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#config)"
-* Control de contraste de LCD desde desde el menu "[Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#config)"
-* Acceso rápido desde el [teclado](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#entrada-del-usuario) al LCD back light
+* Opciones de memoria Save, Load, Clear, Clear All (para los bancos de memoria y empty RAM
+* Opciones de memoria para los 8 bancos de universos DMX
+* Función de Black Out
+* Control de iluminación de LCD back light
+* Control de contraste de LCD
+* Acceso rápido desde el teclado LCD back light
 * Compilado en [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
 * Librería Arduino cuatro universos DMX v0.3 - [Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 * Libreria LCD v1.2.1 - [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
