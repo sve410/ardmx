@@ -4,11 +4,15 @@
 
 ***
 
-**Beta**
-- cambiar potenciómetro por encoder
-- agregar luz para el teclado
-- agregar opto acoplado a salida de dmx
-- agregar convertidor de dc/dc para alimentar el opto acoplado
+**v0.5 - Beta - Firm vx.x**
+- CORREGIDO - potenciómetro por encoder
+- CORREGIDO - etapa de potencia para contraste
+- AGREGADO 	- Luz para el teclado y cursores
+- AGREGADO  - Etapa de potencia para luz de teclado
+- AGREGADO  - opto acoplado a salida de dmx
+- AGREGADO  - convertidor de DC/DC para asilamiento de DMX
+- Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
+- Contraste por PWM basado en http://www.pcbheaven.com/circuitpages/PWM_LCD_Contrast_Control/
 
 ***
 
