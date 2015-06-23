@@ -7,6 +7,8 @@
 **v0.5 - Beta - Firm vx.x**
 - CORREGIDO - potenciómetro por encoder
 - CORREGIDO - etapa de potencia para contraste
+- CORREGIGO - se quito la entrada al Arduino desde el MAX485, causa problemas al cargar el programa
+- CORREGIDO - Las bases de los CI se cambiaron a maquinadas
 - AGREGADO 	- Luz para el teclado y cursores
 - AGREGADO  - Etapa de potencia para luz de teclado
 - AGREGADO  - opto acoplado a salida de dmx
