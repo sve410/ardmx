@@ -8,7 +8,19 @@
 
 **v0.x - Beta**
 - Agregar encoder
-- agregar a config luz para teclado
+
+***
+
+**v1.3 - Beta - Hardware v0.3 - v0.4**
+- AGREGADO  - Control de iluminacion para teclado
+- AGREGADO  - a EEPROM la posicion 4092 para guardar key light
+- AGREGADO  - la variable global int EEPROM_Limit para controlar el limite de escritura de eeprom de universos
+- AGREGADO  - EEPROM_Limit a todas las funciones de memoria EEPROM
+- AGREGADO  - el control * en el teclado controla el back light y el key light 
+- AGREGADO  - variable global Light_On_Off para control desde tecla * de la iluminacion de teclado y back
+- CORREGIDO - en Back_Light_En, byte Back_Light_Value = EEPROM.read(513); el valor esta fuera de rango
+- CORREGIDO - unused variable 'EEPROM_Add'
+- CORREGIDO - en about "open hardware!" por "Open Source License:"
 
 ***
 
