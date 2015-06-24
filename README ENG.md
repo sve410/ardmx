@@ -1,15 +1,13 @@
 ### **Arduino DMX 512 Tester and Controller**
 ***
 
-More information in the [Wiki...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki)
+[Spanish version](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/README.md)
 
-![Arduino DMX-512 Tester and Controller](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.0%20-%20stable%20-%20Firm%20v0.0%20to%20v0.6/media/Hardware%20v00.JPG)
-
-[![YouTube](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v0.6%20Stable%20-%20Hard%200.0/Media/youtube.JPG)](https://www.youtube.com/watch?v=TxBHMpAWDSY)
+More information on [Wiki...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki)
 
 ***
 
-A tool to control and test light show controlled by the protocol [DMX-512] (http://es.wikipedia.org/wiki/Digital_Multiplex), ideal for quick tests on fixed or temporary installations of lighting.
+Control tool for testing and light show by the [DMX-512](http://es.wikipedia.org/wiki/Digital_Multiplex) protocol, ideal for quick tests on fixed or temporary installations of lighting.
 This project arises from the need to have a portable system for rapid testing in lighting installations, without the need to install lighting consoles, interfaces or computers in environments outside, hostile or difficult to access.
 
 Based on:
@@ -19,16 +17,15 @@ Based on:
 * [Arduino from Proteus Simulation - Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 
 ***
-
-### [Hardware v0.3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Hardware-v0.3-ENG)
-[Release Notes...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/notas%20sobre%20la%20version.txt)
-* Under construction...
+### Hardware v0.4
+[Release Notes...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/Hardware%20-%20Notas%20Sobre%20la%20Version.md)
+* Supports Firmware v0.9 - v1.3
 * 4x20 LCD with backlight and contrast controlled by software
-* Power supply from USB, batteries or external power supply
-* Keyboard navigation
-* Keypad 4x4
-* Control potentiometer for analogue
-* Switch on / off
+* Power from USB, batteries or external power supply
+* Navigation keypad
+* 4x4 keypad
+* Analog control potentiometer
+* Switch on / off (not applicable to USB power)
 * DMX output from terminal block, XLR 3-pin and 5-pin XLR
 * Output status LEDs DMX
 * Simulation in Proteus V7.7 SP2
@@ -36,32 +33,67 @@ Based on:
 
 ***
 
-### [Firmware v0.6](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6)
-
-[Release Notes...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/Documentacion/notas%20sobre%20la%20version.txt)
-* Compatible with [Hardware v0.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Hardware-v0.0)
-* Cursor navigation from easily accessible and intuitive
-* Fast Inserting values from the keypad
-* Insert values from analog potentiometer
+### Firmware v1.2
+[Release Notes...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/Documentacion/Firmware%20-%20Notas%20Sobre%20la%20Version.md)
+* Supports Hardware v0.3 - v0.4
+* Navigation from cursor easily accessible and intuitive
+* Fast Inserting values ​​from the keypad
+* Insert values ​​from analog potentiometer
+* Memory Banks store 8 DMX universes
+* Reading from the EEPROM to start DMX universe preselected
+* Selection of memory options to start
+* DMX Control Unitary, selects a specific channel, and shows the values ​​of the previous channels and next
+* Matrix Control DMX shows a 3 x 5 matrix with the values ​​of the channels shown
+* Chaser DMX Control allows sequence selected channels, with a selected time
+* DMX Sequencer allows sequencing between universes stored in the EEPROM memory with a selected time
+* Multiply DMX Control allows multiplying values ​​fill the selected channels
 * Function to locate luminaire from the selected channel
 * Quick access to memory options
-* Feature [Black Out](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#memory-options) desde el menú "[Memory](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#memory-options)"
-* Control 4 modes DMX "[Control Options](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#control-options)": [Unitary](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#unitary-control), [Matrix](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#matrix-control), [Multiply](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#multiply-control), [Chaser](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#chaser-control) y [Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#Config)
-* Lighting control LCD backlight from the menu "[Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#config)"
-* LCD contrast control from from the menu "[Config](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#config)"
-* Quick access from the [keyboard](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki/Firmware-v0.6#entrada-del-usuario) al LCD back light
-* Compiled by [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
+* Memory options Save, Load, Clear, Clear All (for banks and empty RAM memory
+* Memory options for the 8 DMX universes banks
+* Function Black Out
+* Control of LCD back light illumination
+* LCD Contrast Control
+* Keyboard Shortcuts from the LCD back light
+* compiled by [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
 * Arduino library four universes DMX v0.3 - [Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 * Library LCD v1.2.1 - [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
 
 ***
 
-## License
-[GNU General Public Licence Version 3](/LICENSE)
+## Repository
+[Firmware](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Firmware)
+* Firmware versions are numbered consecutively
+* The folder "Documentacion" contains the information of the libraries used
+* The folder "Documentacion / Hardware" contains information of specific hardware
+* The "Firmware - Notas Sobre la Version.md" file contains the historical changes in the different versions of Firmware
 
-## Author
-Daniel Roberto Becerril Angeles
+[Hardware](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Hardware)
+* Hardware versions are numbered consecutively
+* The folder "Documentacion / Components" contains information of specific components
+* The "Hardware - Notas Sobre la Version.md" file contains the historical changes in the different versions of Hardware
 
+[Simulador](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Simulador)
+* Simulator versions are numbered consecutively
+
+[Social](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Social)
+* The "Publicados.txt" file contains the information about the activity on Websites, Blogs and Social Networks
+
+[Software](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Software)
+* Contiene el software utilizado para el proyecto
+
+[Licencias](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Licencias)
+* Contiene la informacion sobre el licenciamiento del proyecto
+
+***
+
+## Licenciamiento
+* [GNU General Public Licence Version 3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licencias/Licence%20-%20Firmware.md)
+* [Open Source Hardware (OSHW) v1.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licencias/Licence%20-%20Hardware.md)
+
+## Autor
+* Copyright (C) 2015
+* Daniel Roberto Becerril Angeles
 - [daniel3514@gmail.com](mailto:daniel3514@gmail.com)
 - [Tech Inside](http://www.techinside.com.mx)
 - [Hack a Day](https://hackaday.io/daniel3514)
