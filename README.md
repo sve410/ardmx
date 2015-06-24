@@ -61,8 +61,8 @@ Basado en:
 ***
 
 ## Licenciamiento
-* [GNU General Public Licence Version 3](../Licence%20-%20Firmware.md)
-* [Open Source Hardware (OSHW) v1.0](../Licence%20-%20Hardware.md)
+* [GNU General Public Licence Version 3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licence%20-%20Firmware.md)
+* [Open Source Hardware (OSHW) v1.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licence%20-%20Hardware.md)
 
 ## Autor
 * Copyright (C) 2015
