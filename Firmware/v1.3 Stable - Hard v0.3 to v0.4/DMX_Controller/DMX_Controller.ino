@@ -4,7 +4,7 @@
 // **											Arduino DMX-512 Tester Controller				                            **
 // **																	                                                    **
 // **	- Firmware v1.3																										**
-// **	- Hardware v0.5																								**
+// **	- Hardware v0.4																								**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
 // ** 	- Editado en Note++																									**
@@ -285,28 +285,46 @@ void Contrast_Init()
 
 void Light_En()
 {
+	// encender back y key desde la tecla *
 	byte Back_Light_Value 	= EEPROM.read(BackLight_Add);	// lectura del ultimo valor desde la eeprom
 	byte Key_Light_Value	= EEPROM.read(Key_Light_Add);	// lectura del ultimo valor desde la eeprom
+	long delay_dimmer		= 1;
 	// encender
 	if (Light_On_Off == 0)									// si esta apagada encenderla
 	{
 		// si el valor es 0 lo encendemos de todos modos
 		if (Back_Light_Value == 0)
 		{
-			analogWrite(Back_Light_PWM, 127);				// aqui el valor a encender en el caso que se haya establecido apagado
+			for(int contar = 0; contar <= 127; contar ++)
+			{
+				analogWrite(Back_Light_PWM, contar);		// aqui el valor a encender en el caso que se haya establecido apagado
+				delay(delay_dimmer);
+			}	
 		}
 		if (Key_Light_Value == 0)
 		{
-			analogWrite(Key_Light_PWM, 127);				// aqui el valor a encender en el caso que se haya establecido apagado
+			for(int contar = 0; contar <= 127; contar ++)
+			{
+				analogWrite(Key_Light_PWM, 127);			// aqui el valor a encender en el caso que se haya establecido apagado
+				delay(delay_dimmer);
+			}
 		}
 		// solo encender
 		if (Back_Light_Value > 0)
 		{
-			analogWrite(Back_Light_PWM, Back_Light_Value);	// encender con el valor de la eeprom
+			for(int contar = 0; contar <= Back_Light_Value; contar ++)
+			{
+				analogWrite(Back_Light_PWM, contar);		// encender con el valor de la eeprom
+				delay(delay_dimmer);
+			}
 		}
 		if (Key_Light_Value > 0)
 		{
-			analogWrite(Key_Light_PWM, Key_Light_Value);	// encender con el valor de la eeprom
+			for(int contar = 0; contar <= Back_Light_Value; contar ++)
+			{
+				analogWrite(Key_Light_PWM, Key_Light_Value);// encender con el valor de la eeprom
+				delay(delay_dimmer);
+			}
 		}
 		Light_On_Off = 1;
 		goto salida;
@@ -314,7 +332,12 @@ void Light_En()
 	// apagar
 	if (Light_On_Off == 1)									// si esta encendida apagarla
 	{
-		analogWrite(Back_Light_PWM, 0);
+		for(int contar = Back_Light_Value; contar != 0; contar --)
+		{
+			analogWrite(Back_Light_PWM, contar);
+			delay(delay_dimmer);
+		}
+		analogWrite(Back_Light_PWM, 0);	
 		analogWrite(Key_Light_PWM, 0);
 		Light_On_Off = 0;
 	}
@@ -384,11 +407,38 @@ void GUI_About()
 	byte Firm_Ver_Ent = 1;
 	byte Firm_Ver_Dec = 3;
 	byte Hard_Ver_Ent = 0;
-	byte Hard_Ver_Dec = 5;
+	byte Hard_Ver_Dec = 4;
+	byte Key_Light_Value 	= EEPROM.read(Key_Light_Add);
+	byte Back_Light_Value 	= EEPROM.read(BackLight_Add);
 	lcd.clear ();
+	analogWrite(Key_Light_PWM, 0);
+	analogWrite(Back_Light_PWM, 0);
 	for(int numero = 0; numero <= 512; numero ++)	// efecto binario en lcd
 	{
+		// binario
 		lcd.print (numero, BIN);
+		// key light
+		if(Key_Light_Value > 0)
+		{
+			if(numero <= 255)
+			{
+				if(numero <= Key_Light_Value)
+				{
+					analogWrite(Key_Light_PWM, numero);
+				}
+			}
+		}
+		// back light
+		if(Back_Light_Value > 0)
+		{
+			if(numero <= 255)
+			{
+				if(numero <= Back_Light_Value)
+				{
+					analogWrite(Back_Light_PWM, numero);
+				}
+			}
+		}
 	}
 	lcd.clear ();
 	lcd.blink ();

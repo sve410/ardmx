@@ -8,6 +8,7 @@
 
 **v0.x - Beta**
 - Agregar encoder
+- agregar al arranque cuando se espera salir de about control de tecla * para light
 
 ***
 
@@ -18,6 +19,8 @@
 - AGREGADO  - EEPROM_Limit a todas las funciones de memoria EEPROM
 - AGREGADO  - el control * en el teclado controla el back light y el key light 
 - AGREGADO  - variable global Light_On_Off para control desde tecla * de la iluminacion de teclado y back
+- AGREGADO  - al about un dimmer en key y back durante el efecto binario
+- AGREGADO  - a la tecla de light * un dimmer de on y off para key y back
 - CORREGIDO - en Back_Light_En, byte Back_Light_Value = EEPROM.read(513); el valor esta fuera de rango
 - CORREGIDO - unused variable 'EEPROM_Add'
 - CORREGIDO - en about "open hardware!" por "Open Source License:"
