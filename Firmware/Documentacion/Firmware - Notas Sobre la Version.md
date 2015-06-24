@@ -8,11 +8,10 @@
 
 **v0.x - Beta**
 - Agregar encoder
-- agregar al arranque cuando se espera salir de about control de tecla * para light
 
 ***
 
-**v1.3 - Beta - Hardware v0.3 - v0.4**
+**v1.3 - Stable - Hardware v0.3 - v0.4**
 - AGREGADO  - Control de iluminacion para teclado
 - AGREGADO  - a EEPROM la posicion 4092 para guardar key light
 - AGREGADO  - la variable global int EEPROM_Limit para controlar el limite de escritura de eeprom de universos
