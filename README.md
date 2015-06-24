@@ -1,13 +1,11 @@
 ### **Arduino DMX 512 Tester and Controller**
 ***
 
-English version
-
 Mas informacion en la [Wiki...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/wiki)
 
 ***
 
-Una herramienta para probar y controlar iluminación de espectáculos a travez del protocolo [DMX-512](http://es.wikipedia.org/wiki/Digital_Multiplex), ideal para hacer pruebas rápidas en instalaciones fijas o temporales de iluminación.
+Herramienta para pruebas y control de iluminación de espectáculos a travez del protocolo [DMX-512](http://es.wikipedia.org/wiki/Digital_Multiplex), ideal para hacer pruebas rápidas en instalaciones fijas o temporales de iluminación.
 Este proyecto surge por la necesidad de tener un sistema portátil para realizar pruebas rápidas en instalaciones de iluminación, sin la necesidad de instalar consolas de iluminación, interfaces o computadoras en ambientes al intemperie, hostiles o de difícil acceso.
 
 Basado en:
@@ -19,7 +17,7 @@ Basado en:
 ***
 ### Hardware v0.4
 [Notas sobre la version...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/Documentacion/Hardware%20-%20Notas%20Sobre%20la%20Version.md)
-* Compatible con Firmware v0.9 - v1.2
+* Compatible con Firmware v0.9 - v1.3
 * LCD de 4x20 con backlight y contraste controlado por software
 * Alimentación desde USB, baterías o fuente de alimentación externa
 * Teclado de navegación
@@ -63,8 +61,8 @@ Basado en:
 ***
 
 ## Licenciamiento
-* [GNU General Public Licence Version 3](/LICENSE)
-* [Open Source Hardware (OSHW) v1.0](http://www.oshwa.org/definition/)
+* [GNU General Public Licence Version 3](../Licence%20-%20Firmware.md)
+* [Open Source Hardware (OSHW) v1.0](../Licence%20-%20Hardware.md)
 
 ## Autor
 * Copyright (C) 2015
