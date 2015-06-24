@@ -60,6 +60,32 @@ Basado en:
 
 ***
 
+## Repositorio
+[Firmware](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Firmware)
+* Las versiones del Firmware estan numeradas de manera consecutiva
+* La carpeta de "Documentacion" contiene la informacion de las librerias utilizadas
+* La carpeta de "Documentacion/Hardware" contiene la informacion del hardware especifico
+* El archivo "Firmware - Notas Sobre la Version.md" contiene el historico de cambios en las diferentes versiones del Firmware
+
+[Hardware](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Hardware)
+* Las versiones del Hardware estan numeradas de manera consecutiva
+* La carpeta de "Documentacion/Componentes" contiene la informacion de los componentes especificos
+* El archivo "Hardware - Notas Sobre la Version.md" contiene el historico de cambios en las diferentes versiones del Hardware
+
+[Simulador](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Simulador)
+* Las versiones del Simulador estan numeradas de manera consecutiva
+
+[Social](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Social)
+* El archivo "Publicados.txt" contiene la informacion de la actividad en Webs, Blogs y Redes Sociales
+
+[Software](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Software)
+* Contiene el software utilizado para el proyecto
+
+[Licencias](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Licencias)
+* Contiene la informacion sobre el licenciamiento del proyecto
+
+***
+
 ## Licenciamiento
 * [GNU General Public Licence Version 3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licence%20-%20Firmware.md)
 * [Open Source Hardware (OSHW) v1.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licence%20-%20Hardware.md)
