@@ -1,4 +1,7 @@
 ### **Arduino DMX 512 Tester and Controller**
+
+[![Arduino DMX-512 Tester and Controller](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.0%20-%20beta%20-%20Firm%20v0.0%20to%20v0.8/media/youtube.JPG)](https://www.youtube.com/watch?v=TxBHMpAWDSY)
+
 ***
 
 [English version](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/README%20ENG.md)
