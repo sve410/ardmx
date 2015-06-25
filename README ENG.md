@@ -80,18 +80,18 @@ Based on:
 * The "Publicados.txt" file contains the information about the activity on Websites, Blogs and Social Networks
 
 [Software](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Software)
-* Contiene el software utilizado para el proyecto
+* Contains software used for the project
 
 [Licencias](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Licencias)
-* Contiene la informacion sobre el licenciamiento del proyecto
+* It contains information about licensing the project
 
 ***
 
-## Licenciamiento
+## Licence
 * [GNU General Public Licence Version 3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licencias/Licence%20-%20Firmware.md)
 * [Open Source Hardware (OSHW) v1.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licencias/Licence%20-%20Hardware.md)
 
-## Autor
+## Author
 * Copyright (C) 2015
 * Daniel Roberto Becerril Angeles
 - [daniel3514@gmail.com](mailto:daniel3514@gmail.com)
