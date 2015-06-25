@@ -95,8 +95,8 @@ Based on:
 * [Open Source Hardware (OSHW) v1.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Licencias/Licence%20-%20Hardware.md)
 
 ## Author
-* Copyright (C) 2015
-* Daniel Roberto Becerril Angeles
+- Copyright (C) 2015
+- [Daniel Roberto Becerril Angeles](https://www.facebook.com/daniel.3514)
 - [daniel3514@gmail.com](mailto:daniel3514@gmail.com)
 - [Tech Inside](http://www.techinside.com.mx)
 - [Hack a Day](https://hackaday.io/daniel3514)
