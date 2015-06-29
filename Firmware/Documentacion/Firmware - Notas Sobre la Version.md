@@ -12,6 +12,7 @@
 ***
 
 **v1.3 - Stable - Hardware v0.3 - v0.4**
+- CORREGIR  - en control matrix cuando se selecciona un canal de la esquina el cursor parpadeando queda fuera de lugar
 - AGREGADO  - Control de iluminacion para teclado
 - AGREGADO  - a EEPROM la posicion 4092 para guardar key light
 - AGREGADO  - la variable global int EEPROM_Limit para controlar el limite de escritura de eeprom de universos
