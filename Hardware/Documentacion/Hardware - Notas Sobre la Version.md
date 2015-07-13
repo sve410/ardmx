@@ -13,6 +13,8 @@
 - AGREGADO  - Etapa de potencia para luz de teclado
 - AGREGADO  - opto acoplado a salida de dmx
 - AGREGADO  - convertidor de DC/DC para asilamiento de DMX
+- AGREGAR   - regulador para fuente externa, el arduino se calienta
+- AGREGAR   - luz led como lampara
 - Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
 - Contraste por PWM basado en http://www.pcbheaven.com/circuitpages/PWM_LCD_Contrast_Control/
 
