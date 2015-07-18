@@ -15,6 +15,20 @@
 
 ***
 
+**v1.4 - Stable - Hardware v0.3 - v0.4**
+- CORREGIDO - en about la version actual
+- CORREGIDO - las leyendas Ctrl cambian por Exit, el menu control ya no tiene la leyenda
+- CORREGIDO - en control unitary Ctrl cambia por Exit
+- CORREGIDO - en control Matrix Ctr cambia por Exi
+- CORREGIDO - en control chaser Ctrl por Exit
+- CORREGIDO - en control secuencer Ctrl por Exit
+- CORREGIDO - en control multiply Ctrl por Exit
+- CORREGIDO - en control options se quito la leyenda Control:
+- AGREGADO  - a control options la opcion Convert
+
+
+***
+
 **v1.3 - Stable - Hardware v0.3 - v0.4**
 - CORREGIR  - en control matrix cuando se selecciona un canal de la esquina el cursor parpadeando queda fuera de lugar
 - AGREGADO  - Control de iluminacion para teclado
