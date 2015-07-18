@@ -4,6 +4,14 @@
 
 ***
 
+**vx.x - Beta - Firm vx.x**
+- AGREGADO  - Adafruit HXD8357D - 3.5" TFT 320x480 + Touchscreen Breakout Board w/MicroSD Socket
+			- https://learn.adafruit.com/adafruit-3-5-color-320x480-tft-touchscreen-breakout/overview
+- AGREGADO  - Adafruit STMPE610 - Resistive Touch Screen Controller
+			- https://www.adafruit.com/products/1571
+			
+***
+
 **v0.5 - Beta - Firm vx.x**
 - CORREGIDO - potenciómetro por encoder
 - CORREGIDO - etapa de potencia para contraste
