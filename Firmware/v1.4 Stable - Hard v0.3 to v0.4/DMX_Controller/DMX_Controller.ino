@@ -2093,10 +2093,10 @@ void GUI_Control_Options()
 
 void GUI_Convert()
 {
-	int valor 			= 0;					// aqui el valor a calcular 
-	int valor_bin[9]	= {0,0,0,0,0,0,0,0,0};	// aqui el valor calculado en la resta
-	int valor_temp		= 0;					// aqui el valor temporal para las cuentas
-	int valor_resto 	= 0;					// aqui el valor del resto de la divicion
+	int valor 			= 0;						// aqui el valor a calcular 
+	int valor_temp		= 0;						// aqui el valor temporal para las cuentas
+	int valor_resto 	= 0;						// aqui el valor del resto de la divicion
+	int valor_Bin [10]	= {0,0,0,0,0,0,0,0,0,0};	// aqui el valor descompuesto en binario
 	lcd.clear ();
 	lcd.setCursor (0, 0);
 	lcd.print ("Bin: OOOOOOOOO I=On");
@@ -2119,41 +2119,175 @@ void GUI_Convert()
 	calc:
 	GUI_Navegar(0, 0);
 	// Acciones
+	// Exit
+	if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3)
+	{
+		GUI_Control_Options();
+	}
+	// Binario a decimal
+	if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
+	{
+		// boton de centro para salir
+		// boton de lados para navegar
+		// boton arriba abajo para cambiar valor
+		byte cursor 		= 5;		// posicion de cursor
+		int boton_retardo 	= 250;		// retardo de boton para estabilidad
+		byte calcular 		= 0;		// calcular binario a decimal
+		byte calcular_val	= 0;		// valor a meter a la matriz para calcular
+		lcd.blink();
+		lcd.setCursor (5, 0);
+		while (digitalRead(Boton_Center) == HIGH)	// salida
+		{
+			if (digitalRead(Boton_Right) == LOW)
+			{
+				delay(boton_retardo);	// esperar a estabilidad
+				cursor = cursor + 1;
+				if (cursor > 13)
+				{
+					cursor = 5;			// regresar al principio
+				}
+				lcd.setCursor (cursor, 0);
+			}
+			if (digitalRead(Boton_Left) == LOW)
+			{
+				delay(boton_retardo);	// esperar a estabilidad
+				cursor = cursor - 1;
+				if (cursor < 5)
+				{
+					cursor = 13;		// regresar al final
+				}
+				lcd.setCursor (cursor, 0);
+			}
+			if (digitalRead(Boton_Up) == LOW)
+			{
+				delay(boton_retardo);	// esperar a estabilidad
+				lcd.print ("I");
+				lcd.setCursor (cursor, 0);
+				calcular_val 	= 1;
+				calcular 		= 1;
+			}
+			if (digitalRead(Boton_Down) == LOW)
+			{
+				delay(boton_retardo);	// esperar a estabilidad
+				lcd.print ("O");
+				lcd.setCursor (cursor, 0);
+				calcular_val	= 0;
+				calcular 		= 1;
+			}
+			if (calcular == 1)
+			{
+				calcular = 0;
+				// agregar a la matriz el valor nuevo
+				switch (cursor)
+				{
+					case 5:		// 1
+						valor_Bin [1] = calcular_val;
+						break;
+					case 6:		// 2
+						valor_Bin [2] = calcular_val;
+						break;
+					case 7:		// 4
+						valor_Bin [3] = calcular_val;
+						break;
+					case 8:		// 8
+						valor_Bin [4] = calcular_val;
+						break;
+					case 9:		// 16
+						valor_Bin [5] = calcular_val;
+						break;
+					case 10:	// 32
+						valor_Bin [6] = calcular_val;
+						break;
+					case 11:	// 64
+						valor_Bin [7] = calcular_val;
+						break;
+					case 12:	// 128
+						valor_Bin [8] = calcular_val;
+						break;
+					case 13:	// 256
+						valor_Bin [9] = calcular_val;
+						break;
+				}
+				// calcular valor de binario a decimal
+				valor = 0;
+				if (valor_Bin [1] == 1)	
+				{
+					valor = valor + 1;
+				}
+				if (valor_Bin [2] == 1)	
+				{
+					valor = valor + 2;
+				}
+				if (valor_Bin [3] == 1)	
+				{
+					valor = valor + 4;
+				}
+				if (valor_Bin [4] == 1)	
+				{
+					valor = valor + 8;
+				}
+				if (valor_Bin [5] == 1)	
+				{
+					valor = valor + 16;
+				}
+				if (valor_Bin [6] == 1)	
+				{
+					valor = valor + 32;
+				}
+				if (valor_Bin [7] == 1)	
+				{
+					valor = valor + 64;
+				}
+				if (valor_Bin [8] == 1)	
+				{
+					valor = valor + 128;
+				}
+				if (valor_Bin [9] == 1)	
+				{
+					valor = valor + 256;
+				}
+				// escribir el valor en decimal
+				Numerico_Write (valor, 5, 3);
+				lcd.setCursor (cursor, 0);
+			}
+		}
+		delay(200);		// esperar a estabilidad
+		lcd.noBlink();
+		goto calc;
+	}
 	// Decimal a binario
 	if (LCD_Col_Pos == 4 && LCD_Row_Pos == 3)
 	{
 		Num_Row_Pos = 3;
 		Num_Col_Pos = 5;
 		Numerico_Calc (0);
-		if (Num_Val > 512)
+		if (Num_Val > 511)
 		{
-			Num_Val = 512;
+			Num_Val = 511;				// corregir valor en pantalla
+			lcd.setCursor (5, 3);
+			lcd.print ("511");
 		}
 		valor = Num_Val;
-		lcd.setCursor (5, 3);
-		lcd.print (valor);
+		// escribir 00000000 en el valor binario para borrar el anterior
+		lcd.setCursor (5, 0);
+		lcd.print ("OOOOOOOOO");
+		lcd.setCursor (5, 0);
 		// calcular binario
 		valor_temp = valor;
-		for (byte pos = 0; pos <= 8; pos ++)
+		for (byte pos = 9; pos >= 1; pos --)
 		{
-			valor_temp  	= valor_temp / 2;
-			valor_resto 	= valor_temp % 2;
-			valor_bin[pos]	= valor_resto;
-		}
-		// dibujar binario de izq a der
-		lcd.setCursor (5, 0);
-		for (byte pos = 8; pos != 0; pos --)
-		{
-			if (valor_bin[pos] == 0)
-			{
-				lcd.print ("I");
-			}
-			else
+			valor_resto 		= valor_temp % 2;
+			valor_temp  		= valor_temp / 2;
+			valor_Bin [pos] 	= valor_resto;
+			if (valor_resto == 0)
 			{
 				lcd.print ("O");
 			}
+			else
+			{
+				lcd.print ("I");
+			}
 		}
-		
 		goto calc;
 	}
 }
@@ -2424,7 +2558,7 @@ void GUI_Control_Multiply()
 	// navegar
 	GUI_Navegar(0, 0);
 	// Acciones
-	// Control
+	// Exit
 	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 1)
 	{
 		GUI_Control_Options();
@@ -2696,7 +2830,7 @@ void GUI_Control_Chaser()
 
 void Numerico_Write (int valor, int col, int row)
 {
-	//posicionar el valor en los campos 000
+	// posicionar el valor en los campos 000
 	lcd.setCursor (col, row);
 	lcd.print ("000");
 	if (valor < 10)

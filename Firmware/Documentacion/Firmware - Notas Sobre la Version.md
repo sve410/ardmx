@@ -8,7 +8,6 @@
 
 **v0.x - Beta**
 - AGREGAR - encoder
-- AGREGAR - funcion para convertir a binario dip switch y viceversa
 - AGREGAR - en multiplicador el valor en tiempo real desde el potenciometro o teclado
 - AGREGAR - control chaser desde el potenciometro, al girar recorre los canales
 - AGREGAR - dimmer para luz led como lampara
@@ -24,8 +23,9 @@
 - CORREGIDO - en control secuencer Ctrl por Exit
 - CORREGIDO - en control multiply Ctrl por Exit
 - CORREGIDO - en control options se quito la leyenda Control:
+- AGREGADO  - Convert, convierte entre binario y decimal para address dip switch
 - AGREGADO  - a control options la opcion Convert
-
+- AGREGADO  - a Convert binario a decimal boton de centro para salir, boton de lados para navegar, boton arriba abajo para cambiar valor
 
 ***
 
