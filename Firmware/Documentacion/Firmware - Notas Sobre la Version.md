@@ -14,6 +14,20 @@
 
 ***
 
+**v1.6 - Stable - Hardware v0.3 - v0.4**
+- CORREGIDO - se agrega un encoder KEYES Rotary encoder module KY-040 para remplazar el potenciometro
+- AGREGADO  - el boton del centro es el mismo del encoder
+- AGREGADO  - encoder CLK en 6 DT en 7
+- CORREGIDO - el pin del potenciometro se elimina
+
+***
+
+**v1.5 - Stable - Hardware v0.3 - v0.4**
+- Ultima version con potenciometro
+- CORREGIDO - el cursor en el analogo se mostraba el blink fuera del numero y se ensimaba
+
+***
+
 **v1.4 - Stable - Hardware v0.3 - v0.4**
 - CORREGIDO - en about la version actual
 - CORREGIDO - las leyendas Ctrl cambian por Exit, el menu control ya no tiene la leyenda
