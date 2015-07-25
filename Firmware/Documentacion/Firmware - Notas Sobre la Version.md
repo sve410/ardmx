@@ -19,6 +19,7 @@
 - AGREGADO  - el boton del centro es el mismo del encoder
 - AGREGADO  - encoder CLK en 6 DT en 7
 - CORREGIDO - el pin del potenciometro se elimina
+- AGREGADO  - encoder library - https://www.pjrc.com/teensy/td_libs_Encoder.html
 
 ***
 
