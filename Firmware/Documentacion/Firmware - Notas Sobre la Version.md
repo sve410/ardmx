@@ -3,6 +3,7 @@
 **Notas sobre la versión**
 
 **Compilado en Arduino IDE v1.0.6**
+- instalar la libreria DMX manualmente, dejar solo carpeta DMX
 
 ***
 
@@ -14,12 +15,22 @@
 
 ***
 
+**v1.7 - Stable - Hardware v0.3 - v0.4**
+- CORREGIDO - se separa la lectura desde el encoder como funcion
+- CORREGIDO - en analogo read "a" cambia por encoder read "e"
+- AGREGADO  - control desde encoder a value de dmx
+- AGREGADO  - control desde encoder a config contraste 
+
+***
+
 **v1.6 - Stable - Hardware v0.3 - v0.4**
 - CORREGIDO - se agrega un encoder KEYES Rotary encoder module KY-040 para remplazar el potenciometro
 - AGREGADO  - el boton del centro es el mismo del encoder
 - AGREGADO  - encoder CLK en 6 DT en 7
 - CORREGIDO - el pin del potenciometro se elimina
 - AGREGADO  - encoder library - https://www.pjrc.com/teensy/td_libs_Encoder.html
+- CORREGIDO - lectura analoga de valor, se agrega el valor anterior en la escritura del LCD
+- CORREGIDO - lectura analoga en valor el cursor blink se queda en la "a" y no sobre el numero
 
 ***
 

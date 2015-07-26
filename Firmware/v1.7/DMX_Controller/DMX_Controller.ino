@@ -3,7 +3,7 @@
 // **				                                                                                                        **
 // **											Arduino DMX-512 Tester Controller				                            **
 // **																	                                                    **
-// **	- Firmware v1.6																										**
+// **	- Firmware v1.7																										**
 // **	- Hardware v0.4																										**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
@@ -408,11 +408,11 @@ void GUI_Licence()
 void GUI_About()
 {
   byte Firm_Ver_Ent = 1;
-  byte Firm_Ver_Dec = 6;
+  byte Firm_Ver_Dec = 7;
   byte Hard_Ver_Ent = 0;
   byte Hard_Ver_Dec = 4;
   byte Key_Light_Value 	= EEPROM.read(Key_Light_Add);
-  byte Back_Light_Value 	= EEPROM.read(BackLight_Add);
+  byte Back_Light_Value = EEPROM.read(BackLight_Add);
   lcd.clear ();
   analogWrite(Key_Light_PWM, 0);
   analogWrite(Back_Light_PWM, 0);
@@ -744,7 +744,7 @@ Salida_DMX:
   }
   if (Num_Val == 712)						// analogo
   {
-    Analog_Read_DMX(Num_Col_Pos - 2, Num_Row_Pos);
+    Encoder_Read(Num_Col_Pos - 2, Num_Row_Pos, 0, 255, 1);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
     Num_Col_Pos = Num_Col_Pos - 4;
     goto Banco;
   }
@@ -2297,221 +2297,202 @@ calc:
 
 void GUI_Config()
 {
-Inicio:
-  byte Back_Light_Value 	= EEPROM.read(BackLight_Add);
-  byte Contrast_Value 	= EEPROM.read(Contrast_Add);
-  byte Bank_Init_Value	= EEPROM.read(Bank_Init_Add);
-  byte Key_Light_Value	= EEPROM.read(Key_Light_Add);
-  // GUI
-  lcd.clear ();
-  lcd.setCursor (0, 0);
-  lcd.print (" KeyLight:");
-  Numerico_Write(Key_Light_Value, 11, 0);
-  lcd.setCursor (15, 2);
-  lcd.print ("About");
-  lcd.setCursor (0, 1);
-  lcd.print ("BackLight:");
-  Numerico_Write(Back_Light_Value, 11, 1);
-  lcd.setCursor (1, 2);
-  lcd.print ("Contrast:");
-  Numerico_Write(Contrast_Value, 11, 2);
-  lcd.setCursor (15, 3);
-  lcd.print ("Exit");
-  // Bank
-  lcd.setCursor (1, 3);
-  lcd.print ("BankInit:");
-  if (Bank_Init_Value > 8 || Bank_Init_Value < 1)
-  {
-    lcd.setCursor (11, 3);
-    lcd.print ("---");
-  }
-  else
-  {
-    Numerico_Write(Bank_Init_Value, 11, 3);
-  }
-  // Cursor
-  LCD_Col_Pos = 10;			// posicion de cursor
-  LCD_Row_Pos = 1;			// posicion de cursor
-  // configuracion de cursor
-  Cursor_Conf_Clear();		// limpiar array
-  // Cursores
-  Cursor_Conf[1][10]  = 1;	// Back Light Value
-  Cursor_Conf[2][10]  = 1;	// Contrast Value
-  Cursor_Conf[3][10]  = 1;	// Bank init Value
-  Cursor_Conf[0][10]  = 1;	// Key Light Value
-  Cursor_Conf[3][14]  = 1;	// Exit
-  Cursor_Conf[2][14]  = 1;	// About
-Navegacion:
-  GUI_Navegar(0, 0);
-  // Acciones
-  //Back Light Value
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
-  {
-    Num_Row_Pos = 1;
-    Num_Col_Pos = 11;
-    Numerico_Calc (1);
-    if (Num_Val == 712)
-    {
-      lcd.setCursor (10, 1);
-      lcd.print("a");								// indicar que es analogo
-      digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
-      lcd.blink();
-      while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
-      {
-        Num_Val = analogRead(Pot);				// lectura desde el potenciometro
-        Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
-        Numerico_Write(Num_Val, 11, 1);
-        analogWrite(Back_Light_PWM, Num_Val);
-        delay(50);								// retardo de lectura
-      }
-      lcd.noBlink();
-      digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
-      delay(300);									// retraso para center
-      goto salida;
-    }
-    if (Num_Val > 255)
-    {
-      Num_Val = 255;
-      Numerico_Write (255, 11, 1);
-    }
-    analogWrite(Back_Light_PWM, Num_Val);
-salida:
-    // mecanismo para on off Enable
-    if (Num_Val == 0)
-    {
-      Light_On_Off = 0;
-    }
-    if (Num_Val > 0)
-    {
-      Light_On_Off = 1;
-    }
-    EEPROM.write(BackLight_Add, Num_Val);			// guardar valor nuevo
-    goto Navegacion;
-  }
-  //Key Light Value
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 0)
-  {
-    Num_Row_Pos = 0;
-    Num_Col_Pos = 11;
-    Numerico_Calc (1);
-    if (Num_Val == 712)
-    {
-      lcd.setCursor (10, 0);
-      lcd.print("a");								// indicar que es analogo
-      digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
-      lcd.blink();
-      while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
-      {
-        Num_Val = analogRead(Pot);				// lectura desde el potenciometro
-        Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
-        Numerico_Write(Num_Val, 11, 0);
-        analogWrite(Key_Light_PWM, Num_Val);
-        delay(50);								// retardo de lectura
-      }
-      lcd.noBlink();
-      digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
-      delay(300);									// retraso para center
-      goto salida_key;
-    }
-    if (Num_Val > 255)
-    {
-      Num_Val = 255;
-      Numerico_Write (255, 11, 0);
-    }
-    analogWrite(Key_Light_PWM, Num_Val);
-salida_key:
-    // mecanismo para on off Enable
-    if (Num_Val == 0)
-    {
-      Light_On_Off = 0;
-    }
-    if (Num_Val > 0)
-    {
-      Light_On_Off = 1;
-    }
-    EEPROM.write(Key_Light_Add, Num_Val);			// guardar valor nuevo
-    goto Navegacion;
-  }
-  //Contrast Value
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
-  {
-    Num_Row_Pos = 2;
-    Num_Col_Pos = 11;
-    Numerico_Calc (1);
-    if (Num_Val == 712)
-    {
-      lcd.setCursor (10, 2);
-      lcd.print("a");								// indicar que es analogo
-      digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
-      lcd.blink();
-      while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
-      {
-        Num_Val = analogRead(Pot);				// lectura desde el potenciometro
-        Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
-        if (Num_Val > 149)						// limite menor de contraste LCD
-        {
-          Numerico_Write(Num_Val, 11, 2);
-          analogWrite(Contrast_PWM, Num_Val);
-        }
-        if (Num_Val < 149)
-        {
-          Numerico_Write(150, 11, 2);
-        }
-        delay(50);								// retardo de lectura
-      }
-      lcd.noBlink();
-      digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
-      delay(300);									// retraso para center
-      goto salir;
-    }
-    if (Num_Val > 255)
-    {
-      Num_Val = 255;
-      Numerico_Write (255, 11, 2);
-    }
-    if (Num_Val < 150)
-    {
-      Num_Val = 150;								// limite menor de contraste LCD
-      Numerico_Write (150, 11, 2);
-    }
-    analogWrite(Contrast_PWM, Num_Val);
-salir:
-    EEPROM.write(Contrast_Add, Num_Val);			// guardar valor nuevo
-    goto Navegacion;
-  }
-  //Bank init Value
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
-  {
-    Num_Row_Pos = 3;
-    Num_Col_Pos = 11;
-    Numerico_Calc (1);
-    if (Num_Val > 8)
-    {
-      Num_Val = 8;
-      Numerico_Write (8, 11, 3);
-    }
-    if (Num_Val == 0)
-    {
-      lcd.setCursor (11, 3);
-      lcd.print("---");
-    }
-    EEPROM.write(Bank_Init_Add, Num_Val);			// guardar valor nuevo
-    goto Navegacion;
-  }
-  // Exit
-  if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
-  {
-    GUI_Control_Options();
-    goto Navegacion;
-  }
-  // About
-  if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
-  {
-    GUI_About();
-    GUI_Licence();
-    goto Inicio;
-  }
-  goto Navegacion;
+	Inicio:
+	byte Back_Light_Value 	= EEPROM.read(BackLight_Add);
+	byte Contrast_Value 	= EEPROM.read(Contrast_Add);
+	byte Bank_Init_Value	= EEPROM.read(Bank_Init_Add);
+	byte Key_Light_Value	= EEPROM.read(Key_Light_Add);
+	// GUI
+	lcd.clear ();
+	lcd.setCursor (0, 0);
+	lcd.print (" KeyLight:");
+	Numerico_Write(Key_Light_Value, 11, 0);
+	lcd.setCursor (15, 2);
+	lcd.print ("About");
+	lcd.setCursor (0, 1);
+	lcd.print ("BackLight:");
+	Numerico_Write(Back_Light_Value, 11, 1);
+	lcd.setCursor (1, 2);
+	lcd.print ("Contrast:");
+	Numerico_Write(Contrast_Value, 11, 2);
+	lcd.setCursor (15, 3);
+	lcd.print ("Exit");
+	// Bank
+	lcd.setCursor (1, 3);
+	lcd.print ("BankInit:");
+	if (Bank_Init_Value > 8 || Bank_Init_Value < 1)
+	{
+		lcd.setCursor (11, 3);
+		lcd.print ("---");
+	}
+	else
+	{
+		Numerico_Write(Bank_Init_Value, 11, 3);
+	}
+	// Cursor
+	LCD_Col_Pos = 10;			// posicion de cursor
+	LCD_Row_Pos = 1;			// posicion de cursor
+	// configuracion de cursor
+	Cursor_Conf_Clear();		// limpiar array
+	// Cursores
+	Cursor_Conf[1][10]  = 1;	// Back Light Value
+	Cursor_Conf[2][10]  = 1;	// Contrast Value
+	Cursor_Conf[3][10]  = 1;	// Bank init Value
+	Cursor_Conf[0][10]  = 1;	// Key Light Value
+	Cursor_Conf[3][14]  = 1;	// Exit
+	Cursor_Conf[2][14]  = 1;	// About
+	Navegacion:
+	GUI_Navegar(0, 0);
+	// Acciones
+	//Back Light Value
+	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
+	{
+		Num_Row_Pos = 1;
+		Num_Col_Pos = 11;
+		Numerico_Calc (1);
+		if (Num_Val == 712)
+		{
+			lcd.setCursor (10, 1);
+			lcd.print("a");								// indicar que es analogo
+			digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
+			lcd.blink();
+			while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
+			{
+				Num_Val = analogRead(Pot);				// lectura desde el potenciometro
+				Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
+				Numerico_Write(Num_Val, 11, 1);
+				analogWrite(Back_Light_PWM, Num_Val);
+				delay(50);								// retardo de lectura
+			}
+			lcd.noBlink();
+			digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
+			delay(300);									// retraso para center
+			goto salida;
+		}
+		if (Num_Val > 255)
+		{
+			Num_Val = 255;
+			Numerico_Write (255, 11, 1);
+		}
+		analogWrite(Back_Light_PWM, Num_Val);
+		salida:
+		// mecanismo para on off Enable
+		if (Num_Val == 0)
+		{
+			Light_On_Off = 0;
+		}
+		if (Num_Val > 0)
+		{
+			Light_On_Off = 1;
+		}
+		EEPROM.write(BackLight_Add, Num_Val);	// guardar valor nuevo
+		goto Navegacion;
+	}
+	//Key Light Value
+	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 0)
+	{
+		Num_Row_Pos = 0;
+		Num_Col_Pos = 11;
+		Numerico_Calc (1);
+		if (Num_Val == 712)
+		{
+			lcd.setCursor (10, 0);
+			lcd.print("a");						// indicar que es analogo
+			digitalWrite(Boton_Array_3, LOW);	// lectura linea 3
+			lcd.blink();
+			while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
+			{
+				Num_Val = analogRead(Pot);				// lectura desde el potenciometro
+				Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
+				Numerico_Write(Num_Val, 11, 0);
+				analogWrite(Key_Light_PWM, Num_Val);
+				delay(50);								// retardo de lectura
+			}
+			lcd.noBlink();
+			digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
+			delay(300);									// retraso para center
+			goto salida_key;
+		}
+		if (Num_Val > 255)
+		{
+			Num_Val = 255;
+			Numerico_Write (255, 11, 0);
+		}
+		analogWrite(Key_Light_PWM, Num_Val);
+		salida_key:
+		// mecanismo para on off Enable
+		if (Num_Val == 0)
+		{
+			Light_On_Off = 0;
+		}
+		if (Num_Val > 0)
+		{
+			Light_On_Off = 1;
+		}
+		EEPROM.write(Key_Light_Add, Num_Val);	// guardar valor nuevo
+		goto Navegacion;
+	}
+	//Contrast Value
+	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
+	{
+		Num_Row_Pos = 2;
+		Num_Col_Pos = 11;
+		Numerico_Calc (1);
+		// encoder
+		if (Num_Val == 712)
+		{
+			Encoder_Read (11, 2, 0, 255, 2);	// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+			goto salir;
+		}
+		// teclado
+		if (Num_Val > 255)
+		{
+			Num_Val = 255;
+			Numerico_Write (255, 11, 2);
+		}
+		if (Num_Val < 150)
+		{
+			Num_Val = 150;						// limite menor de contraste LCD
+			Numerico_Write (150, 11, 2);
+		}
+		analogWrite(Contrast_PWM, Num_Val);
+		salir:
+		EEPROM.write(Contrast_Add, Num_Val);	// guardar valor nuevo
+		goto Navegacion;
+	}
+	//Bank init Value
+	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
+	{
+		Num_Row_Pos = 3;
+		Num_Col_Pos = 11;
+		Numerico_Calc (1);
+		if (Num_Val > 8)
+		{
+			Num_Val = 8;
+			Numerico_Write (8, 11, 3);
+		}
+		if (Num_Val == 0)
+		{
+			lcd.setCursor (11, 3);
+			lcd.print("---");
+		}
+		EEPROM.write(Bank_Init_Add, Num_Val);			// guardar valor nuevo
+		goto Navegacion;
+	}
+	// Exit
+	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
+	{
+		GUI_Control_Options();
+		goto Navegacion;
+	}
+	// About
+	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
+	{
+		GUI_About();
+		GUI_Licence();
+		goto Inicio;
+	}
+	goto Navegacion;
 }
 
 void GUI_Control_Multiply()
@@ -2953,7 +2934,7 @@ Navegacion:
     }
     if (Num_Val == 712)						// analogo
     {
-      Analog_Read_DMX(9, 3);
+      Encoder_Read(9, 3, 0, 255, 1);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
       goto Navegacion;
     }
     if (Num_Val > 255)
@@ -3289,21 +3270,40 @@ void Numerico_Read()
   }
 }
 
-void Analog_Read_DMX(byte col, byte row)
+void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
 {
+	// control: 1 = dmx, 2 = contraste, 3 = backlight, 4 = light key, 5 light ext, 6 = channel
 	// escritura del numero desde el encoder aplica a dmx
 	lcd.setCursor (col - 1, row);
-	lcd.print("a");							// indicar que es analogo
-	// escribir el valor anterior
-	Numerico_Write(DMX_Values[Canal_Actual], col, row);
-	lcd.setCursor (col - 1, row);
-	lcd.blink();
+	lcd.print("e");						// indicar que es analogo
 	// lectura de bton de teclado
 	digitalWrite(Boton_Array_3, LOW);	// lectura linea 3
-	// lectura de encoder
+	// establecer valores
 	long 	read;
 	long 	read_ant = myEnc.read() / 4;	// 4 porque la libreria muestra 4 numeros en cada paso
-	long 	numero = DMX_Values[Canal_Actual];
+	long 	numero;		// valor actual
+	switch (control)
+	{
+		case 1:		// DMX
+			numero = DMX_Values[Canal_Actual];
+			break;
+		case 2:		// contraste
+			numero = EEPROM.read(Contrast_Add);
+			break;
+		case 3:		// backlight
+			break;
+		case 4:		// light key
+			break;
+		case 5:		// light ext
+			break;
+		case 6:		// channel
+			break;
+	}
+	// escribir el valor anterior
+	Numerico_Write(numero, col, row);
+	lcd.setCursor (col - 1, row);
+	lcd.blink();
+	// lectura de teclado
 	while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
 	{
 		// lectura de encoder
@@ -3320,19 +3320,37 @@ void Analog_Read_DMX(byte col, byte row)
 				numero = numero + 1;
 			}
 			// limites
-			if (numero < 0)
+			if (numero < limit_min)
 			{
-				numero = 255;
+				numero = limit_max;
 			}
-			if (numero > 255)
+			if (numero > limit_max)
 			{
-				numero = 0;
+				numero = limit_min;
 			}
-			// escribir el valor
+			// escribir el valor LCD
 			Numerico_Write(numero, col, row);
 			lcd.setCursor (col - 1, row);
-			ArduinoDmx0.TxBuffer[Canal_Actual - 1] = numero;
-			DMX_Values[Canal_Actual] = numero;
+			// escribir valor hardware
+			switch (control)
+			{
+				case 1:		// DMX
+					ArduinoDmx0.TxBuffer[Canal_Actual - 1] = numero;
+					DMX_Values[Canal_Actual] = numero;
+					break;
+				case 2:		// contraste
+					analogWrite(Contrast_PWM, numero);
+					break;
+				case 3:		// backlight
+					break;
+				case 4:		// light key
+					break;
+				case 5:		// light ext
+					break;
+				case 6:		// channel
+					break;
+			}
+			// establecer valor anterior
 			read_ant = read;
 		}
 	}
