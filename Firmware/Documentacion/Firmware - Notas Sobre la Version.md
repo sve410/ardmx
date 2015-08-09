@@ -15,15 +15,17 @@
 
 ***
 
-**v1.7 - Stable - Hardware v0.3 - v0.4**
+**v1.7 - Stable - Hardware v0.3 - v0.5**
 - CORREGIDO - se separa la lectura desde el encoder como funcion
 - CORREGIDO - en analogo read "a" cambia por encoder read "e"
 - AGREGADO  - control desde encoder a value de dmx
 - AGREGADO  - control desde encoder a config contraste 
+- AGREGADO  - control desde encoder a config backlight
+- AGREGADO  - control desde encoder a config bank init
 
 ***
 
-**v1.6 - Stable - Hardware v0.3 - v0.4**
+**v1.6 - Stable - Hardware v0.3 - v0.5**
 - CORREGIDO - se agrega un encoder KEYES Rotary encoder module KY-040 para remplazar el potenciometro
 - AGREGADO  - el boton del centro es el mismo del encoder
 - AGREGADO  - encoder CLK en 6 DT en 7
