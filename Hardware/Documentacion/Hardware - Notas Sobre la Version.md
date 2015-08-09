@@ -12,7 +12,7 @@
 			
 ***
 
-**v0.5 - Beta - Firm vx.x**
+**v0.5 - Beta - Firm v1.6 to 1.7**
 - CORREGIDO - potenciómetro por encoder
 - CORREGIDO - etapa de potencia para contraste
 - CORREGIGO - se quito la entrada al Arduino desde el MAX485, causa problemas al cargar el programa
@@ -23,6 +23,7 @@
 - AGREGADO  - convertidor de DC/DC para asilamiento de DMX
 - AGREGAR   - regulador para fuente externa, el arduino se calienta
 - AGREGAR   - luz led como lampara
+- AGREGAR   - boton de reset
 - Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
 - Contraste por PWM basado en http://www.pcbheaven.com/circuitpages/PWM_LCD_Contrast_Control/
 
