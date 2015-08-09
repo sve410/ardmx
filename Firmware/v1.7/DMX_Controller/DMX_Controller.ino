@@ -4,11 +4,12 @@
 // **											Arduino DMX-512 Tester Controller				                            **
 // **																	                                                    **
 // **	- Firmware v1.7																										**
-// **	- Hardware v0.4																										**
+// **	- Hardware v0.5																										**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
-// ** 	- Editado en Notepad++																								**
 // **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
+// ** 	- Editado en Notepad++																								**
+// **		https://notepad-plus-plus.org/																					**
 // **		Formato Windows ANSI																							**
 // **	- Compilado para Arduino Mega 2560 R3																				**
 // **		http://www.arduino.cc/en/Main/ArduinoBoardMega2560																**
@@ -16,7 +17,7 @@
 // **		http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)											**
 // **	- Libreria LCD v1.2.1 - Francisco Malpartida																		**
 // **		https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home													**
-// **	- Libreria Encoder v1.2 - www.pjrc.com																				**
+// **	- Libreria Encoder v1.2 - pjrc.com																					**
 // **		http://www.pjrc.com/teensy/td_libs_Encoder.html																	**
 // **	- Simulacion en Proteus v7.7 SP2																					**
 // **	- Simulacion en Proteus de Arduino - Microcontrolandos																**
@@ -410,7 +411,7 @@ void GUI_About()
   byte Firm_Ver_Ent = 1;
   byte Firm_Ver_Dec = 7;
   byte Hard_Ver_Ent = 0;
-  byte Hard_Ver_Dec = 4;
+  byte Hard_Ver_Dec = 5;
   byte Key_Light_Value 	= EEPROM.read(Key_Light_Add);
   byte Back_Light_Value = EEPROM.read(BackLight_Add);
   lcd.clear ();
@@ -2096,164 +2097,164 @@ inicio:
 
 void GUI_Convert()
 {
-  int valor 			= 0;						// aqui el valor a calcular
-  int valor_temp		= 0;						// aqui el valor temporal para las cuentas
-  int valor_resto 	= 0;						// aqui el valor del resto de la divicion
-  int valor_Bin [10]	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	// aqui el valor descompuesto en binario
-  lcd.clear ();
-  lcd.setCursor (0, 0);
-  lcd.print ("Bin: OOOOOOOOO I=On");
-  lcd.setCursor (5, 1);
-  lcd.print ("124813612 O=Off");
-  lcd.setCursor (9, 2);
-  lcd.print ("62425");
-  lcd.setCursor (0, 3);
-  lcd.print ("Dec: 000    86  Exit");
-  // Cursor
-  LCD_Col_Pos = 4;			// posicion de cursor
-  LCD_Row_Pos = 3;			// posicion e cursor
-  // configuracion de cursor
-  Cursor_Conf_Clear();		// limpiar array
-  // Cursores
-  Cursor_Conf[0][4]  	= 1;	// Bin
-  Cursor_Conf[3][4]  	= 1;	// Dec
-  Cursor_Conf[3][15]  = 1;	// Exit
-  //Navegacion:
-calc:
-  GUI_Navegar(0, 0);
-  // Acciones
-  // Exit
-  if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3)
-  {
-    GUI_Control_Options();
-  }
-  // Binario a decimal
-  if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
-  {
-    // boton de centro para salir
-    // boton de lados para navegar
-    // boton arriba abajo para cambiar valor
-    byte cursor 		= 5;		// posicion de cursor
-    int boton_retardo 	= 250;		// retardo de boton para estabilidad
-    byte calcular 		= 0;		// calcular binario a decimal
-    byte calcular_val	= 0;		// valor a meter a la matriz para calcular
-    lcd.blink();
-    lcd.setCursor (5, 0);
-    while (digitalRead(Boton_Center) == HIGH)	// salida
-    {
-      if (digitalRead(Boton_Right) == LOW)
-      {
-        delay(boton_retardo);	// esperar a estabilidad
-        cursor = cursor + 1;
-        if (cursor > 13)
-        {
-          cursor = 5;			// regresar al principio
+	int valor 			= 0;						// aqui el valor a calcular
+	int valor_temp		= 0;						// aqui el valor temporal para las cuentas
+	int valor_resto 	= 0;						// aqui el valor del resto de la divicion
+	int valor_Bin [10]	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	// aqui el valor descompuesto en binario
+	lcd.clear ();
+	lcd.setCursor (0, 0);
+	lcd.print ("Bin: OOOOOOOOO I=On");
+	lcd.setCursor (5, 1);
+	lcd.print ("124813612 O=Off");
+	lcd.setCursor (9, 2);
+	lcd.print ("62425");
+	lcd.setCursor (0, 3);
+	lcd.print ("Dec: 000    86  Exit");
+	// Cursor
+	LCD_Col_Pos = 4;			// posicion de cursor
+	LCD_Row_Pos = 3;			// posicion e cursor
+	// configuracion de cursor
+	Cursor_Conf_Clear();		// limpiar array
+	// Cursores
+	Cursor_Conf[0][4]  	= 1;	// Bin
+	Cursor_Conf[3][4]  	= 1;	// Dec
+	Cursor_Conf[3][15]  = 1;	// Exit
+	//Navegacion:
+	calc:
+	GUI_Navegar(0, 0);
+	// Acciones
+	// Exit
+	if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3)
+	{
+		GUI_Control_Options();
+	}
+	// Binario a decimal
+	if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
+	{
+		// boton de centro para salir
+		// boton de lados para navegar
+		// boton arriba abajo para cambiar valor
+		byte cursor 		= 5;		// posicion de cursor
+		int boton_retardo 	= 250;		// retardo de boton para estabilidad
+		byte calcular 		= 0;		// calcular binario a decimal
+		byte calcular_val	= 0;		// valor a meter a la matriz para calcular
+		lcd.blink();
+		lcd.setCursor (5, 0);
+		while (digitalRead(Boton_Center) == HIGH)	// salida
+		{
+			if (digitalRead(Boton_Right) == LOW)
+			{
+				delay(boton_retardo);	// esperar a estabilidad
+				cursor = cursor + 1;
+				if (cursor > 13)
+			{
+			cursor = 5;			// regresar al principio
         }
         lcd.setCursor (cursor, 0);
-      }
-      if (digitalRead(Boton_Left) == LOW)
-      {
-        delay(boton_retardo);	// esperar a estabilidad
+    }
+    if (digitalRead(Boton_Left) == LOW)
+    {
+		delay(boton_retardo);	// esperar a estabilidad
         cursor = cursor - 1;
         if (cursor < 5)
         {
           cursor = 13;		// regresar al final
         }
         lcd.setCursor (cursor, 0);
-      }
-      if (digitalRead(Boton_Up) == LOW)
-      {
+    }
+    if (digitalRead(Boton_Up) == LOW)
+    {
         delay(boton_retardo);	// esperar a estabilidad
         lcd.print ("I");
         lcd.setCursor (cursor, 0);
         calcular_val 	= 1;
         calcular 		= 1;
-      }
-      if (digitalRead(Boton_Down) == LOW)
-      {
+    }
+    if (digitalRead(Boton_Down) == LOW)
+    {
         delay(boton_retardo);	// esperar a estabilidad
         lcd.print ("O");
         lcd.setCursor (cursor, 0);
         calcular_val	= 0;
         calcular 		= 1;
-      }
-      if (calcular == 1)
-      {
+    }
+    if (calcular == 1)
+    {
         calcular = 0;
         // agregar a la matriz el valor nuevo
         switch (cursor)
         {
-          case 5:		// 1
-            valor_Bin [1] = calcular_val;
-            break;
-          case 6:		// 2
-            valor_Bin [2] = calcular_val;
-            break;
-          case 7:		// 4
-            valor_Bin [3] = calcular_val;
-            break;
-          case 8:		// 8
-            valor_Bin [4] = calcular_val;
-            break;
-          case 9:		// 16
-            valor_Bin [5] = calcular_val;
-            break;
-          case 10:	// 32
-            valor_Bin [6] = calcular_val;
-            break;
-          case 11:	// 64
-            valor_Bin [7] = calcular_val;
-            break;
-          case 12:	// 128
-            valor_Bin [8] = calcular_val;
-            break;
-          case 13:	// 256
-            valor_Bin [9] = calcular_val;
-            break;
-        }
+			case 5:		// 1
+				valor_Bin [1] = calcular_val;
+				break;
+			case 6:		// 2
+				valor_Bin [2] = calcular_val;
+				break;
+			case 7:		// 4
+				valor_Bin [3] = calcular_val;
+				break;
+			case 8:		// 8
+				valor_Bin [4] = calcular_val;
+				break;
+			case 9:		// 16
+				valor_Bin [5] = calcular_val;
+				break;
+			case 10:	// 32
+				valor_Bin [6] = calcular_val;
+				break;
+			case 11:	// 64
+				valor_Bin [7] = calcular_val;
+				break;
+			case 12:	// 128
+				valor_Bin [8] = calcular_val;
+				break;
+			case 13:	// 256
+				valor_Bin [9] = calcular_val;
+				break;
+		}
         // calcular valor de binario a decimal
         valor = 0;
         if (valor_Bin [1] == 1)
         {
-          valor = valor + 1;
+			valor = valor + 1;
         }
         if (valor_Bin [2] == 1)
         {
-          valor = valor + 2;
+			valor = valor + 2;
         }
         if (valor_Bin [3] == 1)
         {
-          valor = valor + 4;
+			valor = valor + 4;
         }
         if (valor_Bin [4] == 1)
         {
-          valor = valor + 8;
+			valor = valor + 8;
         }
         if (valor_Bin [5] == 1)
         {
-          valor = valor + 16;
+			valor = valor + 16;
         }
         if (valor_Bin [6] == 1)
         {
-          valor = valor + 32;
+			valor = valor + 32;
         }
         if (valor_Bin [7] == 1)
         {
-          valor = valor + 64;
+			valor = valor + 64;
         }
         if (valor_Bin [8] == 1)
         {
-          valor = valor + 128;
+			valor = valor + 128;
         }
         if (valor_Bin [9] == 1)
         {
-          valor = valor + 256;
+			valor = valor + 256;
         }
         // escribir el valor en decimal
         Numerico_Write (valor, 5, 3);
         lcd.setCursor (cursor, 0);
-      }
     }
+   }
     delay(200);		// esperar a estabilidad
     lcd.noBlink();
     goto calc;
@@ -2264,6 +2265,10 @@ calc:
     Num_Row_Pos = 3;
     Num_Col_Pos = 5;
     Numerico_Calc (0);
+	if (Num_Val == 712)
+	{
+		Encoder_Read (5, 3, 0, 511, 8);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+	}
     if (Num_Val > 511)
     {
       Num_Val = 511;				// corregir valor en pantalla
@@ -2352,22 +2357,15 @@ void GUI_Config()
 		Numerico_Calc (1);
 		if (Num_Val == 712)
 		{
-			lcd.setCursor (10, 1);
-			lcd.print("a");								// indicar que es analogo
 			digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
-			lcd.blink();
 			while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
 			{
-				Num_Val = analogRead(Pot);				// lectura desde el potenciometro
-				Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
-				Numerico_Write(Num_Val, 11, 1);
-				analogWrite(Back_Light_PWM, Num_Val);
-				delay(50);								// retardo de lectura
+				Encoder_Read (11, 1, 0, 255, 3);	// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+				goto salida;
+				
 			}
-			lcd.noBlink();
 			digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
 			delay(300);									// retraso para center
-			goto salida;
 		}
 		if (Num_Val > 255)
 		{
@@ -2396,19 +2394,12 @@ void GUI_Config()
 		Numerico_Calc (1);
 		if (Num_Val == 712)
 		{
-			lcd.setCursor (10, 0);
-			lcd.print("a");						// indicar que es analogo
 			digitalWrite(Boton_Array_3, LOW);	// lectura linea 3
-			lcd.blink();
 			while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Boton_Center) == HIGH) // enter y center para paro
 			{
-				Num_Val = analogRead(Pot);				// lectura desde el potenciometro
-				Num_Val = Num_Val / 4;					// / 4 porque es de 12 bits
-				Numerico_Write(Num_Val, 11, 0);
-				analogWrite(Key_Light_PWM, Num_Val);
-				delay(50);								// retardo de lectura
+				Encoder_Read (11, 0, 0, 255, 4);	// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+				goto salida_key;
 			}
-			lcd.noBlink();
 			digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
 			delay(300);									// retraso para center
 			goto salida_key;
@@ -2466,6 +2457,16 @@ void GUI_Config()
 		Num_Row_Pos = 3;
 		Num_Col_Pos = 11;
 		Numerico_Calc (1);
+		if (Num_Val == 712)
+		{
+			Encoder_Read (11, 3, 0, 8, 7);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+			if (EEPROM.read(Bank_Init_Add) == 0)
+			{
+				lcd.setCursor (11, 3);
+				lcd.print("---");
+			}
+			goto Navegacion;
+		}
 		if (Num_Val > 8)
 		{
 			Num_Val = 8;
@@ -2476,7 +2477,7 @@ void GUI_Config()
 			lcd.setCursor (11, 3);
 			lcd.print("---");
 		}
-		EEPROM.write(Bank_Init_Add, Num_Val);			// guardar valor nuevo
+		EEPROM.write(Bank_Init_Add, Num_Val);	// guardar valor nuevo
 		goto Navegacion;
 	}
 	// Exit
@@ -3272,7 +3273,7 @@ void Numerico_Read()
 
 void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
 {
-	// control: 1 = dmx, 2 = contraste, 3 = backlight, 4 = light key, 5 light ext, 6 = channel
+	// control: 1 = dmx, 2 = contraste, 3 = backlight, 4 = light key, 5 light ext PENDIENTE, 6 = channel, 7 = Bank Init, 8 = convert dec
 	// escritura del numero desde el encoder aplica a dmx
 	lcd.setCursor (col - 1, row);
 	lcd.print("e");						// indicar que es analogo
@@ -3291,13 +3292,20 @@ void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte contr
 			numero = EEPROM.read(Contrast_Add);
 			break;
 		case 3:		// backlight
+			numero = EEPROM.read(Back_Light_PWM);
 			break;
 		case 4:		// light key
+			numero = EEPROM.read(Key_Light_Add);
 			break;
-		case 5:		// light ext
+		case 5:		// light ext	PENDIENTE
 			break;
 		case 6:		// channel
 			break;
+		case 7:		// bank init
+			numero = EEPROM.read(Bank_Init_Add);
+			break;
+		case 8:		// convert dec
+			numero = Num_Val;
 	}
 	// escribir el valor anterior
 	Numerico_Write(numero, col, row);
@@ -3342,12 +3350,25 @@ void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte contr
 					analogWrite(Contrast_PWM, numero);
 					break;
 				case 3:		// backlight
+					analogWrite(Back_Light_PWM, numero);
 					break;
 				case 4:		// light key
+					analogWrite(Key_Light_PWM, numero);
 					break;
-				case 5:		// light ext
+				case 5:		// light ext	PENDIENTE
 					break;
 				case 6:		// channel
+					break;
+				case 7:		// bank init
+					EEPROM.write(Bank_Init_Add, numero);
+					if (numero == 0)
+					{
+						lcd.setCursor (11, 3);
+						lcd.print("---");
+					}
+					break;
+				case 8:		// convert dec
+					Num_Val = numero;
 					break;
 			}
 			// establecer valor anterior
