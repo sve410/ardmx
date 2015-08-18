@@ -7,11 +7,18 @@
 
 ***
 
-**v0.x - Beta**
+**vx.x - Beta**
 - AGREGAR - encoder
-- AGREGAR - en multiplicador el valor en tiempo real desde el potenciometro o teclado
+- AGREGAR - en multiplicador, el valor en tiempo real desde el potenciometro o teclado
 - AGREGAR - control chaser desde el potenciometro, al girar recorre los canales
 - AGREGAR - dimmer para luz led como lampara
+
+***
+
+**vx.x - Beta - TOUCH**
+- AGREGADO - Implementacion de Adafruit Resistive Touch Screen Controller - STMPE610 PID: 1571
+- AGREGADO - Implementacion de Adafruit 3.5" TFT 320x480 + Touchscreen Breakout Board w/MicroSD Socket - HXD8357D PID: 2050
+- AGREGADO - Debbugger al arranque con informacion de estado de dispositivos
 
 ***
 

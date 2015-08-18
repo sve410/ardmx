@@ -1,31 +1,32 @@
-#include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_TFTLCD.h> // Hardware-specific library
+#include <Adafruit_GFX.h>    	// Core graphics library
+#include <Adafruit_TFTLCD.h> 	// Hardware-specific library
+#include <SPI.h>
+#include <Wire.h>
+#include "Adafruit_STMPE610.h" 	// Adafruit STMPE610 Resistive touch screen controller breakout http://www.adafruit.com/products/1571
 
-// The control pins for the LCD can be assigned to any digital or
-// analog pins...but we'll use the analog pins as this allows us to
-// double up the pins with the touch screen (see the TFT paint example).
+// LCD
+	// The control pins for the LCD can be assigned to any digital or
+	// analog pins...but we'll use the analog pins as this allows us to
+	// double up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
 #define LCD_CD A2 // Command/Data goes to Analog 2
 #define LCD_WR A1 // LCD Write goes to Analog 1
 #define LCD_RD A0 // LCD Read goes to Analog 0
-
 #define LCD_RESET A4 // Can alternately just connect to Arduino's reset pin
-
-// When using the BREAKOUT BOARD only, use these 8 data lines to the LCD:
-// For the Arduino Uno, Duemilanove, Diecimila, etc.:
-//   D0 connects to digital pin 8  (Notice these are
-//   D1 connects to digital pin 9   NOT in order!)
-//   D2 connects to digital pin 2
-//   D3 connects to digital pin 3
-//   D4 connects to digital pin 4
-//   D5 connects to digital pin 5
-//   D6 connects to digital pin 6
-//   D7 connects to digital pin 7
-// For the Arduino Mega, use digital pins 22 through 29
-// (on the 2-row header at the end of the board).
-
-// Assign human-readable names to some common 16-bit color values:
-	// colores
+	// When using the BREAKOUT BOARD only, use these 8 data lines to the LCD:
+	// For the Arduino Uno, Duemilanove, Diecimila, etc.:
+	//   D0 connects to digital pin 8  (Notice these are
+	//   D1 connects to digital pin 9   NOT in order!)
+	//   D2 connects to digital pin 2
+	//   D3 connects to digital pin 3
+	//   D4 connects to digital pin 4
+	//   D5 connects to digital pin 5
+	//   D6 connects to digital pin 6
+	//   D7 connects to digital pin 7
+	// For the Arduino Mega, use digital pins 22 through 29
+	// (on the 2-row header at the end of the board).
+	// Assign human-readable names to some common 16-bit color values:
+		// colores
 #define	Black   	0x0000	// color 0
 #define	Blue    	0x001F	// color 1
 #define	Red     	0xF800	// color 2
@@ -46,23 +47,48 @@
 #define GreenYellow 0xAFE5 	// color 17
 	// coneccion de pantalla
 Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
-
+// Touch Screen
+	// Pick one of three wiring options below!
+		// Option #1 - uses I2C, connect to hardware I2C port only!
+		// SCL to I2C clock (#A5 on Uno) and SDA to I2C data (#A4 on Uno)
+		// tie MODE to GND and POWER CYCLE (there is no reset pin)
+Adafruit_STMPE610 touch = Adafruit_STMPE610();
+		// Option #2 - use hardware SPI, connect to hardware SPI port only!
+		// SDI to MOSI, SDO to MISO, and SCL to SPI CLOCK
+		// on Arduino Uno, that's 11, 12 and 13 respectively
+		// Then pick a CS pin, any pin is OK but we suggest #10 on an Uno
+		// tie MODE to 3.3V and POWER CYCLE the STMPE610 (there is no reset pin)
+	//Adafruit_STMPE610 touch = Adafruit_STMPE610(STMPE_CS);
+		// Option #3 - use software SPI, connect to *any* 4 I/O pins!
+		// define the following pins to whatever 4 you want and wire up!
+		// Tie MODE to 3.3V and POWER CYCLE the STMPE610 (there is no reset pin)
+	// Adafruit_STMPE610 touch = Adafruit_STMPE610(STMPE_CS, STMPE_SDI, STMPE_SDO, STMPE_SCK);
 // DMX
 int	DMX_rt_Values 	[512];  // array de valores actuales DMX
 int	DMX_rt_Colors	[512];  // array de valores de colores actuales DMX	
-// reticula
+// GUI default 
+	// reticula
 int color_reticula = DarkGrey;
 
 void setup() 
 {
-	// inicializador de pantalla
+	// Debbugger
+	Serial.begin(9600);
+	// TFT inicializador de pantalla
 	tft.reset();
 	tft.begin(tft.readID());	// readID, el valor ID que lee la libreria desde la pantalla
+	// Touch Screen
+		// if using hardware SPI on an Uno #10 must be an output, remove line
+			// if using software SPI or I2C
+			// pinMode(10, OUTPUT);
+		// If using I2C you can select the I2C address (there are two options) by calling
+			// touch.begin(0x41), the default, or touch.begin(0x44) if A0 is tied to 3.3V
+			// If no address is passed, 0x41 is used
 }
 
 void loop() 
 {
-	//Menu();
+	Debbugger_Init();	// inicializador de debbugger
 	GUI();
 	Matrix(1);
 	
@@ -74,7 +100,66 @@ void loop()
 	
 	GUI_Channel_Options(1);
 	
-	delay(50000);
+	while(1)
+	{
+		GUI_Touch_Event();
+	}
+}
+
+void Debbugger_Init()
+{
+	Serial.println("Arduino DMX-512 Tester and Controller");
+	Serial.println("Open Hardware");
+	Serial.println("Hardware v0.0");
+	Serial.println("Software v0.0");
+	Serial.println(" ");
+	// Touch Screen
+		// saber si esta presente el hardware
+	if (! touch.begin()) 
+	{
+		Serial.println("Fail - Touch Screen Controller");
+	}
+	else
+	{
+		Serial.println("  Ok - Touch Screen Controller");
+	}
+	// TFT screen
+	if (tft.readID() == 33623)	// id de pantalla, lo usamos como verificador de funcionamiento
+	{
+		Serial.println("  Ok - TFT Screen");
+	}
+	else
+	{
+		Serial.println("Fail - TFT Screen");
+	}
+
+}
+
+void GUI_Touch_Event()
+{
+	uint16_t 	x;
+	uint16_t 	y;
+	uint8_t 	z;
+	
+	if (touch.touched()) 
+	{
+		if (touch.bufferEmpty() == 0) // esta vacio el buffer?
+		{
+			// X - 0­4095
+			// Y - 0­4095
+			// Z - presure, 0-255
+			Serial.print(touch.bufferSize());
+			touch.readData(&x, &y, &z);
+			Serial.print("->(");
+			Serial.print(x); Serial.print(", ");
+			Serial.print(y); Serial.print(", ");
+			Serial.print(z);
+			Serial.println(")");
+			// ajuste a resolucion
+			
+		}
+		touch.writeRegister8(STMPE_INT_STA, 0xFF); // reset all ints
+	}
 }
 
 void GUI_Channel_Options(int canal)
@@ -188,7 +273,7 @@ void GUI_icon_encoder(int x, int y, int color)
 
 void GUI()
 {
-	tft.setRotation(1);								// rotacion de pantalla 0 = 0*, 1 = 90*, 2 = 180*, 3 = 270*
+	tft.setRotation(3);								// rotacion de pantalla 0 = 0*, 1 = 90*, 2 = 180*, 3 = 270*
 	tft.fillScreen(Black);							// fondo negro
 	// marco
 	tft.drawRect(0, 0, 384, 320, color_reticula);	// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
