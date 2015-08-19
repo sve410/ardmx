@@ -63,6 +63,7 @@ Adafruit_STMPE610 touch = Adafruit_STMPE610();
 		// define the following pins to whatever 4 you want and wire up!
 		// Tie MODE to 3.3V and POWER CYCLE the STMPE610 (there is no reset pin)
 	// Adafruit_STMPE610 touch = Adafruit_STMPE610(STMPE_CS, STMPE_SDI, STMPE_SDO, STMPE_SCK);
+	// tamaños maximos de pantalla tactil
 // DMX
 int	DMX_rt_Values 	[512];  // array de valores actuales DMX
 int	DMX_rt_Colors	[512];  // array de valores de colores actuales DMX	
@@ -99,6 +100,8 @@ void loop()
 	}
 	
 	GUI_Channel_Options(1);
+	
+
 	
 	while(1)
 	{
@@ -156,6 +159,15 @@ void GUI_Touch_Event()
 			Serial.print(z);
 			Serial.println(")");
 			// ajuste a resolucion
+			Serial.print(touch.bufferSize());
+			touch.readData(&x, &y, &z);
+			Serial.print("->(");
+			Serial.print(x / 8.53125); Serial.print(", ");
+			Serial.print(y / 12.796875); Serial.print(", ");
+			Serial.print(z);
+			Serial.println(")");
+			tft.drawCircle(x / 8.53125, y / 12.796875, 20, Green);
+			delay(300);
 			
 		}
 		touch.writeRegister8(STMPE_INT_STA, 0xFF); // reset all ints
