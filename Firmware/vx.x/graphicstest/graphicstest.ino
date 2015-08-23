@@ -93,7 +93,8 @@ void setup()
 
 void loop() 
 {
-	Debbugger_Init();	// inicializador de debbugger
+	//Debbugger_Init();	// inicializador de debbugger
+	tft.setRotation(3);	
 	//GUI();
 	//Matrix(1);
 	
@@ -105,7 +106,7 @@ void loop()
 	
 	//GUI_Channel_Options(1);
 	
-	tft.setRotation(3);								// rotacion de pantalla 0 = 0*, 1 = 90*, 2 = 180*, 3 = 270*
+								// rotacion de pantalla 0 = 0*, 1 = 90*, 2 = 180*, 3 = 270*
 	
 		
 	while(1)
@@ -158,6 +159,10 @@ void GUI_Touch_Calibration()
 	// borra pantalla
 	tft.fillScreen(Black);					// fondo negro
 	
+	// memory
+	tft.setCursor(0, 0);		// posicion del cursor
+	tft.println("Memory");		// texto
+	
 Calculo_1:
 	// calcular 0, 0
 		// limpiar variables
@@ -198,16 +203,16 @@ Calculo_1:
 	Serial.print("Average X 0 = "); Serial.println(x_cont);
 	Serial.print("Average Y 0 = "); Serial.println(y_cont);
 		// evaluar resultados
-	if (x_cont < 3500)
-	{
-		Serial.print("X value error: "); Serial.println(x_cont);
-		goto Calculo_1;
-	}
-	if (y_cont > 500)
-	{
-		Serial.print("Y value error: "); Serial.println(y_cont);
-		goto Calculo_1;
-	}
+	//if (x_cont < 3500)
+	//{
+	//	Serial.print("X value error: "); Serial.println(x_cont);
+	//	goto Calculo_1;
+	//}
+	//if (y_cont > 500)
+	//{
+	//	Serial.print("Y value error: "); Serial.println(y_cont);
+	//	goto Calculo_1;
+	//}
 	Serial.println("Value Ok!");
 	Serial.println();
 		// actualizar variables
@@ -257,16 +262,16 @@ Calculo_2:
 	Serial.print("Average X 479 = "); Serial.println(x_cont);
 	Serial.print("Average Y 319 = "); Serial.println(y_cont);
 		// evaluar resultados
-	if (x_cont > 1000)
-	{
-		Serial.print("X value error: "); Serial.println(x_cont);
-		goto Calculo_2;
-	}
-	if (y_cont < 4000)
-	{
-		Serial.print("Y value error: "); Serial.println(y_cont);
-		goto Calculo_2;
-	}
+	//if (x_cont > 1000)
+	//{
+	//	Serial.print("X value error: "); Serial.println(x_cont);
+	//	goto Calculo_2;
+	//}
+	//if (y_cont < 4000)
+	//{
+	//	Serial.print("Y value error: "); Serial.println(y_cont);
+	//	goto Calculo_2;
+	//}
 	Serial.println("Value Ok!");
 	Serial.println();
 		// actualizar variables
@@ -275,27 +280,25 @@ Calculo_2:
 		// cuadrado 0, 0
 	tft.fillRect(463 , 303, 17, 17, Green);				// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
 	
+	//X_Touch_0
+	//Y_Touch_0
+	//X_Touch_480
+	//Y_Touch_320
 	// Test de calibracion
 		// Dibujar boton
 	GUI_boton(0, 268, 1, 0);
 Lectura:
 	if (touch.touched())
 	{
-		if (Touch_Event(0, 268, 94, 52) == 1)			// void Touch_Event(posicion x, posicion y, tamaño x, tamaño y), regresa 1 si se cumple la condicion
-		{
-			goto Salida;
-		}
+		touch.readData(&x, &y, &z);
+		// boton exit
+		//if (x)
 	}
 	goto Lectura;
 Salida:
 	GUI_boton(0, 268, 1, 1);
-}
-
-int Touch_Event(int X_Objet, int Y_Objet, int X_Size, Y_Size)
-{
-	// saber si se preciono dentro del area establecida
-	// void Touch_Event(posicion x, posicion y, tamaño x, tamaño y), regresa 1 si se cumple la condicion
-	return 1;
+	
+	// agregar guardado en eeprom
 }
 
 void GUI_Channel_Options(int canal)
