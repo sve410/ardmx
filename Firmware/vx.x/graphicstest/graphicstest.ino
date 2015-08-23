@@ -63,7 +63,11 @@ Adafruit_STMPE610 touch = Adafruit_STMPE610();
 		// define the following pins to whatever 4 you want and wire up!
 		// Tie MODE to 3.3V and POWER CYCLE the STMPE610 (there is no reset pin)
 	// Adafruit_STMPE610 touch = Adafruit_STMPE610(STMPE_CS, STMPE_SDI, STMPE_SDO, STMPE_SCK);
-	// tamaños maximos de pantalla tactil
+	// tamaños maximos de pantalla touch 
+uint16_t X_Touch_0 		= 0;
+uint16_t Y_Touch_0	 	= 0;
+uint16_t X_Touch_480 	= 0;
+uint16_t Y_Touch_320 	= 0;
 // DMX
 int	DMX_rt_Values 	[512];  // array de valores actuales DMX
 int	DMX_rt_Colors	[512];  // array de valores de colores actuales DMX	
@@ -90,22 +94,23 @@ void setup()
 void loop() 
 {
 	Debbugger_Init();	// inicializador de debbugger
-	GUI();
-	Matrix(1);
+	//GUI();
+	//Matrix(1);
 	
-	for (byte numero = 1; numero <= 48; numero ++)
-	{
-		//DMX_rt_Colors[numero] = numero;
-		Matrix_Element(numero, numero, 0, White);	// Matrix_Element(int canal, byte element, byte marco, int color_marco)
-	}
+	//for (byte numero = 1; numero <= 48; numero ++)
+	//{
+	//	//DMX_rt_Colors[numero] = numero;
+	//	Matrix_Element(numero, numero, 0, White);	// Matrix_Element(int canal, byte element, byte marco, int color_marco)
+	//}
 	
-	GUI_Channel_Options(1);
+	//GUI_Channel_Options(1);
 	
-
+	tft.setRotation(3);								// rotacion de pantalla 0 = 0*, 1 = 90*, 2 = 180*, 3 = 270*
 	
+		
 	while(1)
 	{
-		GUI_Touch_Event();
+		GUI_Touch_Calibration();
 	}
 }
 
@@ -135,43 +140,162 @@ void Debbugger_Init()
 	{
 		Serial.println("Fail - TFT Screen");
 	}
-
+	Serial.println();
 }
 
-void GUI_Touch_Event()
+void GUI_Touch_Calibration()
 {
-	uint16_t 	x;
-	uint16_t 	y;
-	uint8_t 	z;
+	uint16_t x;
+	uint16_t y;
+	uint8_t  z;
+	uint16_t x_cont;
+	uint16_t y_cont;
+	byte 	 conteo;
 	
-	if (touch.touched()) 
+	// debbugger
+	Serial.println("Touch Screen Calibration:");
+	Serial.println();
+	// borra pantalla
+	tft.fillScreen(Black);					// fondo negro
+	
+Calculo_1:
+	// calcular 0, 0
+		// limpiar variables
+	x_cont = 0;
+	y_cont = 0;
+	conteo = 0;
+		// debbugger
+	Serial.println("0,0     Calibrating...");
+		// cuadrado 0, 0
+	tft.drawRect(0 , 0, 16, 16, Green);		// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
+		// circulo
+	tft.fillCircle(8, 8, 2, Green);			// circulo con relleno, tft.fillCircle(X, Y, radio, color de relleno); 
+		// calcular promedio
+	while (conteo <= 10)					// tomar 10 muestras
 	{
-		if (touch.bufferEmpty() == 0) // esta vacio el buffer?
+		if (touch.touched()) 
 		{
-			// X - 0­4095
-			// Y - 0­4095
-			// Z - presure, 0-255
-			Serial.print(touch.bufferSize());
-			touch.readData(&x, &y, &z);
-			Serial.print("->(");
-			Serial.print(x); Serial.print(", ");
-			Serial.print(y); Serial.print(", ");
-			Serial.print(z);
-			Serial.println(")");
-			// ajuste a resolucion
-			Serial.print(touch.bufferSize());
-			touch.readData(&x, &y, &z);
-			Serial.print("->(");
-			Serial.print(x / 8.53125); Serial.print(", ");
-			Serial.print(y / 12.796875); Serial.print(", ");
-			Serial.print(z);
-			Serial.println(")");
-			tft.drawCircle(x / 8.53125, y / 12.796875, 20, Green);
-			delay(300);
-			
+			if (touch.bufferEmpty() == 0) 	// esta vacio el buffer?
+			{
+				// X - 0­4095
+				// Y - 0­4095
+				// Z - presure, 0-255
+				touch.readData(&x, &y, &z);
+
+				x_cont = x_cont + x;
+				y_cont = y_cont + y;
+				conteo = conteo + 1;
+				
+				delay(10);
+			}
 		}
 		touch.writeRegister8(STMPE_INT_STA, 0xFF); // reset all ints
 	}
+		// calcular promedio
+	x_cont = x_cont / 10;
+	y_cont = y_cont / 10;
+		// mostrar resultados
+	Serial.print("Average X 0 = "); Serial.println(x_cont);
+	Serial.print("Average Y 0 = "); Serial.println(y_cont);
+		// evaluar resultados
+	if (x_cont < 3500)
+	{
+		Serial.print("X value error: "); Serial.println(x_cont);
+		goto Calculo_1;
+	}
+	if (y_cont > 500)
+	{
+		Serial.print("Y value error: "); Serial.println(y_cont);
+		goto Calculo_1;
+	}
+	Serial.println("Value Ok!");
+	Serial.println();
+		// actualizar variables
+	X_Touch_0 = x_cont;
+	Y_Touch_0 = y_cont;
+		// cuadrado 0, 0
+	tft.fillRect(0, 0, 16, 16, Green);				// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
+	delay(1000);
+	
+Calculo_2:
+	// calcular 480, 320
+		// debbugger
+	Serial.println("479,319 Calibrating...");
+		// limpiar variables
+	x_cont = 0;
+	y_cont = 0;
+	conteo = 0;
+		// cuadrado 479, 319
+	tft.drawRect(463, 303, 17, 17, Green);		// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
+		// circulo
+	tft.fillCircle(471, 311, 2, Green);			// circulo con relleno, tft.fillCircle(X, Y, radio, color de relleno); 
+		// calcular promedio
+	while (conteo <= 10)					// tomar 10 muestras
+	{
+		if (touch.touched()) 
+		{
+			if (touch.bufferEmpty() == 0) 	// esta vacio el buffer?
+			{
+				// X - 0­4095
+				// Y - 0­4095
+				// Z - presure, 0-255
+				touch.readData(&x, &y, &z);
+
+				x_cont = x_cont + x;
+				y_cont = y_cont + y;
+				conteo = conteo + 1;
+				
+				delay(10);
+			}
+		}
+		touch.writeRegister8(STMPE_INT_STA, 0xFF); // reset all ints
+	}
+		// calcular promedio
+	x_cont = x_cont / 10;
+	y_cont = y_cont / 10;
+		// mostrar resultados
+	Serial.print("Average X 479 = "); Serial.println(x_cont);
+	Serial.print("Average Y 319 = "); Serial.println(y_cont);
+		// evaluar resultados
+	if (x_cont > 1000)
+	{
+		Serial.print("X value error: "); Serial.println(x_cont);
+		goto Calculo_2;
+	}
+	if (y_cont < 4000)
+	{
+		Serial.print("Y value error: "); Serial.println(y_cont);
+		goto Calculo_2;
+	}
+	Serial.println("Value Ok!");
+	Serial.println();
+		// actualizar variables
+	X_Touch_480 = x_cont;
+	Y_Touch_320 = y_cont;
+		// cuadrado 0, 0
+	tft.fillRect(463 , 303, 17, 17, Green);				// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
+	
+	// Test de calibracion
+		// Dibujar boton
+	GUI_boton(0, 268, 1, 0);
+Lectura:
+	if (touch.touched())
+	{
+		if (Touch_Event(0, 268, 94, 52) == 1)			// void Touch_Event(posicion x, posicion y, tamaño x, tamaño y), regresa 1 si se cumple la condicion
+		{
+			goto Salida;
+		}
+	}
+	goto Lectura;
+Salida:
+	GUI_boton(0, 268, 1, 1);
+}
+
+int Touch_Event(int X_Objet, int Y_Objet, int X_Size, Y_Size)
+{
+	// saber si se preciono dentro del area establecida
+	// void Touch_Event(posicion x, posicion y, tamaño x, tamaño y), regresa 1 si se cumple la condicion
+	return 1;
 }
 
 void GUI_Channel_Options(int canal)
