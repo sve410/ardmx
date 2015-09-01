@@ -19,6 +19,7 @@
 - AGREGADO - Implementacion de Adafruit Resistive Touch Screen Controller - STMPE610 PID: 1571
 - AGREGADO - Implementacion de Adafruit 3.5" TFT 320x480 + Touchscreen Breakout Board w/MicroSD Socket - HXD8357D PID: 2050
 - AGREGADO - Debbugger al arranque con informacion de estado de dispositivos
+- AGREGADO - Funcion de calibracio para touch
 
 ***
 
