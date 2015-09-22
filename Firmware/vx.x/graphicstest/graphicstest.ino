@@ -3,6 +3,7 @@
 #include <SPI.h>
 #include <Wire.h>
 #include "Adafruit_STMPE610.h" 	// Adafruit STMPE610 Resistive touch screen controller breakout http://www.adafruit.com/products/1571
+#include <EEPROM.h>
 
 // LCD
 	// The control pins for the LCD can be assigned to any digital or
@@ -69,18 +70,29 @@ uint16_t Y_Touch_0	 	= 0;
 uint16_t X_Touch_480 	= 0;
 uint16_t Y_Touch_320 	= 0;
 	// relacion de pixeles vs touch
-uint16_t X_Pitch		= 0;
-uint16_t Y_Pitch		= 0;
+uint16_t X_Touch_Pitch		= 0;
+uint16_t Y_Touch_Pitch		= 0;
 	// temporal de lectura de modulo touch
 uint16_t 	x;
 uint16_t 	y;
 uint8_t  	z;
+	// XY procesados
+int X_Touch_Read;
+int Y_Touch_Read;
 // DMX
-int	DMX_rt_Values 	[512];  // array de valores actuales DMX
-int	DMX_rt_Colors	[512];  // array de valores de colores actuales DMX	
+int	DMX_rt_Values 	[512];  	// array de valores actuales DMX
+int	DMX_rt_Colors	[512];  	// array de valores de colores actuales DMX	
 // GUI default 
 	// reticula
 int color_reticula = DarkGrey;
+// EEPROM Address
+	// Touch
+byte X_Touch_0_Add 		= 0;	// + 2
+byte X_Touch_480_Add	= 2;	// + 15
+byte Y_Touch_0_Add		= 18;	// + 2
+byte Y_Touch_320_Add	= 20;	// + 15
+byte X_Touch_Pitch_Add		= 36;
+byte Y_Touch_Pitch_Add		= 37;
 
 void setup() 
 {
@@ -99,8 +111,10 @@ void setup()
 
 void loop() 
 {
-	Init_Debbugger();	// inicializador de debbugger
-	tft.setRotation(3);	
+	Init_Debbugger();		// inicializador de debbugger
+	Init_TFT();				// iniciar pantalla
+	Init_Touch();			// evaluar valores guardados, si fail llamar a calibracion
+	
 	//GUI();
 	//Matrix(1);
 	
@@ -112,13 +126,124 @@ void loop()
 	
 	//GUI_Channel_Options(1);
 	
-								// rotacion de pantalla 0 = 0*, 1 = 90*, 2 = 180*, 3 = 270*
+								
 	
 		
 	while(1)
 	{
-		GUI_Touch_Calibration();
+	//	GUI_Touch_Calibration();
 	}
+}
+
+void Init_Touch()
+{
+	// saber si los valores leidos desde la eeprom son correctos para el touch
+		// debbugger
+	Serial.println("--- Touch Screen Test ---");
+	Serial.println();
+inicio:
+	// saber si esta presente el hardware
+	if (! touch.begin()) 		// arranque del touch
+	{
+			// debbugger
+		Serial.println("Touch Screen Controller Fail!");
+	}
+	else
+	{
+			// debbugger
+		Serial.print	("Touch Screen Controller v");
+		Serial.println	(touch.getVersion());
+		Serial.println	();
+	}
+	
+		// Lectura inicial de eeprom
+	byte Address = 0;
+		// debbugger
+	Serial.println("EEPROM Data Read:");
+	// Touch
+		// X 0
+	Address = X_Touch_0_Add;
+	for (byte contar = 1; contar <= 16; contar ++)
+	{
+		X_Touch_0 = X_Touch_0 + EEPROM.read(Address);
+		Address = Address + 1;
+	}
+		// debbugger
+	Serial.print("X Touch 0   = ");
+	Serial.println(X_Touch_0);
+	
+		// X 480
+	Address = X_Touch_480_Add;
+	for (byte contar = 1; contar <= 16; contar ++)
+	{
+		X_Touch_480 = X_Touch_480 + EEPROM.read(Address);
+		Address = Address + 1;
+	}
+		// debbugger
+	Serial.print("X Touch 480 = ");
+	Serial.println(X_Touch_480);
+	
+		// Y 0
+	Address = Y_Touch_0_Add;
+	for (byte contar = 1; contar <= 16; contar ++)
+	{
+		Y_Touch_0 = Y_Touch_0 + EEPROM.read(Address);
+		Address = Address + 1;
+	}
+		// debbugger
+	Serial.print("Y Touch 0   = ");
+	Serial.println(Y_Touch_0);
+	
+		// Y 320
+	Address = Y_Touch_320_Add;
+	for (byte contar = 1; contar <= 16; contar ++)
+	{
+		Y_Touch_320 = Y_Touch_320 + EEPROM.read(Address);
+		Address = Address + 1;
+	}
+		// debbugger
+	Serial.print("Y Touch 320 = ");
+	Serial.println(Y_Touch_320);
+	
+		// Pitch X
+	X_Touch_Pitch = EEPROM.read(X_Touch_Pitch_Add);
+		// debbugger
+	Serial.print("X Pitch     = ");
+	Serial.println(X_Touch_Pitch);
+	
+		// Pitch Y
+	Y_Touch_Pitch = EEPROM.read(Y_Touch_Pitch_Add);
+		// debbugger
+	Serial.print("Y Pitch     = ");
+	Serial.println(Y_Touch_Pitch);
+	Serial.println();
+	
+	// pruebas de valores guardados
+		// XY touch 0 0
+	if (X_Touch_0 > 400 || Y_Touch_0 > 400 || X_Touch_0 == 0 || Y_Touch_0 == 0)
+	{
+			// debbugger
+		Serial.print("XY Touch 0, 0	Data Fail!");
+		Serial.println();
+		Serial.println();
+		GUI_Touch_Calibration();
+		goto inicio;
+	}
+		// XY touch 480 320
+	if (X_Touch_480 > 3900 || Y_Touch_320 > 3900 || X_Touch_480 < 3300 || Y_Touch_320 < 3300)
+	{
+			// debbugger
+		Serial.println("XY Touch 480, 320 Data Fail!");
+		Serial.println();
+		Serial.println();
+		GUI_Touch_Calibration();
+		goto inicio;
+	}
+		// debbugger
+	Serial.println("Touch Screen Module Ok!");
+salida:
+		// debbugger
+	Serial.println();
 }
 
 void Touch_Del_Buffer()
@@ -137,11 +262,13 @@ void Touch_Del_Buffer()
 		y_ant = y;
 	}
 		// debbugger
-	Serial.println("Touch Buffer Deleted!");
+	Serial.println("--- Touch Buffer Deleted ---");
+	Serial.println();
 }
 
 void Init_Debbugger()
 {
+		// debbugger
 	Serial.println("Arduino DMX-512 Tester and Controller");
 	Serial.println();
 	Serial.println("Open Hardware");
@@ -149,27 +276,29 @@ void Init_Debbugger()
 	Serial.println("Hardware v0.0");
 	Serial.println("Software v0.0");
 	Serial.println();
-	// Touch Screen
-		// saber si esta presente el hardware
-	if (! touch.begin()) 		// arranque del touch
-	{
-		Serial.println("Fail - Touch Screen Controller");
-	}
-	else
-	{
-		Serial.print	("  Ok - Touch Screen Controller v");
-		Serial.println	(touch.getVersion());
-	}
+}
+
+void Init_TFT()
+{
 	// TFT screen
+		// debbugger
+	Serial.println("--- TFT Screen Test ---");
+	Serial.println();
+	
 	if (tft.readID() != 0)	// id de pantalla, lo usamos como verificador de funcionamiento
 	{
-		Serial.print	("  Ok - TFT Screen ID ");
+			// debbugger
+		Serial.print	("TFT Screen ID ");
 		Serial.println	(tft.readID());
 	}
 	else
 	{
-		Serial.println("Fail - TFT Screen");
+			// debbugger
+		Serial.println("TFT Screen Fail!");
 	}
+	
+	tft.setRotation(3);		// rotacion de pantalla 0 = 0*, 1 = 90*, 2 = 180*, 3 = 270*
+		// debbugger
 	Serial.println();
 }
 
@@ -180,7 +309,7 @@ void GUI_Touch_Calibration()
 	byte 	 	conteo;
 	
 	// debbugger
-	Serial.println("Touch Screen Calibration:");
+	Serial.println("--- Touch Screen Calibration ---");
 	Serial.println();
 	// borra pantalla
 	tft.fillScreen(Black);						// fondo negro
@@ -200,6 +329,7 @@ Calculo_1:
 	conteo 		= 0;
 		// debbugger
 	Serial.println("Calibrating 0, 0:");
+	Serial.println();
 		// cuadrado 0, 0
 	tft.fillRect(0, 0, 16, 16, Black);			// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
 	tft.drawRect(0, 0, 16, 16, Green);			// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
@@ -289,6 +419,7 @@ Calculo_2:
 	conteo 		= 0;	
 		// debbugger
 	Serial.println("Calibrating 320, 480:");
+	Serial.println();
 		// cuadrado 0, 0
 	tft.fillRect(463, 303, 17, 17, Black);		// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
 	tft.drawRect(463, 303, 17, 17, Green);		// rectangulo, 	tft.drawRect(X, Y, alto, ancho, color);	
@@ -382,6 +513,17 @@ Calculo_2:
 	tft.setCursor(110, 262);				// posicion del cursor
 	tft.print("touch the top left corner of the screen...");			// texto
 	// Resultados
+		// pitch Pixels / Touch
+	X_Touch_Pitch = X_Touch_480 - X_Touch_0;
+	X_Touch_Pitch = X_Touch_Pitch / 480;
+	Y_Touch_Pitch = Y_Touch_320 - Y_Touch_0;
+	Y_Touch_Pitch = Y_Touch_Pitch / 320;
+		// ajuste a la resolucion total, 
+		// considerar lados entre el punto y el cuadrado en los test
+	X_Touch_0 	= X_Touch_0 	- X_Touch_Pitch;
+	X_Touch_480 = X_Touch_480 	+ X_Touch_Pitch;
+	Y_Touch_0	= Y_Touch_0		- Y_Touch_Pitch;
+	Y_Touch_320 = Y_Touch_320	+ Y_Touch_Pitch;
 		// debbugger
 	Serial.println("Calibration Results:");
 	Serial.println();
@@ -395,19 +537,13 @@ Calculo_2:
 	Serial.print("Y-320 = ");
 	Serial.println(Y_Touch_320);
 	Serial.println();
-		// pitch Pixels / Touch
-	X_Pitch = X_Touch_480 - X_Touch_0;
-	X_Pitch = X_Pitch / 480;
-	Y_Pitch = Y_Touch_320 - Y_Touch_0;
-	Y_Pitch = Y_Pitch / 320;
-		// debbugger
 	Serial.print("X Pitch = ");
-	Serial.println(X_Pitch);
+	Serial.println(X_Touch_Pitch);
 	Serial.print("Y Pitch = ");
-	Serial.println(Y_Pitch);
+	Serial.println(Y_Touch_Pitch);
 	Serial.println();
-		
 		// obtener datos de touch
+	delay(2000);
 	Touch_Read_XY();
 	
 	
@@ -424,15 +560,68 @@ void Touch_Read_XY()
 		// uint16_t X_Touch_480
 		// uint16_t Y_Touch_320
 	// relacion de pixeles vs touch
-		// uint16_t X_Pitch
-		// uint16_t Y_Pitch
+		// uint16_t X_Touch_Pitch
+		// uint16_t Y_Touch_Pitch
+	// XY procesados
+		// int X_Touch_Read;
+		// int Y Touch_Read;
+	
+	// limpiar variables
+	X_Touch_Read = 0;
+	Y_Touch_Read = 0;
 	
 		// debbugger
-	Serial.println("Touch Read X/Y:");
-	Serial.println();
-		// borrar buffer
+	Serial.println("--- Touch Read X/Y ---");
+	
+	// borrar buffer
 	Touch_Del_Buffer();
 	
+	// lectura de touch
+		// X - 0­4095
+		// Y - 0­4095
+		// Z - presure, 0-255
+lectura:
+	if (touch.touched()) 
+	{	
+		if (touch.bufferEmpty() == 0) 		// esta vacio el buffer?
+		{
+			touch.readData(&x, &y, &z);
+		}
+		else
+		{
+			goto lectura;
+		}
+	}
+	else
+	{
+		goto lectura;
+	}
+
+	// eje X
+		// calcular coordenadas
+	X_Touch_Read = x - X_Touch_0;
+	X_Touch_Read = X_Touch_Read / X_Touch_Pitch;
+	// eje Y
+		// calcular coordenadas
+	Y_Touch_Read = y - Y_Touch_0;
+	Y_Touch_Read = Y_Touch_Read / Y_Touch_Pitch;
+	// ajuste
+		// eje x
+	if (X_Touch_Read > 480)
+	{
+		X_Touch_Read = 480;
+	}
+		// eje Y
+	if (Y_Touch_Read > 320)
+	{
+		Y_Touch_Read = 320;
+	}	
+		// debbugger
+	Serial.print("X = ");
+	Serial.println(X_Touch_Read);
+	Serial.print("Y = ");
+	Serial.println(Y_Touch_Read);
+	Serial.println();
 	while(1)
 	{}
 
@@ -570,32 +759,32 @@ void GUI()
 
 void Menu()
 {
-	// separadores botones
+		// separadores botones
 	int separador = 53;
 	tft.drawLine(385, separador, 480, separador, color_reticula);			// dibuja linea, tft.drawLine(X0, Y0, X1, Y1, color);
 	tft.drawLine(385, separador * 2, 480, separador * 2, color_reticula);	// dibuja linea, tft.drawLine(X0, Y0, X1, Y1, color);
 	tft.drawLine(385, separador * 3, 480, separador * 3, color_reticula);	// dibuja linea, tft.drawLine(X0, Y0, X1, Y1, color);
 	tft.drawLine(385, separador * 4, 480, separador * 4, color_reticula);	// dibuja linea, tft.drawLine(X0, Y0, X1, Y1, color);
 	tft.drawLine(385, separador * 5, 480, separador * 5, color_reticula);	// dibuja linea, tft.drawLine(X0, Y0, X1, Y1, color);
-	// opciones 
+		// opciones 
 	tft.setTextColor(White);	// color de texto
 	tft.setTextSize(1);			// tamaño de texto, lo probamos 1 hasta 100 y funciona
-	// memory
+		// memory
 	tft.setCursor(413, 25);		// posicion del cursor
 	tft.println("Memory");		// texto
-	// chaser
+		// chaser
 	tft.setCursor(415, 76);		// posicion del cursor
 	tft.println("Chaser");		// texto
-	// Secuencer
+		// Secuencer
 	tft.setCursor(407, 129);	// posicion del cursor
 	tft.println("Secuencer");	// texto
-	// Multiply
+		// Multiply
 	tft.setCursor(410, 182);	// posicion del cursor
 	tft.println("Multiply");	// texto
-	// Info
+		// Info
 	tft.setCursor(420, 235);	// posicion del cursor
 	tft.println("Info");		// texto
-	// Config
+		// Config
 	tft.setCursor(414, 290);	// posicion del cursor
 	tft.println("Config");		// texto
 }
