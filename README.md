@@ -108,4 +108,5 @@ Basado en:
 [![Hack a Day](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/hackaday%2050x50.jpg)](https://hackaday.io/project/5342-arduino-dmx-512-tester-and-controller)
 [![Youtube](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/Youtube%2050x50.png)](https://www.youtube.com/watch?v=TxBHMpAWDSY)
 [![Tech Inside](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/techinside%2045x45.png)](https://techinsideblog.wordpress.com/)
+[![GitHub](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/github%2050x50.png)](ttps://github.com/daniel3514/Arduino-DMX-512-Tester-Controller)
 ***
