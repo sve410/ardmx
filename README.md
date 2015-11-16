@@ -106,3 +106,7 @@ Basado en:
 - [Facebook](https://www.facebook.com/ArduinoDMX512TesterController)
 
 ***
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/Facebook%20200x200.png)
+[![Arduino DMX-512 Tester and Controller](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.0/media/youtube.JPG)](https://www.youtube.com/watch?v=TxBHMpAWDSY)
+
