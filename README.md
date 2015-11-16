@@ -102,10 +102,9 @@ Basado en:
 - [daniel3514@gmail.com](mailto:daniel3514@gmail.com)
 - [Tech Inside](http://www.techinside.com.mx)
 - [Hack a Day](https://hackaday.io/daniel3514)
-- [Instructables](http://www.instructables.com/member/daniel3514/)
 
 ***
 
 [![Facebook](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/Facebook%2050x50.png)](https://www.facebook.com/ArduinoDMX512TesterController)
 [![Twitter](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/Twitter%2050x50.png)](https://twitter.com/daniel3514)
-[![Instructables](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/Instructables%2050x50.png)](http://www.instructables.com/id/Arduino-DMX-512-Tester-and-Controller/)
+[![Instructables](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/Instructables%2050x50.jpg)](http://www.instructables.com/id/Arduino-DMX-512-Tester-and-Controller/)
