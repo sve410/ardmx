@@ -86,10 +86,11 @@ int  Boton_Center			= 11;
 byte LCD_Col_Pos 			= 0;	// posicion en tiempo real de lcd
 byte LCD_Row_Pos 			= 0;	// posicion en tiempo real de lcd
 // config de posiciones de lcd Col Row
-byte Cursor_Conf[4][20] = {	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+byte Cursor_Conf[4][20] = 
+{	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+  	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+  	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+  	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 };
 // Botones Numerico Array
 int  Boton_Array_1			= 38;
@@ -2121,7 +2122,7 @@ inicio:
   if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
   {
     GUI_Memory();
-    goto inicio;
+    goto inicio
   }
 }
 

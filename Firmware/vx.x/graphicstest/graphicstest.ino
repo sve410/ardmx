@@ -27,6 +27,7 @@
 	// For the Arduino Mega, use digital pins 22 through 29
 	// (on the 2-row header at the end of the board).
 	// Assign human-readable names to some common 16-bit color values:
+	
 		// colores
 #define	Black   	0x0000	// color 0
 #define	Blue    	0x001F	// color 1
@@ -46,8 +47,10 @@
 #define DarkGrey    0x7BEF	// color 15
 #define Orange      0xFD20	// color 16
 #define GreenYellow 0xAFE5 	// color 17
+
 	// coneccion de pantalla
 Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+
 // Touch Screen
 	// Pick one of three wiring options below!
 		// Option #1 - uses I2C, connect to hardware I2C port only!
@@ -64,27 +67,34 @@ Adafruit_STMPE610 touch = Adafruit_STMPE610();
 		// define the following pins to whatever 4 you want and wire up!
 		// Tie MODE to 3.3V and POWER CYCLE the STMPE610 (there is no reset pin)
 	// Adafruit_STMPE610 touch = Adafruit_STMPE610(STMPE_CS, STMPE_SDI, STMPE_SDO, STMPE_SCK);
+	
 	// tamaños maximos de pantalla touch 
 uint16_t X_Touch_0 		= 0;
 uint16_t Y_Touch_0	 	= 0;
 uint16_t X_Touch_480 	= 0;
 uint16_t Y_Touch_320 	= 0;
+
 	// relacion de pixeles vs touch
 uint16_t X_Touch_Pitch		= 0;
 uint16_t Y_Touch_Pitch		= 0;
+
 	// temporal de lectura de modulo touch
 uint16_t 	x;
 uint16_t 	y;
 uint8_t  	z;
+
 	// XY procesados
 int X_Touch_Read;
 int Y_Touch_Read;
+
 // DMX
 int	DMX_rt_Values 	[512];  	// array de valores actuales DMX
 int	DMX_rt_Colors	[512];  	// array de valores de colores actuales DMX	
+
 // GUI default 
 	// reticula
 int color_reticula = DarkGrey;
+
 // EEPROM Address
 	// Touch
 byte X_Touch_0_Add 		= 0;	// + 2
