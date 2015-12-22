@@ -8,7 +8,6 @@
 ***
 
 **vx.x - Beta**
-- AGREGAR - encoder
 - AGREGAR - en multiplicador, el valor en tiempo real desde el potenciometro o teclado
 - AGREGAR - control chaser desde el potenciometro, al girar recorre los canales
 - AGREGAR - dimmer para luz led como lampara
