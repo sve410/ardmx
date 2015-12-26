@@ -7,20 +7,27 @@
 
 ***
 
-**vx.x - Beta**
-- AGREGAR - en multiplicador, el valor en tiempo real desde el potenciometro o teclado
-- AGREGAR - control chaser desde el potenciometro, al girar recorre los canales
-- AGREGAR - dimmer para luz led como lampara
+**vx.x - Beta - TOUCH**
+- AGREGADO 	- Implementacion de Adafruit Resistive Touch Screen Controller - STMPE610 PID: 1571
+- AGREGADO 	- Implementacion de Adafruit 3.5" TFT 320x480 + Touchscreen Breakout Board w/MicroSD Socket - HXD8357D PID: 2050
+- AGREGADO 	- Debbugger al arranque con informacion de estado de dispositivos
+- AGREGADO 	- Funcion de calibracion para touch
+- AGREGADO 	- Funcion para borrar el buffer del touch
+- AGREGADO 	- calibracion de touch, obtencion de datos completa
 
 ***
 
-**vx.x - Beta - TOUCH**
-- AGREGADO - Implementacion de Adafruit Resistive Touch Screen Controller - STMPE610 PID: 1571
-- AGREGADO - Implementacion de Adafruit 3.5" TFT 320x480 + Touchscreen Breakout Board w/MicroSD Socket - HXD8357D PID: 2050
-- AGREGADO - Debbugger al arranque con informacion de estado de dispositivos
-- AGREGADO - Funcion de calibracion para touch
-- AGREGADO - Funcion para borrar el buffer del touch
-- AGREGADO - calibracion de touch, obtencion de datos completa
+**v1.8 - beta - Hardware v0.6**
+- CORREGIDO - Pin Out para version de hardware
+- CORREGIDO - Pin encoder center al 6
+- CORREGIR  - Quitar la programacion del potenciometro
+- CORREGIR  - Quitar la programacion de los cursores
+- CORREGIR  - pin 6 de encoder center a pull up
+- CORREGIR  - pin key light a 11
+- CORREGIR  - pin contraste a 12
+- AGREGAR 	- en multiplicador, el valor en tiempo real desde el potenciometro o teclado
+- AGREGAR 	- control chaser desde el potenciometro, al girar recorre los canales
+- AGREGAR 	- dimmer para luz led como lampara
 
 ***
 

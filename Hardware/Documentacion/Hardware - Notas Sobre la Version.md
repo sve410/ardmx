@@ -12,19 +12,28 @@
 			
 ***
 
+**v0.6 - Beta - Firm v1.7**
+- AGREGADO   - regulador para fuente externa, el arduino se calienta
+- AGREGADO   - bornera para salida de fuente regulada de 5V para uso general
+- AGREGADO   - led para salida de fuente regulada
+- AGREGADO   - boton de reset
+- AGREGADO   - opto acoplado a salida de dmx
+- AGREGADO   - convertidor de DC/DC para asilamiento de DMX
+- CORREGIDO - se eliminan los cursores, los remplaza el encoder
+- CORREGIDO - se elimina el data I/O
+- CORREGIGO - se quito la entrada al Arduino desde el MAX485, causa problemas al cargar el programa
+- CORREGIDO - Las bases de los CI se cambiaron a maquinadas
+- Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
+- AGREGAR   - luz led como lampara
+- AGREGAR   - sw deslizable para cambiar la polaridad del dmx
+
+***
+
 **v0.5 - Beta - Firm v1.6 to 1.7**
 - CORREGIDO - potenciómetro por encoder
 - CORREGIDO - etapa de potencia para contraste
-- CORREGIGO - se quito la entrada al Arduino desde el MAX485, causa problemas al cargar el programa
-- CORREGIDO - Las bases de los CI se cambiaron a maquinadas
 - AGREGADO 	- Luz para el teclado y cursores
 - AGREGADO  - Etapa de potencia para luz de teclado
-- AGREGADO  - opto acoplado a salida de dmx
-- AGREGADO  - convertidor de DC/DC para asilamiento de DMX
-- AGREGAR   - regulador para fuente externa, el arduino se calienta
-- AGREGAR   - luz led como lampara
-- AGREGAR   - boton de reset
-- Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
 - Contraste por PWM basado en http://www.pcbheaven.com/circuitpages/PWM_LCD_Contrast_Control/
 
 ***
@@ -38,7 +47,7 @@
 - CORREGIDO - se hizo más chico el puente que estaba dentro del área del arduino
 - CORREGIDO - los datos de la salida están al revés
 - AGREGADO  - interconectados los pines del arduino de vcc y gnd faltantes
-- AGREGADO  -  la leyenda open hardware a bottom
+- AGREGADO  - la leyenda open hardware a bottom
 
 ***
 
