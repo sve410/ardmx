@@ -27,7 +27,8 @@
 - CORREGIR  - pin contraste a 12
 - AGREGAR 	- en multiplicador, el valor en tiempo real desde el potenciometro o teclado
 - AGREGAR 	- control chaser desde el potenciometro, al girar recorre los canales
-- AGREGAR 	- dimmer para luz led como lampara
+- AGREGAR   - EEPROM Default en pin 9 como pullup
+- AGREGAR 	- dimmer para luz led como lampara en pin 10
 
 ***
 

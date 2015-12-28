@@ -19,13 +19,18 @@
 - AGREGADO   - boton de reset
 - AGREGADO   - opto acoplado a salida de dmx
 - AGREGADO   - convertidor de DC/DC para asilamiento de DMX
-- CORREGIDO - se eliminan los cursores, los remplaza el encoder
-- CORREGIDO - se elimina el data I/O
-- CORREGIGO - se quito la entrada al Arduino desde el MAX485, causa problemas al cargar el programa
-- CORREGIDO - Las bases de los CI se cambiaron a maquinadas
+- AGREGADO   - SW de palanca para invertir polaridad de salida de DMX
+- AGREGADO   - Al encoder capacitores para rebote
+- AGREGADO   - jumper default eeprom en pin 9
+- AGREGADO   - driver para luz led como lampara
+- AGREGADO   - capacitores al teclado para rebote
+- CORREGIDO  - se eliminan los cursores, los remplaza el encoder
+- CORREGIDO  - se saco el encoder de la placa original y se solda directo a la placa
+- CORREGIDO  - se elimina el data I/O
+- CORREGIGO  - se quito la entrada al Arduino desde el MAX485, causa problemas al cargar el programa
+- CORREGIDO  - Las bases de los CI se cambiaron a maquinadas
 - Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
-- AGREGAR   - luz led como lampara
-- AGREGAR   - sw deslizable para cambiar la polaridad del dmx
+- CHECAR     - el encoder DT y CLK que sean pullup
 
 ***
 
