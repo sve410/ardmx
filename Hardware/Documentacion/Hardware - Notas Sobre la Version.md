@@ -24,6 +24,7 @@
 - AGREGADO   - jumper default eeprom en pin 9
 - AGREGADO   - driver para luz led como lampara
 - AGREGADO   - capacitores al teclado para rebote
+- AGREGADO   - logo de Open Hardware
 - CORREGIDO  - se eliminan los cursores, los remplaza el encoder
 - CORREGIDO  - se saco el encoder de la placa original y se solda directo a la placa
 - CORREGIDO  - se elimina el data I/O
