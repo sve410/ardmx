@@ -32,6 +32,8 @@
 - CORREGIDO  - Las bases de los CI se cambiaron a maquinadas
 - Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
 - CHECAR     - el encoder DT y CLK que sean pullup
+- AGREGAR    - leyendas de conectores
+- AGREGAR    - boton de reset
 
 ***
 
