@@ -15,6 +15,8 @@
 **v0.7 - Beta - Firm v1.7**
 - AGREGADO   - SW para Key Light
 - AGREGADO   - SW para Ext Light
+- AGREGADO   - Espaciadores para fijacion
+- AGREGADO   - Leyendas de conexion
 
 ***
  
