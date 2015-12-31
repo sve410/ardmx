@@ -12,6 +12,12 @@
 			
 ***
 
+**v0.7 - Beta - Firm v1.7**
+- AGREGADO   - SW para Key Light
+- AGREGADO   - SW para Ext Light
+
+***
+ 
 **v0.6 - Beta - Firm v1.7**
 - AGREGADO   - regulador para fuente externa, el arduino se calienta
 - AGREGADO   - bornera para salida de fuente regulada de 5V para uso general
@@ -31,9 +37,7 @@
 - CORREGIGO  - se quito la entrada al Arduino desde el MAX485, causa problemas al cargar el programa
 - CORREGIDO  - Las bases de los CI se cambiaron a maquinadas
 - Optoacoplamiento basado en http://www.mathertel.de/Arduino/DMXShield.aspx
-- CHECAR     - el encoder DT y CLK que sean pullup
-- AGREGAR    - leyendas de conectores
-- AGREGAR    - boton de reset
+- CHECAR     - en firmware que el encoder DT y CLK que sean pullup
 
 ***
 
