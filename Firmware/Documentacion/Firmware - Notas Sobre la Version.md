@@ -7,8 +7,14 @@
 
 ***
 
+**vx.x - Beta**
+- AGREGAR   - editor de secuencias con canales y valores especificos
+- AGREGAR   - al editor de secuencias fade y tiempo de comando dmx entre ciclos
+
+***
+
 **vx.x - Beta - TOUCH**
-- AGREGADO 	- Implementacion de Adafruit Resistive Touch Screen Controller - STMPE610 PID: 1571
+- AGREGADO 	- Implementacion de Adafruit Resistive Touch Screen Controller 	- STMPE610 PID: 1571
 - AGREGADO 	- Implementacion de Adafruit 3.5" TFT 320x480 + Touchscreen Breakout Board w/MicroSD Socket - HXD8357D PID: 2050
 - AGREGADO 	- Debbugger al arranque con informacion de estado de dispositivos
 - AGREGADO 	- Funcion de calibracion para touch
@@ -25,6 +31,7 @@
 - CORREGIR  - pin 6 de encoder center a pull up
 - CORREGIR  - pin key light a 11
 - CORREGIR  - pin contraste a 12
+- CORREGIR  - cambiar delay por interrupciones de timer
 - AGREGAR 	- en multiplicador, el valor en tiempo real desde el potenciometro o teclado
 - AGREGAR 	- control chaser desde el potenciometro, al girar recorre los canales
 - AGREGAR   - EEPROM Default en pin 9 como pullup
