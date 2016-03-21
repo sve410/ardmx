@@ -1,4 +1,4 @@
-jhdgsfsduysguydguyfgidsuygfcuysfgnudcubsuzygfign// ***************************************************************************************************************************
+// ***************************************************************************************************************************
 // ***************************************************************************************************************************
 // **				                                                                                                        **
 // **											Arduino DMX-512 Tester Controller				                            **
@@ -885,8 +885,7 @@ void GUI_Navegar(byte matrix, int banco)
 	lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
 	lcd.print(">");
 
-		// navegacion
-		
+		// navegacion	
 Dibujar:
 
 	byte Dibujar_Cursor = 0;				// saber si dibujar cursor para evitar repeticiones en lcd, 0 no dibujar, 1 dibujar >, 2 dibujar +
@@ -1175,13 +1174,15 @@ Salida:
 					Numerico_Write (banco + 14, 1, 0);
 					goto salida;
 				}
+			}
 					
 salida:
 					// escribir guion de bancos
 				lcd.setCursor(16, 0);
 				lcd.print("-");
 salir:
-			}
+		
+		}
 	}
     else
     {
@@ -1202,9 +1203,11 @@ salir:
     {
 		Dibujar_Cursor = 0;
     }
-  }
+  //}
   goto Dibujar;
+
 Salir: {}
+
 }
 
 void GUI_Memory_Init()
