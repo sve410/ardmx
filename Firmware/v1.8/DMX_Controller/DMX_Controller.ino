@@ -262,10 +262,9 @@ void loop()
 	Back_Light_Init();		// inicializador de Backlight desde eeprom
 	Contrast_Init();		// inicializador de EEPROM desde eeprom
 	// EEPROM_Default();		// jumper para default eeprom ------------ esperar a poner pullup fisico
-	
-
-	//EEPROM_Load_Init();		// valores desde eeprom
-	//GUI_About();			// interface grafica de about
+	EEPROM_Load_Init();		// valores desde eeprom
+	GUI_About();			// interface grafica de about
+	while(1);
 	//GUI_Memory_Init();		// interface grafica de memoria
 }
 
@@ -342,7 +341,7 @@ void Back_Light_Init()
 
 void Contrast_Init()
 {
-	// lee y aplica el ultimo estado del comtrast
+	// lee y aplica el ultimo estado del contrast
 
 	byte Contrast_Value = EEPROM.read(Contrast_Add);
   
@@ -490,7 +489,7 @@ salida:
 	delay(retardo);
 }*/
 
-/*void GUI_About()
+void GUI_About()
 {
 	// imprimir about
 
@@ -569,10 +568,8 @@ salida:
 	lcd.setCursor(10, 2);	// Blink
 
 		// lectura del boton centro
-	while (digitalRead(Boton_Center) == HIGH)
-	{
+	while (digitalRead(Enc_Center) == HIGH);
 
-	}
 	delay (300);			// rebote de boton
 	lcd.clear ();
 	lcd.setCursor(0, 0);
@@ -599,13 +596,11 @@ salida:
 	lcd.setCursor(19, 1);
 
 		// lectura del boton centro
-	while (digitalRead(Boton_Center) == HIGH)
-	{
+	while (digitalRead(Enc_Center) == HIGH);
 
-	}
 	delay (300);			// rebote de boton
 	lcd.noBlink ();
-}*/
+}
 
 /*void Multi_Matrix(int inicial)
 {
@@ -2094,9 +2089,9 @@ salida:
   return cancel;
 }*/
 
-/*void EEPROM_Load_Init()
+void EEPROM_Load_Init()
 {
-  // carga los valores de la eeprom al inicio
+  // carga los valores de los canales DMX de la eeprom al inicio e inicia el streaming de dmx
 
   int EEPROM_Add = 0;
   Universo_Actual = EEPROM.read(Bank_Init_Add);
@@ -2164,7 +2159,7 @@ salida:
 
 salir: {}
 
-}*/
+}
 
 /*void EEPROM_Empty()
 {
