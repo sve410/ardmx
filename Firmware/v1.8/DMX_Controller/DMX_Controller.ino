@@ -873,342 +873,297 @@ void Cursor_Conf_Clear()
 
 void GUI_Navegar(byte matrix, int banco)
 {
-	int Boton_Delay_Cursor = 300;		// delay de lectura de boton
-	byte LCD_Col_Pos_Ant;				// saber el estado anterior para borrar cursor
-	byte LCD_Row_Pos_Ant;				// saber el estado anterior para borrar cursor
-	
-		// guardar valor anterior de row col
-	LCD_Col_Pos_Ant = LCD_Col_Pos;
-	LCD_Row_Pos_Ant = LCD_Row_Pos;
-
-		// Dibujar cursor
-	lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
-	lcd.print(">");
-
-		// navegacion	
+  int Boton_Delay_Cursor = 300;		// delay de lectura de boton
+  byte LCD_Col_Pos_Ant;				// saber el estado anterior para borrar cursor
+  byte LCD_Row_Pos_Ant;				// saber el estado anterior para borrar cursor
+  // guardar valor anterior de row col
+  LCD_Col_Pos_Ant = LCD_Col_Pos;
+  LCD_Row_Pos_Ant = LCD_Row_Pos;
+  // Dibujar cursor
+  lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
+  lcd.print(">");
+  // navegacion
 Dibujar:
-
-	byte Dibujar_Cursor = 0;				// saber si dibujar cursor para evitar repeticiones en lcd, 0 no dibujar, 1 dibujar >, 2 dibujar +
-	
-		// LCD Back Light *
-	digitalWrite(Boton_Array_1, LOW);		// lectura linea 1
-	if (digitalRead(Boton_Array_D) == LOW)
-	{
-		delay(Boton_Delay_Teclado);
-		Light_En();
-	}
-	digitalWrite(Boton_Array_1, HIGH);		// lectura linea 1
-		
-		// Left
-	if (digitalRead(Boton_Left) == LOW)
-	{
-		delay (Boton_Delay_Cursor);
-		byte Salida_Left = 0;
-		byte LCD_Col_Pos_Temp = 0;
-		LCD_Col_Pos_Temp = LCD_Col_Pos;
-
-		while (Salida_Left == 0)
-		{
-			if (LCD_Col_Pos_Temp == 0)
-			{
-				LCD_Col_Pos_Temp = 20;
-			}
-
-			LCD_Col_Pos_Temp = LCD_Col_Pos_Temp - 1;
-
-			if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
-			{
-				LCD_Col_Pos = LCD_Col_Pos_Temp;
-				Dibujar_Cursor = 1;
-				Salida_Left = 1;
-			}
-		}
-		goto Salida;
-	}
-	
-		// Right
-	if (digitalRead(Boton_Right) == LOW)
-	{
-		delay(Boton_Delay_Cursor);
-		byte Salida_Right = 0;
-		byte LCD_Col_Pos_Temp = 0;
-		LCD_Col_Pos_Temp = LCD_Col_Pos;
-
-		while (Salida_Right == 0)
-		{
-			LCD_Col_Pos_Temp = LCD_Col_Pos_Temp + 1;
-
-			if (LCD_Col_Pos_Temp >= 20)
-			{
-				LCD_Col_Pos_Temp = 0;	// regresar al cero
-			}
-
-			if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
-			{
-				LCD_Col_Pos = LCD_Col_Pos_Temp;
-				Dibujar_Cursor = 1;
-				Salida_Right = 1;
-			}
-		}
-		goto Salida;
-	}
-	
-		// Down
-	if (digitalRead(Boton_Down) == LOW)
-	{
-		delay(Boton_Delay_Cursor);
-		byte Salida_Down = 0;
-		byte LCD_Row_Pos_Temp = 0;
-		LCD_Row_Pos_Temp = LCD_Row_Pos;
-
-		while (Salida_Down == 0)
-		{
-			LCD_Row_Pos_Temp = LCD_Row_Pos_Temp + 1;
-
-			if (LCD_Row_Pos_Temp >= 4)
-			{
-				LCD_Row_Pos_Temp = 0;	// regresar al cero
-			}
-
-			if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
-			{
-				LCD_Row_Pos = LCD_Row_Pos_Temp;
-				Dibujar_Cursor = 1;
-				Salida_Down = 1;
-			}
-		}
-		goto Salida;
-	}
-	
-		// Up
-	if (digitalRead(Boton_Up) == LOW)
-	{
-		delay(Boton_Delay_Cursor);
-		byte Salida_Up = 0;
-		byte LCD_Row_Pos_Temp;
-		LCD_Row_Pos_Temp = LCD_Row_Pos;
-
-		while (Salida_Up == 0)
-		{
-			if (LCD_Row_Pos_Temp <= 0)
-			{
-				LCD_Row_Pos_Temp = 4;
-			}
-
-			LCD_Row_Pos_Temp = LCD_Row_Pos_Temp - 1;
-
-			if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
-			{
-				Dibujar_Cursor = 1;
-				LCD_Row_Pos = LCD_Row_Pos_Temp;
-				Salida_Up = 1;
-			}
-		}
-		goto Salida;
-	}
-	
-		// Center
-	if (digitalRead(Boton_Center) == LOW)
-	{
-		delay(Boton_Delay_Cursor);
-		byte Salida_Center = 0;
-		while (Salida_Center == 0)
-		{
-			if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos] == 1)
-			{
-				Dibujar_Cursor = 2;	// dibujar +
-				Salida_Center = 1;
-			}
-		}
-	}
-		
+  byte Dibujar_Cursor = 0;			// saber si dibujar cursor para evitar repeticiones en lcd, 0 no dibujar, 1 dibujar >, 2 dibujar +
+  // LCD Back Light *
+  digitalWrite(Boton_Array_1, LOW);		// lectura linea 1
+  if (digitalRead(Boton_Array_D) == LOW)
+  {
+    delay(Boton_Delay_Teclado);
+    Light_En();
+  }
+  digitalWrite(Boton_Array_1, HIGH);	// lectura linea 1
+  // Left
+  if (digitalRead(Boton_Left) == LOW)
+  {
+    delay (Boton_Delay_Cursor);
+    byte Salida_Left = 0;
+    byte LCD_Col_Pos_Temp = 0;
+    LCD_Col_Pos_Temp = LCD_Col_Pos;
+    while (Salida_Left == 0)
+    {
+      if (LCD_Col_Pos_Temp == 0)
+      {
+        LCD_Col_Pos_Temp = 20;
+      }
+      LCD_Col_Pos_Temp = LCD_Col_Pos_Temp - 1;
+      if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
+      {
+        LCD_Col_Pos = LCD_Col_Pos_Temp;
+        Dibujar_Cursor = 1;
+        Salida_Left = 1;
+      }
+    }
+    goto Salida;
+  }
+  // Right
+  if (digitalRead(Boton_Right) == LOW)
+  {
+    delay(Boton_Delay_Cursor);
+    byte Salida_Right = 0;
+    byte LCD_Col_Pos_Temp = 0;
+    LCD_Col_Pos_Temp = LCD_Col_Pos;
+    while (Salida_Right == 0)
+    {
+      LCD_Col_Pos_Temp = LCD_Col_Pos_Temp + 1;
+      if (LCD_Col_Pos_Temp >= 20)
+      {
+        LCD_Col_Pos_Temp = 0;	// regresar al cero
+      }
+      if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos_Temp] == 1)
+      {
+        LCD_Col_Pos = LCD_Col_Pos_Temp;
+        Dibujar_Cursor = 1;
+        Salida_Right = 1;
+      }
+    }
+    goto Salida;
+  }
+  // Down
+  if (digitalRead(Boton_Down) == LOW)
+  {
+    delay(Boton_Delay_Cursor);
+    byte Salida_Down = 0;
+    byte LCD_Row_Pos_Temp = 0;
+    LCD_Row_Pos_Temp = LCD_Row_Pos;
+    while (Salida_Down == 0)
+    {
+      LCD_Row_Pos_Temp = LCD_Row_Pos_Temp + 1;
+      if (LCD_Row_Pos_Temp >= 4)
+      {
+        LCD_Row_Pos_Temp = 0;	// regresar al cero
+      }
+      if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
+      {
+        LCD_Row_Pos = LCD_Row_Pos_Temp;
+        Dibujar_Cursor = 1;
+        Salida_Down = 1;
+      }
+    }
+    goto Salida;
+  }
+  // Up
+  if (digitalRead(Boton_Up) == LOW)
+  {
+    delay(Boton_Delay_Cursor);
+    byte Salida_Up = 0;
+    byte LCD_Row_Pos_Temp;
+    LCD_Row_Pos_Temp = LCD_Row_Pos;
+    while (Salida_Up == 0)
+    {
+      if (LCD_Row_Pos_Temp <= 0)
+      {
+        LCD_Row_Pos_Temp = 4;
+      }
+      LCD_Row_Pos_Temp = LCD_Row_Pos_Temp - 1;
+      if (Cursor_Conf[LCD_Row_Pos_Temp][LCD_Col_Pos] == 1)
+      {
+        Dibujar_Cursor = 1;
+        LCD_Row_Pos = LCD_Row_Pos_Temp;
+        Salida_Up = 1;
+      }
+    }
+    goto Salida;
+  }
+  // Center
+  if (digitalRead(Boton_Center) == LOW)
+  {
+    delay(Boton_Delay_Cursor);
+    byte Salida_Center = 0;
+    while (Salida_Center == 0)
+    {
+      if (Cursor_Conf[LCD_Row_Pos][LCD_Col_Pos] == 1)
+      {
+        Dibujar_Cursor = 2;	// dibujar +
+        Salida_Center = 1;
+      }
+    }
+  }
 Salida:
-
-		// Dibujar Cursor
-	if (Dibujar_Cursor > 0)
-	{
-		if (Dibujar_Cursor == 1)
-		{
-				// borra el anterior
-			lcd.setCursor (LCD_Col_Pos_Ant, LCD_Row_Pos_Ant);
-			lcd.print(" ");
-				// escribir >
-			lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
-			lcd.print(">");
-				// matrix print posicion
-			if (matrix == 1)
-			{
-					// banco inicial
-				if (LCD_Col_Pos == 12 && LCD_Row_Pos == 0)
-				{
-					lcd.setCursor(1, 0);
-					lcd.print("---");
-					goto salida;
-				}
-
-					// banco  final
-				if (LCD_Col_Pos == 16 && LCD_Row_Pos == 0)
-				{
-					lcd.setCursor(1, 0);
-					lcd.print("---");
-					goto salir;
-				}
-
-					// Memory
-				if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
-				{
-					lcd.setCursor(1, 0);
-					lcd.print("---");
-					goto salida;
-				}
-
-					// Unitary
-				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 0)
-				{
-					lcd.setCursor(1, 0);
-					lcd.print("---");
-					goto salida;
-				}
-
-					// banco 1
-				if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
-				{
-					Numerico_Write (banco, 1, 0);
-					goto salida;
-				}
-
-					// banco 2
-				if (LCD_Col_Pos == 4 && LCD_Row_Pos == 1)
-				{
-					Numerico_Write (banco + 1, 1, 0);
-					goto salida;
-				}
-
-					// banco 3
-				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 1)
-				{
-					Numerico_Write (banco + 2, 1, 0);
-					goto salida;
-				}
-
-					// banco 4
-				if (LCD_Col_Pos == 12 && LCD_Row_Pos == 1)
-				{
-					Numerico_Write (banco + 3, 1, 0);
-					goto salida;
-				}
-
-					// banco 5
-				if (LCD_Col_Pos == 16 && LCD_Row_Pos == 1)
-				{
-					Numerico_Write (banco + 4, 1, 0);
-					goto salida;
-				}
-
-					// banco 6
-				if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
-				{
-					Numerico_Write (banco + 5, 1, 0);
-					goto salida;
-				}
-
-					// banco 7
-				if (LCD_Col_Pos == 4 && LCD_Row_Pos == 2)
-				{
-					Numerico_Write (banco + 6, 1, 0);
-					goto salida;
-				}
-
-					// banco 8
-				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
-				{
-					Numerico_Write (banco + 7, 1, 0);
-					goto salida;
-				}
-
-					// banco 9
-				if (LCD_Col_Pos == 12 && LCD_Row_Pos == 2)
-				{
-					Numerico_Write (banco + 8, 1, 0);
-					goto salida;
-				}
-
-					// banco 10
-				if (LCD_Col_Pos == 16 && LCD_Row_Pos == 2)
-				{
-					Numerico_Write (banco + 9, 1, 0);
-					goto salida;
-				}
-
-					// banco 11
-				if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
-				{
-					Numerico_Write (banco + 10, 1, 0);
-					goto salida;
-				}
-
-					// banco 12
-				if (LCD_Col_Pos == 4 && LCD_Row_Pos == 3)
-				{
-					Numerico_Write (banco + 11, 1, 0);
-					goto salida;
-				}
-
-					// banco 13
-				if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
-				{
-					Numerico_Write (banco + 12, 1, 0);
-					goto salida;
-				}
-
-					// banco 14
-				if (LCD_Col_Pos == 12 && LCD_Row_Pos == 3)
-				{
-					Numerico_Write (banco + 13, 1, 0);
-					goto salida;
-				}
-
-					// banco 15
-				if (LCD_Col_Pos == 16 && LCD_Row_Pos == 3)
-				{
-					Numerico_Write (banco + 14, 1, 0);
-					goto salida;
-				}
-			}
-					
+  // Dibujar Cursor
+  if (Dibujar_Cursor > 0)
+  {
+    if (Dibujar_Cursor == 1)
+    {
+      // borra el anterior
+      lcd.setCursor (LCD_Col_Pos_Ant, LCD_Row_Pos_Ant);
+      lcd.print(" ");
+      // escribir >
+      lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
+      lcd.print(">");
+      // matrix print posicion
+      if (matrix == 1)
+      {
+        // banco inicial
+        if (LCD_Col_Pos == 12 && LCD_Row_Pos == 0)
+        {
+          lcd.setCursor(1, 0);
+          lcd.print("---");
+          goto salida;
+        }
+        // banco  final
+        if (LCD_Col_Pos == 16 && LCD_Row_Pos == 0)
+        {
+          lcd.setCursor(1, 0);
+          lcd.print("---");
+          goto salir;
+        }
+        // Memory
+        if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
+        {
+          lcd.setCursor(1, 0);
+          lcd.print("---");
+          goto salida;
+        }
+        // Unitary
+        if (LCD_Col_Pos == 8 && LCD_Row_Pos == 0)
+        {
+          lcd.setCursor(1, 0);
+          lcd.print("---");
+          goto salida;
+        }
+        // banco 1
+        if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
+        {
+          Numerico_Write (banco, 1, 0);
+          goto salida;
+        }
+        // banco 2
+        if (LCD_Col_Pos == 4 && LCD_Row_Pos == 1)
+        {
+          Numerico_Write (banco + 1, 1, 0);
+          goto salida;
+        }
+        // banco 3
+        if (LCD_Col_Pos == 8 && LCD_Row_Pos == 1)
+        {
+          Numerico_Write (banco + 2, 1, 0);
+          goto salida;
+        }
+        // banco 4
+        if (LCD_Col_Pos == 12 && LCD_Row_Pos == 1)
+        {
+          Numerico_Write (banco + 3, 1, 0);
+          goto salida;
+        }
+        // banco 5
+        if (LCD_Col_Pos == 16 && LCD_Row_Pos == 1)
+        {
+          Numerico_Write (banco + 4, 1, 0);
+          goto salida;
+        }
+        // banco 6
+        if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
+        {
+          Numerico_Write (banco + 5, 1, 0);
+          goto salida;
+        }
+        // banco 7
+        if (LCD_Col_Pos == 4 && LCD_Row_Pos == 2)
+        {
+          Numerico_Write (banco + 6, 1, 0);
+          goto salida;
+        }
+        // banco 8
+        if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
+        {
+          Numerico_Write (banco + 7, 1, 0);
+          goto salida;
+        }
+        // banco 9
+        if (LCD_Col_Pos == 12 && LCD_Row_Pos == 2)
+        {
+          Numerico_Write (banco + 8, 1, 0);
+          goto salida;
+        }
+        // banco 10
+        if (LCD_Col_Pos == 16 && LCD_Row_Pos == 2)
+        {
+          Numerico_Write (banco + 9, 1, 0);
+          goto salida;
+        }
+        // banco 11
+        if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
+        {
+          Numerico_Write (banco + 10, 1, 0);
+          goto salida;
+        }
+        // banco 12
+        if (LCD_Col_Pos == 4 && LCD_Row_Pos == 3)
+        {
+          Numerico_Write (banco + 11, 1, 0);
+          goto salida;
+        }
+        // banco 13
+        if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
+        {
+          Numerico_Write (banco + 12, 1, 0);
+          goto salida;
+        }
+        // banco 14
+        if (LCD_Col_Pos == 12 && LCD_Row_Pos == 3)
+        {
+          Numerico_Write (banco + 13, 1, 0);
+          goto salida;
+        }
+        // banco 15
+        if (LCD_Col_Pos == 16 && LCD_Row_Pos == 3)
+        {
+          Numerico_Write (banco + 14, 1, 0);
+          goto salida;
+        }
+        // escribir guion de bancos
 salida:
-					// escribir guion de bancos
-				lcd.setCursor(16, 0);
-				lcd.print("-");
+        lcd.setCursor(16, 0);
+        lcd.print("-");
 salir:
-		
-		}
-	}
+        {
+        }
+      }
+    }
     else
     {
-		// escribir +
-		lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
-		lcd.print("+");
+      // escribir +
+      lcd.setCursor (LCD_Col_Pos, LCD_Row_Pos);
+      lcd.print("+");
     }
-
-		//salida
-	LCD_Col_Pos_Ant = LCD_Col_Pos;
+    //salida
+    LCD_Col_Pos_Ant = LCD_Col_Pos;
     LCD_Row_Pos_Ant = LCD_Row_Pos;
-
     if (Dibujar_Cursor == 2)
-	{
-		goto Salir;
+    {
+      goto Salir;
     }
     else
     {
-		Dibujar_Cursor = 0;
+      Dibujar_Cursor = 0;
     }
-  //}
+  }
   goto Dibujar;
-
 Salir: {}
-
 }
+
+
 
 void GUI_Memory_Init()
 {
@@ -2417,7 +2372,7 @@ inicio:
   if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
   {
     GUI_Memory();
-    goto inicio
+    goto inicio;
   }
 }
 
