@@ -258,7 +258,6 @@ void setup()
 
 void loop()
 {
-	digitalWrite(2, HIGH);	// max 485 como salida, no se deja asignar desde el apuntador
 	Back_Light_Init();		// inicializador de Backlight desde eeprom
 	Contrast_Init();		// inicializador de EEPROM desde eeprom
 	EEPROM_Load_Init();		// valores desde eeprom
