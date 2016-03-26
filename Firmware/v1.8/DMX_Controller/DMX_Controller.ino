@@ -171,7 +171,7 @@ void setup()
 	pinMode(Light_SW,		INPUT_PULLUP);
 
 		// EEPROM Default
-	pinMode(EEPROM_Def_Jumper, INPUT_PULLUP);
+	pinMode(EEPROM_Def_Jumper, INPUT);			// no tiene pullup fisico
 
 		// DMX
 	ArduinoDmx0.set_tx_address		(1);      	// poner aqui la direccion de inicio de DMX
@@ -261,6 +261,9 @@ void loop()
 {
 	Back_Light_Init();		// inicializador de Backlight desde eeprom
 	Contrast_Init();		// inicializador de EEPROM desde eeprom
+	// EEPROM_Default();		// jumper para default eeprom ------------ esperar a poner pullup fisico
+	
+
 	//EEPROM_Load_Init();		// valores desde eeprom
 	//GUI_About();			// interface grafica de about
 	//GUI_Memory_Init();		// interface grafica de memoria
@@ -269,6 +272,7 @@ void loop()
 void EEPROM_Default()
 {
 	// jumper cerrado, eeprom a default
+		// valores default
 	byte Key_Light_Val_Def	= 255;	// valor default de keylight
 	byte Ext_Light_Def		= 255;
 	byte CH_DMX_Val_Def		= 0;	// valor default de canales DMX
@@ -278,11 +282,18 @@ void EEPROM_Default()
 
 	if (digitalRead(EEPROM_Def_Jumper) == 0)
 	{
+		lcd.clear ();
+		lcd.setCursor(1, 1);
+		lcd.print("EEPROM Default:");
+
 			// canales DMX
 		for (int ch = 0; ch <= EEPROM_Limit; ch ++)
 		{
 			EEPROM.write(ch, CH_DMX_Val_Def);
+			lcd.setCursor(16, 1);
+			lcd.print(ch);
 		}
+
 			// backlight
 		EEPROM.write(BackLight_Add, Backlight_Def);
 			// contraste
@@ -293,6 +304,15 @@ void EEPROM_Default()
 		EEPROM.write(Key_Light_Add, Key_Light_Val_Def);
 			// Light Ext
 		EEPROM.write(Light_Ext_Add, Ext_Light_Def);
+
+		lcd.clear ();
+		lcd.setCursor(1, 0);
+		lcd.print("EEPROM Default ok!");
+		lcd.setCursor(0, 2);
+		lcd.print("Remove jumper and");
+		lcd.setCursor(14, 3);
+		lcd.print("reset!");
+		while(1);
 	}
 }
 
@@ -303,10 +323,10 @@ void Back_Light_Init()
 	byte Back_Light_Value = EEPROM.read(BackLight_Add);
 		
 		// dimmer de pantalla
-	for (byte dim = 0; dim <= Back_Light_Value; dim ++)
+	for (int dim = 0; dim <= Back_Light_Value; dim ++)
 	{
 		analogWrite(Back_Light_PWM, dim);
-		delay(3);
+		delay(3);	// aqui el retardo para el dimmer
 	}	
 
 	if (Back_Light_Value == 0)
@@ -2074,7 +2094,7 @@ salida:
   return cancel;
 }*/
 
-void EEPROM_Load_Init()
+/*void EEPROM_Load_Init()
 {
   // carga los valores de la eeprom al inicio
 
@@ -2144,7 +2164,7 @@ void EEPROM_Load_Init()
 
 salir: {}
 
-}
+}*/
 
 /*void EEPROM_Empty()
 {
