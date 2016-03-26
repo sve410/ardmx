@@ -26,17 +26,16 @@
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
 - CORREGIDO - Pin encoder center al 6
-- CORREGIR  - Quitar la programacion del potenciometro
-- CORREGIR  - Quitar la programacion de los cursores
+- CORREGIR  - Quitar la programación del potenciometro
+- CORREGIR  - Quitar la programación de los cursores
 - CORREGIR  - pin 6 de encoder center a pull up
 - CORREGIR  - pin key light a 11
 - CORREGIR  - pin contraste a 12
 - CORREGIR  - cambiar delay por interrupciones de timer
-- AGREGAR 	- en multiplicador, el valor en tiempo real desde el potenciometro o teclado
-- AGREGAR 	- control chaser desde el potenciometro, al girar recorre los canales
+- AGREGAR   - en multiplicador, el valor en tiempo real desde el potenciometro o teclado
+- AGREGAR   - control chaser desde el potenciometro, al girar recorre los canales
 - AGREGAR   - EEPROM Default en pin 9 como pullup
-- AGREGAR 	- dimmer para luz led como lampara en pin 10
-
+- AGREGAR   - dimmer para luz led como lampara en pin 10
 - AGREGADO  - a EEPROM, espacio para Ext Light
 - AGREGADO  - función para jumper de eeprom default
 - AGREGADO  - dimmer de pantalla al inicio
@@ -44,7 +43,7 @@
 ***
 
 **v1.7 - Stable - Hardware v0.3 - v0.5**
-- CORREGIDO - se separa la lectura desde el encoder como funcion
+- CORREGIDO - se separa la lectura desde el encoder como función
 - CORREGIDO - en analogo read "a" cambia por encoder read "e"
 - AGREGADO  - control desde encoder a value de dmx
 - AGREGADO  - control desde encoder a config contraste 

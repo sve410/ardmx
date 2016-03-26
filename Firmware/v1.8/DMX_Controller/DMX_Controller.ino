@@ -308,10 +308,10 @@ void EEPROM_Default()
 		lcd.clear ();
 		lcd.setCursor(1, 0);
 		lcd.print("EEPROM Default ok!");
-		lcd.setCursor(0, 2);
-		lcd.print("Remove jumper and");
-		lcd.setCursor(14, 3);
-		lcd.print("reset!");
+		lcd.setCursor(3, 2);
+		lcd.print("Remove jumper");
+		lcd.setCursor(4, 3);
+		lcd.print("and reset!");
 		while(1);
 	}
 }
