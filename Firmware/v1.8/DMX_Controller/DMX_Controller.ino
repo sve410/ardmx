@@ -278,7 +278,21 @@ void EEPROM_Default()
 
 	if (digitalRead(EEPROM_Def_Jumper) == 0)
 	{
-			// canales
+			// canales DMX
+		for (int ch = 0; ch <= EEPROM_Limit; ch ++)
+		{
+			EEPROM.write(ch, CH_DMX_Val_Def);
+		}
+			// backlight
+		EEPROM.write(BackLight_Add, Backlight_Def);
+			// contraste
+		EEPROM.write(Contrast_Add, Contrast_Def);
+			// Bank init
+		EEPROM.write(Bank_Init_Add, Initial_Bank_Def);
+			// Key light
+		EEPROM.write(Key_Light_Add, Key_Light_Val_Def);
+			// Light Ext
+		EEPROM.write(Light_Ext_Add, Ext_Light_Def);
 	}
 }
 
@@ -287,8 +301,13 @@ void Back_Light_Init()
 	// lee y aplica el ultimo estado del backlight
 
 	byte Back_Light_Value = EEPROM.read(BackLight_Add);
-	
-	analogWrite(Back_Light_PWM, Back_Light_Value);
+		
+		// dimmer de pantalla
+	for (byte dim = 0; dim <= Back_Light_Value; dim ++)
+	{
+		analogWrite(Back_Light_PWM, dim);
+		delay(3);
+	}	
 
 	if (Back_Light_Value == 0)
 	{

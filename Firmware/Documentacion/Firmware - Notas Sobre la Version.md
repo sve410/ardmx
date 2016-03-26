@@ -23,7 +23,7 @@
 
 ***
 
-**v1.8 - beta - Hardware v0.6**
+**v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
 - CORREGIDO - Pin encoder center al 6
 - CORREGIR  - Quitar la programacion del potenciometro
@@ -36,6 +36,10 @@
 - AGREGAR 	- control chaser desde el potenciometro, al girar recorre los canales
 - AGREGAR   - EEPROM Default en pin 9 como pullup
 - AGREGAR 	- dimmer para luz led como lampara en pin 10
+
+- AGREGADO  - a EEPROM, espacio para Ext Light
+- AGREGADO  - función para jumper de eeprom default
+- AGREGADO  - dimmer de pantalla al inicio
 
 ***
 
