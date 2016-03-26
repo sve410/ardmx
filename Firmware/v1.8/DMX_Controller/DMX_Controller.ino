@@ -127,7 +127,8 @@ int  BackLight_Add 			= 4094;	// direccion de eeprom
 int  Contrast_Add			= 4095;	// direccion de eeprom
 int  Bank_Init_Add			= 4093;	// direccion de eeprom
 int  Key_Light_Add			= 4092;	// direccion de eeprom
-int  EEPROM_Limit			= 4091;	// limite de espacios en eeprom para universos
+int  Light_Ext_Add			= 4091;	// direccion de eeprom
+int  EEPROM_Limit			= 4090;	// limite de espacios en eeprom para universos
 byte EEPROM_Def_Jumper		= 9;
 
 void setup()
@@ -263,6 +264,22 @@ void loop()
 	//EEPROM_Load_Init();		// valores desde eeprom
 	//GUI_About();			// interface grafica de about
 	//GUI_Memory_Init();		// interface grafica de memoria
+}
+
+void EEPROM_Default()
+{
+	// jumper cerrado, eeprom a default
+	byte Key_Light_Val_Def	= 255;	// valor default de keylight
+	byte Ext_Light_Def		= 255;
+	byte CH_DMX_Val_Def		= 0;	// valor default de canales DMX
+	byte Initial_Bank_Def	= 1;	// banco inicial de memoria a cargar
+	byte Backlight_Def		= 255;	
+	byte Contrast_Def		= 150;
+
+	if (digitalRead(EEPROM_Def_Jumper) == 0)
+	{
+			// canales
+	}
 }
 
 void Back_Light_Init()
