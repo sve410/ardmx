@@ -75,7 +75,7 @@ byte 	Universo_Actual		= 0;
 byte  	Enc_Center			= 8;
 byte 	Enc_CLK				= 7;
 byte 	Enc_Data 			= 6;
-Encoder myEnc				(EncData, Enc_CLK);	// conexion de encoder
+Encoder myEnc				(Enc_Data, Enc_CLK);	// conexion de encoder
 
 	// Cursor
 byte LCD_Col_Pos 			= 0;	// posicion en tiempo real de lcd
@@ -260,7 +260,6 @@ void loop()
 {
 	Back_Light_Init();		// inicializador de Backlight desde eeprom
 	Contrast_Init();		// inicializador de EEPROM desde eeprom
-	Key_Light_Init();		// inicializador de key light desde eeprom
 	//EEPROM_Load_Init();		// valores desde eeprom
 	//GUI_About();			// interface grafica de about
 	//GUI_Memory_Init();		// interface grafica de memoria
@@ -280,25 +279,6 @@ void Back_Light_Init()
 	}
 
 	if (Back_Light_Value > 0)
-	{
-		Light_On_Off = 1;
-	}
-}
-
-void Key_Light_Init()
-{
-	// lee y aplica el ultimo estado del Key Light
-
-	byte Key_Light_Value = EEPROM.read (Key_Light_Add);
-	
-	analogWrite(Key_Light_PWM, Key_Light_Value);
-
-	if (Key_Light_Value == 0)
-	{
-		Light_On_Off = 0;
-	}
-
-	if (Key_Light_Value > 0)
 	{
 		Light_On_Off = 1;
 	}
