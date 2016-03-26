@@ -132,8 +132,9 @@ byte EEPROM_Def_Jumper		= 9;
 
 void setup()
 {
-		// Botones cursor
-	pinMode(11,				INPUT_PULLUP);	//Boton_Center, INPUT_PULLUP);
+		// Encoder
+	pinMode(Enc_Center,		INPUT_PULLUP);
+	// no es necesario declarar CLK y data
 
 		// Botones Teclado numerico
 	pinMode(Boton_Array_1, 	OUTPUT);
@@ -157,10 +158,19 @@ void setup()
 	pinMode(LCD_D5, 		OUTPUT);
 	pinMode(LCD_D4, 		OUTPUT);
 	pinMode(Back_Light_PWM,	OUTPUT);
+	pinMode(Contrast_PWM,	OUTPUT);
 	lcd.begin(20, 4);							//tamaño de LCD
 
 		// Key Light
 	pinMode(Key_Light_PWM,	OUTPUT);
+	pinMode(Key_Light_SW,	INPUT_PULLUP);
+
+		// Light
+	pinMode(Light_PWM,		OUTPUT);
+	pinMode(Light_SW,		INPUT_PULLUP);
+
+		// EEPROM Default
+	pinMode(EEPROM_Def_Jumper, INPUT_PULLUP);
 
 		// DMX
 	ArduinoDmx0.set_tx_address		(1);      	// poner aqui la direccion de inicio de DMX
@@ -170,6 +180,12 @@ void setup()
 		// no conectados
 	pinMode			(5, OUTPUT);
 	digitalWrite	(5, LOW);
+	pinMode			(6, OUTPUT);
+	digitalWrite	(6, LOW);
+	pinMode			(20, OUTPUT);
+	digitalWrite	(20, LOW);
+	pinMode			(21, OUTPUT);
+	digitalWrite	(21, LOW);
 	pinMode			(22, OUTPUT);
 	digitalWrite	(22, LOW);
 	pinMode			(23, OUTPUT);
@@ -236,6 +252,8 @@ void setup()
 	digitalWrite	(A13, LOW);
 	pinMode			(A14, OUTPUT);
 	digitalWrite	(A14, LOW);
+	pinMode			(A15, OUTPUT);
+	digitalWrite	(A15, LOW);
 }
 
 void loop()
