@@ -4,7 +4,7 @@
 // **											Arduino DMX-512 Tester Controller				                            **
 // **																	                                                    **
 // **	- Firmware v1.8																										**
-// **	- Hardware v0.6																										**
+// **	- Hardware v0.7																										**
 // **																														**
 // **	- Compilado en Arduino IDE v1.0.6																					**
 // **		http://www.arduino.cc/en/Main/OldSoftwareReleases																**
@@ -19,9 +19,6 @@
 // **		https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home													**
 // **	- Libreria Encoder v1.2 - pjrc.com																					**
 // **		http://www.pjrc.com/teensy/td_libs_Encoder.html																	**
-// **	- Simulacion en Proteus v7.7 SP2																					**
-// **	- Simulacion en Proteus de Arduino - Microcontrolandos																**
-// **		http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html							**
 // **																														**
 // **	Autor:																												**
 // **																														**
@@ -57,39 +54,33 @@
 // ***************************************************************************************************************************
 
 	// Librerias
-#include <LiquidCrystal.h>		// libreria para LCD - ttps://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home	
+#include <LiquidCrystal.h>			// libreria para LCD - ttps://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home	
 #include <Wire.h>
 #include <EEPROM.h>
 #include <string.h>
-#include <lib_dmx.h>  			// libreria DMX 4 universos deskontrol four universes DMX library  - http://www.deskontrol.net/blog
-#include <Encoder.h>			// libreria encoder - http://www.pjrc.com/teensy/td_libs_Encoder.html		
+#include <lib_dmx.h>  				// libreria DMX 4 universos deskontrol four universes DMX library  - http://www.deskontrol.net/blog
+#include <Encoder.h>				// libreria encoder - http://www.pjrc.com/teensy/td_libs_Encoder.html		
 
 	// DMX Library
-#define    DMX512	  (0)  	 	// (250 kbaud  - 2 to 512 channels) Standard USITT DMX-512
-//#define  DMX1024    (1)   	// (500 kbaud  - 2 to 1024 channels) Completely non standard - TESTED ok
-//#define  DMX2048    (2)   	// (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
+#define    DMX512	  		(0)  	// (250 kbaud  - 2 to 512 channels) Standard USITT DMX-512
+//#define  DMX1024    		(1)   	// (500 kbaud  - 2 to 1024 channels) Completely non standard - TESTED ok
+//#define  DMX2048    		(2)   	// (1000 kbaud - 2 to 2048 channels) called by manufacturers DMX1000K, DMX 4x or DMX 1M ???
 
-// Puertos, variables
 	// DMX
-int 	DMX_Data_Flux 		= 2;	// control de flujo de datos para dmx, 0 por default
 int  	DMX_Values 			[515];  // array de valores actuales DMX
 int  	Canal_Actual 		= 1;
 byte 	Universo_Actual		= 0;
 
 	// Encoder
-Encoder myEnc				(7, 6);	// conexion de encoder
+byte  	Enc_Center			= 8;
+byte 	Enc_CLK				= 7;
+byte 	Enc_Data 			= 6;
+Encoder myEnc				(EncData, Enc_CLK);	// conexion de encoder
 
-	// Botones cursor
-int  Boton_Up     			= 9;
-int  Boton_Down   			= 12;
-int  Boton_Left  			= 8;
-int  Boton_Right  			= 10;
-int  Boton_Center			= 6;	// encoder center
+	// Cursor
 byte LCD_Col_Pos 			= 0;	// posicion en tiempo real de lcd
 byte LCD_Row_Pos 			= 0;	// posicion en tiempo real de lcd
-
-	// config de posiciones de lcd Col Row
-byte Cursor_Conf[4][20] = 
+byte Cursor_Conf[4][20] 	= 
 						{	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
   							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
   							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -97,55 +88,51 @@ byte Cursor_Conf[4][20] =
 						};
 
 	//Teclado Numerico Array
-int  Boton_Array_1			= 38;
-int  Boton_Array_2			= 40;
-int  Boton_Array_3			= 42;
-int  Boton_Array_4			= 44;
-int  Boton_Array_A			= 30;
-int  Boton_Array_B			= 32;
-int  Boton_Array_C 			= 34;
-int  Boton_Array_D  		= 36;
+byte Boton_Array_1			= 36;
+byte Boton_Array_2			= 34;
+byte Boton_Array_3			= 32;
+byte Boton_Array_4			= 30;
+byte Boton_Array_A			= 44;
+byte Boton_Array_B			= 42;
+byte Boton_Array_C 			= 40;
+byte Boton_Array_D  		= 38;
 byte Boton_Calc 			= 17;	// valor calculado	# E * F, 17 sin valor calculado
 byte Num_Col_Pos  			= 0;	// posicion en tiempo real de lcd
 byte Num_Row_Pos 			= 0;	// posicion en tiempo real de lcd
 int  Num_Val				= 0;	// valor generado al calculo
 long Boton_Delay_Teclado 	= 100;	// delay de lectura de boton
 
-	// Potenciometro
-int  Pot					= A15;	// entrada de potenciometro
-
 	// LCD
-int  LCD_RS 				= 43;	// puertos de conexion de LCD
-int  LCD_E  				= 45;
-int  LCD_D4 				= 47;
-int  LCD_D5 				= 49;
-int  LCD_D6 				= 51;
-int  LCD_D7					= 53;
-LiquidCrystal lcd			(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
-int  Back_Light_PWM			= 13;	// salida para PWM de Back Light de LCD
-int  Contrast_PWM			= 4;	// salida para pwm de contraste de LCD
+byte LCD_RS 				= 43;	// puertos de conexion de LCD
+byte LCD_E  				= 45;
+byte LCD_D4 				= 47;
+byte LCD_D5 				= 49;
+byte LCD_D6 				= 51;
+byte LCD_D7					= 53;
+byte Back_Light_PWM			= 13;	// salida para PWM de Back Light de LCD
+byte Contrast_PWM			= 12;	// salida para pwm de contraste de LCD
 byte Light_On_Off			= 0;	// saber si esta encendida o apagada, back y key
+LiquidCrystal lcd			(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
 
 	// Key Light
-int  Key_Light_PWM			= 3;	// salida para pwm de key light
+byte Key_Light_PWM			= 11;	// salida para pwm de key light
+byte Key_Light_SW			= 3;
+
+	// Light
+byte Light_PWM 				= 10;	// light external
+byte Light_SW 				= 2;
 
 	// EEPROM
-int BackLight_Add 			= 4094;	// direccion de eeprom
-int Contrast_Add			= 4095;	// direccion de eeprom
-int Bank_Init_Add			= 4093;	// direccion de eeprom
-int Key_Light_Add			= 4092;	// direccion de eeprom
-int EEPROM_Limit			= 4091;	// limite de espacios en eeprom para universos
+int  BackLight_Add 			= 4094;	// direccion de eeprom
+int  Contrast_Add			= 4095;	// direccion de eeprom
+int  Bank_Init_Add			= 4093;	// direccion de eeprom
+int  Key_Light_Add			= 4092;	// direccion de eeprom
+int  EEPROM_Limit			= 4091;	// limite de espacios en eeprom para universos
+byte EEPROM_Def_Jumper		= 9;
 
 void setup()
 {
-		// DMX
-	// pinMode(DMX_Data_Flux, 	OUTPUT);
-
 		// Botones cursor
-	pinMode(Boton_Up,      	INPUT_PULLUP);
-	pinMode(Boton_Down,    	INPUT_PULLUP);
-	pinMode(Boton_Left,    	INPUT_PULLUP);
-	pinMode(Boton_Right,   	INPUT_PULLUP);
 	pinMode(11,				INPUT_PULLUP);	//Boton_Center, INPUT_PULLUP);
 
 		// Botones Teclado numerico
