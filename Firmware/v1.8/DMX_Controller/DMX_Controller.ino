@@ -260,9 +260,10 @@ void loop()
 {
 	Back_Light_Init();		// inicializador de Backlight desde eeprom
 	Contrast_Init();		// inicializador de EEPROM desde eeprom
-	EEPROM_Load_Init();		// valores desde eeprom
-	GUI_About();			// interface grafica de about
-	GUI_Memory_Init();		// interface grafica de memoria
+	Key_Light_Init();		// inicializador de key light desde eeprom
+	//EEPROM_Load_Init();		// valores desde eeprom
+	//GUI_About();			// interface grafica de about
+	//GUI_Memory_Init();		// interface grafica de memoria
 }
 
 void Back_Light_Init()
@@ -317,7 +318,7 @@ void Contrast_Init()
 	analogWrite(Contrast_PWM, Contrast_Value);
 }
 
-void Light_En()
+/*void Light_En()
 {
 	// encender back y key desde la tecla *
 
@@ -386,9 +387,9 @@ void Light_En()
 salida:
 
 	delay(300);												// para impedir repeticion del comando
-}
+}*/
 
-void GUI_Licence()
+/*void GUI_Licence()
 {
 	// imprimir licencia
 
@@ -451,9 +452,9 @@ void GUI_Licence()
 	lcd.print("for more details...");
 
 	delay(retardo);
-}
+}*/
 
-void GUI_About()
+/*void GUI_About()
 {
 	// imprimir about
 
@@ -568,9 +569,9 @@ void GUI_About()
 	}
 	delay (300);			// rebote de boton
 	lcd.noBlink ();
-}
+}*/
 
-void Multi_Matrix(int inicial)
+/*void Multi_Matrix(int inicial)
 {
 	// dibujar matriz de universo dmx
 
@@ -598,9 +599,9 @@ void Multi_Matrix(int inicial)
 	Numerico_Write (DMX_Values[inicial + 12], 9, 3);
 	Numerico_Write (DMX_Values[inicial + 13], 13, 3);
 	Numerico_Write (DMX_Values[inicial + 14], 17, 3);
-}
+}*/
 
-void GUI_Control_Matrix()
+/*void GUI_Control_Matrix()
 {
 	// control en matriz
 	int Inicial = 1;
@@ -860,9 +861,9 @@ Salida_DMX:
 	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
 	DMX_Values[Canal_Actual] = Num_Val;
 	goto Banco;
-}
+}*/
 
-void Cursor_Conf_Clear()
+/*void Cursor_Conf_Clear()
 {
 	// borrar el array del cursor
 
@@ -873,9 +874,9 @@ void Cursor_Conf_Clear()
 			Cursor_Conf[Conteo_Row][Conteo_Col] = 0;
 		}
 	}
-}
+}*/
 
-void GUI_Navegar(byte matrix, int banco)
+/*void GUI_Navegar(byte matrix, int banco)
 {
   int Boton_Delay_Cursor = 300;		// delay de lectura de boton
   byte LCD_Col_Pos_Ant;				// saber el estado anterior para borrar cursor
@@ -1165,11 +1166,9 @@ salir:
   }
   goto Dibujar;
 Salir: {}
-}
+}*/
 
-
-
-void GUI_Memory_Init()
+/*void GUI_Memory_Init()
 {
 
 inicio:
@@ -1243,9 +1242,9 @@ inicio:
   {
     GUI_Control_Options();
   }
-}
+}*/
 
-int GUI_Memory_Bank(byte Opcion)
+/*int GUI_Memory_Bank(byte Opcion)
 {
   // regresa 1 si se selecciona salir, de lo contrario 0
   // recibe opcion para pintar en la pantalla lo que se selecciono
@@ -1497,9 +1496,9 @@ regresa:
   }
 
 salida: {}
-}
+}*/
 
-void GUI_Control_Secuencer()
+/*void GUI_Control_Secuencer()
 {
   // secuenciador de bancos guardados en eeprom
 
@@ -1866,9 +1865,9 @@ Delay_Salir_Rev: {}
     }
   }
   goto inicio;
-}
+}*/
 
-void Black_Out()
+/*void Black_Out()
 {
   lcd.setCursor (15, 1);
   lcd.blink();
@@ -1892,9 +1891,9 @@ void Black_Out()
 
   lcd.setCursor (6, 2);
   lcd.noBlink();
-}
+}*/
 
-int EEPROM_Save()
+/*int EEPROM_Save()
 {
   // guarda el universo en la eeprom
   // regresa 1 si se selecciona exit
@@ -1977,9 +1976,9 @@ int EEPROM_Save()
 salida:
 
   return cancel;
-}
+}*/
 
-int EEPROM_Load()
+/*int EEPROM_Load()
 {
   // guarda los valores en la eeprom
   // regresa 1 si se selecciona exit
@@ -2057,11 +2056,11 @@ int EEPROM_Load()
 salida:
 
   return cancel;
-}
+}*/
 
 void EEPROM_Load_Init()
 {
-  // carga los valores en la eeprom al inicio
+  // carga los valores de la eeprom al inicio
 
   int EEPROM_Add = 0;
   Universo_Actual = EEPROM.read(Bank_Init_Add);
@@ -2131,7 +2130,7 @@ salir: {}
 
 }
 
-void EEPROM_Empty()
+/*void EEPROM_Empty()
 {
   // solo borra la ram
   // no hay retorno al menu anterior
@@ -2153,9 +2152,9 @@ void EEPROM_Empty()
   lcd.blink();
   delay (1000);
   lcd.noBlink();
-}
+}*/
 
-int EEPROM_Clear()
+/*int EEPROM_Clear()
 {
   // Pone en ceros la memoria EEPROM
   // regresa 1 si se selecciona exit
@@ -2240,9 +2239,9 @@ int EEPROM_Clear()
 salida:
 
   return cancel;
-}
+}*/
 
-void EEPROM_Clear_All()
+/*void EEPROM_Clear_All()
 {
   // Pone en ceros la memoria EEPROM toda
   lcd.clear ();
@@ -2271,9 +2270,9 @@ void EEPROM_Clear_All()
   lcd.print ("All");
   Universo_Actual = 0;
   delay (1000);
-}
+}*/
 
-void GUI_Control_Options()
+/*void GUI_Control_Options()
 {
 
 inicio:
@@ -2378,9 +2377,9 @@ inicio:
     GUI_Memory();
     goto inicio;
   }
-}
+}*/
 
-void GUI_Convert()
+/*void GUI_Convert()
 {
 	int valor 			= 0;						// aqui el valor a calcular
 	int valor_temp		= 0;						// aqui el valor temporal para las cuentas
@@ -2619,9 +2618,9 @@ void GUI_Convert()
     }
     goto calc;
   }
-}
+}*/
 
-void GUI_Config()
+/*void GUI_Config()
 {
 	Inicio:
 
@@ -2850,9 +2849,9 @@ salir:
 	}
 
 	goto Navegacion;
-}
+}*/
 
-void GUI_Control_Multiply()
+/*void GUI_Control_Multiply()
 {
   int  First_Channel = 1;
   long Multiply 	   = 0;
@@ -3052,9 +3051,9 @@ Siguiente:
     }
   }
   goto Siguiente;
-}
+}*/
 
-void GUI_Control_Chaser()
+/*void GUI_Control_Chaser()
 {
   long Delay     = 1;
   long First 	 = 1;
@@ -3211,9 +3210,9 @@ Siguiente:
     }
   }
   goto Siguiente;
-}
+}*/
 
-void Numerico_Write (int valor, int col, int row)
+/*void Numerico_Write (int valor, int col, int row)
 {
   // posicionar el valor en los campos 000
 
@@ -3411,9 +3410,9 @@ void Ubicar()
   digitalWrite(Boton_Array_4, HIGH);
   delay(300); 	// rebote de boton enter
   lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-}
+}*/
 
-void Numerico_Calc(byte value)
+/*void Numerico_Calc(byte value)
 {
   // escritura del numero desde el teclado numerico si value es 1 entra opcion de A 255 y B 0
 
@@ -3583,9 +3582,9 @@ Salida_Option:
   lcd.noBlink();
   lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
   delay(300); // rebote de boton
-}
+}*/
 
-void Numerico_Read()
+/*void Numerico_Read()
 {
   long Num_Barrido_Time = 5;			// tiempo entre barrido de keys
   Boton_Calc = 17;						// limpiar valor para lectura
@@ -3760,9 +3759,9 @@ void Numerico_Read()
       delay(Boton_Delay_Teclado);
     }
   }
-}
+}*/
 
-void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+/*void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
 {
 	// control: 1 = dmx, 2 = contraste, 3 = backlight, 4 = light key, 5 light ext PENDIENTE, 6 = channel, 7 = Bank Init, 8 = convert dec
 	// escritura del numero desde el encoder aplica a dmx
@@ -3897,4 +3896,4 @@ void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte contr
 	lcd.noBlink();
 	digitalWrite(Boton_Array_3, HIGH);	// lectura linea 3
 	delay(300);							// delay para salir de la lectura analoga
-}
+}*/
