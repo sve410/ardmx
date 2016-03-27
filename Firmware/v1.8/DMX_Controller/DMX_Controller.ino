@@ -1926,28 +1926,28 @@ Delay_Salir_Rev: {}
 
 void Black_Out()
 {
-  lcd.setCursor (15, 1);
-  lcd.blink();
+  	lcd.setCursor (15, 1);
+  	lcd.blink();
 
-  	// limpiar universo
-  for (int Canal = 1; Canal <= 512; Canal ++)
-  {
-    ArduinoDmx0.TxBuffer[Canal - 1] = 0;
-  }
+  		// limpiar universo
+  	for (int Canal = 1; Canal <= 512; Canal ++)
+  	{
+    	ArduinoDmx0.TxBuffer[Canal - 1] = 0;
+  	}
 
-  	// esperar al boton centro para cancelar
-  while (digitalRead(Enc_Center) == HIGH) {}
+  		// esperar al boton centro para cancelar
+  	while (digitalRead(Enc_Center) == HIGH) {}
 
-  delay(300);		// retardo de rebote de boton
+  	delay(300);		// retardo de rebote de boton
 
-  	// regresar el universo a su lugar
-  for (int Canal = 1; Canal <= 512; Canal ++)
-  {
-    ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal];
-  }
+  		// regresar el universo a su lugar
+  	for (int Canal = 1; Canal <= 512; Canal ++)
+  	{
+    	ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal];
+  	}
 
-  lcd.setCursor (6, 2);
-  lcd.noBlink();
+  	lcd.setCursor (6, 2);
+  	lcd.noBlink();
 }
 
 int EEPROM_Save()
@@ -2118,71 +2118,71 @@ salida:
 
 void EEPROM_Load_Init()
 {
-  // carga los valores de los canales DMX de la eeprom al inicio e inicia el streaming de dmx
+  	// carga los valores de los canales DMX de la eeprom al inicio e inicia el streaming de dmx
 
-  int EEPROM_Add = 0;
-  Universo_Actual = EEPROM.read(Bank_Init_Add);
+  	int EEPROM_Add = 0;
+  	Universo_Actual = EEPROM.read(Bank_Init_Add);
 
-  if (Universo_Actual == 0)
-  {
-    goto salir;
-  }
+  	if (Universo_Actual == 0)
+  	{
+    	goto salir;
+  	}
 
-  for (int Canal = 1; Canal <= 512; Canal ++)
-  {
-    // Escritura de universo EEPROM
-    switch (Universo_Actual)
-    {
-      case 1:
-        EEPROM_Add = 0 + Canal - 1;
-        break;
+  	for (int Canal = 1; Canal <= 512; Canal ++)
+  	{
+    		// Escritura de universo EEPROM
+    	switch (Universo_Actual)
+    	{
+      		case 1:
+        		EEPROM_Add = 0 + Canal - 1;
+        		break;
 
-      case 2:
-        EEPROM_Add = 512 + Canal - 1;
-        break;
+      		case 2:
+        		EEPROM_Add = 512 + Canal - 1;
+        		break;
 
-      case 3:
-        EEPROM_Add = 1024 + Canal - 1;
-        break;
+      		case 3:
+        		EEPROM_Add = 1024 + Canal - 1;
+        		break;
 
-      case 4:
-        EEPROM_Add = 1536 + Canal - 1;
-        break;
+      		case 4:
+        		EEPROM_Add = 1536 + Canal - 1;
+        		break;
 
-      case 5:
-        EEPROM_Add = 2048 + Canal - 1;
-        break;
+      		case 5:
+        		EEPROM_Add = 2048 + Canal - 1;
+        		break;
 
-      case 6:
-        EEPROM_Add = 2560 + Canal - 1;
-        break;
+      		case 6:
+        		EEPROM_Add = 2560 + Canal - 1;
+        		break;
 
-      case 7:
-        EEPROM_Add = 3072 + Canal - 1;
-        break;
+      		case 7:
+       	 		EEPROM_Add = 3072 + Canal - 1;
+        		break;
 
-      case 8:
-        EEPROM_Add = 3584 + Canal - 1;
-        if (EEPROM_Add > EEPROM_Limit)
-        {
-          EEPROM_Add = EEPROM_Limit;
-        }
-        break;
-    }
-    DMX_Values[Canal] = EEPROM.read(EEPROM_Add);          	// lectura desde EEPROM
-    ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal]; 	// salida a DMX
-  }
+      		case 8:
+        		EEPROM_Add = 3584 + Canal - 1;
+        		if (EEPROM_Add > EEPROM_Limit)
+        		{
+          			EEPROM_Add = EEPROM_Limit;
+        		}
+        		break;
+    	}
+    	DMX_Values[Canal] = EEPROM.read(EEPROM_Add);          	// lectura desde EEPROM
+    	ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal]; 	// salida a DMX
+  	}
 
-  lcd.clear ();
-  lcd.setCursor (3, 1);
-  lcd.print ("Memory Loaded!");
-  lcd.setCursor (3, 2);
-  lcd.print ("Bank: ");
-  lcd.print (Universo_Actual);
-  lcd.setCursor (10, 2);
-  lcd.blink();
-  delay (2000);
-  lcd.noBlink();
+  	lcd.clear ();
+  	lcd.setCursor (3, 1);
+  	lcd.print ("Memory Loaded!");
+  	lcd.setCursor (3, 2);
+  	lcd.print ("Bank: ");
+  	lcd.print (Universo_Actual);
+  	lcd.setCursor (10, 2);
+  	lcd.blink();
+  	delay (2000);
+  	lcd.noBlink();
 
 salir: {}
 
@@ -2190,144 +2190,144 @@ salir: {}
 
 void EEPROM_Empty()
 {
-  // solo borra la ram
-  // no hay retorno al menu anterior
+  	// solo borra la ram
+  	// no hay retorno al menu anterior
 
-  lcd.clear ();
+  	lcd.clear ();
 
-  for (int Canal = 1; Canal <= 512; Canal ++)
-  {
-    DMX_Values[Canal] = 0;          		// lectura desde EEPROM
-    ArduinoDmx0.TxBuffer[Canal - 1] = 0; 	// salida a DMX
-  }
+  	for (int Canal = 1; Canal <= 512; Canal ++)
+  	{
+    	DMX_Values[Canal] = 0;          		// lectura desde EEPROM
+    	ArduinoDmx0.TxBuffer[Canal - 1] = 0; 	// salida a DMX
+  	}
 
-  lcd.clear ();
-  lcd.setCursor (3, 1);
-  lcd.print ("Memory Emptied!");
-  lcd.setCursor (3, 2);
-  lcd.print ("Bank: RAM");
-  lcd.setCursor (19, 3);
-  lcd.blink();
-  delay (1000);
-  lcd.noBlink();
+  	lcd.clear ();
+  	lcd.setCursor (3, 1);
+  	lcd.print ("Memory Emptied!");
+  	lcd.setCursor (3, 2);
+  	lcd.print ("Bank: RAM");
+  	lcd.setCursor (19, 3);
+  	lcd.blink();
+  	delay (1000);
+  	lcd.noBlink();
 }
 
 int EEPROM_Clear()
 {
-  // Pone en ceros la memoria EEPROM
-  // regresa 1 si se selecciona exit
+  	// Pone en ceros la memoria EEPROM
+  	// regresa 1 si se selecciona exit
 
-  int cancel = 0;				// regresa 1 si se selecciona salir
-  int bank;					// regresa 1 si se selecciona salir
-  int EEPROM_Add = 0;			// direccion de eeprom para universos
-  bank = GUI_Memory_Bank(3);	// seleccinar banco
+  	int cancel = 0;				// regresa 1 si se selecciona salir
+  	int bank;					// regresa 1 si se selecciona salir
+  	int EEPROM_Add = 0;			// direccion de eeprom para universos
+  	bank = GUI_Memory_Bank(3);	// seleccinar banco
 
-  if (bank == 1)				// si se selecciono salir
-  {
-    cancel = 1;
-    goto salida;
-  }
+  	if (bank == 1)				// si se selecciono salir
+  	{
+    	cancel = 1;
+    	goto salida;
+  	}
 
-  lcd.clear ();
-  lcd.setCursor (1, 1);
-  lcd.print ("Memory Cleaning...");
-  lcd.setCursor (1, 2);
-  lcd.print ("Bank: ");
-  lcd.setCursor (7, 2);
-  lcd.print (Universo_Actual);
-  lcd.setCursor (19, 3);
-  lcd.blink();
+  	lcd.clear ();
+  	lcd.setCursor (1, 1);
+  	lcd.print ("Memory Cleaning...");
+  	lcd.setCursor (1, 2);
+  	lcd.print ("Bank: ");
+  	lcd.setCursor (7, 2);
+  	lcd.print (Universo_Actual);
+  	lcd.setCursor (19, 3);
+  	lcd.blink();
 
-  for (int Canal = 0; Canal <= 511; Canal ++)
-  {
-    DMX_Values[Canal] = 0;          		// lectura desde EEPROM
-    ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
-    // Escritura de universo EEPROM
-    switch (Universo_Actual)
-    {
-      case 1:
-        EEPROM_Add = 0 + Canal;
-        break;
+  	for (int Canal = 0; Canal <= 511; Canal ++)
+  	{
+    	DMX_Values[Canal] = 0;          		// lectura desde EEPROM
+    	ArduinoDmx0.TxBuffer[Canal] = 0; 		// salida a DMX
+    		// Escritura de universo EEPROM
+    	switch (Universo_Actual)
+    	{
+      		case 1:
+        		EEPROM_Add = 0 + Canal;
+        		break;
 
-      case 2:
-        EEPROM_Add = 512 + Canal;
-        break;
+      		case 2:
+        		EEPROM_Add = 512 + Canal;
+        		break;
 
-      case 3:
-        EEPROM_Add = 1024 + Canal;
-        break;
+      		case 3:
+        		EEPROM_Add = 1024 + Canal;
+        		break;
 
-      case 4:
-        EEPROM_Add = 1536 + Canal;
-        break;
+      		case 4:
+        		EEPROM_Add = 1536 + Canal;
+        		break;
 
-      case 5:
-        EEPROM_Add = 2048 + Canal;
-        break;
+      		case 5:
+        		EEPROM_Add = 2048 + Canal;
+        		break;
 
-      case 6:
-        EEPROM_Add = 2560 + Canal;
-        break;
+      		case 6:
+        		EEPROM_Add = 2560 + Canal;
+        		break;
 
-      case 7:
-        EEPROM_Add = 3072 + Canal;
-        break;
+      		case 7:
+        		EEPROM_Add = 3072 + Canal;
+        		break;
 
-      case 8:
-        EEPROM_Add = 3584 + Canal;
-        if (EEPROM_Add > EEPROM_Limit)
-        {
-          EEPROM_Add = EEPROM_Limit;
-        }
-        break;
-    }
+      		case 8:
+       			EEPROM_Add = 3584 + Canal;
+        		if (EEPROM_Add > EEPROM_Limit)
+        		{
+          			EEPROM_Add = EEPROM_Limit;
+        		}
+        		break;
+    	}
 
-    EEPROM.write (EEPROM_Add, 0);		// escritura EEPROM
-  }
-  lcd.clear ();
-  lcd.setCursor (2, 1);
-  lcd.print ("Memory Cleaned!");
-  lcd.setCursor (2, 2);
-  lcd.print ("Bank: ");
-  lcd.print (Universo_Actual);
-  lcd.setCursor (19, 3);
-  delay (1000);
-  lcd.noBlink();
+    	EEPROM.write (EEPROM_Add, 0);		// escritura EEPROM
+  	}
+  	lcd.clear ();
+  	lcd.setCursor (2, 1);
+  	lcd.print ("Memory Cleaned!");
+  	lcd.setCursor (2, 2);
+  	lcd.print ("Bank: ");
+  	lcd.print (Universo_Actual);
+  	lcd.setCursor (19, 3);
+  	delay (1000);
+  	lcd.noBlink();
 
 salida:
 
-  return cancel;
+  	return cancel;
 }
 
 void EEPROM_Clear_All()
 {
-  // Pone en ceros la memoria EEPROM toda
-  lcd.clear ();
-  lcd.setCursor (1, 1);
-  lcd.print ("All");
-  lcd.setCursor (1, 2);
-  lcd.print ("Memory Cleaning...");
-  lcd.setCursor (19, 2);
-  lcd.blink();
+  	// Pone en ceros la memoria EEPROM toda
+  	lcd.clear ();
+  	lcd.setCursor (1, 1);
+  	lcd.print ("All");
+  	lcd.setCursor (1, 2);
+  	lcd.print ("Memory Cleaning...");
+  	lcd.setCursor (19, 2);
+  	lcd.blink();
 
-  for (int Canal = 0; Canal <= EEPROM_Limit; Canal ++)
-  {
-    EEPROM.write (Canal, 0);			// escritura EEPROM
-    if (Canal <= 511)
-    {
-      DMX_Values[Canal + 1] = 0;
-      ArduinoDmx0.TxBuffer[Canal] = 0; 	// salida a DMX
-    }
-  }
+  	for (int Canal = 0; Canal <= EEPROM_Limit; Canal ++)
+  	{
+    	EEPROM.write (Canal, 0);			// escritura EEPROM
+    	if (Canal <= 511)
+    	{
+     	 	DMX_Values[Canal + 1] = 0;
+      		ArduinoDmx0.TxBuffer[Canal] = 0; 	// salida a DMX
+    	}
+  	}
 
-  lcd.clear ();
-  lcd.noBlink();
-  lcd.setCursor (2, 2);
-  lcd.print ("Memory Cleaned!");
-  lcd.setCursor (2, 1);
-  lcd.print ("All");
-  Universo_Actual = 0;
-  delay (1000);
+  	lcd.clear ();
+  	lcd.noBlink();
+  	lcd.setCursor (2, 2);
+  	lcd.print ("Memory Cleaned!");
+  	lcd.setCursor (2, 1);
+  	lcd.print ("All");
+  	Universo_Actual = 0;
+  	delay (1000);
 }
 
 void GUI_Control_Options()
@@ -2335,106 +2335,106 @@ void GUI_Control_Options()
 
 inicio:
 
-  	// LCD
-  lcd.clear ();
-  lcd.setCursor (18, 0);
-  lcd.print ("b");
+  		// LCD
+  	lcd.clear ();
+  	lcd.setCursor (18, 0);
+  	lcd.print ("b");
 
-  if (Universo_Actual == 0)
-  {
-    lcd.print ("-");
-  }
-  else
-  {
-    lcd.print (Universo_Actual);
-  }
+  	if (Universo_Actual == 0)
+  	{
+    	lcd.print ("-");
+  	}
+  	else
+  	{
+    	lcd.print (Universo_Actual);
+  	}
 
-  lcd.setCursor (2, 0);
-  lcd.print ("Convert");
-  lcd.setCursor (2, 1);
-  lcd.print ("Unitary");
-  lcd.setCursor (2, 2);
-  lcd.print ("Matrix");
-  lcd.setCursor (2, 3);
-  lcd.print ("Chaser");
-  lcd.setCursor (11, 3);
-  lcd.print ("Multiply");
-  lcd.setCursor (11, 0);
-  lcd.print ("Config");
-  lcd.setCursor (11, 2);
-  lcd.print ("Secuencer");
-  lcd.setCursor (11, 1);
-  lcd.print ("Memory");
+  	lcd.setCursor (2, 0);
+  	lcd.print ("Convert");
+  	lcd.setCursor (2, 1);
+  	lcd.print ("Unitary");
+	lcd.setCursor (2, 2);
+	lcd.print ("Matrix");
+	lcd.setCursor (2, 3);
+	lcd.print ("Chaser");
+	lcd.setCursor (11, 3);
+	lcd.print ("Multiply");
+	lcd.setCursor (11, 0);
+	lcd.print ("Config");
+	lcd.setCursor (11, 2);
+	lcd.print ("Secuencer");
+	lcd.setCursor (11, 1);
+	lcd.print ("Memory");
 
-  	// Cursor
-  LCD_Col_Pos = 1;			// posicion de cursor
-  LCD_Row_Pos = 2;
+  		// Cursor
+  	LCD_Col_Pos = 1;			// posicion de cursor
+  	LCD_Row_Pos = 2;
 
-  	// configuracion de cursor
-  Cursor_Conf_Clear();		// limpiar array
+  		// configuracion de cursor
+  	Cursor_Conf_Clear();		// limpiar array
+
+  		// Acciones
+  	Cursor_Conf[1][1]   = 1;	// Unitary
+  	Cursor_Conf[2][1]   = 1; 	// Matrix
+  	Cursor_Conf[3][1]   = 1; 	// Chaser
+  	Cursor_Conf[3][10]  = 1; 	// Multiply
+  	Cursor_Conf[0][10]  = 1; 	// Config
+  	Cursor_Conf[2][10]  = 1; 	// Secuencer
+  	Cursor_Conf[1][10]  = 1; 	// Memory
+  	Cursor_Conf[0][1]   = 1; 	// Convert
+
+  		// navegar
+  	GUI_Navegar(0, 0);
 
   	// Acciones
-  Cursor_Conf[1][1]   = 1;	// Unitary
-  Cursor_Conf[2][1]   = 1; 	// Matrix
-  Cursor_Conf[3][1]   = 1; 	// Chaser
-  Cursor_Conf[3][10]  = 1; 	// Multiply
-  Cursor_Conf[0][10]  = 1; 	// Config
-  Cursor_Conf[2][10]  = 1; 	// Secuencer
-  Cursor_Conf[1][10]  = 1; 	// Memory
-  Cursor_Conf[0][1]   = 1; 	// Convert
+  		// Unitary
+  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 1)
+  	{
+    	GUI_Control_Unit();
+  	}
 
-  	// navegar
-  GUI_Navegar(0, 0);
+  		// Matrix
+  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
+  	{
+    	GUI_Control_Matrix();
+  	}
 
-  // Acciones
-  	// Unitary
-  if (LCD_Col_Pos == 1 && LCD_Row_Pos == 1)
-  {
-    GUI_Control_Unit();
-  }
+  		// Chaser
+  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 3)
+  	{
+    	GUI_Control_Chaser();
+  	}
 
-  	// Matrix
-  if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
-  {
-    GUI_Control_Matrix();
-  }
+  		// Multiply
+  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
+  	{
+   	 	GUI_Control_Multiply();
+  	}
 
-  	// Chaser
-  if (LCD_Col_Pos == 1 && LCD_Row_Pos == 3)
-  {
-    GUI_Control_Chaser();
-  }
+  		// Config
+  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 0)
+  	{
+    	GUI_Config();
+  	}
 
-  	// Multiply
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
-  {
-    GUI_Control_Multiply();
-  }
+  		// Secuencer
+  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
+  	{
+    	GUI_Control_Secuencer();
+  	}
 
-  	// Config
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 0)
-  {
-    GUI_Config();
-  }
+  		// Converter
+  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 0)
+  	{
+    	//GUI_Convert();
+  	}
 
-  	// Secuencer
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
-  {
-    GUI_Control_Secuencer();
-  }
-
-  	// Converter
-  if (LCD_Col_Pos == 1 && LCD_Row_Pos == 0)
-  {
-    //GUI_Convert();
-  }
-
-  	// Memory
-  if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
-  {
-    GUI_Memory();
-    goto inicio;
-  }
+  		// Memory
+  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
+  	{
+    	GUI_Memory();
+    	goto inicio;
+  	}
 }
 
 /*void GUI_Convert()
@@ -3415,43 +3415,43 @@ Navegacion:
     	Num_Val = DMX_Values[Canal_Actual];		// para dejar el numero que estaba si no se cambia
     	Numerico_Calc (1);
 
-    if (Num_Val == 612)						// ubicar
-    {
-      	Ubicar();
-    }
+    	if (Num_Val == 612)						// ubicar
+    	{
+      		Ubicar();
+    	}
 
-    if (Num_Val == 712)						// analogo
-    {
-      	Encoder_Read(9, 3, 0, 255, 1);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
-      	goto Navegacion;
-    }
+    	if (Num_Val == 712)						// analogo
+    	{
+      		Encoder_Read(9, 3, 0, 255, 1);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+      		goto Navegacion;
+    	}
 
-    if (Num_Val > 255)
-    {
-      	Num_Val = 255;
-      	Numerico_Write (255, 9, 3);
-    }
+    	if (Num_Val > 255)
+    	{
+      		Num_Val = 255;
+      		Numerico_Write (255, 9, 3);
+    	}
 
-    	// Escribr valor en dmx
-    ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
-    DMX_Values[Canal_Actual] = Num_Val;
-    goto Navegacion;
-  }
+    		// Escribr valor en dmx
+    	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
+    	DMX_Values[Canal_Actual] = Num_Val;
+    	goto Navegacion;
+  	}
 
-  	// Memory
-  if (LCD_Col_Pos == 13 && LCD_Row_Pos == 3)
-  {
-    GUI_Memory();
-    goto Inicio;
-  }
+  		// Memory
+  	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 3)
+  	{
+    	GUI_Memory();
+    	goto Inicio;
+  	}
 
-  	// Control
-  if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
-  {
-    GUI_Control_Options();
-  }
+  		// Control
+  	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
+  	{
+    	GUI_Control_Options();
+  	}
 
-  goto Navegacion;
+  	goto Navegacion;
 }
 
 void Ubicar()
@@ -3476,351 +3476,351 @@ void Ubicar()
 
 void Numerico_Calc(byte value)
 {
-  // escritura del numero desde el teclado numerico si value es 1 entra opcion de A 255 y B 0
+  	// escritura del numero desde el teclado numerico si value es 1 entra opcion de A 255 y B 0
 
-  int 	Num_Val_Temp_1 	 = 0;
-  int 	Num_Val_Temp_2 	 = 0;
-  lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-  lcd.print("___");
-  lcd.blink();						// mostrar cursor
+  	int Num_Val_Temp_1 	 = 0;
+  	int Num_Val_Temp_2 	 = 0;
+  	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+  	lcd.print("___");
+  	lcd.blink();						// mostrar cursor
 
-  	//Num_Val = 0;
-  Num_Col_Pos = Num_Col_Pos + 2;
-  lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+  		//Num_Val = 0;
+  	Num_Col_Pos = Num_Col_Pos + 2;
+  	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
 
-  	// primer numero
-  Numerico_Read();					// leer boton
-  if (Boton_Calc <= 9)
-  {
-    lcd.print (Boton_Calc);			// escribir valor calculado
-    lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-    Num_Val = Boton_Calc;			// valor calculado
-    Num_Val_Temp_1 = Boton_Calc;	// valor temporal para el acarreo
-  }
+  		// primer numero
+  	Numerico_Read();					// leer boton
+  	if (Boton_Calc <= 9)
+  	{
+    	lcd.print (Boton_Calc);			// escribir valor calculado
+    	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+    	Num_Val = Boton_Calc;			// valor calculado
+    	Num_Val_Temp_1 = Boton_Calc;	// valor temporal para el acarreo
+  	}
 
-  if (Boton_Calc == 14)		// enter
-  {
-    goto Salida;			// num val = 0
-  }
+  	if (Boton_Calc == 14)		// enter
+  	{
+    	goto Salida;			// num val = 0
+  	}
 
-  if (value == 1)			// si es un valor
-  {
-    if (Boton_Calc == 10)	// 255
-    {
-      Num_Val = 255;
-      goto Salida;
-    }
+  	if (value == 1)			// si es un valor
+  	{
+    	if (Boton_Calc == 10)	// 255
+    	{
+      		Num_Val = 255;
+      		goto Salida;
+    	}
 
-    if (Boton_Calc == 11)	// 000
-    {
-      Num_Val = 0;
-      goto Salida;
-    }
+    	if (Boton_Calc == 11)	// 000
+    	{
+      		Num_Val = 0;
+      		goto Salida;
+    	}
 
-    if (Boton_Calc == 12)	// ubicar
-    {
-      Num_Val = 612;
-      goto Salida_Option;
-    }
+    	if (Boton_Calc == 12)	// ubicar
+    	{
+      		Num_Val = 612;
+      		goto Salida_Option;
+    	}
 
-    if (Boton_Calc == 13)	// analogo
-    {
-      Num_Val = 712;
-      goto Salida_Option;
-    }
-  }
-  	// segundo numero
-  Numerico_Read();			// leer boton
-  if (Boton_Calc == 14)		// enter
-  {
-    Num_Val = Num_Val_Temp_1;
-    goto Salida;			// num val = num val anterior
-  }
+    	if (Boton_Calc == 13)	// analogo
+    	{
+      		Num_Val = 712;
+      		goto Salida_Option;
+    	}
+  	}
+  		// segundo numero
+  	Numerico_Read();			// leer boton
+  	if (Boton_Calc == 14)		// enter
+  	{
+    	Num_Val = Num_Val_Temp_1;
+    	goto Salida;			// num val = num val anterior
+  	}
 
-  if (value == 1)			// si es un valor
-  {
-    if (Boton_Calc == 10)	// 255
-    {
-      Num_Val = 255;
-      goto Salida;
-    }
+  	if (value == 1)			// si es un valor
+  	{
+    	if (Boton_Calc == 10)	// 255
+    	{
+      		Num_Val = 255;
+      		goto Salida;
+    	}
 
-    if (Boton_Calc == 11)	// 000
-    {
-      Num_Val = 0;
-      goto Salida;
-    }
+    	if (Boton_Calc == 11)	// 000
+    	{
+      		Num_Val = 0;
+      		goto Salida;
+    	}
 
-    if (Boton_Calc == 12)	// ubicar
-    {
-      Num_Val = 612;
-      goto Salida_Option;
-    }
+    	if (Boton_Calc == 12)	// ubicar
+    	{
+      		Num_Val = 612;
+      		goto Salida_Option;
+    	}
 
-    if (Boton_Calc == 13)	// analogo
-    {
-      Num_Val = 712;
-      goto Salida_Option;
-    }
-  }
+    	if (Boton_Calc == 13)	// analogo
+    	{
+      		Num_Val = 712;
+      		goto Salida_Option;
+    	}
+  	}
 
-  if (Boton_Calc <= 9)
-  {
-    	// recorrer numero ya impreso
-    Num_Col_Pos = Num_Col_Pos - 1;
-    lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-    lcd.print (Num_Val_Temp_1);
+  	if (Boton_Calc <= 9)
+  	{
+    		// recorrer numero ya impreso
+    	Num_Col_Pos = Num_Col_Pos - 1;
+    	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+    	lcd.print (Num_Val_Temp_1);
 
-    	// dibujar numero nuevo
-    lcd.print (Boton_Calc);
-    Num_Val_Temp_2 = Boton_Calc;
-    Num_Col_Pos = Num_Col_Pos + 1;
-    lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-  }
+    		// dibujar numero nuevo
+    	lcd.print (Boton_Calc);
+    	Num_Val_Temp_2 = Boton_Calc;
+    	Num_Col_Pos = Num_Col_Pos + 1;
+    	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+  	}
 
-  	// Tercer numero
-  Numerico_Read();			// leer boton
-  if (Boton_Calc == 14)		// enter
-  {
-    Num_Val = (Num_Val_Temp_1 * 10) + Num_Val_Temp_2;
-    goto Salida;
-  }
+  		// Tercer numero
+  	Numerico_Read();			// leer boton
+  	if (Boton_Calc == 14)		// enter
+  	{
+    	Num_Val = (Num_Val_Temp_1 * 10) + Num_Val_Temp_2;
+    	goto Salida;
+  	}
 
-  if (value == 1)				// si es un valor
-  {
-    if (Boton_Calc == 10)	// 255
-    {
-      Num_Val = 255;
-      goto Salida;
-    }
+  	if (value == 1)				// si es un valor
+  	{
+    	if (Boton_Calc == 10)	// 255
+    	{
+      		Num_Val = 255;
+      		goto Salida;
+    	}		
 
-    if (Boton_Calc == 11)	// 000
-    {
-      Num_Val = 0;
-      goto Salida;
-    }
+    	if (Boton_Calc == 11)	// 000
+    	{
+      		Num_Val = 0;
+      		goto Salida;
+    	}
 
-    if (Boton_Calc == 12)	// ubicar
-    {
-      Num_Val = 612;
-      goto Salida_Option;
-    }
+    	if (Boton_Calc == 12)	// ubicar
+    	{
+      		Num_Val = 612;
+      		goto Salida_Option;
+    	}
 
-    if (Boton_Calc == 13)	// analogo
-    {
-      Num_Val = 712;
-      goto Salida_Option;
-    }
-  }
+    	if (Boton_Calc == 13)	// analogo
+    	{
+      		Num_Val = 712;
+      		goto Salida_Option;
+    	}
+  	}
 
-  if (Boton_Calc <= 9)
-  {
-   		// recorrer numero ya impreso
-    Num_Col_Pos = Num_Col_Pos - 2;
-    lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-    lcd.print (Num_Val_Temp_1);
-    lcd.print (Num_Val_Temp_2);
+  	if (Boton_Calc <= 9)
+  	{
+   			// recorrer numero ya impreso
+    	Num_Col_Pos = Num_Col_Pos - 2;
+    	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+    	lcd.print (Num_Val_Temp_1);
+    	lcd.print (Num_Val_Temp_2);
 
-    	// dibujar numero nuevo
-    Num_Col_Pos = Num_Col_Pos + 2;
-    lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-    lcd.print (Boton_Calc);
-    Num_Val = Boton_Calc + (Num_Val_Temp_1 * 100) + (Num_Val_Temp_2 * 10);
-  }
+    		// dibujar numero nuevo
+    	Num_Col_Pos = Num_Col_Pos + 2;
+    	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+    	lcd.print (Boton_Calc);
+    	Num_Val = Boton_Calc + (Num_Val_Temp_1 * 100) + (Num_Val_Temp_2 * 10);
+  	}
 
 Salida:
 
-  lcd.noBlink();
+  	lcd.noBlink();
 
-  	// pintar los ceros antes del numero
-  Numerico_Write (Num_Val, Num_Col_Pos - 2, Num_Row_Pos);
-  Num_Col_Pos = Num_Col_Pos - 4;
+  		// pintar los ceros antes del numero
+  	Numerico_Write (Num_Val, Num_Col_Pos - 2, Num_Row_Pos);
+  	Num_Col_Pos = Num_Col_Pos - 4;
 
-  	// regresar el cursor a su ligar
-  lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+  		// regresar el cursor a su ligar
+  	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
 
 Salida_Option:
 
-  lcd.noBlink();
-  lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-  delay(300); // rebote de boton
+  	lcd.noBlink();
+  	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
+  	delay(300); // rebote de boton
 }
 
 void Numerico_Read()
 {
-  long Num_Barrido_Time = 5;			// tiempo entre barrido de keys
-  Boton_Calc = 17;						// limpiar valor para lectura
+  	long Num_Barrido_Time = 5;			// tiempo entre barrido de keys
+  	Boton_Calc = 17;						// limpiar valor para lectura
 
-  while (Boton_Calc == 17)				// valor calculado	# E * F, 17 sin valor calculado
-  {
-    // Barrido
-    	// Linea 1
-    digitalWrite(Boton_Array_1, LOW);	// lectura linea 1
+  	while (Boton_Calc == 17)				// valor calculado	# E * F, 17 sin valor calculado
+  	{
+    	// Barrido
+    		// Linea 1
+    	digitalWrite(Boton_Array_1, LOW);	// lectura linea 1
 
-    // Lectura 1A = 1
-    if (digitalRead(Boton_Array_A) == LOW)
-    {
-      Boton_Calc = 1;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 1A = 1
+    	if (digitalRead(Boton_Array_A) == LOW)
+    	{
+      		Boton_Calc = 1;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 1B = 6
-    if (digitalRead(Boton_Array_B) == LOW)
-    {
-      Boton_Calc = 4;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 1B = 6
+    	if (digitalRead(Boton_Array_B) == LOW)
+    	{
+      		Boton_Calc = 4;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 1C = 7
-    if (digitalRead(Boton_Array_C) == LOW)
-    {
-      Boton_Calc = 7;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 1C = 7
+    	if (digitalRead(Boton_Array_C) == LOW)
+    	{
+      		Boton_Calc = 7;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 1D = * = 15
-    if (digitalRead(Boton_Array_D) == LOW)
-    {
-      Boton_Calc = 15;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 1D = * = 15
+    	if (digitalRead(Boton_Array_D) == LOW)
+    	{
+      		Boton_Calc = 15;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
-    digitalWrite(Boton_Array_1, HIGH);	// lectura linea 1
+    	delay(Num_Barrido_Time);
+    	digitalWrite(Boton_Array_1, HIGH);	// lectura linea 1
 
-    	// Linea 2
-    digitalWrite(Boton_Array_2, LOW);	// lectura linea 2
+    		// Linea 2
+    	digitalWrite(Boton_Array_2, LOW);	// lectura linea 2
 
-    	// Lectura 2A = 2
-    if (digitalRead(Boton_Array_A) == LOW)
-    {
-      Boton_Calc = 2;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 2A = 2
+    	if (digitalRead(Boton_Array_A) == LOW)
+    	{
+      		Boton_Calc = 2;
+      		delay(Boton_Delay_Teclado);
+   	 	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 2B = 5
-    if (digitalRead(Boton_Array_B) == LOW)
-    {
-      Boton_Calc = 5;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 2B = 5
+    	if (digitalRead(Boton_Array_B) == LOW)
+    	{
+      		Boton_Calc = 5;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 2C = 8
-    if (digitalRead(Boton_Array_C) == LOW)
-    {
-      Boton_Calc = 8;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 2C = 8
+    	if (digitalRead(Boton_Array_C) == LOW)
+    	{
+      		Boton_Calc = 8;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 2D = 0
-    if (digitalRead(Boton_Array_D) == LOW)
-    {
-      Boton_Calc = 0;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 2D = 0
+    	if (digitalRead(Boton_Array_D) == LOW)
+    	{
+      		Boton_Calc = 0;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
-    digitalWrite(Boton_Array_2, HIGH);	// lectura linea 2
+    	delay(Num_Barrido_Time);
+    	digitalWrite(Boton_Array_2, HIGH);	// lectura linea 2
 
-    	// Linea 3
-    digitalWrite(Boton_Array_3, LOW);	// lectura linea 3
+    		// Linea 3
+    	digitalWrite(Boton_Array_3, LOW);	// lectura linea 3
 
-    	// Lectura 3A = 3
-    if (digitalRead(Boton_Array_A) == LOW)
-    {
-      Boton_Calc = 3;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 3A = 3
+    	if (digitalRead(Boton_Array_A) == LOW)
+    	{
+      		Boton_Calc = 3;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 3B = 4
-    if (digitalRead(Boton_Array_B) == LOW)
-    {
-      Boton_Calc = 6;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 3B = 4
+    	if (digitalRead(Boton_Array_B) == LOW)
+    	{
+      		Boton_Calc = 6;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 3C = 9
-    if (digitalRead(Boton_Array_C) == LOW)
-    {
-      Boton_Calc = 9;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 3C = 9
+    	if (digitalRead(Boton_Array_C) == LOW)
+    	{
+      		Boton_Calc = 9;
+      		delay(Boton_Delay_Teclado);
+   		}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 3D = 14
-    if (digitalRead(Boton_Array_D) == LOW)
-    {
-      Boton_Calc = 14;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 3D = 14
+    	if (digitalRead(Boton_Array_D) == LOW)
+    	{
+      		Boton_Calc = 14;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
-    digitalWrite(Boton_Array_3, HIGH);	// lectura linea 3
+    	delay(Num_Barrido_Time);
+    	digitalWrite(Boton_Array_3, HIGH);	// lectura linea 3
 
-    	// Linea 4
-    digitalWrite(Boton_Array_4, LOW);	// lectura linea 4
+    		// Linea 4
+    	digitalWrite(Boton_Array_4, LOW);	// lectura linea 4
 
-    	// Lectura 4A = 10
-    if (digitalRead(Boton_Array_A) == LOW)
-    {
-      Boton_Calc = 10;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 4A = 10
+    	if (digitalRead(Boton_Array_A) == LOW)
+    	{
+      		Boton_Calc = 10;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 4B = 11
-    if (digitalRead(Boton_Array_B) == LOW)
-    {
-      Boton_Calc = 11;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 4B = 11
+    	if (digitalRead(Boton_Array_B) == LOW)
+    	{
+      		Boton_Calc = 11;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 4C = 12
-    if (digitalRead(Boton_Array_C) == LOW)
-    {
-      Boton_Calc = 12;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 4C = 12
+    	if (digitalRead(Boton_Array_C) == LOW)
+    	{
+     		Boton_Calc = 12;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
+    	delay(Num_Barrido_Time);
 
-    	// Lectura 4D = 13
-    if (digitalRead(Boton_Array_D) == LOW)
-    {
-      Boton_Calc = 13;
-      delay(Boton_Delay_Teclado);
-    }
+    		// Lectura 4D = 13
+    	if (digitalRead(Boton_Array_D) == LOW)
+    	{
+      		Boton_Calc = 13;
+      		delay(Boton_Delay_Teclado);
+    	}
 
-    delay(Num_Barrido_Time);
-    digitalWrite(Boton_Array_4, HIGH);	// lectura linea 4
+    	delay(Num_Barrido_Time);
+    	digitalWrite(Boton_Array_4, HIGH);	// lectura linea 4
 
-    	// Cursor center "enter"
-    if (digitalRead(Enc_Center) == LOW)
-    {
-      Boton_Calc = 14;
-      delay(Boton_Delay_Teclado);
-    }
-  }
+    		// Cursor center "enter"
+    	if (digitalRead(Enc_Center) == LOW)
+    	{
+      		Boton_Calc = 14;
+      		delay(Boton_Delay_Teclado);
+    	}
+  	}
 }
 
 void Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
