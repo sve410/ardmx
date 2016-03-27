@@ -134,44 +134,44 @@ byte EEPROM_Def_Jumper		= 9;
 void setup()
 {
 		// Encoder
-	pinMode(Enc_Center,		INPUT_PULLUP);
+	pinMode(Enc_Center,				INPUT_PULLUP);
 	// no es necesario declarar CLK y data
 
 		// Botones Teclado numerico
-	pinMode(Boton_Array_1, 	OUTPUT);
-	pinMode(Boton_Array_2, 	OUTPUT);
-	pinMode(Boton_Array_3, 	OUTPUT);
-	pinMode(Boton_Array_4,	OUTPUT);
-	pinMode(Boton_Array_A, 	INPUT_PULLUP);
-	pinMode(Boton_Array_B, 	INPUT_PULLUP);
-	pinMode(Boton_Array_C, 	INPUT_PULLUP);
-	pinMode(Boton_Array_D, 	INPUT_PULLUP);
-	digitalWrite			(Boton_Array_1, HIGH);
-	digitalWrite			(Boton_Array_2, HIGH);
-	digitalWrite			(Boton_Array_3, HIGH);
-	digitalWrite			(Boton_Array_4, HIGH);
+	pinMode(Boton_Array_1, 			OUTPUT);
+	pinMode(Boton_Array_2, 			OUTPUT);
+	pinMode(Boton_Array_3, 			OUTPUT);
+	pinMode(Boton_Array_4,			OUTPUT);
+	pinMode(Boton_Array_A, 			INPUT_PULLUP);
+	pinMode(Boton_Array_B, 			INPUT_PULLUP);
+	pinMode(Boton_Array_C, 			INPUT_PULLUP);
+	pinMode(Boton_Array_D, 			INPUT_PULLUP);
+	digitalWrite					(Boton_Array_1, HIGH);
+	digitalWrite					(Boton_Array_2, HIGH);
+	digitalWrite					(Boton_Array_3, HIGH);
+	digitalWrite					(Boton_Array_4, HIGH);
 
 		// LCD
-	pinMode(LCD_RS, 		OUTPUT);
-	pinMode(LCD_E,  		OUTPUT);
-	pinMode(LCD_D7, 		OUTPUT);
-	pinMode(LCD_D6, 		OUTPUT);
-	pinMode(LCD_D5, 		OUTPUT);
-	pinMode(LCD_D4, 		OUTPUT);
-	pinMode(Back_Light_PWM,	OUTPUT);
-	pinMode(Contrast_PWM,	OUTPUT);
+	pinMode(LCD_RS, 				OUTPUT);
+	pinMode(LCD_E,  				OUTPUT);
+	pinMode(LCD_D7, 				OUTPUT);
+	pinMode(LCD_D6, 				OUTPUT);
+	pinMode(LCD_D5, 				OUTPUT);
+	pinMode(LCD_D4, 				OUTPUT);
+	pinMode(Back_Light_PWM,			OUTPUT);
+	pinMode(Contrast_PWM,			OUTPUT);
 	lcd.begin(20, 4);							//tamaño de LCD
 
 		// Key Light
-	pinMode(Key_Light_PWM,	OUTPUT);
-	pinMode(Key_Light_SW,	INPUT_PULLUP);
+	pinMode(Key_Light_PWM,			OUTPUT);
+	pinMode(Key_Light_SW,			INPUT_PULLUP);
 
 		// Light
-	pinMode(Light_PWM,		OUTPUT);
-	pinMode(Light_SW,		INPUT_PULLUP);
+	pinMode(Light_PWM,				OUTPUT);
+	pinMode(Light_SW,				INPUT_PULLUP);
 
 		// EEPROM Default
-	pinMode(EEPROM_Def_Jumper, INPUT);			// no tiene pullup fisico
+	pinMode(EEPROM_Def_Jumper, 		INPUT);		// no tiene pullup fisico
 
 		// DMX
 	ArduinoDmx0.set_tx_address		(1);      	// poner aqui la direccion de inicio de DMX
@@ -418,7 +418,7 @@ void Light_En()
 		Light_On_Off = 0;
 	}
 
-salida:
+	salida:
 
 	delay(300);												// para impedir repeticion del comando
 }
@@ -637,7 +637,7 @@ void GUI_Control_Matrix()
 	int Inicial = 1;
 	Canal_Actual = 1;
 	
-inicio:
+	inicio:
 
 	lcd.clear();
 	lcd.setCursor (0, 0);
@@ -690,7 +690,7 @@ inicio:
 	Cursor_Conf[3][16] = 1;
 
 		// navegar
-Banco:
+	Banco:
 
 	GUI_Navegar(1, Inicial);
 	
@@ -861,7 +861,7 @@ Banco:
 		goto Salida_DMX;
 	}
 	
-Salida_DMX:
+	Salida_DMX:
 
 	Num_Row_Pos = LCD_Row_Pos;
 	Num_Col_Pos = LCD_Col_Pos + 1;
@@ -922,7 +922,7 @@ void GUI_Navegar(byte matrix, int banco)
 
   		// navegacion
 
-Dibujar:
+	Dibujar:
 
   	byte Dibujar_Cursor = 0;			// saber si dibujar cursor para evitar repeticiones en lcd, 0 no dibujar, 1 dibujar >, 2 dibujar +
   	
@@ -1046,7 +1046,7 @@ Dibujar:
     	}
   	}
 
-Salida:
+	Salida:
 
   	// Dibujar Cursor
   	if (Dibujar_Cursor > 0)
@@ -1182,12 +1182,12 @@ Salida:
         		}
 
         // escribir guion de bancos
-salida:
+				salida:
 
         		lcd.setCursor(16, 0);
         		lcd.print("-");
 
-salir: {}
+				salir: {}
 
       		}
     	}
@@ -1210,16 +1210,16 @@ salir: {}
       		Dibujar_Cursor = 0;
     	}
   	}
-  goto Dibujar;
+ 	goto Dibujar;
 
-Salir: {}
+	Salir: {}
 
 }
 
 void GUI_Memory_Init()
 {
 
-inicio:
+	inicio:
 	
 	int salir = 0;
   	lcd.clear ();
@@ -1425,7 +1425,7 @@ int GUI_Memory_Bank(byte Opcion)
     	salir = 1;
   	}
 
-Salida:
+	Salida:
 
   	return salir;
 }
@@ -1433,7 +1433,7 @@ Salida:
 void GUI_Memory()
 {
 
-iniciar:
+	iniciar:
 
   		// Texto
   	lcd.clear ();
@@ -1481,7 +1481,7 @@ iniciar:
   	Cursor_Conf[3][15] = 1;	// Exit
 
   		// navegar
-regresa:
+	regresa:
 
   	GUI_Navegar(0, 0);
 
@@ -1540,7 +1540,7 @@ regresa:
   		// Exit
   	if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3) {}
 
-salida: {}
+	salida: {}
 
 }
 
@@ -1587,7 +1587,7 @@ void GUI_Control_Secuencer()
   	Cursor_Conf[2][14] = 1;	// Control
   	Cursor_Conf[3][14] = 1;	// start
 
-inicio:
+	inicio:
 
   	lcd.setCursor (15, 3);
   	lcd.print("Start");
@@ -1751,7 +1751,7 @@ inicio:
     	if (Adelante_Reversa == 0)
     	{
 
-contar:
+			contar:
 
       		for (byte conteo = 1; conteo <= 8; conteo ++)
       		{
@@ -1822,12 +1822,12 @@ contar:
             			goto Delay_Salir;
           			}
 
-salida:
+					salida:
 
           			delay(500);									// rebote de boton
           			goto inicio;
 
-Delay_Salir: {}
+					Delay_Salir: {}
 
         		}
       		}
@@ -1838,7 +1838,7 @@ Delay_Salir: {}
     	if (Adelante_Reversa == 1)
     	{
 
-contar_rev:
+			contar_rev:
 
       		for (byte conteo = 8; conteo >= 1; conteo --)
       		{
@@ -1909,12 +1909,12 @@ contar_rev:
             			goto Delay_Salir_Rev;
           			}
 
-salida_rev:
+					salida_rev:
 
           			delay(500);									// rebote de boton
           			goto inicio;
 
-Delay_Salir_Rev: {}
+					Delay_Salir_Rev: {}
 
         		}
       		}
@@ -2031,7 +2031,7 @@ int EEPROM_Save()
   	delay (1000);
   	lcd.noBlink();
 
-salida:
+	salida:
 
   	return cancel;
 }
@@ -2111,7 +2111,7 @@ int EEPROM_Load()
   	delay (1000);
   	lcd.noBlink();
 
-salida:
+	salida:
 
   	return cancel;
 }
@@ -2184,7 +2184,7 @@ void EEPROM_Load_Init()
   	delay (2000);
   	lcd.noBlink();
 
-salir: {}
+	salir: {}
 
 }
 
@@ -2294,7 +2294,7 @@ int EEPROM_Clear()
   	delay (1000);
   	lcd.noBlink();
 
-salida:
+	salida:
 
   	return cancel;
 }
@@ -2333,7 +2333,7 @@ void EEPROM_Clear_All()
 void GUI_Control_Options()
 {
 
-inicio:
+	inicio:
 
   		// LCD
   	lcd.clear ();
@@ -2762,7 +2762,7 @@ void GUI_Config()
 		}
 		analogWrite(Back_Light_PWM, Num_Val);
 
-salida:
+		salida:
 
 			// mecanismo para on off Enable
 		if (Num_Val == 0)
@@ -2807,7 +2807,7 @@ salida:
 
 		analogWrite(Key_Light_PWM, Num_Val);
 
-salida_key:
+		salida_key:
 
 		// mecanismo para on off Enable
 		if (Num_Val == 0)
@@ -2853,7 +2853,7 @@ salida_key:
 
 		analogWrite(Contrast_PWM, Num_Val);
 
-salir:
+		salir:
 
 		EEPROM.write(Contrast_Add, Num_Val);	// guardar valor nuevo
 		goto Navegacion;
@@ -2916,7 +2916,7 @@ void GUI_Control_Multiply()
   	long Quantity 	   = 0;
   	int  Value         = 255;
 
-iniciar:
+	iniciar:
 
   		// LCD
   	lcd.clear ();
@@ -2948,7 +2948,7 @@ iniciar:
   	LCD_Col_Pos = 8;			// posicion de cursor
   	LCD_Row_Pos = 0;
 
-Siguiente:
+	Siguiente:
 
   		// configuracion de cursor
   	Cursor_Conf_Clear();		// limpiar array
@@ -3139,7 +3139,7 @@ void GUI_Control_Chaser()
   	LCD_Col_Pos = 8;			// posicion de cursor
   	LCD_Row_Pos = 1;
 
-Siguiente:
+	Siguiente:
 
   		// configuracion de cursor
   	Cursor_Conf_Clear();		// limpiar array
@@ -3302,7 +3302,7 @@ void Numerico_Write (int valor, int col, int row)
 void GUI_Control_Unit()
 {
 
-Inicio:
+	Inicio:
 
   	Canal_Actual = 1;
 
@@ -3349,9 +3349,8 @@ Inicio:
   	Cursor_Conf[2][13] = 1; 	// Control
   	Cursor_Conf[3][13] = 1;	// Memory
 
-  	// navegar
-
-Navegacion:
+  		// navegar
+	Navegacion:
 
   	GUI_Navegar(0, 0);
 
@@ -3628,7 +3627,7 @@ void Numerico_Calc(byte value)
     	Num_Val = Boton_Calc + (Num_Val_Temp_1 * 100) + (Num_Val_Temp_2 * 10);
   	}
 
-Salida:
+	Salida:
 
   	lcd.noBlink();
 
@@ -3639,7 +3638,7 @@ Salida:
   		// regresar el cursor a su ligar
   	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
 
-Salida_Option:
+	Salida_Option:
 
   	lcd.noBlink();
   	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
