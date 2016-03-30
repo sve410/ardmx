@@ -29,7 +29,7 @@
 - CORREGIR   - bornera de voltaje lateral metera mas
 - CORREGIR   - acostar C7
 - CORREGIR   - tornillos de LCD no coinciden
-- CORREGIR   - jumper de reset, poner pullup
+- CORREGIR   - jumper de reset, poner pullup, el pin no tiene interno 
 
 ***
  

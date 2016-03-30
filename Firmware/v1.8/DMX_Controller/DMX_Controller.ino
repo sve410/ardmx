@@ -68,16 +68,17 @@
 
 	// DMX
 int  	DMX_Values 			[515];  // array de valores actuales DMX
-int  	Canal_Actual 		= 1;
-byte 	Universo_Actual		= 0;
+int  	Canal_Actual 		= 1;	// canal actual de dmx
+byte 	Universo_Actual		= 0;	// universo actual de dmx
 
 	// Encoder
-byte  	Enc_Center			= 8;
-byte 	Enc_CLK				= 7;
-byte 	Enc_Data 			= 6;
+byte  	Enc_Center			= 8;	// pin
+byte 	Enc_CLK				= 7;	// pin
+byte 	Enc_Data 			= 6;	// pin
 Encoder myEnc				(Enc_Data, Enc_CLK);	// conexion de encoder
 
 	// Cursor
+byte Enc_ultima_pos			= 1;	// saber cual fue la ultima posicion de cursor, para posicionar encoder
 byte LCD_Col_Pos 			= 0;	// posicion en tiempo real de lcd
 byte LCD_Row_Pos 			= 0;	// posicion en tiempo real de lcd
 byte Cursor_Conf[4][20] 	= 
@@ -88,14 +89,14 @@ byte Cursor_Conf[4][20] 	=
 						};
 
 	//Teclado Numerico Array
-byte Boton_Array_1			= 36;
-byte Boton_Array_2			= 34;
-byte Boton_Array_3			= 32;
-byte Boton_Array_4			= 30;
-byte Boton_Array_A			= 44;
-byte Boton_Array_B			= 42;
-byte Boton_Array_C 			= 40;
-byte Boton_Array_D  		= 38;
+byte Boton_Array_1			= 36;	// pin
+byte Boton_Array_2			= 34;	// pin
+byte Boton_Array_3			= 32;	// pin
+byte Boton_Array_4			= 30;	// pin
+byte Boton_Array_A			= 44;	// pin
+byte Boton_Array_B			= 42;	// pin
+byte Boton_Array_C 			= 40;	// pin
+byte Boton_Array_D  		= 38;	// pin
 byte Boton_Calc 			= 17;	// valor calculado	# E * F, 17 sin valor calculado
 byte Num_Col_Pos  			= 0;	// posicion en tiempo real de lcd
 byte Num_Row_Pos 			= 0;	// posicion en tiempo real de lcd
@@ -103,24 +104,24 @@ int  Num_Val				= 0;	// valor generado al calculo
 long Boton_Delay_Teclado 	= 100;	// delay de lectura de boton
 
 	// LCD
-byte LCD_RS 				= 43;	// puertos de conexion de LCD
-byte LCD_E  				= 45;
-byte LCD_D4 				= 47;
-byte LCD_D5 				= 49;
-byte LCD_D6 				= 51;
-byte LCD_D7					= 53;
+byte LCD_RS 				= 43;	// pin
+byte LCD_E  				= 45;	// pin
+byte LCD_D4 				= 47;	// pin
+byte LCD_D5 				= 49;	// pin
+byte LCD_D6 				= 51;	// pin
+byte LCD_D7					= 53;	// pin
 byte Back_Light_PWM			= 13;	// salida para PWM de Back Light de LCD
 byte Contrast_PWM			= 12;	// salida para pwm de contraste de LCD
 byte Light_On_Off			= 0;	// saber si esta encendida o apagada, back y key
 LiquidCrystal lcd			(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
 
 	// Key Light
-byte Key_Light_PWM			= 11;	// salida para pwm de key light
-byte Key_Light_SW			= 3;
+byte Key_Light_PWM			= 11;	// pin
+byte Key_Light_SW			= 3;	// pin
 
-	// Light
-byte Light_PWM 				= 10;	// light external
-byte Light_SW 				= 2;
+	// Light external
+byte Light_PWM 				= 10;	// pin
+byte Light_SW 				= 2;	// pin
 
 	// EEPROM
 int  BackLight_Add 			= 4094;	// direccion de eeprom
@@ -129,7 +130,7 @@ int  Bank_Init_Add			= 4093;	// direccion de eeprom
 int  Key_Light_Add			= 4092;	// direccion de eeprom
 int  Light_Ext_Add			= 4091;	// direccion de eeprom
 int  EEPROM_Limit			= 4090;	// limite de espacios en eeprom para universos
-byte EEPROM_Def_Jumper		= 9;
+byte EEPROM_Def_Jumper		= 9;	// pin
 
 void setup()
 {
@@ -179,70 +180,70 @@ void setup()
 	ArduinoDmx0.init_tx				(DMX512);   // iniciar transmision universo 0, modo estandar DMX512
 
 		// no conectados
-	pinMode			(5, OUTPUT);
-	digitalWrite	(5, LOW);
-	pinMode			(6, OUTPUT);
-	digitalWrite	(6, LOW);
-	pinMode			(20, OUTPUT);
-	digitalWrite	(20, LOW);
-	pinMode			(21, OUTPUT);
-	digitalWrite	(21, LOW);
-	pinMode			(22, OUTPUT);
-	digitalWrite	(22, LOW);
-	pinMode			(23, OUTPUT);
-	digitalWrite	(23, LOW);
-	pinMode			(24, OUTPUT);
-	digitalWrite	(24, LOW);
-	pinMode			(25, OUTPUT);
-	digitalWrite	(25, LOW);
-	pinMode			(26, OUTPUT);
-	digitalWrite	(26, LOW);
-	pinMode			(27, OUTPUT);
-	digitalWrite	(27, LOW);
-	pinMode			(28, OUTPUT);
-	digitalWrite	(28, LOW);
-	pinMode			(29, OUTPUT);
-	digitalWrite	(29, LOW);
-	pinMode			(31, OUTPUT);
-	digitalWrite	(31, LOW);
-	pinMode			(33, OUTPUT);
-	digitalWrite	(33, LOW);
-	pinMode			(35, OUTPUT);
-	digitalWrite	(35, LOW);
-	pinMode			(37, OUTPUT);
-	digitalWrite	(37, LOW);
-	pinMode			(39, OUTPUT);
-	digitalWrite	(39, LOW);
-	pinMode			(41, OUTPUT);
-	digitalWrite	(41, LOW);
-	pinMode			(46, OUTPUT);
-	digitalWrite	(46, LOW);
-	pinMode			(48, OUTPUT);
-	digitalWrite	(48, LOW);
-	pinMode			(50, OUTPUT);
-	digitalWrite	(50, LOW);
-	pinMode			(52, OUTPUT);
-	digitalWrite	(52, LOW);
-	pinMode			(A0, OUTPUT);
-	digitalWrite	(A0, LOW);
-	pinMode			(A1, OUTPUT);
-	digitalWrite	(A1, LOW);
-	pinMode			(A2, OUTPUT);
-	digitalWrite	(A2, LOW);
-	pinMode			(A3, OUTPUT);
-	digitalWrite	(A3, LOW);
-	pinMode			(A4, OUTPUT);
-	digitalWrite	(A4, LOW);
-	pinMode			(A5, OUTPUT);
-	digitalWrite	(A5, LOW);
-	pinMode			(A6, OUTPUT);
-	digitalWrite	(A6, LOW);
-	pinMode			(A7, OUTPUT);
-	digitalWrite	(A7, LOW);
-	pinMode			(A8, OUTPUT);
-	digitalWrite	(A8, LOW);
-	pinMode			(A9, OUTPUT);
-	digitalWrite	(A9, LOW);
+	pinMode			(5,   OUTPUT);
+	digitalWrite	(5,   LOW);
+	pinMode			(6,   OUTPUT);
+	digitalWrite	(6,   LOW);
+	pinMode			(20,  OUTPUT);
+	digitalWrite	(20,  LOW);
+	pinMode			(21,  OUTPUT);
+	digitalWrite	(21,  LOW);
+	pinMode			(22,  OUTPUT);
+	digitalWrite	(22,  LOW);
+	pinMode			(23,  OUTPUT);
+	digitalWrite	(23,  LOW);
+	pinMode			(24,  OUTPUT);
+	digitalWrite	(24,  LOW);
+	pinMode			(25,  OUTPUT);
+	digitalWrite	(25,  LOW);
+	pinMode			(26,  OUTPUT);
+	digitalWrite	(26,  LOW);
+	pinMode			(27,  OUTPUT);
+	digitalWrite	(27,  LOW);
+	pinMode			(28,  OUTPUT);
+	digitalWrite	(28,  LOW);
+	pinMode			(29,  OUTPUT);
+	digitalWrite	(29,  LOW);
+	pinMode			(31,  OUTPUT);
+	digitalWrite	(31,  LOW);
+	pinMode			(33,  OUTPUT);
+	digitalWrite	(33,  LOW);
+	pinMode			(35,  OUTPUT);
+	digitalWrite	(35,  LOW);
+	pinMode			(37,  OUTPUT);
+	digitalWrite	(37,  LOW);
+	pinMode			(39,  OUTPUT);
+	digitalWrite	(39,  LOW);
+	pinMode			(41,  OUTPUT);
+	digitalWrite	(41,  LOW);
+	pinMode			(46,  OUTPUT);
+	digitalWrite	(46,  LOW);
+	pinMode			(48,  OUTPUT);
+	digitalWrite	(48,  LOW);
+	pinMode			(50,  OUTPUT);
+	digitalWrite	(50,  LOW);
+	pinMode			(52,  OUTPUT);
+	digitalWrite	(52,  LOW);
+	pinMode			(A0,  OUTPUT);
+	digitalWrite	(A0,  LOW);
+	pinMode			(A1,  OUTPUT);
+	digitalWrite	(A1,  LOW);
+	pinMode			(A2,  OUTPUT);
+	digitalWrite	(A2,  LOW);
+	pinMode			(A3,  OUTPUT);
+	digitalWrite	(A3,  LOW);
+	pinMode			(A4,  OUTPUT);
+	digitalWrite	(A4,  LOW);
+	pinMode			(A5,  OUTPUT);
+	digitalWrite	(A5,  LOW);
+	pinMode			(A6,  OUTPUT);
+	digitalWrite	(A6,  LOW);
+	pinMode			(A7,  OUTPUT);
+	digitalWrite	(A7,  LOW);
+	pinMode			(A8,  OUTPUT);
+	digitalWrite	(A8,  LOW);
+	pinMode			(A9,  OUTPUT);
+	digitalWrite	(A9,  LOW);
 	pinMode			(A10, OUTPUT);
 	digitalWrite	(A10, LOW);
 	pinMode			(A11, OUTPUT);
@@ -295,7 +296,7 @@ void EEPROM_Default()
 			// backlight
 		EEPROM.write(BackLight_Add, Backlight_Def);
 			// contraste
-		EEPROM.write(Contrast_Add, Contrast_Def);
+		EEPROM.write(Contrast_Add,  Contrast_Def);
 			// Bank init
 		EEPROM.write(Bank_Init_Add, Initial_Bank_Def);
 			// Key light
@@ -1350,7 +1351,7 @@ int GUI_Memory_Bank(byte Opcion)
 
   		// Acciones
   	Cursor_Conf[1][0]   = 1;	// Bank 1
-  	Cursor_Conf[2][0]   = 1;  // Bank 2
+  	Cursor_Conf[2][0]   = 1;  	// Bank 2
   	Cursor_Conf[3][0]   = 1;	// Bank 3
   	Cursor_Conf[1][7]   = 1;	// Bank 4
   	Cursor_Conf[2][7]   = 1;	// Bank 5
@@ -1472,13 +1473,13 @@ void GUI_Memory()
   	Cursor_Conf_Clear();		// limpiar array
 
   		// Acciones
-  	Cursor_Conf[1][0]  = 1;	// Save
+  	Cursor_Conf[1][0]  = 1;		// Save
   	Cursor_Conf[2][0]  = 1; 	// Load
-  	Cursor_Conf[3][0]  = 1;	// Clear
-  	Cursor_Conf[2][6]  = 1;	// Clear All
-  	Cursor_Conf[3][6]  = 1;	// Empty RAM
-  	Cursor_Conf[1][6]  = 1;	// Black Out
-  	Cursor_Conf[3][15] = 1;	// Exit
+  	Cursor_Conf[3][0]  = 1;		// Clear
+  	Cursor_Conf[2][6]  = 1;		// Clear All
+  	Cursor_Conf[3][6]  = 1;		// Empty RAM
+  	Cursor_Conf[1][6]  = 1;		// Black Out
+  	Cursor_Conf[3][15] = 1;		// Exit
 
   		// navegar
 	regresa:
@@ -1581,11 +1582,11 @@ void GUI_Control_Secuencer()
   	Cursor_Conf_Clear();		// limpiar array
 
   		// Acciones
-  	Cursor_Conf[1][9]  = 1;	// Delay
+  	Cursor_Conf[1][9]  = 1;		// Delay
   	Cursor_Conf[2][9]  = 1; 	// First Bank
-  	Cursor_Conf[3][9]  = 1;	// Final Bank
-  	Cursor_Conf[2][14] = 1;	// Control
-  	Cursor_Conf[3][14] = 1;	// start
+  	Cursor_Conf[3][9]  = 1;		// Final Bank
+  	Cursor_Conf[2][14] = 1;		// Control
+  	Cursor_Conf[3][14] = 1;		// start
 
 	inicio:
 
@@ -1956,7 +1957,7 @@ int EEPROM_Save()
   	// regresa 1 si se selecciona exit
 
   	int cancel = 0;				// regresa 1 si se selecciona salir
-  	int bank;						// regresa 1 si se selecciona salir
+  	int bank;					// regresa 1 si se selecciona salir
   	int EEPROM_Add = 0;			// direccion de eeprom para universos
   	bank = GUI_Memory_Bank(1);	// seleccinar banco
 
@@ -2042,7 +2043,7 @@ int EEPROM_Load()
   	// regresa 1 si se selecciona exit
 
   	int cancel = 0;				// regresa 1 si se selecciona salir
-  	int bank;						// regresa 1 si se selecciona salir
+  	int bank;					// regresa 1 si se selecciona salir
   	int EEPROM_Add = 0;			// seleccion de universo
  	bank = GUI_Memory_Bank(2);	// seleccinar banco
 
@@ -2312,7 +2313,7 @@ void EEPROM_Clear_All()
 
   	for (int Canal = 0; Canal <= EEPROM_Limit; Canal ++)
   	{
-    	EEPROM.write (Canal, 0);			// escritura EEPROM
+    	EEPROM.write (Canal, 0);				// escritura EEPROM
     	if (Canal <= 511)
     	{
      	 	DMX_Values[Canal + 1] = 0;
@@ -2745,9 +2746,9 @@ void GUI_Config()
 		if (Num_Val == 712)
 		{
 			digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
-			while (digitalRead(Boton_Array_D) == HIGH) //&& digitalRead(Boton_Center) == HIGH) // enter y center para paro
+			while (digitalRead(Boton_Array_D) == HIGH) 	//&& digitalRead(Boton_Center) == HIGH) // enter y center para paro
 			{
-				Encoder_Read (11, 1, 0, 255, 3);	// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+				Encoder_Read (11, 1, 0, 255, 3);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
 				goto salida;
 				
 			}
@@ -2775,7 +2776,7 @@ void GUI_Config()
 			Light_On_Off = 1;
 		}
 
-		EEPROM.write(BackLight_Add, Num_Val);	// guardar valor nuevo
+		EEPROM.write(BackLight_Add, Num_Val);			// guardar valor nuevo
 		goto Navegacion;
 	}
 
@@ -2788,10 +2789,10 @@ void GUI_Config()
 		
 		if (Num_Val == 712)
 		{
-			digitalWrite(Boton_Array_3, LOW);	// lectura linea 3
+			digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
 			while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Enc_Center) == HIGH) // enter y center para paro
 			{
-				Encoder_Read (11, 0, 0, 255, 4);	// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
+				Encoder_Read (11, 0, 0, 255, 4);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
 				goto salida_key;
 			}
 			digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
@@ -3169,7 +3170,7 @@ void GUI_Control_Chaser()
   		// Start
   	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
   	{
-    	long ciclo_longitud = 1300;					// numero multiplicador aprox para 1 seg
+    	long ciclo_longitud = 1300;						// numero multiplicador aprox para 1 seg
     	long ciclo 			= 0;
     	long Delay_Cont		= 0;
     	int  canal 			= First;
@@ -3179,8 +3180,8 @@ void GUI_Control_Chaser()
 
     		// borrar canales previos
     	for (int Canales = 0; Canales <= 512; Canales ++)
-    	{
-     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 		// salida a DMX
+    	{	
+     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
     	}
 
     	while (digitalRead(Enc_Center) == HIGH)			// lectura del boton centro
@@ -3344,10 +3345,10 @@ void GUI_Control_Unit()
   	Cursor_Conf_Clear();		// limpiar array
 
   		// Cursores
-  	Cursor_Conf[2][8]  = 1;	// Channel
-  	Cursor_Conf[3][8]  = 1;	// Value
+  	Cursor_Conf[2][8]  = 1;		// Channel
+  	Cursor_Conf[3][8]  = 1;		// Value
   	Cursor_Conf[2][13] = 1; 	// Control
-  	Cursor_Conf[3][13] = 1;	// Memory
+  	Cursor_Conf[3][13] = 1;		// Memory
 
   		// navegar
 	Navegacion:
@@ -3502,7 +3503,7 @@ void Numerico_Calc(byte value)
     	goto Salida;			// num val = 0
   	}
 
-  	if (value == 1)			// si es un valor
+  	if (value == 1)				// si es un valor
   	{
     	if (Boton_Calc == 10)	// 255
     	{
@@ -3536,7 +3537,7 @@ void Numerico_Calc(byte value)
     	goto Salida;			// num val = num val anterior
   	}
 
-  	if (value == 1)			// si es un valor
+  	if (value == 1)				// si es un valor
   	{
     	if (Boton_Calc == 10)	// 255
     	{
@@ -3647,7 +3648,7 @@ void Numerico_Calc(byte value)
 
 void Numerico_Read()
 {
-  	long Num_Barrido_Time = 5;			// tiempo entre barrido de keys
+  	long Num_Barrido_Time = 5;				// tiempo entre barrido de keys
   	Boton_Calc = 17;						// limpiar valor para lectura
 
   	while (Boton_Calc == 17)				// valor calculado	# E * F, 17 sin valor calculado

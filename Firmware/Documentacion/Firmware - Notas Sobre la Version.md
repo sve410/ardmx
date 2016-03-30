@@ -39,6 +39,7 @@
 - AGREGADO  - a EEPROM, espacio para Ext Light
 - AGREGADO  - función para jumper de eeprom default
 - AGREGADO  - dimmer de pantalla al inicio
+- AGREGADO  - indices a posiciones de LCD en el excel
 
 ***
 
