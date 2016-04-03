@@ -121,6 +121,7 @@ byte LCD_D6 				= 51;	// pin
 byte LCD_D7					= 53;	// pin
 byte Back_Light_PWM			= 13;	// salida para PWM de Back Light de LCD
 byte Contrast_PWM			= 12;	// salida para pwm de contraste de LCD
+byte Light_On_Off			= 0;	// saber si esta encendida o apagada, back y key
 LiquidCrystal lcd			(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
 
 	// Key Light
@@ -614,7 +615,7 @@ void GUI_About()
 void Multi_Matrix(int inicial)
 {
 	// dibujar matriz de universo dmx
-
+	/*
 		// dibujar banco
 	Numerico_Write (inicial, 13, 0);
 	Numerico_Write (inicial + 14, 17, 0);
@@ -639,9 +640,10 @@ void Multi_Matrix(int inicial)
 	Numerico_Write (DMX_Values[inicial + 12], 9, 3);
 	Numerico_Write (DMX_Values[inicial + 13], 13, 3);
 	Numerico_Write (DMX_Values[inicial + 14], 17, 3);
+	*/
 }
 
-void GUI_Control_Matrix()
+/*void GUI_Control_Matrix()
 {
 	// control en matriz
 	int Inicial = 1;
@@ -901,7 +903,7 @@ void GUI_Control_Matrix()
 	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
 	DMX_Values[Canal_Actual] = Num_Val;
 	goto Banco;
-}
+}*/
 
 void GUI_Memory_Init()
 {
@@ -976,7 +978,7 @@ void GUI_Memory_Init()
   	}
   	*/
 }
-
+/*
 int GUI_Memory_Bank(byte Opcion)
 {
 	// regresa 1 si se selecciona salir, de lo contrario 0
@@ -1113,8 +1115,8 @@ int GUI_Memory_Bank(byte Opcion)
 	Salida:
 
   	return salir;
-}
-
+}*/
+/*
 void GUI_Memory()
 {
 
@@ -1227,8 +1229,8 @@ void GUI_Memory()
 
 	salida: {}
 
-}
-
+}*/
+/*
 void GUI_Control_Secuencer()
 {
   	// secuenciador de bancos guardados en eeprom
@@ -1607,7 +1609,7 @@ void GUI_Control_Secuencer()
     	}
   	}
   	goto inicio;
-}
+}*/
 
 void Black_Out()
 {
@@ -1634,7 +1636,7 @@ void Black_Out()
   	lcd.setCursor (6, 2);
   	lcd.noBlink();
 }
-
+/*
 int EEPROM_Save()
 {
   	// guarda el universo en la eeprom
@@ -1719,8 +1721,8 @@ int EEPROM_Save()
 	salida:
 
   	return cancel;
-}
-
+}*/
+/*
 int EEPROM_Load()
 {
   	// guarda los valores en la eeprom
@@ -1799,7 +1801,7 @@ int EEPROM_Load()
 	salida:
 
   	return cancel;
-}
+}*/
 
 void EEPROM_Load_Init()
 {
@@ -1905,7 +1907,7 @@ int EEPROM_Clear()
   	int cancel = 0;				// regresa 1 si se selecciona salir
   	int bank;					// regresa 1 si se selecciona salir
   	int EEPROM_Add = 0;			// direccion de eeprom para universos
-  	bank = GUI_Memory_Bank(3);	// seleccinar banco
+  	//bank = GUI_Memory_Bank(3);	// seleccinar banco
 
   	if (bank == 1)				// si se selecciono salir
   	{
@@ -2014,7 +2016,7 @@ void EEPROM_Clear_All()
   	Universo_Actual = 0;
   	delay (1000);
 }
-
+/*
 void GUI_Control_Options()
 {
 
@@ -2120,7 +2122,7 @@ void GUI_Control_Options()
     	GUI_Memory();
     	goto inicio;
   	}
-}
+}*/
 
 /*void GUI_Convert()
 {
@@ -2362,7 +2364,7 @@ void GUI_Control_Options()
     goto calc;
   }
 }*/
-
+/*
 void GUI_Config()
 {
 	Inicio:
@@ -2592,8 +2594,8 @@ void GUI_Config()
 	}
 
 	goto Navegacion;
-}
-
+}*/
+/*
 void GUI_Control_Multiply()
 {
   	int  First_Channel = 1;
@@ -2798,8 +2800,8 @@ void GUI_Control_Multiply()
   	}
 
   	goto Siguiente;
-}
-
+}*/
+/*
 void GUI_Control_Chaser()
 {
   	long Delay     = 1;
@@ -2957,8 +2959,8 @@ void GUI_Control_Chaser()
     	}
   	}
   	goto Siguiente;
-}
-
+}*/
+/*
 void GUI_Control_Unit()
 {
 
@@ -3111,8 +3113,8 @@ void GUI_Control_Unit()
   	}
 
   	goto Navegacion;
-}
-
+}*/
+/*
 void Ubicar()
 {
   	digitalWrite(Boton_Array_4, LOW);
@@ -3131,7 +3133,7 @@ void Ubicar()
   	digitalWrite(Boton_Array_4, HIGH);
   	delay(300); 	// rebote de boton enter
   	lcd.setCursor (Num_Col_Pos, Num_Row_Pos);
-}
+}*/
 
 // ----------------------------- Navegacion LCD - Encoder - Keypad v0.0 -----------------------------
 
