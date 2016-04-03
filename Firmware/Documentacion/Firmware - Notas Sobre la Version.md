@@ -22,6 +22,10 @@
 - AGREGADO 	- calibración de touch, obtención de datos completa
 
 ***
+**v1.9 - beta - Hardware v0.7**
+- AGREGADO  - modelo de programación de LCD - Encoder - keypad
+	https://github.com/daniel3514/Arduino-LCD-Encoder-KeyPad-Examples/tree/master/Examples/LCD%20-%20Encoder%20-%20Key%20Pad/v0.0
+
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
