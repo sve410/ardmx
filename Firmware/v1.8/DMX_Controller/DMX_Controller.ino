@@ -262,7 +262,7 @@ void loop()
 {
 	Back_Light_Init();		// inicializador de Backlight desde eeprom
 	Contrast_Init();		// inicializador de EEPROM desde eeprom
-	// EEPROM_Default();	// jumper para default eeprom ------------ esperar a poner pullup fisico
+	EEPROM_Default();		// jumper para default eeprom
 	EEPROM_Load_Init();		// valores desde eeprom
 	GUI_About();			// interface grafica de about
 	GUI_Memory_Init();		// interface grafica de memoria
@@ -496,7 +496,7 @@ void GUI_About()
 	byte Firm_Ver_Ent = 1;
 	byte Firm_Ver_Dec = 8;
 	byte Hard_Ver_Ent = 0;
-	byte Hard_Ver_Dec = 6;
+	byte Hard_Ver_Dec = 7;
 	byte Key_Light_Value 	= EEPROM.read(Key_Light_Add);
 	byte Back_Light_Value 	= EEPROM.read(BackLight_Add);
 	
