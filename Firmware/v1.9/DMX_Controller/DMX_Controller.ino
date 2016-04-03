@@ -75,33 +75,42 @@ byte 	Universo_Actual		= 0;	// universo actual de dmx
 byte  	Enc_Center			= 8;	// pin
 byte 	Enc_CLK				= 7;	// pin
 byte 	Enc_Data 			= 6;	// pin
-Encoder myEnc				(Enc_Data, Enc_CLK);	// conexion de encoder
+Encoder myEnc				(Enc_CLK, Enc_Data);	// conexion de encoder
 
 	// Cursor
-byte Enc_ultima_pos			= 1;	// saber cual fue la ultima posicion de cursor, para posicionar encoder
-byte LCD_Col_Pos 			= 0;	// posicion en tiempo real de lcd
-byte LCD_Row_Pos 			= 0;	// posicion en tiempo real de lcd
-byte Cursor_Conf[4][20] 	= 
-						{	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-  							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-  							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-  							{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+int  Cursor_Index_Pos 		= 1;	// posicion en tiempo real de lcd
+byte Cursor_Index[20][4] 	= 
+						{	{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, },
+  							{0, 0, 0, 0, }
 						};
 
-	//Teclado Numerico Array
-byte Boton_Array_1			= 36;	// pin
-byte Boton_Array_2			= 34;	// pin
-byte Boton_Array_3			= 32;	// pin
-byte Boton_Array_4			= 30;	// pin
-byte Boton_Array_A			= 44;	// pin
-byte Boton_Array_B			= 42;	// pin
-byte Boton_Array_C 			= 40;	// pin
-byte Boton_Array_D  		= 38;	// pin
-byte Boton_Calc 			= 17;	// valor calculado	# E * F, 17 sin valor calculado
-byte Num_Col_Pos  			= 0;	// posicion en tiempo real de lcd
-byte Num_Row_Pos 			= 0;	// posicion en tiempo real de lcd
-int  Num_Val				= 0;	// valor generado al calculo
-long Boton_Delay_Teclado 	= 100;	// delay de lectura de boton
+	// tecleado					
+byte Keypad_A				= 30; 	
+byte Keypad_B				= 32; 	
+byte Keypad_C				= 34; 	
+byte Keypad_D				= 36; 	
+byte Keypad_1				= 38; 	
+byte Keypad_2				= 40; 
+byte Keypad_3				= 42;
+byte Keypad_4				= 44;
 
 	// LCD
 byte LCD_RS 				= 43;	// pin
@@ -112,7 +121,6 @@ byte LCD_D6 				= 51;	// pin
 byte LCD_D7					= 53;	// pin
 byte Back_Light_PWM			= 13;	// salida para PWM de Back Light de LCD
 byte Contrast_PWM			= 12;	// salida para pwm de contraste de LCD
-byte Light_On_Off			= 0;	// saber si esta encendida o apagada, back y key
 LiquidCrystal lcd			(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
 
 	// Key Light
@@ -138,19 +146,20 @@ void setup()
 	pinMode(Enc_Center,				INPUT_PULLUP);
 	// no es necesario declarar CLK y data
 
-		// Botones Teclado numerico
-	pinMode(Boton_Array_1, 			OUTPUT);
-	pinMode(Boton_Array_2, 			OUTPUT);
-	pinMode(Boton_Array_3, 			OUTPUT);
-	pinMode(Boton_Array_4,			OUTPUT);
-	pinMode(Boton_Array_A, 			INPUT_PULLUP);
-	pinMode(Boton_Array_B, 			INPUT_PULLUP);
-	pinMode(Boton_Array_C, 			INPUT_PULLUP);
-	pinMode(Boton_Array_D, 			INPUT_PULLUP);
-	digitalWrite					(Boton_Array_1, HIGH);
-	digitalWrite					(Boton_Array_2, HIGH);
-	digitalWrite					(Boton_Array_3, HIGH);
-	digitalWrite					(Boton_Array_4, HIGH);
+	// Teclado
+	pinMode			(Keypad_A, OUTPUT);
+	pinMode			(Keypad_B, OUTPUT);
+	pinMode			(Keypad_C, OUTPUT);
+	pinMode			(Keypad_D, OUTPUT);
+	pinMode			(Keypad_1, INPUT_PULLUP);
+	pinMode			(Keypad_2, INPUT_PULLUP);
+	pinMode			(Keypad_3, INPUT_PULLUP);
+	pinMode			(Keypad_4, INPUT_PULLUP);
+
+	digitalWrite	(Keypad_A, HIGH);
+	digitalWrite	(Keypad_B, HIGH);
+	digitalWrite	(Keypad_C, HIGH);
+	digitalWrite	(Keypad_D, HIGH);
 
 		// LCD
 	pinMode(LCD_RS, 				OUTPUT);
