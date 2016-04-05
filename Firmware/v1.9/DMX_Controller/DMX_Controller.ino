@@ -948,7 +948,7 @@ void GUI_Memory_Init()
 	switch (Cursor_Index_Pos)
 	{
 		case 1:
-			//GUI_Control_Options();
+			GUI_Control_Options();
 			break;
 		case 2:
 			salir = EEPROM_Load();
@@ -956,7 +956,7 @@ void GUI_Memory_Init()
     		{
       			goto inicio;
     		}
-    		//GUI_Control_Options();
+    		GUI_Control_Options();
 			break;
 		case 3:
 			salir = EEPROM_Clear();
@@ -1873,7 +1873,7 @@ int EEPROM_Clear()
   	int cancel = 0;				// regresa 1 si se selecciona salir
   	int bank;					// regresa 1 si se selecciona salir
   	int EEPROM_Add = 0;			// direccion de eeprom para universos
-  	//bank = GUI_Memory_Bank(3);	// seleccinar banco
+  	bank = GUI_Memory_Bank(3);	// seleccinar banco
 
   	if (bank == 1)				// si se selecciono salir
   	{
@@ -1982,7 +1982,7 @@ void EEPROM_Clear_All()
   	Universo_Actual = 0;
   	delay (1000);
 }
-/*
+
 void GUI_Control_Options()
 {
 
@@ -2019,76 +2019,61 @@ void GUI_Control_Options()
 	lcd.setCursor (11, 1);
 	lcd.print ("Memory");
 
-  		// Cursor
-  	LCD_Col_Pos = 1;			// posicion de cursor
-  	LCD_Row_Pos = 2;
+  		// borrar datos previos en el indice
+	Cursor_Index_Clear();
 
-  		// configuracion de cursor
-  	Cursor_Conf_Clear();		// limpiar array
+  		// establecer el indice
+  	Cursor_Index[1][1]   = 2;	// Unitary		// y x
+  	Cursor_Index[1][2]   = 3; 	// Matrix
+  	Cursor_Index[1][3]   = 4; 	// Chaser
+  	Cursor_Index[10][3]  = 8; 	// Multiply
+  	Cursor_Index[10][0]  = 5; 	// Config
+  	Cursor_Index[10][2]  = 7; 	// Secuencer
+  	Cursor_Index[10][1]  = 6; 	// Memory
+  	Cursor_Index[1][0]   = 1; 	// Convert
 
-  		// Acciones
-  	Cursor_Conf[1][1]   = 1;	// Unitary
-  	Cursor_Conf[2][1]   = 1; 	// Matrix
-  	Cursor_Conf[3][1]   = 1; 	// Chaser
-  	Cursor_Conf[3][10]  = 1; 	// Multiply
-  	Cursor_Conf[0][10]  = 1; 	// Config
-  	Cursor_Conf[2][10]  = 1; 	// Secuencer
-  	Cursor_Conf[1][10]  = 1; 	// Memory
-  	Cursor_Conf[0][1]   = 1; 	// Convert
+  	navegacion:
 
-  		// navegar
-  	GUI_Navegar(0, 0);
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar();	// actualiza Cursor_Index_Pos
 
-  	// Acciones
-  		// Unitary
-  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 1)
-  	{
-    	GUI_Control_Unit();
-  	}
-
-  		// Matrix
-  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
-  	{
-    	GUI_Control_Matrix();
-  	}
-
-  		// Chaser
-  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 3)
-  	{
-    	GUI_Control_Chaser();
-  	}
-
-  		// Multiply
-  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
-  	{
-   	 	GUI_Control_Multiply();
-  	}
-
-  		// Config
-  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 0)
-  	{
-    	GUI_Config();
-  	}
-
-  		// Secuencer
-  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
-  	{
-    	GUI_Control_Secuencer();
-  	}
-
-  		// Converter
-  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 0)
-  	{
-    	//GUI_Convert();
-  	}
-
-  		// Memory
-  	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
-  	{
-    	GUI_Memory();
-    	goto inicio;
-  	}
-}*/
+  	switch (Cursor_Index_Pos)
+	{
+			// Convert
+		case 1:
+			// convert _______________________________________________________
+			break;
+			// Unitary
+		case 2:
+			//GUI_Control_Unit();
+			break;
+			// Matrix
+		case 3:
+			//GUI_Control_Matrix();
+			break;
+			// Chaser
+		case 4:
+			//GUI_Control_Chaser();
+			break;
+			// Config
+		case 5:
+			//GUI_Config();
+			break;
+			// Memory
+		case 6:
+			//GUI_Memory();
+    		goto inicio;
+			break;
+			// Secuencer
+		case 7:
+			//GUI_Control_Secuencer();
+			break;
+			// Multiply
+		case 8:
+			//GUI_Control_Multiply();
+			break;
+	}
+}
 
 /*void GUI_Convert()
 {
