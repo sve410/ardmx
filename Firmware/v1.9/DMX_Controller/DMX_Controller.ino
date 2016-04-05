@@ -144,23 +144,23 @@ byte EEPROM_Def_Jumper		= 9;	// pin
 void setup()
 {
 		// Encoder
-	pinMode(Enc_Center,				INPUT_PULLUP);
+	pinMode			(Enc_Center,	INPUT_PULLUP);
 	// no es necesario declarar CLK y data
 
 	// Teclado
-	pinMode			(Keypad_A, OUTPUT);
-	pinMode			(Keypad_B, OUTPUT);
-	pinMode			(Keypad_C, OUTPUT);
-	pinMode			(Keypad_D, OUTPUT);
-	pinMode			(Keypad_1, INPUT_PULLUP);
-	pinMode			(Keypad_2, INPUT_PULLUP);
-	pinMode			(Keypad_3, INPUT_PULLUP);
-	pinMode			(Keypad_4, INPUT_PULLUP);
+	pinMode			(Keypad_A, 		OUTPUT);
+	pinMode			(Keypad_B, 		OUTPUT);
+	pinMode			(Keypad_C, 		OUTPUT);
+	pinMode			(Keypad_D, 		OUTPUT);
+	pinMode			(Keypad_1, 		INPUT_PULLUP);
+	pinMode			(Keypad_2, 		INPUT_PULLUP);
+	pinMode			(Keypad_3, 		INPUT_PULLUP);
+	pinMode			(Keypad_4, 		INPUT_PULLUP);
 
-	digitalWrite	(Keypad_A, HIGH);
-	digitalWrite	(Keypad_B, HIGH);
-	digitalWrite	(Keypad_C, HIGH);
-	digitalWrite	(Keypad_D, HIGH);
+	digitalWrite	(Keypad_A, 		HIGH);
+	digitalWrite	(Keypad_B, 		HIGH);
+	digitalWrite	(Keypad_C, 		HIGH);
+	digitalWrite	(Keypad_D, 		HIGH);
 
 		// LCD
 	pinMode(LCD_RS, 				OUTPUT);
@@ -192,8 +192,6 @@ void setup()
 		// no conectados
 	pinMode			(5,   OUTPUT);
 	digitalWrite	(5,   LOW);
-	pinMode			(6,   OUTPUT);
-	digitalWrite	(6,   LOW);
 	pinMode			(20,  OUTPUT);
 	digitalWrite	(20,  LOW);
 	pinMode			(21,  OUTPUT);
@@ -940,45 +938,37 @@ void GUI_Memory_Init()
 	Cursor_Index_Clear();
 
 		// establecer el indice
-	Cursor_Index[2][1] 	= 1;		// y x 	// Empty
-	Cursor_Index[2][8] 	= 1;		// y x 	// Load
-	Cursor_Index[2][14]	= 1;		// y x 	// Clear
+	Cursor_Index[1] [2] = 1;		// y x 	// Empty
+	Cursor_Index[8] [2] = 2;		// y x 	// Load
+	Cursor_Index[14][2]	= 3;		// y x 	// Clear
 
+		// navegacion
 	Navegar();	// actualiza Cursor_Index_Pos
-
-  	/*
-  
-  	// Acciones
-  		// Load
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
-  	{
-    	salir = EEPROM_Load();
-    	if (salir == 1)
-    	{
-      		goto inicio;
-    	}
-    	GUI_Control_Options();
-  	}
-
-  		// Clear
-  	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
-  	{
-    	salir = EEPROM_Clear();
-    	if (salir == 1)
-    	{
-      		goto inicio;
-    	}
-    	GUI_Control_Options();
-  	}
-
-  		// Empty
-  	if (LCD_Col_Pos == 1 && LCD_Row_Pos == 2)
-  	{
-    	GUI_Control_Options();
-  	}
-  	*/
+	
+	switch (Cursor_Index_Pos)
+	{
+		case 1:
+			//GUI_Control_Options();
+			break;
+		case 2:
+			salir = EEPROM_Load();
+    		if (salir == 1)
+    		{
+      			goto inicio;
+    		}
+    		//GUI_Control_Options();
+			break;
+		case 3:
+			salir = EEPROM_Clear();
+    		if (salir == 1)
+    		{
+      			goto inicio;
+    		}
+    		//GUI_Control_Options();
+			break;
+	}
 }
-/*
+
 int GUI_Memory_Bank(byte Opcion)
 {
 	// regresa 1 si se selecciona salir, de lo contrario 0
@@ -1028,94 +1018,70 @@ int GUI_Memory_Bank(byte Opcion)
     	lcd.print(Universo_Actual);
   	}
 
- 		// Cursor inicial
-  	LCD_Col_Pos = 0;			// posicion de cursor
-  	LCD_Row_Pos = 1;
+ 		// borrar datos previos en el indice
+	Cursor_Index_Clear();
 
-  		// configuracion de cursor
-  	Cursor_Conf_Clear();		// limpiar array
+  		// establecer el indice
+  	Cursor_Index[0][1]   = 1;	// Bank 1 	// y x
+  	Cursor_Index[0][2]   = 2;  	// Bank 2
+  	Cursor_Index[0][3]   = 3;	// Bank 3
+  	Cursor_Index[7][1]   = 4;	// Bank 4
+  	Cursor_Index[7][2]   = 5;	// Bank 5
+  	Cursor_Index[7][3]   = 6;	// Bank 6
+  	Cursor_Index[14][1]  = 7;	// Bank 7
+  	Cursor_Index[14][2]  = 8;	// Bank 8
+  	Cursor_Index[14][3]  = 9;	// Exit
+	
+	Cursor_Index_Pos = 1;
+  	
+  	navegacion:
 
-  		// Acciones
-  	Cursor_Conf[1][0]   = 1;	// Bank 1
-  	Cursor_Conf[2][0]   = 1;  	// Bank 2
-  	Cursor_Conf[3][0]   = 1;	// Bank 3
-  	Cursor_Conf[1][7]   = 1;	// Bank 4
-  	Cursor_Conf[2][7]   = 1;	// Bank 5
-  	Cursor_Conf[3][7]   = 1;	// Bank 6
-  	Cursor_Conf[1][14]  = 1;	// Bank 7
-  	Cursor_Conf[2][14]  = 1;	// Bank 8
-  	Cursor_Conf[3][14]  = 1;	// Exit
-
-  		// navegar
-  	GUI_Navegar(0, 0);
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar();	// actualiza Cursor_Index_Pos
   
-  	// Acciones
-  		// Bank 1
-  	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
-  	{
-    	Universo_Actual = 1;
-   	 	goto Salida;
+  	switch (Cursor_Index_Pos)
+	{
+			// Bank 1
+		case 1:
+    		Universo_Actual = 1;
+   	 		break;
+  			// Bank 2
+   	 	case 2:
+  			Universo_Actual = 2;
+    		break;
+	  		// Bank 3
+	  	case 3:
+  			Universo_Actual = 3;
+    		break;
+    		// Bank 4
+	  	case 4:
+  			Universo_Actual = 4;
+    		break;
+    		// Bank 5
+	  	case 5:
+  			Universo_Actual = 5;
+    		break;
+    		// Bank 6
+	  	case 6:
+  			Universo_Actual = 6;
+    		break;
+  			// Bank 7
+	  	case 7:
+  			Universo_Actual = 7;
+    		break;
+    		// Bank 8
+	  	case 8:
+  			Universo_Actual = 8;
+    		break;
+  			// Exit
+	  	case 9:
+  			salir = 1;
+  			Cursor_Index_Pos = 1;
+  			break;
   	}
-
-  		// Bank 2
-  	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
-  	{
-    	Universo_Actual = 2;
-    	goto Salida;
-  	}
-
-  		// Bank 3
-  	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
-  	{
-    	Universo_Actual = 3;
-    	goto Salida;
-  	}
-
-  		// Bank 4
-  	if (LCD_Col_Pos == 7 && LCD_Row_Pos == 1)
-  	{
-    	Universo_Actual = 4;
-    	goto Salida;
-  	}
-
-  		// Bank 5
-  	if (LCD_Col_Pos == 7 && LCD_Row_Pos == 2)
-  	{
-    	Universo_Actual = 5;
-    	goto Salida;
-  	}
-
-  		// Bank 6
-  	if (LCD_Col_Pos == 7 && LCD_Row_Pos == 3)
-  	{
-    	Universo_Actual = 6;
-    	goto Salida;
-  	}
-
-  		// Bank 7
-  	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 1)
-  	{
-    	Universo_Actual = 7;
-    	goto Salida;
-  	}
-
-  		// Bank 8
-  	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
-  	{
-    	Universo_Actual = 8;
-    	goto Salida;
-  	}
-
-  		// Exit
-  	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
-  	{
-    	salir = 1;
-  	}
-
-	Salida:
 
   	return salir;
-}*/
+}
 /*
 void GUI_Memory()
 {
@@ -1722,7 +1688,7 @@ int EEPROM_Save()
 
   	return cancel;
 }*/
-/*
+
 int EEPROM_Load()
 {
   	// guarda los valores en la eeprom
@@ -1801,7 +1767,7 @@ int EEPROM_Load()
 	salida:
 
   	return cancel;
-}*/
+}
 
 void EEPROM_Load_Init()
 {
