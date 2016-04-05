@@ -1602,7 +1602,7 @@ void Black_Out()
   	lcd.setCursor (6, 2);
   	lcd.noBlink();
 }
-/*
+
 int EEPROM_Save()
 {
   	// guarda el universo en la eeprom
@@ -1687,7 +1687,7 @@ int EEPROM_Save()
 	salida:
 
   	return cancel;
-}*/
+}
 
 int EEPROM_Load()
 {
@@ -2041,7 +2041,7 @@ void GUI_Control_Options()
 	{
 			// Convert
 		case 1:
-			// convert _______________________________________________________
+			// GUI_Convert();
 			break;
 			// Unitary
 		case 2:
