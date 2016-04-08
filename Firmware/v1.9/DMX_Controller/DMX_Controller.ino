@@ -2057,7 +2057,7 @@ void GUI_Control_Options()
 			break;
 			// Config
 		case 5:
-			//GUI_Config();
+			GUI_Config();
 			break;
 			// Memory
 		case 6:
@@ -2315,8 +2315,8 @@ void GUI_Control_Options()
     goto calc;
   }
 }*/
-/*
-void GUI_Config()
+
+void GUI_Config()	// pendiente -----------------------------------------------
 {
 	Inicio:
 
@@ -2355,22 +2355,49 @@ void GUI_Config()
 		Numerico_Write(Bank_Init_Value, 11, 3);
 	}
 
-		// Cursor
-	LCD_Col_Pos = 10;			// posicion de cursor
-	LCD_Row_Pos = 1;			// posicion de cursor
+		// borrar datos previos en el indice
+	Cursor_Index_Clear();
 
-		// configuracion de cursor
-	Cursor_Conf_Clear();		// limpiar array
+		// establecer el indice
+	Cursor_Index[10][1]  = 2;	// Back Light Value 	// y x
+	Cursor_Index[10][2]  = 3;	// Contrast Value
+	Cursor_Index[10][3]  = 4;	// Bank init Value
+	Cursor_Index[10][0]  = 1;	// Key Light Value
+	Cursor_Index[14][3]  = 6;	// Exit
+	Cursor_Index[14][2]  = 5;	// About
 
-		// Cursores
-	Cursor_Conf[1][10]  = 1;	// Back Light Value
-	Cursor_Conf[2][10]  = 1;	// Contrast Value
-	Cursor_Conf[3][10]  = 1;	// Bank init Value
-	Cursor_Conf[0][10]  = 1;	// Key Light Value
-	Cursor_Conf[3][14]  = 1;	// Exit
-	Cursor_Conf[2][14]  = 1;	// About
-	Navegacion:
-	GUI_Navegar(0, 0);
+	navegacion:
+
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar();	// actualiza Cursor_Index_Pos
+
+	switch (Cursor_Index_Pos)
+	{
+			// Key Light Value
+		case 1:
+
+			break;
+			// Back Light Value 
+		case 2:
+
+			break;
+			// Contrast Value
+		case 3:
+
+			break;
+			// Bank init Value
+		case 4:
+
+			break;
+			// About
+		case 5:
+
+			break;
+			// Exit
+		case 6:
+
+			break;
+	}
 
 	// Acciones
 		//Back Light Value
@@ -2545,7 +2572,7 @@ void GUI_Config()
 	}
 
 	goto Navegacion;
-}*/
+}
 /*
 void GUI_Control_Multiply()
 {
@@ -3087,6 +3114,32 @@ void Ubicar()
 }*/
 
 // ----------------------------- Navegacion LCD - Encoder - Keypad v0.0 -----------------------------
+
+void Numerico_Write (int valor, int col, int row)
+{
+  // posicionar el valor en los campos 000
+
+  lcd.setCursor (col, row);
+  lcd.print ("000");
+
+  if (valor < 10)
+  {
+    lcd.setCursor (col + 2, row);
+  }
+
+  if (valor > 9 && valor < 100)
+  {
+    lcd.setCursor (col + 1, row);
+  }
+
+  if (valor > 99)
+  {
+    lcd.setCursor (col, row);
+  }
+
+  lcd.print (valor);
+}
+
 
 void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 {
