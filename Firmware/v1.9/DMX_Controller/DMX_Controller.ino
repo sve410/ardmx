@@ -1107,9 +1107,9 @@ void GUI_Memory()
   	lcd.print("Load");
   	lcd.setCursor (1, 3);
   	lcd.print("Clear");
-  	lcd.setCursor (7, 2);
-  	lcd.print("ClearAll");
   	lcd.setCursor (7, 1);
+  	lcd.print("ClearAll");
+  	lcd.setCursor (7, 2);
   	lcd.print("BlackOut");
   	lcd.setCursor (16, 3);
   	lcd.print("Exit");
@@ -1123,9 +1123,9 @@ void GUI_Memory()
   	Cursor_Index[0][1]  = 1;		// Save 		// y x
   	Cursor_Index[0][2]  = 2; 		// Load
   	Cursor_Index[0][3]  = 3;		// Clear
-  	Cursor_Index[6][2]  = 4;		// Clear All
-  	Cursor_Index[6][3]  = 5;		// Empty RAM
-  	Cursor_Index[6][1]  = 6;		// Black Out
+  	Cursor_Index[6][1]  = 4;		// Clear All
+  	Cursor_Index[6][2]  = 5;		// Blackout
+  	Cursor_Index[6][3]  = 6;		// Empty RAM
   	Cursor_Index[15][3] = 7;		// Exit
 
   	Cursor_Index_Pos = 1;
@@ -1185,7 +1185,7 @@ void GUI_Memory()
 
 			// Exit
 		case 7:
-
+			Cursor_Index_Pos = 6;
 			break;
   	}
 
@@ -2038,31 +2038,38 @@ void GUI_Control_Options()
 		case 1:
 			// GUI_Convert();
 			break;
+
 			// Unitary
 		case 2:
 			//GUI_Control_Unit();
 			break;
+
 			// Matrix
 		case 3:
 			//GUI_Control_Matrix();
 			break;
+
 			// Chaser
 		case 4:
 			//GUI_Control_Chaser();
 			break;
+
 			// Config
 		case 5:
 			//GUI_Config();
 			break;
+
 			// Memory
 		case 6:
-			//GUI_Memory();
+			GUI_Memory();
     		goto inicio;
 			break;
+
 			// Secuencer
 		case 7:
 			//GUI_Control_Secuencer();
 			break;
+
 			// Multiply
 		case 8:
 			//GUI_Control_Multiply();
