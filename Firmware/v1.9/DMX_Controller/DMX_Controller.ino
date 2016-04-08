@@ -1185,11 +1185,12 @@ void GUI_Memory()
 
 			// Exit
 		case 7:
-			Cursor_Index_Pos = 6;
+
 			break;
   	}
 
-  	salida: {}
+  	salida:
+  	Cursor_Index_Pos = 6;
 }
 /*
 void GUI_Control_Secuencer()
