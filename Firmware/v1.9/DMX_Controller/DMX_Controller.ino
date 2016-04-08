@@ -613,7 +613,7 @@ void GUI_About()
 void Multi_Matrix(int inicial)
 {
 	// dibujar matriz de universo dmx
-	/*
+
 		// dibujar banco
 	Numerico_Write (inicial, 13, 0);
 	Numerico_Write (inicial + 14, 17, 0);
@@ -638,7 +638,6 @@ void Multi_Matrix(int inicial)
 	Numerico_Write (DMX_Values[inicial + 12], 9, 3);
 	Numerico_Write (DMX_Values[inicial + 13], 13, 3);
 	Numerico_Write (DMX_Values[inicial + 14], 17, 3);
-	*/
 }
 
 /*void GUI_Control_Matrix()
@@ -1082,7 +1081,7 @@ int GUI_Memory_Bank(byte Opcion)
 
   	return salir;
 }
-/*
+
 void GUI_Memory()
 {
 
@@ -1117,85 +1116,81 @@ void GUI_Memory()
   	lcd.setCursor (7, 3);
   	lcd.print("EmptyRAM");
 
-  		// Cursor
-  	LCD_Col_Pos = 0;			// posicion de cursor
-  	LCD_Row_Pos = 1;
-
-  		// configuracion de cursor
-  	Cursor_Conf_Clear();		// limpiar array
+  		// borrar datos previos en el indice
+	Cursor_Index_Clear();
 
   		// Acciones
-  	Cursor_Conf[1][0]  = 1;		// Save
-  	Cursor_Conf[2][0]  = 1; 	// Load
-  	Cursor_Conf[3][0]  = 1;		// Clear
-  	Cursor_Conf[2][6]  = 1;		// Clear All
-  	Cursor_Conf[3][6]  = 1;		// Empty RAM
-  	Cursor_Conf[1][6]  = 1;		// Black Out
-  	Cursor_Conf[3][15] = 1;		// Exit
+  	Cursor_Index[0][1]  = 1;		// Save 		// y x
+  	Cursor_Index[0][2]  = 2; 		// Load
+  	Cursor_Index[0][3]  = 3;		// Clear
+  	Cursor_Index[6][2]  = 4;		// Clear All
+  	Cursor_Index[6][3]  = 5;		// Empty RAM
+  	Cursor_Index[6][1]  = 6;		// Black Out
+  	Cursor_Index[15][3] = 7;		// Exit
+
+  	Cursor_Index_Pos = 1;
 
   		// navegar
-	regresa:
+	navegacion:
 
-  	GUI_Navegar(0, 0);
+  		// iniciar navegacion y evaluar el index seleccionado
+	Navegar();	// actualiza Cursor_Index_Pos
 
-  	// Acciones
-  		// Load
-  	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 2)
-  	{
-    	if (EEPROM_Load() == 1)
-    	{
-      		goto iniciar;
-    	}
-    	goto salida;
+	switch (Cursor_Index_Pos)
+	{
+			// Save 
+		case 1:
+			if (EEPROM_Save() == 1)
+    		{
+     			goto iniciar;
+    		}
+    		goto salida;
+			break;
+
+			// Load 
+		case 2:
+			if (EEPROM_Load() == 1)
+    		{
+      			goto navegacion;
+    		}
+    		goto salida;
+			break;
+
+			// Clear 
+		case 3:
+			if (EEPROM_Clear() == 1)
+    		{
+      			goto iniciar;
+    		}
+    		goto salida;
+			break;
+
+			// Clear All
+		case 4:
+			EEPROM_Clear_All();
+    		goto salida;
+			break;
+
+			// Empty RAM
+		case 5:
+			EEPROM_Empty();		// checar -------------------------------------------------------
+    		goto salida;
+			break;
+
+			// Black Out
+		case 6:
+			Black_Out();
+    		goto navegacion;
+			break;
+
+			// Exit
+		case 7:
+
+			break;
   	}
 
-  		// Clear
-  	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 3)
-  	{
-    	if (EEPROM_Clear() == 1)
-    	{
-      		goto iniciar;
-    	}
-    	goto salida;
-  	}
-
-  		// Clear All
-  	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 2)
-  	{
-    	EEPROM_Clear_All();
-    	goto salida;
-  	}
-
-  		// Save
-  	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
-  	{
-    	if (EEPROM_Save() == 1)
-    	{
-     		goto iniciar;
-    	}
-    	goto salida;
-  	}
-
-  		// Empty RAM
-  	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 3)
-  	{
-    	EEPROM_Empty();
-    	goto salida;
-  	}
-
-  		// Black Out
-  	if (LCD_Col_Pos == 6 && LCD_Row_Pos == 1)
-  	{
-    	Black_Out();
-    	goto regresa;
-  	}
-
-  		// Exit
-  	if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3) {}
-
-	salida: {}
-
-}*/
+  	salida: {}
+}
 /*
 void GUI_Control_Secuencer()
 {
@@ -2057,7 +2052,7 @@ void GUI_Control_Options()
 			break;
 			// Config
 		case 5:
-			GUI_Config();
+			//GUI_Config();
 			break;
 			// Memory
 		case 6:
@@ -2316,7 +2311,7 @@ void GUI_Control_Options()
   }
 }*/
 
-void GUI_Config()	// pendiente -----------------------------------------------
+/*void GUI_Config()	// pendiente -----------------------------------------------
 {
 	Inicio:
 
