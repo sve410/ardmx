@@ -133,18 +133,18 @@ byte Light_PWM 				= 10;	// pin
 byte Light_SW 				= 2;	// pin
 
 	// EEPROM
-int  BackLight_Add 			= 4094;	// direccion de eeprom
-int  Back_Light_Value 		= 0;	// valor en real time
-int  Contrast_Add			= 4095;	// direccion de eeprom
-int  Contrast_Value			= 0;	// valor en real time
-int  Bank_Init_Add			= 4093;	// direccion de eeprom
-int  Key_Light_Add			= 4092;	// direccion de eeprom
-int  Key_Light_Value		= 0;	// valor en real time
-int  Light_Ext_Add			= 4091;	// direccion de eeprom
-int  Light_Ext_Value		= 0;	// valor en real time
-int  EEPROM_Canal_Actual_Add= 4090;	// canal dmx actual
-int  EEPROM_Limit			= 4090;	// limite de espacios en eeprom para universos
-byte EEPROM_Def_Jumper		= 9;	// pin
+int  BackLight_Add 		= 4094;	// direccion de eeprom
+int  Back_Light_Value 	= 0;	// valor en real time
+int  Contrast_Add		= 4095;	// direccion de eeprom
+int  Contrast_Value		= 0;	// valor en real time
+int  Bank_Init_Add		= 4093;	// direccion de eeprom
+int  Key_Light_Add		= 4092;	// direccion de eeprom
+int  Key_Light_Value	= 0;	// valor en real time
+int  Light_Ext_Add		= 4091;	// direccion de eeprom
+int  Light_Ext_Value	= 0;	// valor en real time
+int  Canal_Actual_Add	= 4090;	// canal dmx actual
+int  EEPROM_Limit		= 4089;	// limite de espacios en eeprom para universos
+byte EEPROM_Def_Jumper	= 9;	// pin
 
 void setup()
 {
@@ -1780,7 +1780,7 @@ void EEPROM_Load_Init()
   	int EEPROM_Add = 0;
   	
   	Universo_Actual 	= EEPROM.read(Bank_Init_Add);
-  	Canal_Actual 		= EEPROM.read(EEPROM_Canal_Actual_Add);
+  	Canal_Actual 		= EEPROM.read(Canal_Actual_Add);
   	Back_Light_Value	= EEPROM.read(BackLight_Add);
   	Light_Ext_Value		= EEPROM.read(Light_Ext_Add);
   	Key_Light_Value		= EEPROM.read(Key_Light_Add);
