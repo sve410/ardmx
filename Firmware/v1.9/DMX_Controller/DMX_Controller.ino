@@ -2053,7 +2053,7 @@ void GUI_Control_Options()
 
 			// Unitary
 		case 2:
-			//GUI_Control_Unit();
+			GUI_Control_Unit();
 			break;
 
 			// Matrix
@@ -2914,7 +2914,7 @@ void GUI_Control_Chaser()
   	}
   	goto Siguiente;
 }*/
-/*
+
 void GUI_Control_Unit()
 {
 
@@ -2944,14 +2944,18 @@ void GUI_Control_Unit()
   	lcd.print ("Channel: 001");
   	lcd.setCursor (2, 3);
   	lcd.print ("Value:");
-  	Numerico_Write(DMX_Values[1], 9, 3);
+  	//Numerico_Write(DMX_Values[1], 9, 3);
   	lcd.setCursor (0, 1);
   	lcd.print ("c002=v");
-  	Numerico_Write(DMX_Values[2], 6, 1);
+  	//Numerico_Write(DMX_Values[2], 6, 1);
   	lcd.setCursor (11, 1);
   	lcd.print ("c003=v");
-  	Numerico_Write(DMX_Values[3], 17, 1);
+  	//Numerico_Write(DMX_Values[3], 17, 1);
+  	while(1);
 
+  }
+
+/*
   		// Cursor
   	LCD_Col_Pos = 8;			// posicion de cursor
   	LCD_Row_Pos = 2;			// posicion e cursor
