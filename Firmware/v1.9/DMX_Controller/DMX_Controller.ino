@@ -272,10 +272,10 @@ void setup()
 
 void loop()
 {
+	EEPROM_Load_Init();		// valores desde eeprom
 	Back_Light_Init();		// inicializador de Backlight desde eeprom
 	Contrast_Init();		// inicializador de EEPROM desde eeprom
 	EEPROM_Default();		// jumper para default eeprom
-	EEPROM_Load_Init();		// valores desde eeprom
 	GUI_About();			// interface grafica de about
 	GUI_Memory_Init();		// interface grafica de memoria
 }
@@ -330,8 +330,6 @@ void EEPROM_Default()
 void Back_Light_Init()
 {
 	// lee y aplica el ultimo estado del backlight
-
-	byte Back_Light_Value = EEPROM.read(BackLight_Add);
 		
 		// dimmer de pantalla
 	for (int dim = 0; dim <= Back_Light_Value; dim ++)
@@ -354,8 +352,6 @@ void Back_Light_Init()
 void Contrast_Init()
 {
 	// lee y aplica el ultimo estado del contrast
-
-	byte Contrast_Value = EEPROM.read(Contrast_Add);
   
 	if (Contrast_Value < 150)
 	{
@@ -369,8 +365,6 @@ void Light_En()
 {
 	// encender back y key desde la tecla *
 
-	byte Back_Light_Value 	= EEPROM.read(BackLight_Add);	// lectura del ultimo valor desde la eeprom
-	byte Key_Light_Value	= EEPROM.read(Key_Light_Add);	// lectura del ultimo valor desde la eeprom
 	long delay_dimmer		= 1;
 	
 		// encender
@@ -1787,7 +1781,7 @@ void EEPROM_Load_Init()
   	Universo_Actual 	= EEPROM.read(Bank_Init_Add);
   	Back_Light_Value	= EEPROM.read(BackLight_Add);
   	Light_Ext_Value		= EEPROM.read(Light_Ext_Add);
-  	Key_Light_Value		= EEPROM.read(Key_Light_Value);
+  	Key_Light_Value		= EEPROM.read(Key_Light_Add);
 
   	if (Universo_Actual == 0)
   	{
@@ -2341,12 +2335,11 @@ void GUI_Control_Options()
 
 void GUI_Config()	// pendiente -----------------------------------------------
 {
+	Cursor_Index_Pos = 1;
+
 	Inicio:
 
-	byte Back_Light_Value 	= EEPROM.read(BackLight_Add);
-	byte Contrast_Value 	= EEPROM.read(Contrast_Add);
 	byte Bank_Init_Value	= EEPROM.read(Bank_Init_Add);
-	byte Key_Light_Value	= EEPROM.read(Key_Light_Add);
 
 		// GUI
 	lcd.clear ();
@@ -2371,21 +2364,19 @@ void GUI_Config()	// pendiente -----------------------------------------------
 		// Bank
 	lcd.setCursor (1, 3);
 	lcd.print ("BankInit:");
+	lcd.setCursor (11, 3);
 
-	if (Bank_Init_Value > 8 || Bank_Init_Value < 1)
+	if (Bank_Init_Value < 1)
 	{
-		lcd.setCursor (11, 3);
-		lcd.print ("---");
+		lcd.print ("-");
 	}
 	else
 	{
-		Numeric_Write(Bank_Init_Value, 11, 3);
+		lcd.print(Bank_Init_Value);
 	}
 
 		// borrar datos previos en el indice
 	Cursor_Index_Clear();
-
-	Cursor_Index_Pos = 1;
 
 		// establecer el indice
 	Cursor_Index[10][0]  = 1;	// Key Light Value  	// y x
@@ -2406,18 +2397,13 @@ void GUI_Config()	// pendiente -----------------------------------------------
 	{
 			// Key Light Value
 		case 1:
-
-			break;
-
-			// Back Light Value 
-		case 2:
-			valor_nuevo = Numerico_Write(0, 255, 11, 1, 1, EEPROM.read(BackLight_Add));
+			valor_nuevo = Numerico_Write(0, 255, 11, 0, 1, Key_Light_Value);
 
 				// menor o igual al limites
 			if (valor_nuevo <= 255)			// poner limite max
 			{
-				analogWrite(Back_Light_PWM, valor_nuevo);
-				//EEPROM.Write(BackLight_Add, valor_nuevo);
+				analogWrite(Key_Light_PWM, valor_nuevo);
+				Key_Light_Value = valor_nuevo;
 			}
 
 				// mayor al limite
@@ -2425,7 +2411,42 @@ void GUI_Config()	// pendiente -----------------------------------------------
 			{
 				while(1)
 				{
-					valor_nuevo = Numerico_Enc_Write(0, 255, 11, 1, 1, EEPROM.read(BackLight_Add));
+					valor_nuevo = Numerico_Enc_Write(0, 255, 11, 0, 1, Key_Light_Value);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					analogWrite(Key_Light_PWM, valor_nuevo);	// accion
+					Key_Light_Value = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(11, 0, Key_Light_Value, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			EEPROM.write(Key_Light_Add, Key_Light_Value);
+
+			break;
+
+			// Back Light Value 
+		case 2:
+			valor_nuevo = Numerico_Write(1, 255, 11, 1, 1, Back_Light_Value);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				analogWrite(Back_Light_PWM, valor_nuevo);
+				Back_Light_Value = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 255, 11, 1, 1, Back_Light_Value);
 					
 					if (valor_nuevo > 255)	// poner limite max
 					{
@@ -2433,213 +2454,103 @@ void GUI_Config()	// pendiente -----------------------------------------------
 					}
 
 					analogWrite(Back_Light_PWM, valor_nuevo);	// accion
-					//valor = valor_nuevo;
+					Back_Light_Value = valor_nuevo;
 		
 				}
 					// acomodar numero 	
-				Numerico_Print(1, 11, valor_nuevo, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				Numerico_Print(11, 1, Back_Light_Value, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 			}
 
-
-			//analogWrite(Back_Light_PWM, 0);
+			EEPROM.write(BackLight_Add, Back_Light_Value);
 			break;
 
 			// Contrast Value
 		case 3:
+			valor_nuevo = Numerico_Write(150, 255, 11, 2, 1, Contrast_Value);
 
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				analogWrite(Contrast_PWM, valor_nuevo);
+				Contrast_PWM = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(150, 255, 11, 2, 1, Contrast_Value);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					analogWrite(Contrast_PWM, valor_nuevo);	// accion
+					Contrast_Value = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(11, 2, Contrast_Value, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			EEPROM.write(Contrast_Add, Contrast_Value);
 			break;
 
 			// Bank init Value
 		case 4:
+			valor_nuevo = Numerico_Write(0, 8, 11, 3, 1, Bank_Init_Value);
 
+				// menor o igual al limites
+			if (valor_nuevo <= 8)			// poner limite max
+			{
+				Bank_Init_Value = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 8)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 8, 11, 3, 1, Bank_Init_Value);
+					
+					if (valor_nuevo > 8)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Bank_Init_Value = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(11, 3, Bank_Init_Value, 8, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			EEPROM.write(Bank_Init_Add, Bank_Init_Value);
 			break;
 
 			// About
 		case 5:
-
+			GUI_About();
+			GUI_Licence();
+			Cursor_Index_Pos = 5;
+			goto Inicio;
 			break;
 
 			// Exit
 		case 6:
-
+			goto salida;
 			break;
 	}
+	
+	goto navegacion;
+
+	salida:
+
+	Cursor_Index_Pos = 5;
 }
-/*
-	// Acciones
-		//Back Light Value
-	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
-	{
-		Num_Row_Pos = 1;
-		Num_Col_Pos = 11;
-		Numerico_Calc (1);
 
-		if (Num_Val == 712)
-		{
-			digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
-			while (digitalRead(Boton_Array_D) == HIGH) 	//&& digitalRead(Boton_Center) == HIGH) // enter y center para paro
-			{
-				Encoder_Read (11, 1, 0, 255, 3);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
-				goto salida;
-				
-			}
-			digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
-			delay(300);									// retraso para center
-		}
-
-		if (Num_Val > 255)
-		{
-			Num_Val = 255;
-			Numerico_Write (255, 11, 1);
-		}
-		analogWrite(Back_Light_PWM, Num_Val);
-
-		salida:
-
-			// mecanismo para on off Enable
-		if (Num_Val == 0)
-		{
-			Light_On_Off = 0;
-		}
-
-		if (Num_Val > 0)
-		{
-			Light_On_Off = 1;
-		}
-
-		EEPROM.write(BackLight_Add, Num_Val);			// guardar valor nuevo
-		goto Navegacion;
-	}
-
-		//Key Light Value
-	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 0)
-	{
-		Num_Row_Pos = 0;
-		Num_Col_Pos = 11;
-		Numerico_Calc (1);
-		
-		if (Num_Val == 712)
-		{
-			digitalWrite(Boton_Array_3, LOW);			// lectura linea 3
-			while (digitalRead(Boton_Array_D) == HIGH && digitalRead(Enc_Center) == HIGH) // enter y center para paro
-			{
-				Encoder_Read (11, 0, 0, 255, 4);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
-				goto salida_key;
-			}
-			digitalWrite(Boton_Array_3, HIGH);			// lectura linea 3
-			delay(300);									// retraso para center
-			goto salida_key;
-		}
-
-		if (Num_Val > 255)
-		{
-			Num_Val = 255;
-			Numerico_Write (255, 11, 0);
-		}
-
-		analogWrite(Key_Light_PWM, Num_Val);
-
-		salida_key:
-
-		// mecanismo para on off Enable
-		if (Num_Val == 0)
-		{
-			Light_On_Off = 0;
-		}
-
-		if (Num_Val > 0)
-		{
-			Light_On_Off = 1;
-		}
-
-		EEPROM.write(Key_Light_Add, Num_Val);	// guardar valor nuevo
-		goto Navegacion;
-	}
-
-		//Contrast Value
-	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 2)
-	{
-		Num_Row_Pos = 2;
-		Num_Col_Pos = 11;
-		Numerico_Calc (1);
-
-			// encoder
-		if (Num_Val == 712)
-		{
-			Encoder_Read (11, 2, 0, 255, 2);	// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
-			goto salir;
-		}
-
-			// teclado
-		if (Num_Val > 255)
-		{
-			Num_Val = 255;
-			Numerico_Write (255, 11, 2);
-		}
-
-		if (Num_Val < 150)
-		{
-			Num_Val = 150;						// limite menor de contraste LCD
-			Numerico_Write (150, 11, 2);
-		}
-
-		analogWrite(Contrast_PWM, Num_Val);
-
-		salir:
-
-		EEPROM.write(Contrast_Add, Num_Val);	// guardar valor nuevo
-		goto Navegacion;
-	}
-
-		//Bank init Value
-	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 3)
-	{
-		Num_Row_Pos = 3;
-		Num_Col_Pos = 11;
-		Numerico_Calc (1);
-		if (Num_Val == 712)
-		{
-			Encoder_Read (11, 3, 0, 8, 7);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
-			if (EEPROM.read(Bank_Init_Add) == 0)
-			{
-				lcd.setCursor (11, 3);
-				lcd.print("---");
-			}
-			goto Navegacion;
-		}
-
-		if (Num_Val > 8)
-		{
-			Num_Val = 8;
-			Numerico_Write (8, 11, 3);
-		}
-
-		if (Num_Val == 0)
-		{
-			lcd.setCursor (11, 3);
-			lcd.print("---");
-		}
-
-		EEPROM.write(Bank_Init_Add, Num_Val);	// guardar valor nuevo
-		goto Navegacion;
-	}
-		// Exit
-	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
-	{
-		GUI_Control_Options();
-		goto Navegacion;
-	}
-
-		// About
-	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
-	{
-		GUI_About();
-		GUI_Licence();
-		goto Inicio;
-	}
-
-	goto Navegacion;
-}
 /*
 void GUI_Control_Multiply()
 {
