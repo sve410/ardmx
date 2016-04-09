@@ -134,10 +134,14 @@ byte Light_SW 				= 2;	// pin
 
 	// EEPROM
 int  BackLight_Add 			= 4094;	// direccion de eeprom
+int  Back_Light_Value 		= 0;	// valor en real time
 int  Contrast_Add			= 4095;	// direccion de eeprom
+int  Contrast_Value			= 0;	// valor en real time
 int  Bank_Init_Add			= 4093;	// direccion de eeprom
 int  Key_Light_Add			= 4092;	// direccion de eeprom
+int  Key_Light_Value		= 0;	// valor en real time
 int  Light_Ext_Add			= 4091;	// direccion de eeprom
+int  Light_Ext_Value		= 0;	// valor en real time
 int  EEPROM_Limit			= 4090;	// limite de espacios en eeprom para universos
 byte EEPROM_Def_Jumper		= 9;	// pin
 
@@ -615,29 +619,29 @@ void Multi_Matrix(int inicial)
 	// dibujar matriz de universo dmx
 
 		// dibujar banco
-	Numerico_Write (inicial, 13, 0);
-	Numerico_Write (inicial + 14, 17, 0);
+	Numeric_Write (inicial, 13, 0);
+	Numeric_Write (inicial + 14, 17, 0);
 
 		// matrix 1
-	Numerico_Write (DMX_Values[inicial], 1, 1);
-	Numerico_Write (DMX_Values[inicial + 1], 5, 1);
-	Numerico_Write (DMX_Values[inicial + 2], 9, 1);
-	Numerico_Write (DMX_Values[inicial + 3], 13, 1);
-	Numerico_Write (DMX_Values[inicial + 4], 17, 1);
+	Numeric_Write (DMX_Values[inicial], 1, 1);
+	Numeric_Write (DMX_Values[inicial + 1], 5, 1);
+	Numeric_Write (DMX_Values[inicial + 2], 9, 1);
+	Numeric_Write (DMX_Values[inicial + 3], 13, 1);
+	Numeric_Write (DMX_Values[inicial + 4], 17, 1);
 
 		// matrix 2
-	Numerico_Write (DMX_Values[inicial + 5], 1, 2);
-	Numerico_Write (DMX_Values[inicial + 6], 5, 2);
-	Numerico_Write (DMX_Values[inicial + 7], 9, 2);
-	Numerico_Write (DMX_Values[inicial + 8], 13, 2);
-	Numerico_Write (DMX_Values[inicial + 9], 17, 2);
+	Numeric_Write (DMX_Values[inicial + 5], 1, 2);
+	Numeric_Write (DMX_Values[inicial + 6], 5, 2);
+	Numeric_Write (DMX_Values[inicial + 7], 9, 2);
+	Numeric_Write (DMX_Values[inicial + 8], 13, 2);
+	Numeric_Write (DMX_Values[inicial + 9], 17, 2);
 
 		// matrix 3
-	Numerico_Write (DMX_Values[inicial + 10], 1, 3);
-	Numerico_Write (DMX_Values[inicial + 11], 5, 3);
-	Numerico_Write (DMX_Values[inicial + 12], 9, 3);
-	Numerico_Write (DMX_Values[inicial + 13], 13, 3);
-	Numerico_Write (DMX_Values[inicial + 14], 17, 3);
+	Numeric_Write (DMX_Values[inicial + 10], 1, 3);
+	Numeric_Write (DMX_Values[inicial + 11], 5, 3);
+	Numeric_Write (DMX_Values[inicial + 12], 9, 3);
+	Numeric_Write (DMX_Values[inicial + 13], 13, 3);
+	Numeric_Write (DMX_Values[inicial + 14], 17, 3);
 }
 
 /*void GUI_Control_Matrix()
@@ -904,6 +908,7 @@ void Multi_Matrix(int inicial)
 
 void GUI_Memory_Init()
 {
+	// inicial de memoria
 
 	inicio:
 	
@@ -963,7 +968,7 @@ void GUI_Memory_Init()
     		{
       			goto inicio;
     		}
-    		//GUI_Control_Options();
+    		GUI_Control_Options();
 			break;
 	}
 }
@@ -1044,34 +1049,42 @@ int GUI_Memory_Bank(byte Opcion)
 		case 1:
     		Universo_Actual = 1;
    	 		break;
+
   			// Bank 2
    	 	case 2:
   			Universo_Actual = 2;
     		break;
+
 	  		// Bank 3
 	  	case 3:
   			Universo_Actual = 3;
     		break;
+
     		// Bank 4
 	  	case 4:
   			Universo_Actual = 4;
     		break;
+
     		// Bank 5
 	  	case 5:
   			Universo_Actual = 5;
     		break;
+
     		// Bank 6
 	  	case 6:
   			Universo_Actual = 6;
     		break;
+
   			// Bank 7
 	  	case 7:
   			Universo_Actual = 7;
     		break;
+
     		// Bank 8
 	  	case 8:
   			Universo_Actual = 8;
     		break;
+
   			// Exit
 	  	case 9:
   			salir = 1;
@@ -1770,7 +1783,11 @@ void EEPROM_Load_Init()
   	// carga los valores de los canales DMX de la eeprom al inicio e inicia el streaming de dmx
 
   	int EEPROM_Add = 0;
-  	Universo_Actual = EEPROM.read(Bank_Init_Add);
+  	
+  	Universo_Actual 	= EEPROM.read(Bank_Init_Add);
+  	Back_Light_Value	= EEPROM.read(BackLight_Add);
+  	Light_Ext_Value		= EEPROM.read(Light_Ext_Add);
+  	Key_Light_Value		= EEPROM.read(Key_Light_Value);
 
   	if (Universo_Actual == 0)
   	{
@@ -2057,12 +2074,15 @@ void GUI_Control_Options()
 
 			// Config
 		case 5:
-			//GUI_Config();
+			GUI_Config();
+			Cursor_Index_Pos = 5;
+			goto inicio;
 			break;
 
 			// Memory
 		case 6:
 			GUI_Memory();
+			Cursor_Index_Pos = 6;
     		goto inicio;
 			break;
 
@@ -2319,7 +2339,7 @@ void GUI_Control_Options()
   }
 }*/
 
-/*void GUI_Config()	// pendiente -----------------------------------------------
+void GUI_Config()	// pendiente -----------------------------------------------
 {
 	Inicio:
 
@@ -2332,15 +2352,19 @@ void GUI_Control_Options()
 	lcd.clear ();
 	lcd.setCursor (0, 0);
 	lcd.print (" KeyLight:");
-	Numerico_Write(Key_Light_Value, 11, 0);
+	Numeric_Write(Key_Light_Value, 11, 0);
+
 	lcd.setCursor (15, 2);
 	lcd.print ("About");
+
 	lcd.setCursor (0, 1);
 	lcd.print ("BackLight:");
-	Numerico_Write(Back_Light_Value, 11, 1);
+	Numeric_Write(Back_Light_Value, 11, 1);
+
 	lcd.setCursor (1, 2);
 	lcd.print ("Contrast:");
-	Numerico_Write(Contrast_Value, 11, 2);
+	Numeric_Write(Contrast_Value, 11, 2);
+
 	lcd.setCursor (15, 3);
 	lcd.print ("Exit");
 
@@ -2355,21 +2379,25 @@ void GUI_Control_Options()
 	}
 	else
 	{
-		Numerico_Write(Bank_Init_Value, 11, 3);
+		Numeric_Write(Bank_Init_Value, 11, 3);
 	}
 
 		// borrar datos previos en el indice
 	Cursor_Index_Clear();
 
+	Cursor_Index_Pos = 1;
+
 		// establecer el indice
-	Cursor_Index[10][1]  = 2;	// Back Light Value 	// y x
-	Cursor_Index[10][2]  = 3;	// Contrast Value
+	Cursor_Index[10][0]  = 1;	// Key Light Value  	// y x
+	Cursor_Index[10][1]  = 2;	// Back Light Value 
+	Cursor_Index[10][2]  = 3;	// Contrast Value 
 	Cursor_Index[10][3]  = 4;	// Bank init Value
-	Cursor_Index[10][0]  = 1;	// Key Light Value
-	Cursor_Index[14][3]  = 6;	// Exit
 	Cursor_Index[14][2]  = 5;	// About
+	Cursor_Index[14][3]  = 6;	// Exit
 
 	navegacion:
+
+	int valor_nuevo = 0;
 
 		// iniciar navegacion y evaluar el index seleccionado
 	Navegar();	// actualiza Cursor_Index_Pos
@@ -2380,28 +2408,64 @@ void GUI_Control_Options()
 		case 1:
 
 			break;
+
 			// Back Light Value 
 		case 2:
+			valor_nuevo = Numerico_Write(0, 255, 11, 1, 1, EEPROM.read(BackLight_Add));
 
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				analogWrite(Back_Light_PWM, valor_nuevo);
+				//EEPROM.Write(BackLight_Add, valor_nuevo);
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 11, 1, 1, EEPROM.read(BackLight_Add));
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					analogWrite(Back_Light_PWM, valor_nuevo);	// accion
+					//valor = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(1, 11, valor_nuevo, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+
+			//analogWrite(Back_Light_PWM, 0);
 			break;
+
 			// Contrast Value
 		case 3:
 
 			break;
+
 			// Bank init Value
 		case 4:
 
 			break;
+
 			// About
 		case 5:
 
 			break;
+
 			// Exit
 		case 6:
 
 			break;
 	}
-
+}
+/*
 	// Acciones
 		//Back Light Value
 	if (LCD_Col_Pos == 10 && LCD_Row_Pos == 1)
@@ -3118,7 +3182,7 @@ void Ubicar()
 
 // ----------------------------- Navegacion LCD - Encoder - Keypad v0.0 -----------------------------
 
-void Numerico_Write (int valor, int col, int row)
+void Numeric_Write (int valor, int col, int row)
 {
   // posicionar el valor en los campos 000
 
