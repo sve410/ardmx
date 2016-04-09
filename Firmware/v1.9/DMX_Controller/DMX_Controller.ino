@@ -2333,13 +2333,11 @@ void GUI_Control_Options()
   }
 }*/
 
-void GUI_Config()	// pendiente -----------------------------------------------
+void GUI_Config()
 {
 	Cursor_Index_Pos = 1;
 
 	Inicio:
-
-	byte Bank_Init_Value	= EEPROM.read(Bank_Init_Add);
 
 		// GUI
 	lcd.clear ();
@@ -2366,13 +2364,13 @@ void GUI_Config()	// pendiente -----------------------------------------------
 	lcd.print ("BankInit:");
 	lcd.setCursor (11, 3);
 
-	if (Bank_Init_Value < 1)
+	if (Universo_Actual < 1)
 	{
 		lcd.print ("-");
 	}
 	else
 	{
-		lcd.print(Bank_Init_Value);
+		lcd.print(Universo_Actual);
 	}
 
 		// borrar datos previos en el indice
@@ -2500,12 +2498,12 @@ void GUI_Config()	// pendiente -----------------------------------------------
 
 			// Bank init Value
 		case 4:
-			valor_nuevo = Numerico_Write(0, 8, 11, 3, 1, Bank_Init_Value);
+			valor_nuevo = Numerico_Write(0, 8, 11, 3, 1, Universo_Actual);
 
 				// menor o igual al limites
 			if (valor_nuevo <= 8)			// poner limite max
 			{
-				Bank_Init_Value = valor_nuevo;
+				Universo_Actual = valor_nuevo;
 			}
 
 				// mayor al limite
@@ -2513,21 +2511,21 @@ void GUI_Config()	// pendiente -----------------------------------------------
 			{
 				while(1)
 				{
-					valor_nuevo = Numerico_Enc_Write(0, 8, 11, 3, 1, Bank_Init_Value);
+					valor_nuevo = Numerico_Enc_Write(0, 8, 11, 3, 1, Universo_Actual);
 					
 					if (valor_nuevo > 8)	// poner limite max
 					{
 						break; // enter
 					}
 
-					Bank_Init_Value = valor_nuevo;
+					Universo_Actual = valor_nuevo;
 		
 				}
 					// acomodar numero 	
-				Numerico_Print(11, 3, Bank_Init_Value, 8, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				Numerico_Print(11, 3, Universo_Actual, 8, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 			}
 
-			EEPROM.write(Bank_Init_Add, Bank_Init_Value);
+			EEPROM.write(Bank_Init_Add, Universo_Actual);
 			break;
 
 			// About
