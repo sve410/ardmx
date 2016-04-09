@@ -68,7 +68,7 @@
 
 	// DMX
 int  	DMX_Values 			[515];  // array de valores actuales DMX
-int  	Canal_Actual 		= 1;	// canal actual de dmx
+int  	Canal_Actual 		= 0;	// canal actual de dmx
 byte 	Universo_Actual		= 0;	// universo actual de dmx
 
 	// Encoder
@@ -142,6 +142,7 @@ int  Key_Light_Add			= 4092;	// direccion de eeprom
 int  Key_Light_Value		= 0;	// valor en real time
 int  Light_Ext_Add			= 4091;	// direccion de eeprom
 int  Light_Ext_Value		= 0;	// valor en real time
+int  EEPROM_Canal_Actual_Add= 4090;	// canal dmx actual
 int  EEPROM_Limit			= 4090;	// limite de espacios en eeprom para universos
 byte EEPROM_Def_Jumper		= 9;	// pin
 
@@ -1779,6 +1780,7 @@ void EEPROM_Load_Init()
   	int EEPROM_Add = 0;
   	
   	Universo_Actual 	= EEPROM.read(Bank_Init_Add);
+  	Canal_Actual 		= EEPROM.read(EEPROM_Canal_Actual_Add);
   	Back_Light_Value	= EEPROM.read(BackLight_Add);
   	Light_Ext_Value		= EEPROM.read(Light_Ext_Add);
   	Key_Light_Value		= EEPROM.read(Key_Light_Add);
