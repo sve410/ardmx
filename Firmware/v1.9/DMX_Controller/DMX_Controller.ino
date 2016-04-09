@@ -282,6 +282,23 @@ void loop()
 	GUI_Memory_Init();		// interface grafica de memoria
 }
 
+void Canal_Actual_EEPROM_Save()
+{
+	int temporal = 0;
+
+	if (Canal_Actual < 256)
+	{
+		EEPROM.write(Canal_Actual_1_Add, Canal_Actual);
+		EEPROM.write(Canal_Actual_2_Add, 0);
+	}
+	else
+	{
+		EEPROM.write(Canal_Actual_1_Add, 255);
+		temporal = Canal_Actual - 255;
+		EEPROM.write(Canal_Actual_2_Add, temporal);
+	}
+}
+
 void EEPROM_Default()
 {
 	// jumper cerrado, eeprom a default
