@@ -68,7 +68,7 @@
 
 	// DMX
 int  	DMX_Values 			[515];  // array de valores actuales DMX
-int  	Canal_Actual 		= 0;	// canal actual de dmx
+int  	Canal_Actual 		= 0;	// canal actual de dmx, valor real del canal, inicia en 1
 byte 	Universo_Actual		= 0;	// universo actual de dmx
 
 	// Encoder
@@ -133,19 +133,19 @@ byte Light_PWM 				= 10;	// pin
 byte Light_SW 				= 2;	// pin
 
 	// EEPROM
-int  BackLight_Add 		= 4094;	// direccion de eeprom
-int  Back_Light_Value 	= 0;	// valor en real time
-int  Contrast_Add		= 4095;	// direccion de eeprom
-int  Contrast_Value		= 0;	// valor en real time
-int  Bank_Init_Add		= 4093;	// direccion de eeprom
-int  Key_Light_Add		= 4092;	// direccion de eeprom
-int  Key_Light_Value	= 0;	// valor en real time
-int  Light_Ext_Add		= 4091;	// direccion de eeprom
-int  Light_Ext_Value	= 0;	// valor en real time
-int  Canal_Actual_1_Add	= 4089;	// canal dmx actual
-int  Canal_Actual_2_Add	= 4090;	// canal dmx actual
-int  EEPROM_Limit		= 4088;	// limite de espacios en eeprom para universos
-byte EEPROM_Def_Jumper	= 9;	// pin
+int  BackLight_Add 			= 4094;	// direccion de eeprom
+int  Back_Light_Value 		= 0;	// valor en real time
+int  Contrast_Add			= 4095;	// direccion de eeprom
+int  Contrast_Value			= 0;	// valor en real time
+int  Bank_Init_Add			= 4093;	// direccion de eeprom
+int  Key_Light_Add			= 4092;	// direccion de eeprom
+int  Key_Light_Value		= 0;	// valor en real time
+int  Light_Ext_Add			= 4091;	// direccion de eeprom
+int  Light_Ext_Value		= 0;	// valor en real time
+int  Canal_Actual_1_Add		= 4089;	// canal dmx actual
+int  Canal_Actual_2_Add		= 4090;	// canal dmx actual
+int  EEPROM_Limit			= 4088;	// limite de espacios en eeprom para universos
+byte EEPROM_Def_Jumper		= 9;	// pin
 
 void setup()
 {
@@ -2080,6 +2080,7 @@ void GUI_Control_Options()
 			// Unitary
 		case 2:
 			GUI_Control_Unit();
+			Cursor_Index_Pos = 2;
 			break;
 
 			// Matrix
@@ -2096,14 +2097,12 @@ void GUI_Control_Options()
 		case 5:
 			GUI_Config();
 			Cursor_Index_Pos = 5;
-			goto inicio;
 			break;
 
 			// Memory
 		case 6:
 			GUI_Memory();
 			Cursor_Index_Pos = 6;
-    		goto inicio;
 			break;
 
 			// Secuencer
@@ -2116,6 +2115,7 @@ void GUI_Control_Options()
 			//GUI_Control_Multiply();
 			break;
 	}
+	goto inicio;
 }
 
 /*void GUI_Convert()
@@ -2943,16 +2943,42 @@ void GUI_Control_Chaser()
 
 void GUI_Control_Unit()
 {
+	int CH_1 = 0;
+	int CH_2 = 0;
+	int CH_3 = 0;
+	int CH_4 = 0;
+	int CH_5 = 0;
+	int CH_6 = 0;
+	int CH_7 = 0;
+	int CH_8 = 0;
 
-	Inicio:
+	Cursor_Index_Pos =  1;
 
-  	Canal_Actual = 1;
+	inicio:
 
-  		// GUI
-  	lcd.clear ();
-  	lcd.setCursor (0, 0);
-  	lcd.print ("Unitary Control:  b");
+	lcd.clear();
 
+		// establecer valores
+	if (Canal_Actual > 504)
+	{
+		CH_1 = 505;
+	}
+	else
+	{
+		CH_1 = Canal_Actual;
+	}
+
+	CH_2 = CH_1 + 1;
+	CH_3 = CH_1 + 2;
+	CH_4 = CH_1 + 3;
+	CH_5 = CH_1 + 4;
+	CH_6 = CH_1 + 5;
+	CH_7 = CH_1 + 6;
+	CH_8 = CH_1 + 7;
+
+  		// universo actual
+  	lcd.setCursor (18, 0);
+  	lcd.print ("b");
   	if (Universo_Actual == 0)
   	{
     	lcd.print("-");
@@ -2962,142 +2988,415 @@ void GUI_Control_Unit()
     	lcd.print(Universo_Actual);
   	}
 
-  	lcd.setCursor (14, 2);
-  	lcd.print ("Exit");
-  	lcd.setCursor (14, 3);
-  	lcd.print ("Memory");
-  	lcd.setCursor (0, 2);
-  	lcd.print ("Channel: 001");
-  	lcd.setCursor (2, 3);
-  	lcd.print ("Value:");
-  	//Numerico_Write(DMX_Values[1], 9, 3);
-  	lcd.setCursor (0, 1);
-  	lcd.print ("c002=v");
-  	//Numerico_Write(DMX_Values[2], 6, 1);
-  	lcd.setCursor (11, 1);
-  	lcd.print ("c003=v");
-  	//Numerico_Write(DMX_Values[3], 17, 1);
-  	while(1);
+  	lcd.setCursor (17, 2);
+  	lcd.print ("Mem");
+  	lcd.setCursor (17, 3);
+  	lcd.print ("Ctr");
+  	
+  		// canal 1
+  	Numeric_Write(CH_1, 1, 0);
+  	Numeric_Write(DMX_Values[CH_1], 1, 1);
 
+  		// canal 2
+  	Numeric_Write(CH_2, 5, 0);
+  	Numeric_Write(DMX_Values[CH_2], 5, 1);
+
+  		// canal 3
+  	Numeric_Write(CH_3, 9, 0);
+  	Numeric_Write(DMX_Values[CH_3], 9, 1);
+
+  		// canal 4
+  	Numeric_Write(CH_4, 13, 0);
+  	Numeric_Write(DMX_Values[CH_4], 13, 1);
+
+  		// canal 5
+  	Numeric_Write(CH_5, 1, 2);
+  	Numeric_Write(DMX_Values[CH_5], 1, 3);
+
+  		// canal 6
+  	Numeric_Write(CH_6, 5, 2);
+  	Numeric_Write(DMX_Values[CH_6], 5, 3);
+
+  		// canal 7
+  	Numeric_Write(CH_7, 9, 2);
+  	Numeric_Write(DMX_Values[CH_7], 9, 3);
+
+  		// canal 8
+  	Numeric_Write(CH_8, 13, 2);
+  	Numeric_Write(DMX_Values[CH_8], 13, 3);
+
+  		// borrar datos previos en el indice
+	Cursor_Index_Clear();
+		// establecer el indice
+	Cursor_Index[0][0] 	= 1;	// ch 1 	//y x
+	Cursor_Index[0][1] 	= 2;	// CH 1 	//y x	
+	Cursor_Index[4][0] 	= 3;	// ch 2		//y x
+	Cursor_Index[4][1] 	= 4;	// ch 2		//y x
+	Cursor_Index[8][0] 	= 5;	// ch 3		//y x
+	Cursor_Index[8][1] 	= 6;	// ch 3 	//y x
+	Cursor_Index[12][0] = 7;	// ch 4 	//y x
+	Cursor_Index[12][1] = 8;	// ch 4		//y x
+	Cursor_Index[0][2] 	= 9;	// ch 5		//y x
+	Cursor_Index[0][3] 	= 10;	// ch 5		//y x
+	Cursor_Index[4][2] 	= 11;	// ch 6		//y x
+	Cursor_Index[4][3] 	= 12;	// ch 6		//y x
+	Cursor_Index[8][2] 	= 13;	// ch 7		//y x
+	Cursor_Index[8][3] 	= 14;	// ch 7		//y x
+	Cursor_Index[12][2] = 15;	// ch 8		//y x
+	Cursor_Index[12][3] = 16;	// ch 8		//y x
+	Cursor_Index[16][2] = 17;	// mem		//y x
+	Cursor_Index[16][3] = 18;	// control	//y x
+
+	navegacion:
+
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar();	// actualiza Cursor_Index_Pos
+
+	int valor_nuevo = 0;
+
+	switch (Cursor_Index_Pos)
+	{
+			// 1 Channel
+		case 1:
+			valor_nuevo = Numerico_Write(1, 512, 1, 0, 1, CH_1);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_1], 1, 1);
+				CH_1 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 1, 0, 1, CH_1);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_1], 1, 1);
+					CH_1 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(1, 0, CH_1, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_1;
+
+			break;
+
+			// 1 Value
+		case 2:
+
+			break;
+
+			// 2 Channel
+		case 3:
+			valor_nuevo = Numerico_Write(1, 512, 5, 0, 1, CH_2);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_2], 5, 1);
+				CH_2 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 5, 0, 1, CH_2);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_2], 5, 1);
+					CH_2 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(5, 0, CH_2, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_2;
+
+			break;
+
+			// 2 Value
+		case 4:
+
+			break;
+
+			// 3 Channel
+		case 5:
+			valor_nuevo = Numerico_Write(1, 512, 9, 0, 1, CH_3);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_3], 9, 1);
+				CH_3 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 0, 1, CH_3);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_3], 9, 1);
+					CH_3 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 0, CH_3, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_3;
+
+			break;
+
+			// 3 Value
+		case 6:
+
+			break;
+
+			// 4 Channel
+		case 7:
+			valor_nuevo = Numerico_Write(1, 512, 13, 0, 1, CH_4);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_4], 13, 1);
+				CH_4 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 13, 0, 1, CH_4);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_4], 13, 1);
+					CH_4 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(13, 0, CH_4, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_4;
+
+			break;
+
+			// 4 Value
+		case 8:
+
+			break;
+
+			// 5 Channel
+		case 9:
+			valor_nuevo = Numerico_Write(1, 512, 1, 2, 1, CH_5);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_5], 1, 3);
+				CH_5 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 1, 2, 1, CH_5);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_4], 1, 3);
+					CH_5 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(1, 2, CH_5, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_5;
+
+			break;
+
+			// 5 Value
+		case 10:
+
+			break;
+
+			// 6 Channel
+		case 11:
+			valor_nuevo = Numerico_Write(1, 512, 5, 2, 1, CH_6);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_6], 5, 3);
+				CH_6 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 5, 2, 1, CH_6);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_6], 5, 3);
+					CH_6 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(5, 2, CH_6, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_6;
+			
+			break;
+
+			// 6 Value
+		case 12:
+
+			break;
+
+			// 7 Channel
+		case 13:
+			valor_nuevo = Numerico_Write(1, 512, 9, 2, 1, CH_7);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_7], 9, 3);
+				CH_7 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 2, 1, CH_7);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_7], 9, 3);
+					CH_7 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 2, CH_7, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_7;
+			
+			break;
+
+			// 7 Value
+		case 14:
+
+			break;
+
+			// 8 Channel
+		case 15:
+			valor_nuevo = Numerico_Write(1, 512, 13, 2, 1, CH_8);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Numeric_Write(DMX_Values[CH_8], 13, 3);
+				CH_8 = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 13, 2, 1, CH_8);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Numeric_Write(DMX_Values[CH_8], 13, 3);
+					CH_8 = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(13, 2, CH_8, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_8;
+			
+			break;
+
+			// 8 Value
+		case 16:
+
+			break;
+
+			// memoria
+		case 17:
+			GUI_Memory();
+			Cursor_Index_Pos = 17;
+			goto inicio;
+			break;
+
+			// salida
+		case 18:
+			goto salir;
+			break;
+	}
+
+  	goto navegacion;
+
+  	salir: {}
   }
 
-/*
-  		// Cursor
-  	LCD_Col_Pos = 8;			// posicion de cursor
-  	LCD_Row_Pos = 2;			// posicion e cursor
-
-  		// configuracion de cursor
-  	Cursor_Conf_Clear();		// limpiar array
-
-  		// Cursores
-  	Cursor_Conf[2][8]  = 1;		// Channel
-  	Cursor_Conf[3][8]  = 1;		// Value
-  	Cursor_Conf[2][13] = 1; 	// Control
-  	Cursor_Conf[3][13] = 1;		// Memory
-
-  		// navegar
-	Navegacion:
-
-  	GUI_Navegar(0, 0);
-
-  	// Acciones
-  		//Channel
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
-  	{
-    	Numerico_Write(Canal_Actual, 9, 2);
-    	Num_Row_Pos = 2;
-    	Num_Col_Pos = 9;
-    	Num_Val = Canal_Actual;		// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc (0);
-
-    	if (Num_Val > 512)
-    	{
-     	 	Num_Val = 512;
-      		Numerico_Write (512, 9, 2);
-    	}
-
-    	if (Num_Val < 1)
-    	{
-     	 	Num_Val = 1;
-      		Numerico_Write (1, 9, 2);
-    	}
-
-    		// mostrar valor actual del canal
-    	Canal_Actual = Num_Val;
-    	Numerico_Write(DMX_Values[Canal_Actual], 9, 3);
-
-    		// mostrar anterior y siguiente
-    	if (Canal_Actual == 1)
-    	{
-      		Numerico_Write(2, 1, 1);
-      		Numerico_Write(DMX_Values[2], 6, 1);
-      		Numerico_Write(3, 12, 1);
-      		Numerico_Write(DMX_Values[3], 17, 1);
-    	}
-
-    	if (Canal_Actual == 512)
-    	{
-      		Numerico_Write(510, 1, 1);
-      		Numerico_Write(DMX_Values[510], 6, 1);
-      		Numerico_Write(511, 12, 1);
-      		Numerico_Write(DMX_Values[511], 17, 1);
-   	 	}
-
-    	if (Canal_Actual > 1 && Canal_Actual < 512)
-    	{
-      		Numerico_Write(Canal_Actual - 1, 1, 1);
-      		Numerico_Write(DMX_Values[Canal_Actual - 1], 6, 1);
-      		Numerico_Write(Canal_Actual + 1, 12, 1);
-      		Numerico_Write(DMX_Values[Canal_Actual + 1], 17, 1);
-    	}
-  	}
-
-  		// Value
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
-  	{
-    	Num_Row_Pos = 3;
-    	Num_Col_Pos = 9;
-    	Num_Val = DMX_Values[Canal_Actual];		// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc (1);
-
-    	if (Num_Val == 612)						// ubicar
-    	{
-      		Ubicar();
-    	}
-
-    	if (Num_Val == 712)						// analogo
-    	{
-      		Encoder_Read(9, 3, 0, 255, 1);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
-      		goto Navegacion;
-    	}
-
-    	if (Num_Val > 255)
-    	{
-      		Num_Val = 255;
-      		Numerico_Write (255, 9, 3);
-    	}
-
     		// Escribr valor en dmx
-    	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
-    	DMX_Values[Canal_Actual] = Num_Val;
-    	goto Navegacion;
-  	}
+//    	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = Num_Val;
 
-  		// Memory
-  	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 3)
-  	{
-    	GUI_Memory();
-    	goto Inicio;
-  	}
-
-  		// Control
-  	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
-  	{
-    	GUI_Control_Options();
-  	}
-
-  	goto Navegacion;
-}*/
 /*
 void Ubicar()
 {

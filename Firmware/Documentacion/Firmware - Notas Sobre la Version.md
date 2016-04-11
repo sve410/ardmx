@@ -28,7 +28,7 @@
 - AGREGADO  - canal actual a eeprom
 - CORREGIDO - menu, memoria, cambio de orden de items
 - CORREGIDO - menu, Config, limites y vista
-- CORREGIDO - Unitary Control - rediseño
+- CORREGIDO - Unitary Control - rediseño, 8 unitarios distintos no consecutivos
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
