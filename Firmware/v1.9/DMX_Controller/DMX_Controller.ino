@@ -3060,7 +3060,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_1 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_1], 1, 1);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -3141,7 +3140,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_2 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_2], 5, 1);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -3222,7 +3220,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_3 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_3], 9, 1);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -3303,7 +3300,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_4 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_4], 13, 1);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -3384,7 +3380,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_5 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_5], 1, 3);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -3465,7 +3460,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_6 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_6], 5, 3);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -3546,7 +3540,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_7 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_7], 9, 3);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -3627,7 +3620,6 @@ void GUI_Control_Unit()
 			if (valor_nuevo <= 512)					// poner limite max
 			{
 				CH_8 = valor_nuevo;
-				Numeric_Write(DMX_Values[CH_8], 13, 3);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// encoder
@@ -4109,6 +4101,8 @@ int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int 
 	// regresa el numero tecleado
 	// regresa max + 1 cuendo se selecciona D para encoder
 	// regresa max + 2 para ubicacion
+	// A regresa max
+	// B regresa min
 	// numero minimo a escribir - numero maximo a escribir - x y de pantalla donde se escribe
 	// el calculo del tamaño del numero lo hace en automatico
 	// num_ant, el numero que estaba impreso
@@ -4127,10 +4121,12 @@ int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int 
 	byte	numero_4			= 0;
 	byte 	lectura 			= 0;
 	byte 	numero_unidades		= 0;
+	int 	numero 				= 0;
 	
 	lcd.blink();	// parpadear cursor
 	
 	// calcular tamaño de numero de espacios que ve a utilizar el numero maximo
+
 		// decimal
 	if (Dec_Hex == 1)				
 	{
@@ -4201,15 +4197,15 @@ dibujar_numero_1:
 		// A - numero maximo
 	if (lectura == 10)	
 	{
-		lcd.noBlink();
-		return max;
+		numero = max;
+		goto numero_max_min;
 	}
 
 		// B - numero minimo
 	if (lectura == 11)	
 	{
-		lcd.noBlink();
-		return min;
+		numero = min;
+		goto numero_max_min;
 	}
 
 		// C - ubicar
@@ -4440,6 +4436,70 @@ dibujar_numero_4:
 	numero_4 = lectura;
 		
 	goto salida;	
+
+numero_max_min:
+	
+	lcd.noBlink();
+		// inicial
+	lcd.setCursor(LCD_x, LCD_y);
+		// 2 digitos
+	if (numero_lenght == 2)
+	{
+			// decimal
+		if (Dec_Hex == 1)
+		{
+			if (numero < 10)
+			{
+				lcd.print("0");
+			}
+		}
+			// hexadecimal
+		if (Dec_Hex == 2)
+		{
+			if (numero < 16)
+			{
+				lcd.print("0");
+			}
+		}
+	}
+		// 3 digitos
+	if (numero_lenght == 3)
+	{
+		if (numero < 10)
+		{
+			lcd.print("00");
+		}
+		if (numero > 9 && numero < 100)
+		{
+			lcd.print("0");
+		}
+	}
+		// 4 digitos
+	if (numero_lenght == 4)
+	{
+		if (numero < 10)
+		{
+			lcd.print("000");
+		}
+		if (numero > 9 && numero< 100)
+		{
+			lcd.print("00");
+		}
+		if (numero > 99 && numero < 1000)
+		{
+			lcd.print("0");
+		}		
+	}
+		// dibujar numero
+	if (Dec_Hex == 1)	// decimal
+	{
+		lcd.print(numero);
+	}
+	if (Dec_Hex == 2)	// hexadecimal
+	{
+		lcd.print(numero, HEX);
+	}
+	return numero;
 	
 numero_ant:
 	
