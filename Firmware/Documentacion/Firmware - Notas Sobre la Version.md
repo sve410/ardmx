@@ -23,11 +23,12 @@
 
 ***
 **v1.9 - beta - Hardware v0.7**
-- PENDIENTE - funciones en teclado numero mayor mejor back light, esc, agregar a lectura numerito write
+- PENDIENTE - funciones en teclado back light, agregar a lectura numerito write
 - AGREGADO  - modelo de programación de LCD - Encoder - keypad
 	https://github.com/daniel3514/Arduino-LCD-Encoder-KeyPad-Examples/tree/master/Examples/LCD%20-%20Encoder%20-%20Key%20Pad/v0.0
 - AGREGADO  - canal actual a eeprom
-- AGREGADO  - control unit, funcion para escribir valores repetidos en la matriz, ejemplo si hay dos unos ambos se actualizan
+- AGREGADO  - control unit, función para escribir valores repetidos en la matriz, ejemplo si hay dos unos ambos se actualizan
+- AGREGADO  - Ubicar, valor anterior al final
 - CORREGIDO - menu, memoria, cambio de orden de items
 - CORREGIDO - menu, Config, limites y vista
 - CORREGIDO - Unitary Control - rediseño, 8 unitarios distintos no consecutivos
