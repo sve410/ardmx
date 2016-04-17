@@ -3096,77 +3096,608 @@ void GUI_Control_Unit()
 
 			// 1 Value
 		case 2:
-			
+			valor_nuevo = Numerico_Write(0, 255, 1, 1, 1, DMX_Values[CH_1]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_1 - 1] = valor_nuevo;
+				DMX_Values[CH_1] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 1, 1, 1, DMX_Values[CH_1]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_1 - 1] = valor_nuevo;
+					DMX_Values[CH_1] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(1, 1, DMX_Values[CH_1], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(1, 1, DMX_Values[CH_1]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 2 Channel
 		case 3:
-			
+			valor_nuevo = Numerico_Write(1, 512, 5, 0, 1, CH_2);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)					// poner limite max
+			{
+				CH_2 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_2], 5, 1);							// void Numeric_Write (int valor, int col, int row)
+			}
+
+				// encoder
+			if (valor_nuevo == 513)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 5, 0, 1, CH_2);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					CH_2 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_2], 5, 1);
+				}
+
+					// acomodar numero 	
+				Numerico_Print(5, 0, CH_2, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_2;
+
+				// ubicar
+			if (valor_nuevo == 514)					// poner limite max + 2
+			{
+				Numeric_Write(CH_2, 5, 0);			// escribir canal
+				Ubicar(5, 1, DMX_Values[CH_2]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 2 Value
 		case 4:
-			
+			valor_nuevo = Numerico_Write(0, 255, 5, 1, 1, DMX_Values[CH_2]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_2 - 1] = valor_nuevo;
+				DMX_Values[CH_2] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 5, 1, 1, DMX_Values[CH_2]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_2 - 1] = valor_nuevo;
+					DMX_Values[CH_2] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(5, 1, DMX_Values[CH_2], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(5, 1, DMX_Values[CH_2]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 3 Channel
 		case 5:
-			
+			valor_nuevo = Numerico_Write(1, 512, 9, 0, 1, CH_3);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)					// poner limite max
+			{
+				CH_3 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_3], 9, 1);							// void Numeric_Write (int valor, int col, int row)
+			}
+
+				// encoder
+			if (valor_nuevo == 513)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 0, 1, CH_3);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					CH_3 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_3], 9, 1);
+				}
+
+					// acomodar numero 	
+				Numerico_Print(9, 0, CH_3, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_3;
+
+				// ubicar
+			if (valor_nuevo == 514)					// poner limite max + 2
+			{
+				Numeric_Write(CH_3, 9, 0);			// escribir canal
+				Ubicar(9, 1, DMX_Values[CH_3]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 3 Value
 		case 6:
-			
+			valor_nuevo = Numerico_Write(0, 255, 9, 1, 1, DMX_Values[CH_3]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_3 - 1] = valor_nuevo;
+				DMX_Values[CH_3] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 9, 1, 1, DMX_Values[CH_3]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_3 - 1] = valor_nuevo;
+					DMX_Values[CH_3] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 1, DMX_Values[CH_3], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(9, 1, DMX_Values[CH_3]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 4 Channel
 		case 7:
-			
+			valor_nuevo = Numerico_Write(1, 512, 13, 0, 1, CH_4);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)					// poner limite max
+			{
+				CH_4 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_4], 13, 1);							// void Numeric_Write (int valor, int col, int row)
+			}
+
+				// encoder
+			if (valor_nuevo == 513)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 13, 0, 1, CH_4);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					CH_4 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_4], 13, 1);
+				}
+
+					// acomodar numero 	
+				Numerico_Print(13, 0, CH_4, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_4;
+
+				// ubicar
+			if (valor_nuevo == 514)					// poner limite max + 2
+			{
+				Numeric_Write(CH_4, 13, 0);			// escribir canal
+				Ubicar(13, 1, DMX_Values[CH_4]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 4 Value
 		case 8:
-			
+			valor_nuevo = Numerico_Write(0, 255, 13, 1, 1, DMX_Values[CH_4]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_4 - 1] = valor_nuevo;
+				DMX_Values[CH_4] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 13, 1, 1, DMX_Values[CH_4]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_4 - 1] = valor_nuevo;
+					DMX_Values[CH_4] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(13, 1, DMX_Values[CH_4], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(13, 1, DMX_Values[CH_4]);	// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 5 Channel
 		case 9:
-			
+			valor_nuevo = Numerico_Write(1, 512, 1, 2, 1, CH_5);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)					// poner limite max
+			{
+				CH_5 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_5], 1, 3);							// void Numeric_Write (int valor, int col, int row)
+			}
+
+				// encoder
+			if (valor_nuevo == 513)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 1, 2, 1, CH_5);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					CH_5 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_5], 1, 3);
+				}
+
+					// acomodar numero 	
+				Numerico_Print(1, 2, CH_5, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_5;
+
+				// ubicar
+			if (valor_nuevo == 514)					// poner limite max + 2
+			{
+				Numeric_Write(CH_5, 1, 2);			// escribir canal
+				Ubicar(1, 3, DMX_Values[CH_5]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 5 Value
 		case 10:
-			
+			valor_nuevo = Numerico_Write(0, 255, 1, 3, 1, DMX_Values[CH_5]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_5 - 1] = valor_nuevo;
+				DMX_Values[CH_5] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 1, 3, 1, DMX_Values[CH_5]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_5 - 1] = valor_nuevo;
+					DMX_Values[CH_5] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(1, 3, DMX_Values[CH_5], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(1, 3, DMX_Values[CH_5]);	// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 6 Channel
 		case 11:
-			
+			valor_nuevo = Numerico_Write(1, 512, 5, 2, 1, CH_6);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)					// poner limite max
+			{
+				CH_6 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_6], 5, 3);							// void Numeric_Write (int valor, int col, int row)
+			}
+
+				// encoder
+			if (valor_nuevo == 513)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 5, 2, 1, CH_6);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					CH_6 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_6], 5, 3);
+				}
+
+					// acomodar numero 	
+				Numerico_Print(5, 2, CH_6, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_6;
+
+				// ubicar
+			if (valor_nuevo == 514)					// poner limite max + 2
+			{
+				Numeric_Write(CH_6, 5, 2);			// escribir canal
+				Ubicar(5, 3, DMX_Values[CH_6]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 6 Value
 		case 12:
-			
+			valor_nuevo = Numerico_Write(0, 255, 5, 3, 1, DMX_Values[CH_6]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_6 - 1] = valor_nuevo;
+				DMX_Values[CH_6] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 5, 3, 1, DMX_Values[CH_6]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_6 - 1] = valor_nuevo;
+					DMX_Values[CH_6] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(5, 3, DMX_Values[CH_6], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(5, 3, DMX_Values[CH_6]);	// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 7 Channel
 		case 13:
-			
+			valor_nuevo = Numerico_Write(1, 512, 9, 2, 1, CH_7);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)					// poner limite max
+			{
+				CH_7 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_7], 9, 3);							// void Numeric_Write (int valor, int col, int row)
+			}
+
+				// encoder
+			if (valor_nuevo == 513)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 2, 1, CH_7);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					CH_7 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_7], 9, 3);
+				}
+
+					// acomodar numero 	
+				Numerico_Print(9, 2, CH_7, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_7;
+
+				// ubicar
+			if (valor_nuevo == 514)					// poner limite max + 2
+			{
+				Numeric_Write(CH_7, 9, 2);			// escribir canal
+				Ubicar(9, 3, DMX_Values[CH_7]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 7 Value
 		case 14:
-			
+			valor_nuevo = Numerico_Write(0, 255, 9, 3, 1, DMX_Values[CH_7]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_7 - 1] = valor_nuevo;
+				DMX_Values[CH_7] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 9, 3, 1, DMX_Values[CH_7]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_7 - 1] = valor_nuevo;
+					DMX_Values[CH_7] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 3, DMX_Values[CH_7], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(9, 3, DMX_Values[CH_7]);	// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 8 Channel
 		case 15:
-			
+			valor_nuevo = Numerico_Write(1, 512, 13, 2, 1, CH_8);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)					// poner limite max
+			{
+				CH_8 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_8], 13, 3);							// void Numeric_Write (int valor, int col, int row)
+			}
+
+				// encoder
+			if (valor_nuevo == 513)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 13, 2, 1, CH_8);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					CH_8 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_8], 13, 3);
+				}
+
+					// acomodar numero 	
+				Numerico_Print(13, 2, CH_8, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			Canal_Actual = CH_8;
+
+				// ubicar
+			if (valor_nuevo == 514)					// poner limite max + 2
+			{
+				Numeric_Write(CH_8, 13, 2);			// escribir canal
+				Ubicar(13, 3, DMX_Values[CH_8]);		// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// 8 Value
 		case 16:
-			
+			valor_nuevo = Numerico_Write(0, 255, 13, 3, 1, DMX_Values[CH_8]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)					// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_8 - 1] = valor_nuevo;
+				DMX_Values[CH_8] = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 256)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 13, 3, 1, DMX_Values[CH_8]);
+					
+					if (valor_nuevo > 255)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_8 - 1] = valor_nuevo;
+					DMX_Values[CH_8] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(13, 3, DMX_Values[CH_8], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 257)					// poner limite max + 2
+			{
+				Ubicar(13, 3, DMX_Values[CH_8]);	// void Ubicar(byte y, byte x, num ant)
+			}
+
 			break;
 
 			// memoria
@@ -3207,6 +3738,7 @@ void Ubicar(byte y, byte x, byte val_ant)
   	}
 
   	delay(300); 	// rebote de boton enter
+
   	lcd.noBlink();
   	digitalWrite(Keypad_C, HIGH);
   	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = val_ant;
