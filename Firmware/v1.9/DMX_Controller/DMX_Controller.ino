@@ -3058,13 +3058,13 @@ void GUI_Control_Unit()
 	{
 			// 1 Channel
 		case 1:
-			valor_nuevo = Numerico_Write(1, 512, 1, 0, 1, CH_1);
+			valor_nuevo = Numerico_Write(1, 512, 1, 0, 1, CH_1);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
 
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_1], 1, 1);
 				CH_1 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_1], 1, 1);							// void Numeric_Write (int valor, int col, int row)
 			}
 
 				// mayor al limite
@@ -3072,19 +3072,19 @@ void GUI_Control_Unit()
 			{
 				while(1)
 				{
-					valor_nuevo = Numerico_Enc_Write(1, 512, 1, 0, 1, CH_1);
+					valor_nuevo = Numerico_Enc_Write(1, 512, 1, 0, 1, CH_1);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
 					
 					if (valor_nuevo > 512)	// poner limite max
 					{
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_1], 1, 1);
 					CH_1 = valor_nuevo;
-		
+					Numeric_Write(DMX_Values[CH_1], 1, 1);
 				}
+
 					// acomodar numero 	
-				Numerico_Print(1, 0, CH_1, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				Numerico_Print(1, 0, CH_1, 512, 1);								// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 			}
 
 			Canal_Actual = CH_1;
@@ -3093,6 +3093,35 @@ void GUI_Control_Unit()
 
 			// 1 Value
 		case 2:
+
+			valor_nuevo = Numerico_Write(0, 255, 1, 1, 1, DMX_Values[CH_1]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_1 - 1] = valor_nuevo;
+				DMX_Values[CH_1] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 1, 1, 1, DMX_Values[CH_1]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_1 - 1] = valor_nuevo;
+					DMX_Values[CH_1] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(1, 1, DMX_Values[CH_1], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 
 			break;
 
@@ -3103,8 +3132,8 @@ void GUI_Control_Unit()
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_2], 5, 1);
 				CH_2 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_2], 5, 1);
 			}
 
 				// mayor al limite
@@ -3119,9 +3148,8 @@ void GUI_Control_Unit()
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_2], 5, 1);
 					CH_2 = valor_nuevo;
-		
+					Numeric_Write(DMX_Values[CH_2], 5, 1);
 				}
 					// acomodar numero 	
 				Numerico_Print(5, 0, CH_2, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
@@ -3143,8 +3171,8 @@ void GUI_Control_Unit()
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_3], 9, 1);
 				CH_3 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_3], 9, 1);
 			}
 
 				// mayor al limite
@@ -3159,8 +3187,8 @@ void GUI_Control_Unit()
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_3], 9, 1);
 					CH_3 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_3], 9, 1);
 		
 				}
 					// acomodar numero 	
@@ -3183,8 +3211,8 @@ void GUI_Control_Unit()
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_4], 13, 1);
 				CH_4 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_4], 13, 1);
 			}
 
 				// mayor al limite
@@ -3199,9 +3227,8 @@ void GUI_Control_Unit()
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_4], 13, 1);
 					CH_4 = valor_nuevo;
-		
+					Numeric_Write(DMX_Values[CH_4], 13, 1);
 				}
 					// acomodar numero 	
 				Numerico_Print(13, 0, CH_4, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
@@ -3223,8 +3250,8 @@ void GUI_Control_Unit()
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_5], 1, 3);
 				CH_5 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_5], 1, 3);
 			}
 
 				// mayor al limite
@@ -3239,8 +3266,8 @@ void GUI_Control_Unit()
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_4], 1, 3);
 					CH_5 = valor_nuevo;
+					Numeric_Write(DMX_Values[CH_4], 1, 3);
 		
 				}
 					// acomodar numero 	
@@ -3263,8 +3290,8 @@ void GUI_Control_Unit()
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_6], 5, 3);
 				CH_6 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_6], 5, 3);
 			}
 
 				// mayor al limite
@@ -3279,9 +3306,8 @@ void GUI_Control_Unit()
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_6], 5, 3);
 					CH_6 = valor_nuevo;
-		
+					Numeric_Write(DMX_Values[CH_6], 5, 3);
 				}
 					// acomodar numero 	
 				Numerico_Print(5, 2, CH_6, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
@@ -3303,8 +3329,8 @@ void GUI_Control_Unit()
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_7], 9, 3);
 				CH_7 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_7], 9, 3);
 			}
 
 				// mayor al limite
@@ -3319,9 +3345,8 @@ void GUI_Control_Unit()
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_7], 9, 3);
 					CH_7 = valor_nuevo;
-		
+					Numeric_Write(DMX_Values[CH_7], 9, 3);
 				}
 					// acomodar numero 	
 				Numerico_Print(9, 2, CH_7, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
@@ -3343,8 +3368,8 @@ void GUI_Control_Unit()
 				// menor o igual al limites
 			if (valor_nuevo <= 512)			// poner limite max
 			{
-				Numeric_Write(DMX_Values[CH_8], 13, 3);
 				CH_8 = valor_nuevo;
+				Numeric_Write(DMX_Values[CH_8], 13, 3);
 			}
 
 				// mayor al limite
@@ -3359,9 +3384,8 @@ void GUI_Control_Unit()
 						break; // enter
 					}
 
-					Numeric_Write(DMX_Values[CH_8], 13, 3);
 					CH_8 = valor_nuevo;
-		
+					Numeric_Write(DMX_Values[CH_8], 13, 3);
 				}
 					// acomodar numero 	
 				Numerico_Print(13, 2, CH_8, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
@@ -3781,6 +3805,7 @@ int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, 
 int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
 {
 	// regresa el numero tecleado
+	// regresa max + 1 cuendo se selecciona D para encoder
 	// numero minimo a escribir - numero maximo a escribir - x y de pantalla donde se escribe
 	// el calculo del tamaño del numero lo hace en automatico
 	// num_ant, el numero que estaba impreso
