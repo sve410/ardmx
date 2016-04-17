@@ -661,11 +661,11 @@ void Multi_Matrix(int inicial)
 	Numeric_Write (DMX_Values[inicial + 14], 17, 3);
 }
 
-/*void GUI_Control_Matrix()
+void GUI_Control_Matrix()
 {
 	// control en matriz
-	int Inicial = 1;
-	Canal_Actual = 1;
+
+	int Inicial = Canal_Actual;
 	
 	inicio:
 
@@ -683,47 +683,62 @@ void Multi_Matrix(int inicial)
 		lcd.print(Universo_Actual);
 	}
 
-	Multi_Matrix (Inicial);
+		// dibujar matriz
+	Multi_Matrix (Inicial);	
+
+		// borrar datos previos en el indice
+	Cursor_Index_Clear();
+
+	// establecer el indice
+
+		// col 1
+	Cursor_Index[0][1]	= 5;	//y x
+	Cursor_Index[0][2] 	= 10;	//y x
+	Cursor_Index[0][3] 	= 15;	//y x
+		// col 2
+	Cursor_Index[4][0] 	= 1;	//y x
+	Cursor_Index[4][1] 	= 6;	//y x
+	Cursor_Index[4][2] 	= 11;	//y x
+	Cursor_Index[4][3] 	= 16;	//y x
+		// col 3
+	Cursor_Index[8][0] 	= 2;	//y x
+	Cursor_Index[8][1] 	= 7;	//y x
+	Cursor_Index[8][2] 	= 12;	//y x
+	Cursor_Index[8][3] 	= 17;	//y x
+		// col 4
+	Cursor_Index[12][0] = 3;	//y x
+	Cursor_Index[12][1] = 8;	//y x
+	Cursor_Index[12][2]	= 13;	//y x
+	Cursor_Index[12][3]	= 18;	//y x
+		// col 5
+	Cursor_Index[16][0] = 4;	//y x
+	Cursor_Index[16][1] = 9;	//y x
+	Cursor_Index[16][2]	= 14;	//y x
+	Cursor_Index[16][3]	= 19;	//y x
+
+	Cursor_Index_Pos = 3;	// posicion inicial
+
+	navegacion:
+
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar();	// actualiza Cursor_Index_Pos
+
+		// pintar gion de ventana de canales
+	lcd.setCursor (16, 0);
+	lcd.print("-");
+
+	int valor_nuevo = 0;
+
+	switch (Cursor_Index_Pos)
+	{
 	
-		// Cursor
-	LCD_Col_Pos = 12;		// posicion de cursor
-	LCD_Row_Pos = 0;		// posicion e cursor
+	}
 
-		// configuracion de cursor
-	Cursor_Conf_Clear();	// limpiar array
+	goto navegacion;
 
-		// Row 0
-	Cursor_Conf[0][4]  = 1;	// Memory
-	Cursor_Conf[0][8]  = 1;	// Unit
-	Cursor_Conf[0][12] = 1;	// Banco Inicial
-	Cursor_Conf[0][16] = 1;	// Banco Final
-
-		// Row 1
-	Cursor_Conf[1][0]  = 1;
-	Cursor_Conf[1][4]  = 1;
-	Cursor_Conf[1][8]  = 1;
-	Cursor_Conf[1][12] = 1;
-	Cursor_Conf[1][16] = 1;
-
-		// Row 2
-	Cursor_Conf[2][0]  = 1;
-	Cursor_Conf[2][4]  = 1;
-	Cursor_Conf[2][8]  = 1;
-	Cursor_Conf[2][12] = 1;
-	Cursor_Conf[2][16] = 1;
-
-		// Row 3
-	Cursor_Conf[3][0]  = 1;
-	Cursor_Conf[3][4]  = 1;
-	Cursor_Conf[3][8]  = 1;
-	Cursor_Conf[3][12] = 1;
-	Cursor_Conf[3][16] = 1;
-
-		// navegar
-	Banco:
-
-	GUI_Navegar(1, Inicial);
-	
+	salir: {}
+}
+/*	
 	// Acciones
 		// Memory
 	if (LCD_Col_Pos == 4 &&  LCD_Row_Pos == 0)
@@ -2081,7 +2096,8 @@ void GUI_Control_Options()
 
 			// Matrix
 		case 3:
-			//GUI_Control_Matrix();
+			GUI_Control_Matrix();
+			Cursor_Index_Pos = 3;
 			break;
 
 			// Chaser
