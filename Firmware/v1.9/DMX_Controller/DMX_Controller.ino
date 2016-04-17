@@ -2992,8 +2992,32 @@ void GUI_Control_Unit()
   	lcd.print ("Mem");
   	lcd.setCursor (17, 3);
   	lcd.print ("Ctr");
-  	
-  		// canal 1
+
+  		// borrar datos previos en el indice
+	Cursor_Index_Clear();
+		// establecer el indice
+	Cursor_Index[0][0] 	= 1;	// ch 1 	//y x
+	Cursor_Index[0][1] 	= 2;	// CH 1 	//y x	
+	Cursor_Index[4][0] 	= 3;	// ch 2		//y x
+	Cursor_Index[4][1] 	= 4;	// ch 2		//y x
+	Cursor_Index[8][0] 	= 5;	// ch 3		//y x
+	Cursor_Index[8][1] 	= 6;	// ch 3 	//y x
+	Cursor_Index[12][0] = 7;	// ch 4 	//y x
+	Cursor_Index[12][1] = 8;	// ch 4		//y x
+	Cursor_Index[0][2] 	= 9;	// ch 5		//y x
+	Cursor_Index[0][3] 	= 10;	// ch 5		//y x
+	Cursor_Index[4][2] 	= 11;	// ch 6		//y x
+	Cursor_Index[4][3] 	= 12;	// ch 6		//y x
+	Cursor_Index[8][2] 	= 13;	// ch 7		//y x
+	Cursor_Index[8][3] 	= 14;	// ch 7		//y x
+	Cursor_Index[12][2] = 15;	// ch 8		//y x
+	Cursor_Index[12][3] = 16;	// ch 8		//y x
+	Cursor_Index[16][2] = 17;	// mem		//y x
+	Cursor_Index[16][3] = 18;	// control	//y x
+
+	navegacion:
+
+		// canal 1
   	Numeric_Write(CH_1, 1, 0);
   	Numeric_Write(DMX_Values[CH_1], 1, 1);
 
@@ -3024,30 +3048,6 @@ void GUI_Control_Unit()
   		// canal 8
   	Numeric_Write(CH_8, 13, 2);
   	Numeric_Write(DMX_Values[CH_8], 13, 3);
-
-  		// borrar datos previos en el indice
-	Cursor_Index_Clear();
-		// establecer el indice
-	Cursor_Index[0][0] 	= 1;	// ch 1 	//y x
-	Cursor_Index[0][1] 	= 2;	// CH 1 	//y x	
-	Cursor_Index[4][0] 	= 3;	// ch 2		//y x
-	Cursor_Index[4][1] 	= 4;	// ch 2		//y x
-	Cursor_Index[8][0] 	= 5;	// ch 3		//y x
-	Cursor_Index[8][1] 	= 6;	// ch 3 	//y x
-	Cursor_Index[12][0] = 7;	// ch 4 	//y x
-	Cursor_Index[12][1] = 8;	// ch 4		//y x
-	Cursor_Index[0][2] 	= 9;	// ch 5		//y x
-	Cursor_Index[0][3] 	= 10;	// ch 5		//y x
-	Cursor_Index[4][2] 	= 11;	// ch 6		//y x
-	Cursor_Index[4][3] 	= 12;	// ch 6		//y x
-	Cursor_Index[8][2] 	= 13;	// ch 7		//y x
-	Cursor_Index[8][3] 	= 14;	// ch 7		//y x
-	Cursor_Index[12][2] = 15;	// ch 8		//y x
-	Cursor_Index[12][3] = 16;	// ch 8		//y x
-	Cursor_Index[16][2] = 17;	// mem		//y x
-	Cursor_Index[16][3] = 18;	// control	//y x
-
-	navegacion:
 
 		// iniciar navegacion y evaluar el index seleccionado
 	Navegar();	// actualiza Cursor_Index_Pos
@@ -3093,7 +3093,6 @@ void GUI_Control_Unit()
 
 			// 1 Value
 		case 2:
-
 			valor_nuevo = Numerico_Write(0, 255, 1, 1, 1, DMX_Values[CH_1]);
 
 				// menor o igual al limites
@@ -3161,7 +3160,34 @@ void GUI_Control_Unit()
 
 			// 2 Value
 		case 4:
+			valor_nuevo = Numerico_Write(0, 255, 5, 1, 1, DMX_Values[CH_2]);
 
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_2 - 1] = valor_nuevo;
+				DMX_Values[CH_2] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 5, 1, 1, DMX_Values[CH_2]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_2 - 1] = valor_nuevo;
+					DMX_Values[CH_2] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(5, 1, DMX_Values[CH_2], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 			break;
 
 			// 3 Channel
@@ -3201,7 +3227,34 @@ void GUI_Control_Unit()
 
 			// 3 Value
 		case 6:
+			valor_nuevo = Numerico_Write(0, 255, 9, 1, 1, DMX_Values[CH_3]);
 
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_3 - 1] = valor_nuevo;
+				DMX_Values[CH_3] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 9, 1, 1, DMX_Values[CH_3]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_3 - 1] = valor_nuevo;
+					DMX_Values[CH_3] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 1, DMX_Values[CH_3], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 			break;
 
 			// 4 Channel
@@ -3240,7 +3293,34 @@ void GUI_Control_Unit()
 
 			// 4 Value
 		case 8:
+			valor_nuevo = Numerico_Write(0, 255, 13, 1, 1, DMX_Values[CH_4]);
 
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_4 - 1] = valor_nuevo;
+				DMX_Values[CH_4] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 13, 1, 1, DMX_Values[CH_4]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_4 - 1] = valor_nuevo;
+					DMX_Values[CH_4] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(13, 1, DMX_Values[CH_4], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 			break;
 
 			// 5 Channel
@@ -3280,6 +3360,34 @@ void GUI_Control_Unit()
 
 			// 5 Value
 		case 10:
+			valor_nuevo = Numerico_Write(0, 255, 1, 3, 1, DMX_Values[CH_5]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_5 - 1] = valor_nuevo;
+				DMX_Values[CH_5] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 1, 3, 1, DMX_Values[CH_5]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_5 - 1] = valor_nuevo;
+					DMX_Values[CH_5] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(1, 3, DMX_Values[CH_5], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 
 			break;
 
@@ -3319,6 +3427,34 @@ void GUI_Control_Unit()
 
 			// 6 Value
 		case 12:
+			valor_nuevo = Numerico_Write(0, 255, 5, 3, 1, DMX_Values[CH_6]);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_6 - 1] = valor_nuevo;
+				DMX_Values[CH_6] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 5, 3, 1, DMX_Values[CH_6]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_6 - 1] = valor_nuevo;
+					DMX_Values[CH_6] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(5, 3, DMX_Values[CH_6], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 
 			break;
 
@@ -3358,7 +3494,35 @@ void GUI_Control_Unit()
 
 			// 7 Value
 		case 14:
+			valor_nuevo = Numerico_Write(0, 255, 9, 3, 1, DMX_Values[CH_7]);
 
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_7 - 1] = valor_nuevo;
+				DMX_Values[CH_7] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 9, 3, 1, DMX_Values[CH_7]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_7 - 1] = valor_nuevo;
+					DMX_Values[CH_7] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 3, DMX_Values[CH_7], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+			
 			break;
 
 			// 8 Channel
@@ -3397,7 +3561,34 @@ void GUI_Control_Unit()
 
 			// 8 Value
 		case 16:
+			valor_nuevo = Numerico_Write(0, 255, 13, 3, 1, DMX_Values[CH_8]);
 
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				ArduinoDmx0.TxBuffer[CH_8 - 1] = valor_nuevo;
+				DMX_Values[CH_8] = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(0, 255, 13, 3, 1, DMX_Values[CH_8]);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
+
+					ArduinoDmx0.TxBuffer[CH_8 - 1] = valor_nuevo;
+					DMX_Values[CH_8] = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(13, 3, DMX_Values[CH_8], 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 			break;
 
 			// memoria
