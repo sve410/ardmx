@@ -635,10 +635,6 @@ void Multi_Matrix(int inicial)
 {
 	// dibujar matriz de universo dmx
 
-		// dibujar banco
-	Numeric_Write (inicial, 13, 0);
-	Numeric_Write (inicial + 14, 17, 0);
-
 		// matrix 1
 	Numeric_Write (DMX_Values[inicial], 1, 1);
 	Numeric_Write (DMX_Values[inicial + 1], 5, 1);
@@ -665,15 +661,17 @@ void GUI_Control_Matrix()
 {
 	// control en matriz
 
-	int Inicial = Canal_Actual;
-	
 	inicio:
+
+	int Inicial = Canal_Actual;
 
 	lcd.clear();
 	lcd.setCursor (0, 0);
 	lcd.print("c--- Mb  Exi    -");
-	lcd.setCursor (7, 0);
+	Numerico_Print(13, 0, Inicial, 512, 1);			// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+	Numerico_Print(17, 0, Inicial + 14, 512, 1);	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 
+	lcd.setCursor (7, 0);
 	if (Universo_Actual == 0)
 	{
 		lcd.print("-");
@@ -731,7 +729,111 @@ void GUI_Control_Matrix()
 
 	switch (Cursor_Index_Pos)
 	{
-	
+			// memoria
+		case 1:
+			GUI_Memory();
+			goto inicio;
+			break;
+
+			// Salida
+		case 2:
+			Cursor_Index_Pos = 3;
+			GUI_Control_Options();
+			goto inicio;
+			break;
+
+			// banco inicial
+		case 3:
+			valor_nuevo = Numerico_Write(1, 498, 13, 0, 1, Inicial);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 498)							// poner limite max
+			{
+				Inicial = valor_nuevo;
+			}
+
+				// encoder
+			if (valor_nuevo == 499)							// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 498, 13, 0, 1, Inicial);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 498)					// poner limite max
+					{
+						break; 								// enter
+					}
+
+					Inicial = valor_nuevo;
+						// dibujar matriz
+					Multi_Matrix (Inicial);	
+					Numerico_Print(17, 0, Inicial + 14, 512, 1);	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				}
+
+					// acomodar numero 	
+				Numerico_Print(13, 0, Inicial, 498, 1);		// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 500)							// poner limite max + 2
+			{
+				Numerico_Print(13, 0, Inicial, 512, 1);		// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				Ubicar(1, 1, DMX_Values[Inicial]);			// void Ubicar(byte y, byte x, byte val_ant)
+			}
+
+				// dibujar matriz
+			Multi_Matrix (Inicial);	
+			Numerico_Print(17, 0, Inicial + 14, 512, 1);	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+
+			Canal_Actual = Inicial;
+
+			break;
+
+		case 4:
+			valor_nuevo = Numerico_Write(15, 512, 17, 0, 1, Inicial + 14);			// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)							// poner limite max
+			{
+				Inicial = valor_nuevo - 14;
+			}
+
+				// encoder
+			if (valor_nuevo == 513)							// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(15, 512, 17, 0, 1, Inicial + 14);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)					// poner limite max
+					{
+						break; 								// enter
+					}
+
+					Inicial = valor_nuevo - 14;
+						// dibujar matriz
+					Multi_Matrix (Inicial);	
+					Numerico_Print(13, 0, Inicial, 512, 1);	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				}
+
+					// acomodar numero 	
+				Numerico_Print(17, 0, Inicial, 512, 1);		// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 514)							// poner limite max + 2
+			{
+				Numerico_Print(17, 0, Inicial + 14, 512, 1);		// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				Ubicar(17, 3, DMX_Values[Inicial + 14]);			// void Ubicar(byte y, byte x, byte val_ant)
+			}
+
+				// dibujar matriz
+			Multi_Matrix (Inicial);	
+			Numerico_Print(17, 0, Inicial + 14, 512, 1);			// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+
+			Canal_Actual = Inicial;
+
+			break;
 	}
 
 	goto navegacion;
@@ -739,67 +841,7 @@ void GUI_Control_Matrix()
 	salir: {}
 }
 /*	
-	// Acciones
-		// Memory
-	if (LCD_Col_Pos == 4 &&  LCD_Row_Pos == 0)
-	{
-		GUI_Memory();
-		goto inicio;
-	}
 
-		// Control
-	if (LCD_Col_Pos == 8 &&  LCD_Row_Pos == 0)
-	{
-		GUI_Control_Options();
-		goto inicio;
-	}
-
-		// Banco Inicial
-	if (LCD_Col_Pos == 12 && LCD_Row_Pos == 0)
-	{
-		Num_Row_Pos = 0;
-		Num_Col_Pos = 13;
-		Num_Val = Inicial;	// para dejar el numero que estaba si no se cambia
-		Numerico_Calc(0);
-		if (Num_Val > 498)	// limite de matriz
-		{
-			Num_Val = 498;
-		}
-		if (Num_Val == 0)	// limite de matriz
-		{
-			Num_Val = 1;
-		}
-		Inicial = Num_Val;
-		goto inicio;
-	}
-
-		// Banco Final
-	if (LCD_Col_Pos == 16 && LCD_Row_Pos == 0)
-	{
-		Num_Row_Pos = 0;
-		Num_Col_Pos = 17;
-		if (Inicial == 1)
-		{
-			Num_Val = 15;
-		}
-		else
-		{
-			Num_Val = Inicial - 14;	// para dejar el numero que estaba si no se cambia
-			Numerico_Calc(0);
-		}
-		if (Num_Val > 512)			// limite de matriz
-		{
-			Inicial = 498;
-			goto inicio;
-		}
-		if (Num_Val < 15)			// limite de matriz
-		{
-			Inicial = 1;
-			goto inicio;
-		}
-		Inicial = Num_Val - 14;
-		goto inicio;
-	}
 
 		// posicion 1
 	if (LCD_Col_Pos == 0 && LCD_Row_Pos == 1)
@@ -3750,6 +3792,8 @@ void Ubicar(byte y, byte x, byte val_ant)
   	lcd.noBlink();
   	digitalWrite(Keypad_C, HIGH);
   	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = val_ant;
+  		// acomodar anterior
+  	Numerico_Print(y, x, val_ant, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 }
 
 // ----------------------------- Navegacion LCD - Encoder - Keypad v0.0 -----------------------------

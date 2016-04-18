@@ -29,6 +29,7 @@
 - AGREGADO  - canal actual a eeprom
 - AGREGADO  - control unit, función para escribir valores repetidos en la matriz, ejemplo si hay dos unos ambos se actualizan
 - AGREGADO  - Ubicar, valor anterior al final
+- AGREGADO  - Control Matrix, ubicar a inicial y final
 - CORREGIDO - menu, memoria, cambio de orden de items
 - CORREGIDO - menu, Config, limites y vista
 - CORREGIDO - Unitary Control - rediseño, 8 unitarios distintos no consecutivos
