@@ -123,6 +123,37 @@ byte Back_Light_PWM			= 13;	// salida para PWM de Back Light de LCD
 byte Contrast_PWM			= 12;	// salida para pwm de contraste de LCD
 byte Light_On_Off			= 0;	// saber si esta encendida o apagada, back y key
 LiquidCrystal lcd			(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
+byte Caracter_Nav[8] 		= 	{
+  									B00000,
+  									B00100,
+  									B00110,
+ 									B11001,
+  									B11001,
+  									B00110,
+ 									B00100,
+  									B00000
+								};
+byte Caracter_Off[8] 		= 	{
+  									B11111,
+  									B10001,
+  									B10001,
+ 									B10001,
+  									B10001,
+  									B10001,
+ 									B10001,
+  									B11111
+								};
+byte Caracter_On[8] 		= 	{
+  									B11111,
+  									B11111,
+  									B11111,
+ 									B11111,
+  									B11111,
+  									B11111,
+ 									B11111,
+  									B11111
+								};
+
 
 	// Key Light
 byte Key_Light_PWM			= 11;	// pin
@@ -169,15 +200,18 @@ void setup()
 	digitalWrite	(Keypad_D, 		HIGH);
 
 		// LCD
-	pinMode(LCD_RS, 				OUTPUT);
-	pinMode(LCD_E,  				OUTPUT);
-	pinMode(LCD_D7, 				OUTPUT);
-	pinMode(LCD_D6, 				OUTPUT);
-	pinMode(LCD_D5, 				OUTPUT);
-	pinMode(LCD_D4, 				OUTPUT);
-	pinMode(Back_Light_PWM,			OUTPUT);
-	pinMode(Contrast_PWM,			OUTPUT);
-	lcd.begin(20, 4);							//tamaño de LCD
+	pinMode			(LCD_RS, 				OUTPUT);
+	pinMode			(LCD_E,  				OUTPUT);
+	pinMode			(LCD_D7, 				OUTPUT);
+	pinMode			(LCD_D6, 				OUTPUT);
+	pinMode			(LCD_D5, 				OUTPUT);
+	pinMode			(LCD_D4, 				OUTPUT);
+	pinMode			(Back_Light_PWM,		OUTPUT);
+	pinMode			(Contrast_PWM,			OUTPUT);
+	lcd.begin		(20, 					4);				//tamaño de LCD
+	lcd.createChar	(0, 					Caracter_Nav); 	//void LCD::createChar(uint8_t location, uint8_t charmap[]) 
+	lcd.createChar	(1, 					Caracter_On); 	//void LCD::createChar(uint8_t location, uint8_t charmap[]) 
+	lcd.createChar	(2, 					Caracter_Off); 	//void LCD::createChar(uint8_t location, uint8_t charmap[]) 
 
 		// Key Light
 	pinMode(Key_Light_PWM,			OUTPUT);
@@ -3933,7 +3967,7 @@ void Navegar()
 			if (Cursor_Index[Conteo_Y][Conteo_X] == Cursor_Index_Pos)
 			{
 				lcd.setCursor (Conteo_Y, Conteo_X);
-				lcd.print(">");
+				lcd.write(byte(0));
 			}
 				// saber ultimo indice
 			if (Cursor_Index[Conteo_Y][Conteo_X] > Index_Final)
@@ -3994,7 +4028,7 @@ void Navegar()
 					if (Cursor_Index[Conteo_Y][Conteo_X] == Cursor_Index_Pos)
 					{
 						lcd.setCursor (Conteo_Y, Conteo_X);
-						lcd.print(">");
+						lcd.write(byte(0));
 					}
 						// borrar cursor anterior
 					if (Cursor_Index[Conteo_Y][Conteo_X] == Cursor_Index_Pos_ant)
