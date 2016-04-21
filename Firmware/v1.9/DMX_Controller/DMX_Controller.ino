@@ -125,12 +125,12 @@ byte Light_On_Off			= 0;	// saber si esta encendida o apagada, back y key
 LiquidCrystal lcd			(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);  //LCD setup
 byte Caracter_Nav[8] 		= 	{
   									B00000,
-  									B00100,
-  									B00110,
- 									B11001,
-  									B11001,
-  									B00110,
- 									B00100,
+  									B01000,
+  									B01100,
+ 									B01110,
+  									B01110,
+  									B01100,
+ 									B01000,
   									B00000
 								};
 byte Caracter_Off[8] 		= 	{
