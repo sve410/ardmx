@@ -771,9 +771,7 @@ void GUI_Control_Matrix()
 
 			// Salida
 		case 2:
-			Cursor_Index_Pos = 3;
-			GUI_Control_Options();
-			goto inicio;
+			goto salir;;
 			break;
 
 			// banco inicial
@@ -1681,13 +1679,14 @@ int GUI_Memory_Bank(byte Opcion)
 
 void GUI_Memory()
 {
-
 	iniciar:
 
   		// Texto
   	lcd.clear ();
   	lcd.setCursor (0, 0);
-  	lcd.print("Memory:          b");
+  	lcd.print("Memory");
+  	lcd.setCursor (18, 0);
+  	lcd.print("b");
 
   	if (Universo_Actual == 0)
   	{
@@ -2657,7 +2656,7 @@ void GUI_Control_Options()
 
 			// Chaser
 		case 4:
-			//GUI_Control_Chaser();
+			GUI_Control_Chaser();
 			Cursor_Index_Pos = 4;
 			break;
 
@@ -2752,7 +2751,6 @@ void GUI_Convert()
 		// iniciar navegacion y evaluar el index seleccionado
 	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
-	byte bit_pos 	= 0;
 	long Enc_read	= 0;
 	long Enc_ant 	= 0;
 	byte Cursor 	= 1;
@@ -3609,27 +3607,38 @@ void GUI_Control_Multiply()
 
   	goto Siguiente;
 }*/
-/*
+
 void GUI_Control_Chaser()
 {
-  	long Delay     = 1;
+  	long Delay   = 1;
   	long First 	 = 1;
   	long Final 	 = 0;
 
   		// LCD
   	lcd.clear ();
   	lcd.setCursor (0, 0);
-  	lcd.print ("ChaserCH ---");
-  	lcd.setCursor (3, 1);
-  	lcd.print ("Delay    x10=mS");
+  	lcd.print ("Chaser");
+  	lcd.setCursor (14, 0);
+  	lcd.print ("CH:---");
+  	lcd.setCursor (2, 1);
+  	lcd.print ("Delay:");
+  	lcd.setCursor (12, 1);
+  	lcd.print ("x10=mS");
   	lcd.setCursor (0, 2);
-  	lcd.print ("First CH       Exit");
+  	lcd.print ("FirstCH:");
+  	lcd.setCursor (15, 2);
+  	lcd.print ("Exit");
   	lcd.setCursor (0, 3);
-  	lcd.print ("Final CH       Start");
-  	Numerico_Write (Delay, 9, 1);
-  	Numerico_Write (First, 9, 2);
-  	Numerico_Write (Final, 9, 3);
+  	lcd.print ("FinalCH:");
+  	lcd.setCursor (15, 3);
+  	lcd.print ("Start");
+  	Numerico_Print(9, 1, Delay, 100, 1);	//void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+  	Numerico_Print(9, 2, First, 100, 1);	//void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+  	Numerico_Print(9, 3, Final, 100, 1);	//void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 
+  	while(1);
+}
+/*
   		// Cursor
   	LCD_Col_Pos = 8;			// posicion de cursor
   	LCD_Row_Pos = 1;
@@ -3819,7 +3828,7 @@ void GUI_Control_Unit()
   	lcd.setCursor (17, 2);
   	lcd.print ("Mem");
   	lcd.setCursor (17, 3);
-  	lcd.print ("Ctr");
+  	lcd.print ("Exi");
 
   		// borrar datos previos en el indice
 	Cursor_Index_Clear();

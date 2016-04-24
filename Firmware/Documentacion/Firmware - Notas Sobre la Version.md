@@ -39,6 +39,7 @@
 - CORREGIDO - Convert, rediseño de interface gráfica
 - CORREGIDO - Convert, modelo de navegación de binarios
 - PENDIENTE - Convert, cambiar cursor de navegación de binarios
+- CORREGIDO - Control Chaser, rediseño de interface gráfica
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
