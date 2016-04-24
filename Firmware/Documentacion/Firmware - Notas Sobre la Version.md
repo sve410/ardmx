@@ -32,6 +32,7 @@
 - AGREGADO  - Control Matrix, ubicar a inicial y final
 - AGREGADO  - Control Matrix, mostrar canal a inicial y final
 - AGREGADO  - guardar canal actual en eeprom cuando se sale de algún control
+- AGREGADO  - Converter, opción de ubicar canal
 - CORREGIDO - menu, memoria, cambio de orden de items
 - CORREGIDO - menu, Config, limites y vista
 - CORREGIDO - Unitary Control - rediseño, 8 unitarios distintos no consecutivos

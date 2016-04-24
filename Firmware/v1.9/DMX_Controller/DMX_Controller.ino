@@ -2640,6 +2640,7 @@ void GUI_Control_Options()
 			// Convert
 		case 1:
 			GUI_Convert();
+			Cursor_Index_Pos = 1;
 			break;
 
 			// Unitary
@@ -2657,6 +2658,7 @@ void GUI_Control_Options()
 			// Chaser
 		case 4:
 			//GUI_Control_Chaser();
+			Cursor_Index_Pos = 4;
 			break;
 
 			// Config
@@ -2674,11 +2676,13 @@ void GUI_Control_Options()
 			// Secuencer
 		case 7:
 			//GUI_Control_Secuencer();
+			Cursor_Index_Pos = 7;
 			break;
 
 			// Multiply
 		case 8:
 			//GUI_Control_Multiply();
+			Cursor_Index_Pos = 8;
 			break;
 	}
 	goto inicio;
@@ -2689,7 +2693,8 @@ void GUI_Convert()
 	int valor 			= 0;								// aqui el valor a calcular
 	int valor_temp		= 0;								// aqui el valor temporal para las cuentas
 	int valor_resto 	= 0;								// aqui el valor del resto de la divicion
-	int valor_Bin [10]	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	// aqui el valor descompuesto en binario
+	int valor_Bin [10]	= { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };	// aqui el valor descompuesto en binario
+	int valor_nuevo		= 0;
 
 		// LCD
 	lcd.clear ();
@@ -2715,10 +2720,8 @@ void GUI_Convert()
 		// canal inicial
 	Numerico_Print(5, 3, Canal_Actual, 512, 1);	// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 
-	// calcular binario
-    
+		// calcular binario
     lcd.setCursor (5, 0);
-
     valor_temp = Canal_Actual;
 
     for (byte pos = 9; pos >= 1; pos --)
@@ -2736,27 +2739,117 @@ void GUI_Convert()
       	}
     }
 
+  		// borrar datos previos en el indice
+	Cursor_Index_Clear();
 
+  		// establecer el indice
+  	Cursor_Index[4][0]   = 1;	// Bin		// y x
+  	Cursor_Index[4][3]   = 2; 	// Dec
+  	Cursor_Index[15][3]  = 3; 	// Exit
 
-	while(1);
+  	navegacion:
+
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
+
+  	switch (Cursor_Index_Pos)
+	{
+			// Bin
+		case 1:
+
+			break;
+
+			// Dec
+		case 2:
+			valor_nuevo = Numerico_Write(1, 511, 5, 3, 1, Canal_Actual);				// int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+				// menor o igual al limites
+			if (valor_nuevo <= 511)					// poner limite max
+			{
+				Canal_Actual = valor_nuevo;
+
+						// calcular binario
+    				lcd.setCursor (5, 0);
+					valor_temp = Canal_Actual;
+
+				    for (byte pos = 9; pos >= 1; pos --)
+				    {
+				      	valor_resto 		= valor_temp % 2;
+				      	valor_temp  		= valor_temp / 2;
+				      	valor_Bin [pos] 	= valor_resto;
+				      	if (valor_resto == 0)
+				      	{
+				      	  lcd.write(byte(2));
+				      	}
+				      	else
+				      	{
+				      	  lcd.write(byte(1));
+				      	}
+				    }
+			}
+
+				// encoder
+			if (valor_nuevo == 512)					// poner limite max + 1
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 511, 5, 3, 1, Canal_Actual);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
+					
+					if (valor_nuevo > 512)			// poner limite max
+					{
+						break; 						// enter
+					}
+
+					Canal_Actual = valor_nuevo;
+
+						// calcular binario
+    				lcd.setCursor (5, 0);
+					valor_temp = Canal_Actual;
+
+				    for (byte pos = 9; pos >= 1; pos --)
+				    {
+				      	valor_resto 		= valor_temp % 2;
+				      	valor_temp  		= valor_temp / 2;
+				      	valor_Bin [pos] 	= valor_resto;
+				      	if (valor_resto == 0)
+				      	{
+				      	  lcd.write(byte(2));
+				      	}
+				      	else
+				      	{
+				      	  lcd.write(byte(1));
+				      	}
+				    }
+				}
+					// acomodar numero 	
+				Numerico_Print(5, 3, Canal_Actual, 511, 1);				// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+				// ubicar
+			if (valor_nuevo == 513)										// poner limite max + 2
+			{
+				Numerico_Print(5, 2, Canal_Actual, 511, 1);				// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+				Ubicar(5, 3, DMX_Values[Canal_Actual]);					// void Ubicar(byte y, byte x, byte val_ant)
+				lcd.setCursor (5, 2);
+				lcd.print ("   ");
+				Numerico_Print(5, 3, Canal_Actual, 511, 1);				// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			break;
+
+			// salida
+		case 18:
+			goto salir;
+			break;
+	}
+
+  	goto navegacion;
+
+  	salir:
+  		// guardar canal actual
+  	Canal_Actual_EEPROM_Save();
 }
 /*
-		// Cursor
-	LCD_Col_Pos = 4;			// posicion de cursor
-	LCD_Row_Pos = 3;			// posicion e cursor
-
-		// configuracion de cursor
-	Cursor_Conf_Clear();		// limpiar array
-
-		// Cursores
-	Cursor_Conf[0][4]  	= 1;	// Bin
-	Cursor_Conf[3][4]  	= 1;	// Dec
-	Cursor_Conf[3][15]  = 1;	// Exit
-
-		//Navegacion:
-	calc:
-	GUI_Navegar(0, 0);
-
 	// Acciones
 		// Exit
 	if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3)
