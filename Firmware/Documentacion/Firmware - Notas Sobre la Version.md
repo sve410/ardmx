@@ -34,12 +34,15 @@
 - AGREGADO  - Control Matrix, mostrar canal a inicial y final
 - CORREGIDO - menu, memoria, cambio de orden de items
 - CORREGIDO - menu, Config, limites y vista
-- CORREGIDO - Control Unitary, rediseño, 8 unitarios distintos no consecutivos
+- CORREGIDO - Control Unitary, rediseño de GUI
+- AGREGADO  - Control Unitary, 8 unitarios distintos no consecutivos
 - AGREGADO  - Convert, opción de ubicar canal
 - CORREGIDO - Convert, rediseño de interface gráfica
 - CORREGIDO - Convert, modelo de navegación de binarios
 - PENDIENTE - Convert, cambiar cursor de navegación de binarios
 - CORREGIDO - Control Chaser, rediseño de interface gráfica
+- AGREGADO  - Control Chaser. canal actual como first
+- AGREGADO  - Control Chaser, canal actual inicia encendido 
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware

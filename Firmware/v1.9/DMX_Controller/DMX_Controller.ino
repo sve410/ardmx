@@ -2704,16 +2704,16 @@ void GUI_Convert()
 	lcd.clear ();
 	lcd.setCursor (0, 0);
 	lcd.print ("Bin:");
-	lcd.setCursor (15, 0);
-	lcd.write(byte(1));
 	lcd.setCursor (16, 0);
-	lcd.print (":On");
-	lcd.setCursor (15, 1);
+	lcd.write(byte(1));
+	lcd.setCursor (17, 0);
+	lcd.print ("On");
+	lcd.setCursor (16, 1);
 	lcd.write(byte(2));
 	lcd.setCursor (5, 1);
 	lcd.print ("124813612");
-	lcd.setCursor (16, 1);
-	lcd.print(":Off");
+	lcd.setCursor (17, 1);
+	lcd.print("Off");
 	lcd.setCursor (9, 2);
 	lcd.print ("62425");
 	lcd.setCursor (0, 3);
@@ -3616,15 +3616,19 @@ void GUI_Control_Multiply()
 void GUI_Control_Chaser()
 {
   	long Delay   = 1;
-  	long First 	 = 1;
-  	long Final 	 = 512;
+  	int  First 	 = Canal_Actual;
+  	int  Final 	 = 512;
+  	long ciclo_longitud = 1300;						// numero multiplicador aprox para 1 seg
+    long ciclo 			= 0;
+	long Delay_Cont		= 0;
+	int  canal 			= First;
 
   		// LCD
   	lcd.clear ();
   	lcd.setCursor (0, 0);
   	lcd.print ("Chaser");
-  	lcd.setCursor (14, 0);
-  	lcd.print ("Ch:---");
+  	lcd.setCursor (13, 0);
+  	lcd.print ("Ch:");
   	lcd.setCursor (2, 1);
   	lcd.print ("Delay:");
   	lcd.setCursor (12, 1);
@@ -3641,130 +3645,189 @@ void GUI_Control_Chaser()
   	Numerico_Print(9, 2, First, 100, 1);	//void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
   	Numerico_Print(9, 3, Final, 100, 1);	//void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 
-  	while(1);
+  	// first channel
+  		// borrar canales previos
+	for (int Canales = 0; Canales <= 512; Canales ++)
+	{	
+	    ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
+	}
+		// dibujar numero
+	Numerico_Print(17, 0, Canal_Actual, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+	ArduinoDmx0.TxBuffer[Canal_Actual] = 255; 		// salida a DMX
+
+  		// borrar datos previos en el indice
+	Cursor_Index_Clear();
+
+		// establecer el indice
+	Cursor_Index[14][3] = 4;	// start 		//y x
+	Cursor_Index[8] [1] = 1;	// delay		//y x	
+	Cursor_Index[8] [2] = 2;	// first chanel	//y x
+	Cursor_Index[8] [3] = 3;	// final chanel	//y x
+	Cursor_Index[14][2] = 6;	// exit			//y x
+	Cursor_Index[16][0] = 5;	// Ch			//y x
+
+	navegacion:
+
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
+
+	int valor_nuevo = 0;
+
+	switch (Cursor_Index_Pos)
+	{
+			// start
+		case 4:
+	    	lcd.setCursor(15, 3);
+	    	lcd.print("Stop ");
+	    	lcd.blink();
+
+	    		// borrar canales previos
+	    	for (int Canales = 0; Canales <= 512; Canales ++)
+	    	{	
+	     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
+	    	}
+
+	    	while (digitalRead(Enc_Center) == HIGH)			// lectura del boton centro
+	    	{
+	      		ciclo = ciclo + 1;
+	      		if (ciclo == ciclo_longitud)
+	      		{
+	        		Delay_Cont = Delay_Cont + 1;
+	        		if (Delay_Cont == Delay)
+	        		{
+	          			if (canal > Final)
+	          			{
+	            			canal = First;
+	          			}
+	          			Numerico_Print(17, 0, canal, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+	          			lcd.setCursor(19, 3);
+	          
+	          				// apagar lo anterior
+	          			for (long contar = First; contar <= Final; contar ++)
+	          			{
+	            			ArduinoDmx0.TxBuffer[contar - 1] = 0;
+	          			}
+	          				// encender el siguiente
+	          			ArduinoDmx0.TxBuffer[canal - 1] = 255;
+	          			Delay_Cont = 0;
+	          			canal = canal + 1;
+	        		}
+	        		ciclo = 0;
+	      		}
+	    	}
+	    	lcd.noBlink();
+	    	lcd.setCursor(15, 3);
+	    	lcd.print("Start");
+	    	delay (300); 		// evita que le gane la descarga del capacitor
+
+			break;
+
+			// delay
+		case 1:
+			valor_nuevo = Numerico_Write(1, 999, 9, 1, 1, Delay);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 999)			// poner limite max
+			{
+				Delay = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 999)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 999, 9, 1, 1, Delay);
+					
+					if (valor_nuevo > 999)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Delay = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 1, Delay, 999, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			break;
+
+			// first
+		case 2:
+			valor_nuevo = Numerico_Write(1, 512, 9, 2, 1, First);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				First = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 2, 1, First);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					First = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 2, First, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+			break;
+
+			// final
+		case 3:
+			valor_nuevo = Numerico_Write(1, 512, 9, 3, 1, Final);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Final = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 3, 1, Final);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Final = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 3, Final, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+			break;
+
+			// exit
+		case 5:
+			goto salir;
+			break;
+	}		
+
+	goto navegacion;
+
+	salir:
+		// regresar el universo a su lugar
+    for (int Canal = 1; Canal <= 512; Canal ++)
+    {
+      	ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal];
+    }
 }
-/*
-
-
-  	// Acciones
-  		// Control
-  	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 2)
-  	{
-    	// regresar el universo a su lugar
-    	for (int Canal = 1; Canal <= 512; Canal ++)
-    	{
-      		ArduinoDmx0.TxBuffer[Canal - 1] = DMX_Values[Canal];
-    	}
-    	GUI_Control_Options();
-  	}
-
-  		// Start
-  	if (LCD_Col_Pos == 14 && LCD_Row_Pos == 3)
-  	{
-    	long ciclo_longitud = 1300;						// numero multiplicador aprox para 1 seg
-    	long ciclo 			= 0;
-    	long Delay_Cont		= 0;
-    	int  canal 			= First;
-    	lcd.setCursor(15, 3);
-    	lcd.print("Stop ");
-    	lcd.blink();
-
-    		// borrar canales previos
-    	for (int Canales = 0; Canales <= 512; Canales ++)
-    	{	
-     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
-    	}
-
-    	while (digitalRead(Enc_Center) == HIGH)			// lectura del boton centro
-    	{
-      		ciclo = ciclo + 1;
-      		if (ciclo == ciclo_longitud)
-      		{
-        		Delay_Cont = Delay_Cont + 1;
-        		if (Delay_Cont == Delay)
-        		{
-          			if (canal > Final)
-          			{
-            			canal = First;
-          			}
-          			Numerico_Write (canal, 9, 0);
-          			lcd.setCursor(19, 3);
-          
-          				// apagar lo anterior
-          			for (long contar = First; contar <= Final; contar ++)
-          			{
-            			ArduinoDmx0.TxBuffer[contar - 1] = 0;
-          			}
-          				// encender el siguiente
-          			ArduinoDmx0.TxBuffer[canal - 1] = 255;
-          			Delay_Cont = 0;
-          			canal = canal + 1;
-        		}
-        		ciclo = 0;
-      		}
-    	}
-    	lcd.noBlink();
-    	lcd.setCursor(15, 3);
-    	lcd.print("Start");
-    	delay (300); 		// evita que le gane la descarga del capacitor
-    	goto Siguiente;
-  	}
-
-  		// Delay
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 1)
-  	{
-    	Num_Row_Pos = 1;
-    	Num_Col_Pos = 9;
-    	Num_Val = Delay;	// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc(0);
-    	Delay = Num_Val;
-  	}
-
-  		// First
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
-  	{
-    	Num_Row_Pos = 2;
-    	Num_Col_Pos = 9;
-    	Num_Val = First;	// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc(0);
-    	First = Num_Val;
-
-    	if (First == 0)
-    	{
-      		First = 1;
-      		Numerico_Write (First, 9, 2);
-    	}
-
-    	if (First > 512)
-    	{
-      		First = 512;
-      		Numerico_Write (First, 9, 2);
-    	}
-  	}
-
-  		// Final
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
-  	{
-    	Num_Row_Pos = 3;
-    	Num_Col_Pos = 9;
-    	Num_Val = Final;	// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc(0);
-    	Final = Num_Val;
-
-    	if (Final == 0)
-    	{
-      		Final = 1;
-      		Numerico_Write (Final, 9, 3);
-    	}
-
-    	if (Final > 512)
-    	{
-      		Final = 512;
-      		Numerico_Write (Final, 9, 3);
-    	}
-  	}
-  	goto Siguiente;
-}*/
 
 void GUI_Control_Unit()
 {
