@@ -148,7 +148,7 @@ byte Caracter_On[8] 		= 	{
   									B10001,
   									B10001,
  									B10001,
-  									B11111,
+  									B10001,
   									B11111,
  									B11111,
   									B11111
@@ -753,7 +753,7 @@ void GUI_Control_Matrix()
 	navegacion:
 
 		// iniciar navegacion y evaluar el index seleccionado
-	Navegar();	// actualiza Cursor_Index_Pos
+	Navegar(1, Inicial);	// actualiza Cursor_Index_Pos
 
 		// pintar gion de ventana de canales
 	lcd.setCursor (16, 0);
@@ -1055,7 +1055,7 @@ void GUI_Memory_Init()
 	Cursor_Index[14][2]	= 3;		// y x 	// Clear
 
 		// navegacion
-	Navegar();	// actualiza Cursor_Index_Pos
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 	
 	switch (Cursor_Index_Pos)
 	{
@@ -1147,7 +1147,7 @@ int GUI_Memory_Bank(byte Opcion)
 	Cursor_Index_Pos = 1;
 
 		// iniciar navegacion y evaluar el index seleccionado
-	Navegar();	// actualiza Cursor_Index_Pos
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
   
   	switch (Cursor_Index_Pos)
 	{
@@ -1253,7 +1253,7 @@ void GUI_Memory()
 	navegacion:
 
   		// iniciar navegacion y evaluar el index seleccionado
-	Navegar();	// actualiza Cursor_Index_Pos
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
 	switch (Cursor_Index_Pos)
 	{
@@ -2155,7 +2155,7 @@ void GUI_Control_Options()
   	Cursor_Index[1][0]   = 1; 	// Convert
 
 		// iniciar navegacion y evaluar el index seleccionado
-	Navegar();	// actualiza Cursor_Index_Pos
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
   	switch (Cursor_Index_Pos)
 	{
@@ -2503,7 +2503,7 @@ void GUI_Config()
 	int valor_nuevo = 0;
 
 		// iniciar navegacion y evaluar el index seleccionado
-	Navegar();	// actualiza Cursor_Index_Pos
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
 	switch (Cursor_Index_Pos)
 	{
@@ -3138,7 +3138,7 @@ void GUI_Control_Unit()
   	Numeric_Write(DMX_Values[CH_8], 13, 3);
 
 		// iniciar navegacion y evaluar el index seleccionado
-	Navegar();	// actualiza Cursor_Index_Pos
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
 	int valor_nuevo = 0;
 
@@ -3952,9 +3952,153 @@ void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 	salir: {}
 }
 
-void Navegar()
+void Navegar_Matrix(byte Y, byte X, int Canal_init)
+{
+		// posicion del canal
+	lcd.setCursor(1, 0);
+
+		// memory
+	if (Y == 4 && X == 0)
+	{
+		lcd.setCursor (1, 0);
+		lcd.print("---");
+		goto salida;
+	}
+
+		// Exit
+	if (Y == 8 && X == 0)
+	{
+		lcd.setCursor (1, 0);
+		lcd.print("---");
+		goto salida;
+	}
+
+		// inicial
+	if (Y == 12 && X == 0)
+	{
+		Numerico_Print(1, 0, Canal_init, 512, 1);			// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// final
+	if (Y == 16 && X == 0)
+	{
+		Numerico_Print(1, 0, Canal_init + 14, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 1
+	if (Y == 0 && X == 1)
+	{
+		Numerico_Print(1, 0, Canal_init, 512, 1);			// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 2
+	if (Y == 4 && X == 1)
+	{
+		Numerico_Print(1, 0, Canal_init + 1, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 3
+	if (Y == 8 && X == 1)
+	{
+		Numerico_Print(1, 0, Canal_init + 2, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 4
+	if (Y == 12 && X == 1)
+	{
+		Numerico_Print(1, 0, Canal_init + 3, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 5
+	if (Y == 16 && X == 1)
+	{
+		Numerico_Print(1, 0, Canal_init + 4, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 6
+	if (Y == 0 && X == 2)
+	{
+		Numerico_Print(1, 0, Canal_init + 5, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 7
+	if (Y == 4 && X == 2)
+	{
+		Numerico_Print(1, 0, Canal_init + 6, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 8
+	if (Y == 8 && X == 2)
+	{
+		Numerico_Print(1, 0, Canal_init + 7, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 9
+	if (Y == 12 && X == 2)
+	{
+		Numerico_Print(1, 0, Canal_init + 8, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 10
+	if (Y == 16 && X == 2)
+	{
+		Numerico_Print(1, 0, Canal_init + 9, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 11
+	if (Y == 0 && X == 3)
+	{
+		Numerico_Print(1, 0, Canal_init + 10, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 12
+	if (Y == 4 && X == 3)
+	{
+		Numerico_Print(1, 0, Canal_init + 11, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 13
+	if (Y == 8 && X == 3)
+	{
+		Numerico_Print(1, 0, Canal_init + 12, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 14
+	if (Y == 12 && X == 3)
+	{
+		Numerico_Print(1, 0, Canal_init + 13, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+		// 15
+	if (Y == 16 && X == 3)
+	{
+		Numerico_Print(1, 0, Canal_init + 14, 512, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+		goto salida;
+	}
+
+	salida: {}
+}
+
+void Navegar(byte matrix, byte matrix_ch_init)
 {
 	// actualiza Cursor_Index_Pos
+	// matrix 1, para gui matrix, 0 normal
 
 	byte Index_Final = 0;	// saber cual es el ultimo indice
 
@@ -3968,6 +4112,11 @@ void Navegar()
 			{
 				lcd.setCursor (Conteo_Y, Conteo_X);
 				lcd.write(byte(0));
+					// matrix
+				if (matrix == 1)
+				{
+					Navegar_Matrix(Conteo_Y, Conteo_X, matrix_ch_init);
+				}
 			}
 				// saber ultimo indice
 			if (Cursor_Index[Conteo_Y][Conteo_X] > Index_Final)
@@ -4029,6 +4178,11 @@ void Navegar()
 					{
 						lcd.setCursor (Conteo_Y, Conteo_X);
 						lcd.write(byte(0));
+							// matrix
+						if (matrix == 1)
+						{
+							Navegar_Matrix(Conteo_Y, Conteo_X, matrix_ch_init);
+						}
 					}
 						// borrar cursor anterior
 					if (Cursor_Index[Conteo_Y][Conteo_X] == Cursor_Index_Pos_ant)
