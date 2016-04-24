@@ -148,7 +148,7 @@ byte Caracter_On[8] 		= 	{
   									B10001,
   									B10001,
  									B10001,
-  									B10001,
+  									B11111,
   									B11111,
  									B11111,
   									B11111
@@ -1487,7 +1487,9 @@ void GUI_Control_Matrix()
 
 	goto navegacion;
 
-	salir: {}
+	salir:
+		// guardar canal actual
+  	Canal_Actual_EEPROM_Save();
 }
 
 void GUI_Memory_Init()
@@ -2637,7 +2639,7 @@ void GUI_Control_Options()
 	{
 			// Convert
 		case 1:
-			// GUI_Convert();
+			GUI_Convert();
 			break;
 
 			// Unitary
@@ -2682,22 +2684,63 @@ void GUI_Control_Options()
 	goto inicio;
 }
 
-/*void GUI_Convert()
+void GUI_Convert()
 {
 	int valor 			= 0;								// aqui el valor a calcular
 	int valor_temp		= 0;								// aqui el valor temporal para las cuentas
 	int valor_resto 	= 0;								// aqui el valor del resto de la divicion
 	int valor_Bin [10]	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	// aqui el valor descompuesto en binario
+
+		// LCD
 	lcd.clear ();
 	lcd.setCursor (0, 0);
-	lcd.print ("Bin: OOOOOOOOO I=On");
+	lcd.print ("Bin:");
+	lcd.setCursor (15, 0);
+	lcd.write(byte(1));
+	lcd.setCursor (16, 0);
+	lcd.print (":On");
+	lcd.setCursor (15, 1);
+	lcd.write(byte(2));
 	lcd.setCursor (5, 1);
-	lcd.print ("124813612 O=Off");
+	lcd.print ("124813612");
+	lcd.setCursor (16, 1);
+	lcd.print(":Off");
 	lcd.setCursor (9, 2);
 	lcd.print ("62425");
 	lcd.setCursor (0, 3);
-	lcd.print ("Dec: 000    86  Exit");
+	lcd.print ("Dec:");
+	lcd.setCursor (12, 3);
+	lcd.print ("86  Exit");
+		
+		// canal inicial
+	Numerico_Print(5, 3, Canal_Actual, 512, 1);	// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 
+	// calcular binario
+    
+    lcd.setCursor (5, 0);
+
+    valor_temp = Canal_Actual;
+
+    for (byte pos = 9; pos >= 1; pos --)
+    {
+      	valor_resto 		= valor_temp % 2;
+      	valor_temp  		= valor_temp / 2;
+      	valor_Bin [pos] 	= valor_resto;
+      	if (valor_resto == 0)
+      	{
+      	  lcd.write(byte(2));
+      	}
+      	else
+      	{
+      	  lcd.write(byte(1));
+      	}
+    }
+
+
+
+	while(1);
+}
+/*
 		// Cursor
 	LCD_Col_Pos = 4;			// posicion de cursor
 	LCD_Row_Pos = 3;			// posicion e cursor
@@ -4275,8 +4318,10 @@ void GUI_Control_Unit()
 
   	goto navegacion;
 
-  	salir: {}
-  }
+  	salir:
+  		// guardar canal actual
+  	Canal_Actual_EEPROM_Save();
+}
 
 void Ubicar(byte y, byte x, byte val_ant)
 {
