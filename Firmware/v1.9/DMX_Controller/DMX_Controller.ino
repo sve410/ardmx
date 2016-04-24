@@ -2752,10 +2752,347 @@ void GUI_Convert()
 		// iniciar navegacion y evaluar el index seleccionado
 	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
+	byte bit_pos 	= 0;
+	long Enc_read	= 0;
+	long Enc_ant 	= 0;
+	byte Cursor 	= 1;
+	byte bit_ant	= 0;
+
   	switch (Cursor_Index_Pos)
 	{
 			// Bin
 		case 1:
+			lcd.setCursor (5, 1);
+
+			seguir:
+			lcd.blink();
+
+				// navegar cursor
+			while(digitalRead(Enc_Center) == 1)
+			{
+				Enc_read = myEnc.read() / 4;
+
+					// izquierda
+				if (Enc_read < Enc_ant)
+				{
+					Enc_ant = Enc_read;
+					Cursor = Cursor - 1;
+
+						// limites
+					if(Cursor < 1)
+					{
+						Cursor = 10;
+						lcd.setCursor (4, 0);
+					}
+					else
+					{
+							// dibujar cursor
+						lcd.setCursor (Cursor + 4, 1);
+					}
+					
+				}
+
+					// derecha
+				if (Enc_read > Enc_ant)		
+				{
+					Enc_ant = Enc_read;
+					Cursor = Cursor + 1;
+
+						// limites
+					if(Cursor == 10)
+					{
+						// dibujar cursor
+						lcd.setCursor (4, 0);
+					}
+					else
+					{
+						if(Cursor > 10)
+						{
+							Cursor = 1;
+						}
+
+							// dibujar cursor
+						lcd.setCursor (Cursor + 4, 1);
+					}
+				}
+			}
+
+			delay(300); // rebote de centro encoder
+
+				// insertar valor
+			switch (Cursor)
+			{
+				case 1:
+					bit_ant = valor_Bin [9];
+
+					valor_Bin [9] = Numerico_Write(0, 1, 5, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (5, 0);
+
+					if (valor_Bin [9] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [9] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 2:
+					bit_ant = valor_Bin [8];
+
+					valor_Bin [8] = Numerico_Write(0, 1, 6, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (6, 0);
+
+					if (valor_Bin [8] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [8] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 3:
+					bit_ant = valor_Bin [7];
+
+					valor_Bin [7] = Numerico_Write(0, 1, 7, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (7, 0);
+
+					if (valor_Bin [7] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [7] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 4:
+					bit_ant = valor_Bin [6];
+
+					valor_Bin [6] = Numerico_Write(0, 1, 8, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (8, 0);
+
+					if (valor_Bin [6] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [6] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 5:
+					bit_ant = valor_Bin [5];
+
+					valor_Bin [5] = Numerico_Write(0, 1, 9, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (9, 0);
+
+					if (valor_Bin [5] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [5] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 6:
+					bit_ant = valor_Bin [4];
+
+					valor_Bin [4] = Numerico_Write(0, 1, 10, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (10, 0);
+
+					if (valor_Bin [4] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [4] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 7:
+					bit_ant = valor_Bin [3];
+
+					valor_Bin [3] = Numerico_Write(0, 1, 11, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (11, 0);
+
+					if (valor_Bin [3] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [3] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 8:
+					bit_ant = valor_Bin [2];
+
+					valor_Bin [2] = Numerico_Write(0, 1, 12, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (12, 0);
+
+					if (valor_Bin [2] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [2] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 9:
+					bit_ant = valor_Bin [1];
+
+					valor_Bin [1] = Numerico_Write(0, 1, 13, 0, 1, bit_ant);	//int  Numerico_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, int num_ant)
+
+					lcd.setCursor (13, 0);
+
+					if (valor_Bin [1] == 1)
+					{
+						lcd.write(byte(1));
+					}
+
+					if (valor_Bin [1] == 0)
+					{
+						lcd.write(byte(2));
+					}
+
+					break;
+
+				case 10:
+					goto salida_menu;
+					break;
+			}
+
+				// calcular valor de binario a decimal
+	        valor = 0;
+	        if (valor_Bin [9] == 1)
+	        {
+				valor = valor + 1;
+	        }
+
+	        if (valor_Bin [8] == 1)
+	        {
+				valor = valor + 2;
+	        }
+
+	        if (valor_Bin [7] == 1)
+	        {
+				
+				valor = valor + 4;
+	        }
+
+	        if (valor_Bin [6] == 1)
+	        {
+				valor = valor + 8;
+	        }
+
+	        if (valor_Bin [5] == 1)
+	        {
+				valor = valor + 16;
+	        }
+
+	        if (valor_Bin [4] == 1)
+	        {
+				valor = valor + 32;
+	        }
+
+	        if (valor_Bin [3] == 1)
+	        {
+				valor = valor + 64;
+	        }
+
+	        if (valor_Bin [2] == 1)
+	        {
+				valor = valor + 128;
+	        }
+
+	        if (valor_Bin [1] == 1)
+	        {
+				valor = valor + 256;
+	        }
+
+	        	// escribir el valor en decimal
+	       	Numerico_Print(5, 3, valor, 511, 1);		// void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+
+	       		// posicionar cursor
+	       	switch (Cursor)
+	       	{
+	       		case 1:
+	       			lcd.setCursor (5, 1);
+	       			break;
+
+	       		case 2:
+	       			lcd.setCursor (6, 1);
+	       			break;
+
+	       		case 3:	
+	       			lcd.setCursor (7, 1);
+	       			break;
+
+	       		case 4:
+	       			lcd.setCursor (8, 1);
+	       			break;
+
+	       		case 5:
+	       			lcd.setCursor (9, 1);
+	       			break;
+
+	       		case 6:
+	       			lcd.setCursor (10, 1);
+	       			break;
+
+	       		case 7:
+	       			lcd.setCursor (11, 1);
+	       			break;
+
+	       		case 8:
+	       			lcd.setCursor (12, 1);
+	       			break;
+
+	       		case 9:
+	       			lcd.setCursor (13, 1);
+	       			break;
+	       	}
+
+			goto seguir;
+
+			salida_menu:
+			lcd.noBlink();
 
 			break;
 
@@ -2795,7 +3132,7 @@ void GUI_Convert()
 				{
 					valor_nuevo = Numerico_Enc_Write(1, 511, 5, 3, 1, Canal_Actual);	// int  Numerico_Enc_Write(int min, int max, byte LCD_x, byte LCD_y, byte Dec_Hex, long num_ant)
 					
-					if (valor_nuevo > 512)			// poner limite max
+					if (valor_nuevo > 511)			// poner limite max
 					{
 						break; 						// enter
 					}
@@ -2838,7 +3175,7 @@ void GUI_Convert()
 			break;
 
 			// salida
-		case 18:
+		case 3:
 			goto salir;
 			break;
 	}
@@ -2849,215 +3186,6 @@ void GUI_Convert()
   		// guardar canal actual
   	Canal_Actual_EEPROM_Save();
 }
-/*
-	// Acciones
-		// Exit
-	if (LCD_Col_Pos == 15 && LCD_Row_Pos == 3)
-	{
-		GUI_Control_Options();
-	}
-
-		// Binario a decimal
-	if (LCD_Col_Pos == 4 && LCD_Row_Pos == 0)
-	{
-		// boton de centro para salir
-		// boton de lados para navegar
-		// boton arriba abajo para cambiar valor
-		byte cursor 		= 5;		// posicion de cursor
-		int boton_retardo 	= 250;		// retardo de boton para estabilidad
-		byte calcular 		= 0;		// calcular binario a decimal
-		byte calcular_val	= 0;		// valor a meter a la matriz para calcular
-		lcd.blink();
-		lcd.setCursor (5, 0);
-
-		while (digitalRead(Enc_Center) == HIGH)	// salida
-		{
-			if (digitalRead(Boton_Right) == LOW)
-			{
-				delay(boton_retardo);	// esperar a estabilidad
-				cursor = cursor + 1;
-				if (cursor > 13)
-			{
-			cursor = 5;			// regresar al principio
-        }
-        lcd.setCursor (cursor, 0);
-    }
-
-    if (digitalRead(Boton_Left) == LOW)
-    {
-		delay(boton_retardo);	// esperar a estabilidad
-        cursor = cursor - 1;
-        if (cursor < 5)
-        {
-          cursor = 13;		// regresar al final
-        }
-        lcd.setCursor (cursor, 0);
-    }
-
-    if (digitalRead(Boton_Up) == LOW)
-    {
-        delay(boton_retardo);	// esperar a estabilidad
-        lcd.print ("I");
-        lcd.setCursor (cursor, 0);
-        calcular_val 	= 1;
-        calcular 		= 1;
-    }
-
-    if (digitalRead(Boton_Down) == LOW)
-    {
-        delay(boton_retardo);	// esperar a estabilidad
-        lcd.print ("O");
-        lcd.setCursor (cursor, 0);
-        calcular_val	= 0;
-        calcular 		= 1;
-    }
-
-    if (calcular == 1)
-    {
-        calcular = 0;
-        // agregar a la matriz el valor nuevo
-        switch (cursor)
-        {
-			case 5:		// 1
-				valor_Bin [1] = calcular_val;
-				break;
-
-			case 6:		// 2
-				valor_Bin [2] = calcular_val;
-				break;
-
-			case 7:		// 4
-				valor_Bin [3] = calcular_val;
-				break;
-
-			case 8:		// 8
-				valor_Bin [4] = calcular_val;
-				break;
-
-			case 9:		// 16
-				valor_Bin [5] = calcular_val;
-				break;
-
-			case 10:	// 32
-				valor_Bin [6] = calcular_val;
-				break;
-
-			case 11:	// 64
-				valor_Bin [7] = calcular_val;
-				break;
-
-			case 12:	// 128
-				valor_Bin [8] = calcular_val;
-				break;
-
-			case 13:	// 256
-				valor_Bin [9] = calcular_val;
-				break;
-
-		}
-
-        	// calcular valor de binario a decimal
-        valor = 0;
-        if (valor_Bin [1] == 1)
-        {
-			valor = valor + 1;
-        }
-
-        if (valor_Bin [2] == 1)
-        {
-			valor = valor + 2;
-        }
-
-        if (valor_Bin [3] == 1)
-        {
-			
-			valor = valor + 4;
-        }
-
-        if (valor_Bin [4] == 1)
-        {
-			valor = valor + 8;
-        }
-
-        if (valor_Bin [5] == 1)
-        {
-			valor = valor + 16;
-        }
-
-        if (valor_Bin [6] == 1)
-        {
-			valor = valor + 32;
-        }
-
-        if (valor_Bin [7] == 1)
-        {
-			valor = valor + 64;
-        }
-
-        if (valor_Bin [8] == 1)
-        {
-			valor = valor + 128;
-        }
-
-        if (valor_Bin [9] == 1)
-        {
-			valor = valor + 256;
-        }
-
-        	// escribir el valor en decimal
-        Numerico_Write (valor, 5, 3);
-        lcd.setCursor (cursor, 0);
-    }
-   }
-    delay(200);		// esperar a estabilidad
-    lcd.noBlink();
-    goto calc;
-  }
-  	// Decimal a binario
-  if (LCD_Col_Pos == 4 && LCD_Row_Pos == 3)
-  {
-    Num_Row_Pos = 3;
-    Num_Col_Pos = 5;
-    Numerico_Calc (0);
-
-	if (Num_Val == 712)
-	{
-		Encoder_Read (5, 3, 0, 511, 8);		// Encoder_Read(byte col, byte row, long limit_min, long limit_max, byte control)
-	}
-
-    if (Num_Val > 511)
-    {
-      Num_Val = 511;				// corregir valor en pantalla
-      lcd.setCursor (5, 3);
-      lcd.print ("511");
-    }
-
-    valor = Num_Val;
-
-    	// escribir 00000000 en el valor binario para borrar el anterior
-    lcd.setCursor (5, 0);
-    lcd.print ("OOOOOOOOO");
-    lcd.setCursor (5, 0);
-
-    	// calcular binario
-    valor_temp = valor;
-    for (byte pos = 9; pos >= 1; pos --)
-    {
-      valor_resto 		= valor_temp % 2;
-      valor_temp  		= valor_temp / 2;
-      valor_Bin [pos] 	= valor_resto;
-      if (valor_resto == 0)
-      {
-        lcd.print ("O");
-      }
-      else
-      {
-        lcd.print ("I");
-      }
-    }
-    goto calc;
-  }
-}*/
 
 void GUI_Config()
 {
