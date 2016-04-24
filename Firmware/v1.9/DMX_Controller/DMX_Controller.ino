@@ -494,8 +494,24 @@ void GUI_Licence()
 	int retardo = 4000;
 	
 	lcd.clear ();
+	lcd.blink();
+	lcd.setCursor(6, 0);
+	lcd.print("Create by");
+	lcd.setCursor(3, 1);
+	lcd.print("Daniel Becerril");
+	lcd.setCursor(4, 2);
+	lcd.print("goo.gl/Kon6vc");
+	lcd.setCursor(0, 3);
+	lcd.print("daniel3514@gmail.com");
+	lcd.setCursor(19, 0);
+
+		// lectura del boton centro
+	while (digitalRead(Enc_Center) == HIGH);
+
+	lcd.clear ();
+	lcd.noBlink();
 	lcd.setCursor(0, 0);
-	lcd.print("  This program is");
+	lcd.print(" This program is");
 	lcd.setCursor(0, 1);
 	lcd.print("distributed in the");
 	lcd.setCursor(0, 2);
@@ -636,7 +652,7 @@ void GUI_About()
 	delay (300);			// rebote de boton
 	lcd.clear ();
 	lcd.setCursor(0, 0);
-	lcd.print("Open Source License:");
+	lcd.print("Open Source License");
 	lcd.setCursor(0, 1);
 	lcd.print("Firm: GNU GPL v3");
 	lcd.setCursor(0, 2);
@@ -645,17 +661,6 @@ void GUI_About()
 	lcd.print("Wiki: goo.gl/5nqJKt");
 	lcd.setCursor(2, 1);
 
-		// bank
-	lcd.setCursor(18, 1);
-	lcd.print("b");
-	if (Universo_Actual == 0)
-	{
-		lcd.print("-");
-	}
-	else
-	{
-		lcd.print(Universo_Actual);
-	}
 	lcd.setCursor(19, 1);
 
 		// lectura del boton centro
@@ -1501,7 +1506,7 @@ void GUI_Memory_Init()
 
   		// Texto
   	lcd.setCursor (0, 0);
-  	lcd.print("Initial Memory:");
+  	lcd.print("Initial Memory");
   	lcd.setCursor (2, 2);
   	lcd.print("Empty");
   	lcd.setCursor (9, 2);
@@ -3612,24 +3617,24 @@ void GUI_Control_Chaser()
 {
   	long Delay   = 1;
   	long First 	 = 1;
-  	long Final 	 = 0;
+  	long Final 	 = 512;
 
   		// LCD
   	lcd.clear ();
   	lcd.setCursor (0, 0);
   	lcd.print ("Chaser");
   	lcd.setCursor (14, 0);
-  	lcd.print ("CH:---");
+  	lcd.print ("Ch:---");
   	lcd.setCursor (2, 1);
   	lcd.print ("Delay:");
   	lcd.setCursor (12, 1);
   	lcd.print ("x10=mS");
   	lcd.setCursor (0, 2);
-  	lcd.print ("FirstCH:");
+  	lcd.print ("FirstCh:");
   	lcd.setCursor (15, 2);
   	lcd.print ("Exit");
   	lcd.setCursor (0, 3);
-  	lcd.print ("FinalCH:");
+  	lcd.print ("FinalCh:");
   	lcd.setCursor (15, 3);
   	lcd.print ("Start");
   	Numerico_Print(9, 1, Delay, 100, 1);	//void Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
@@ -3639,24 +3644,7 @@ void GUI_Control_Chaser()
   	while(1);
 }
 /*
-  		// Cursor
-  	LCD_Col_Pos = 8;			// posicion de cursor
-  	LCD_Row_Pos = 1;
 
-	Siguiente:
-
-  		// configuracion de cursor
-  	Cursor_Conf_Clear();		// limpiar array
-
-  		// Acciones
-  	Cursor_Conf[1][8]   = 1;	// Delay
-  	Cursor_Conf[2][8]   = 1; 	// First
-  	Cursor_Conf[3][8]   = 1; 	// Final
-  	Cursor_Conf[2][14]  = 1; 	// control
-  	Cursor_Conf[3][14]  = 1; 	// Start
-
-  		// navegar
-  	GUI_Navegar(0, 0);
 
   	// Acciones
   		// Control
