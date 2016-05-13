@@ -3615,9 +3615,9 @@ void GUI_Control_Multiply()
 
 void GUI_Control_Chaser()
 {
-  	long Delay   = 1;
-  	int  First 	 = Canal_Actual;
-  	int  Final 	 = 512;
+  	long Delay   		= 1;
+  	int  First 			= Canal_Actual;
+  	int  Final 	 		= 512;
   	long ciclo_longitud = 1300;						// numero multiplicador aprox para 1 seg
     long ciclo 			= 0;
 	long Delay_Cont		= 0;
@@ -3672,6 +3672,7 @@ void GUI_Control_Chaser()
 	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
 	int valor_nuevo = 0;
+	int ch_ant = 0;
 
 	switch (Cursor_Index_Pos)
 	{
@@ -3813,8 +3814,60 @@ void GUI_Control_Chaser()
 			}
 			break;
 
-			// exit
+			// channel
 		case 5:
+			ch_ant = First;
+
+				// borrar canales previos
+	    	for (int Canales = First; Canales <= Final; Canales ++)
+	    	{	
+	     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
+	    	}
+
+			while(1)
+			{
+				valor_nuevo = Numerico_Enc_Write(First, Final, 17, 0, 1, ch_ant);
+
+					// apagar canal anterior
+				if (valor_nuevo == Final)
+				{
+					ArduinoDmx0.TxBuffer[First - 1] = 0; 			// salida a DMX
+				}
+
+				if (valor_nuevo == First)
+				{
+					ArduinoDmx0.TxBuffer[Final- 1] = 0; 			// salida a DMX
+				}
+
+				if (valor_nuevo <=Final || valor_nuevo >= First)
+				{
+					ArduinoDmx0.TxBuffer[valor_nuevo - 1] = 0; 		// salida a DMX
+				}
+
+					// encender canal
+				ArduinoDmx0.TxBuffer[valor_nuevo - 1] = 255; 		// salida a DMX
+					
+				if (valor_nuevo > Final)	// poner limite max
+				{
+					break; // enter
+				}
+
+				ch_ant = valor_nuevo;
+		
+			}
+				// acomodar numero 	
+			Numerico_Print(17, 0, First, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+
+				// borrar canales previos
+	    	for (int Canales = First; Canales <= Final; Canales ++)
+	    	{	
+	     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
+	    	}
+
+			break;
+
+			// exit
+		case 6:
 			goto salir;
 			break;
 	}		
