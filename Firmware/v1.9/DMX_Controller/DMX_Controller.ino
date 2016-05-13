@@ -1793,7 +1793,7 @@ void GUI_Memory()
   	salida:
   	Cursor_Index_Pos = 6;
 }
-/*
+
 void GUI_Control_Secuencer()
 {
   	// secuenciador de bancos guardados en eeprom
@@ -1805,7 +1805,7 @@ void GUI_Control_Secuencer()
 
   		// Texto
   	lcd.setCursor (0, 0);
-  	lcd.print("Secuencer Banks:  b");
+  	lcd.print("Secuencer     Bank:");
 
   	if (Universo_Actual == 0)
   	{
@@ -1823,6 +1823,9 @@ void GUI_Control_Secuencer()
   	lcd.setCursor (0, 3);
   	lcd.print("FinalBank 008  Start");
 
+  	while (1);
+}
+/*
   		// Cursor
   	LCD_Col_Pos = 9;			// posicion de cursor
   	LCD_Row_Pos = 1;
@@ -2679,7 +2682,7 @@ void GUI_Control_Options()
 
 			// Secuencer
 		case 7:
-			//GUI_Control_Secuencer();
+			GUI_Control_Secuencer();
 			Cursor_Index_Pos = 7;
 			break;
 
