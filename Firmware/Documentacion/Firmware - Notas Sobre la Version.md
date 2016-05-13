@@ -44,6 +44,7 @@
 - AGREGADO  - Control Chaser. canal actual como first
 - AGREGADO  - Control Chaser, canal actual inicia encendido
 - AGREGADO  - Control Chaser, repasar canales desde encoder
+- CORREGIDO - Control Secuencer, rediseño de GUI
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
