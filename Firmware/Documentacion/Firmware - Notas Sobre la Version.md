@@ -45,6 +45,9 @@
 - AGREGADO  - Control Chaser, canal actual inicia encendido
 - AGREGADO  - Control Chaser, repasar canales desde encoder
 - CORREGIDO - Control Secuencer, rediseño de GUI
+- CORREGIR  - Control Chaser, ch no respeta los canales, borrar numero antes de empezar 
+- CORREGIR  - Control chaser, al arranque se queda el canal 2 abierto
+- CORREGIR  - Config, dejar la ventana mas abierta para el contraste
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware

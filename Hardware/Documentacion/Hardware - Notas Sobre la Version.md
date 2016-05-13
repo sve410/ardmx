@@ -29,7 +29,9 @@
 - CORREGIR   - bornera de voltaje lateral metera mas
 - CORREGIR   - acostar C7
 - CORREGIR   - tornillos de LCD no coinciden
-- CORREGIR   - jumper de reset, poner pullup, el pin no tiene interno 
+- CORREGIR   - jumper de reset, poner pullup, el pin no tiene interno
+- CORREGIR   - posición de SW esta al revés, cambiar leyenda en pcb
+- PENDIENTE  - probar salida DMX con optoacoplado
 
 ***
  
