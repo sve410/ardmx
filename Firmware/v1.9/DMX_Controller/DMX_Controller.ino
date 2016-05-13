@@ -1798,9 +1798,10 @@ void GUI_Control_Secuencer()
 {
   	// secuenciador de bancos guardados en eeprom
 
-  	int Delay_Secuencia 	= 1;
+  	int Delay_Secuencia = 1;
   	int First_Bank 		= 1;
   	int Final_Bank 		= 8;
+  	
   	lcd.clear ();
 
   		// Texto
