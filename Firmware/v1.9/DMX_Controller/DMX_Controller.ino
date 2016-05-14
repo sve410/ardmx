@@ -3325,7 +3325,7 @@ void GUI_Config()
 
 			// Contrast Value
 		case 3:
-			valor_nuevo = Numerico_Write(150, 255, 11, 2, 1, Contrast_Value);
+			valor_nuevo = Numerico_Write(1, 255, 11, 2, 1, Contrast_Value);
 
 				// menor o igual al limites
 			if (valor_nuevo <= 255)			// poner limite max
@@ -3339,7 +3339,7 @@ void GUI_Config()
 			{
 				while(1)
 				{
-					valor_nuevo = Numerico_Enc_Write(150, 255, 11, 2, 1, Contrast_Value);
+					valor_nuevo = Numerico_Enc_Write(1, 255, 11, 2, 1, Contrast_Value);
 					
 					if (valor_nuevo > 255)	// poner limite max
 					{
