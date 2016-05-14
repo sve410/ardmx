@@ -410,7 +410,7 @@ void Contrast_Init()
 {
 	// lee y aplica el ultimo estado del contrast
   
-	if (Contrast_Value < 150)
+	if (Contrast_Value < 60)
 	{
 		Contrast_Value = 150;
 	}
@@ -422,7 +422,7 @@ void Light_En()
 {
 	// encender back y key desde la tecla *
 
-	long delay_dimmer		= 1;
+	long delay_dimmer = 1;
 	
 		// encender
 	if (Light_On_Off == 0)									// si esta apagada encenderla
@@ -2380,6 +2380,8 @@ void EEPROM_Load_Init()
   	Back_Light_Value	= EEPROM.read(BackLight_Add);
   	Light_Ext_Value		= EEPROM.read(Light_Ext_Add);
   	Key_Light_Value		= EEPROM.read(Key_Light_Add);
+  	Contrast_Value		= EEPROM.read(Contrast_Add);
+
   		// canal actual
   	Canal_Actual 		= EEPROM.read(Canal_Actual_1_Add);
   	Canal_Actual 		= Canal_Actual + EEPROM.read(Canal_Actual_2_Add);
