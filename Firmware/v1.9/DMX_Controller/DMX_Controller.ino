@@ -1711,11 +1711,11 @@ void GUI_Memory()
   	lcd.setCursor (7, 1);
   	lcd.print("ClearAll");
   	lcd.setCursor (7, 2);
-  	lcd.print("BlackOut");
+  	lcd.print("EmptyRAM");
   	lcd.setCursor (16, 3);
   	lcd.print("Exit");
   	lcd.setCursor (7, 3);
-  	lcd.print("EmptyRAM");
+  	lcd.print("BlackOut");
 
   		// borrar datos previos en el indice
 	Cursor_Index_Clear();
@@ -1774,7 +1774,7 @@ void GUI_Memory()
 
 			// Empty RAM
 		case 5:
-			EEPROM_Empty();		// checar -------------------------------------------------------
+			EEPROM_Empty();
     		goto salida;
 			break;
 
@@ -2180,7 +2180,7 @@ void GUI_Control_Secuencer()
 
 void Black_Out()
 {
-  	lcd.setCursor (15, 1);
+  	lcd.setCursor (6, 3);
   	lcd.blink();
 
   		// limpiar universo
