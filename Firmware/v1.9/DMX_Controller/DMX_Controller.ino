@@ -3687,7 +3687,6 @@ void GUI_Control_Chaser()
 		case 4:
 	    	lcd.setCursor(15, 3);
 	    	lcd.print("Stop ");
-	    	lcd.blink();
 
 	    		// borrar canales previos
 	    	for (int Canales = 0; Canales <= 511; Canales ++)
@@ -3708,8 +3707,7 @@ void GUI_Control_Chaser()
 	            			canal = First;
 	          			}
 	          			Numerico_Print(17, 0, canal, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
-	          			lcd.setCursor(19, 3);
-	          
+
 	          				// apagar lo anterior
 	          			for (long contar = First; contar <= Final; contar ++)
 	          			{
@@ -3724,7 +3722,7 @@ void GUI_Control_Chaser()
 	        		ciclo = 0;
 	      		}
 	    	}
-	    	lcd.noBlink();
+
 	    	lcd.setCursor(15, 3);
 	    	lcd.print("Start");
 	    	delay (300); 		// evita que le gane la descarga del capacitor
