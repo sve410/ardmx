@@ -22,7 +22,7 @@
 - AGREGADO 	- calibración de touch, obtención de datos completa
 
 ***
-**v1.9 - beta - Hardware v0.7**
+**v1.9 - stable - Hardware v0.7**
 - PENDIENTE - funciones en teclado back light, agregar a lectura numerito write
 - AGREGADO  - modelo de programación de LCD - Encoder - keypad
 	https://github.com/daniel3514/Arduino-LCD-Encoder-KeyPad-Examples/tree/master/Examples/LCD%20-%20Encoder%20-%20Key%20Pad/v0.0
@@ -46,6 +46,7 @@
 - AGREGADO  - Control Chaser, repasar canales desde encoder
 - CORREGIDO - Control Secuencer, rediseño de GUI
 - CORREGIDO - Config, la ventana de acción del contraste se queda en los limites de 0 a 255
+- AGREGADO  - Secuencer, el universo inicial siempre es 1
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
