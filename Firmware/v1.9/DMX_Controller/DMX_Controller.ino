@@ -3833,29 +3833,22 @@ void GUI_Control_Chaser()
 	     	 	ArduinoDmx0.TxBuffer[Canales - 1] = 0; 			// salida a DMX
 	    	}
 
+	    		// encender canal inicial
+	    	ArduinoDmx0.TxBuffer[First - 1] = 255; 				// salida a DMX
+
 			while(1)
 			{
 				valor_nuevo = Numerico_Enc_Write(First, Final, 17, 0, 1, ch_ant);
 
-					// apagar canal anterior
-				if (valor_nuevo == Final)
-				{
-					ArduinoDmx0.TxBuffer[First - 1] = 0; 			// salida a DMX
-				}
-
-				if (valor_nuevo == First)
-				{
-					ArduinoDmx0.TxBuffer[Final- 1] = 0; 			// salida a DMX
-				}
-
-				if (valor_nuevo <=Final || valor_nuevo >= First)
-				{
-					ArduinoDmx0.TxBuffer[valor_nuevo - 1] = 0; 		// salida a DMX
-				}
+					// borrar canales previos
+	    		for (int Canales = First; Canales <= Final; Canales ++)
+	    		{	
+	     	 		ArduinoDmx0.TxBuffer[Canales - 1] = 0; 			// salida a DMX
+	    		}
 
 					// encender canal
 				ArduinoDmx0.TxBuffer[valor_nuevo - 1] = 255; 		// salida a DMX
-					
+				
 				if (valor_nuevo > Final)	// poner limite max
 				{
 					break; // enter
@@ -3873,6 +3866,9 @@ void GUI_Control_Chaser()
 	     	 	ArduinoDmx0.TxBuffer[Canales - 1] = 0; 			// salida a DMX
 	    	}
 
+	    		// encender canal inicial
+	    	ArduinoDmx0.TxBuffer[First - 1] = 255; 				// salida a DMX
+
 			break;
 
 			// exit
@@ -3884,6 +3880,7 @@ void GUI_Control_Chaser()
 	goto navegacion;
 
 	salir:
+	
 		// regresar el universo a su lugar
     for (int Canal = 1; Canal <= 512; Canal ++)
     {
