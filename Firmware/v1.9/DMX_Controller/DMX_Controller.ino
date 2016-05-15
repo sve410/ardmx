@@ -3653,13 +3653,14 @@ void GUI_Control_Chaser()
 
   	// first channel
   		// borrar canales previos
-	for (int Canales = 0; Canales <= 512; Canales ++)
+	for (int Canales = 0; Canales <= 511; Canales ++)
 	{	
 	    ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
 	}
+
 		// dibujar numero
 	Numerico_Print(17, 0, Canal_Actual, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
-	ArduinoDmx0.TxBuffer[Canal_Actual] = 255; 		// salida a DMX
+	ArduinoDmx0.TxBuffer[Canal_Actual - 1] = 255; 	// salida a DMX
 
   		// borrar datos previos en el indice
 	Cursor_Index_Clear();
@@ -3689,7 +3690,7 @@ void GUI_Control_Chaser()
 	    	lcd.blink();
 
 	    		// borrar canales previos
-	    	for (int Canales = 0; Canales <= 512; Canales ++)
+	    	for (int Canales = 0; Canales <= 511; Canales ++)
 	    	{	
 	     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
 	    	}
@@ -3714,6 +3715,7 @@ void GUI_Control_Chaser()
 	          			{
 	            			ArduinoDmx0.TxBuffer[contar - 1] = 0;
 	          			}
+
 	          				// encender el siguiente
 	          			ArduinoDmx0.TxBuffer[canal - 1] = 255;
 	          			Delay_Cont = 0;
@@ -3827,7 +3829,7 @@ void GUI_Control_Chaser()
 				// borrar canales previos
 	    	for (int Canales = First; Canales <= Final; Canales ++)
 	    	{	
-	     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
+	     	 	ArduinoDmx0.TxBuffer[Canales - 1] = 0; 			// salida a DMX
 	    	}
 
 			while(1)
@@ -3867,7 +3869,7 @@ void GUI_Control_Chaser()
 				// borrar canales previos
 	    	for (int Canales = First; Canales <= Final; Canales ++)
 	    	{	
-	     	 	ArduinoDmx0.TxBuffer[Canales] = 0; 			// salida a DMX
+	     	 	ArduinoDmx0.TxBuffer[Canales - 1] = 0; 			// salida a DMX
 	    	}
 
 			break;
