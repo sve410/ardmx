@@ -3824,6 +3824,9 @@ void GUI_Control_Chaser()
 		case 5:
 			ch_ant = First;
 
+			lcd.setCursor(17, 0);
+			lcd.print("   ");
+
 				// borrar canales previos
 	    	for (int Canales = First; Canales <= Final; Canales ++)
 	    	{	
