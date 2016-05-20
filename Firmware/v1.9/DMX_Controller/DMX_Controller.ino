@@ -1827,7 +1827,6 @@ void GUI_Control_Secuencer()
   	for (int canal = 0; canal <= 511; canal ++)
     {
         ArduinoDmx0.TxBuffer[canal] = EEPROM.read(canal); 	// salida a DMX
-        break;
     }      			
 
   		// borrar datos previos en el indice

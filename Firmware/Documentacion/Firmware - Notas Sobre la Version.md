@@ -47,6 +47,7 @@
 - CORREGIDO - Control Secuencer, rediseño de GUI
 - CORREGIDO - Config, la ventana de acción del contraste se queda en los limites de 0 a 255
 - AGREGADO  - Secuencer, el universo inicial siempre es 1
+- PENDIENTE - sacar numérico write y remplazar por numérico print
 
 **v1.8 - beta - Hardware v0.7**
 - CORREGIDO - Pin Out para version de hardware
