@@ -114,7 +114,7 @@ Basado en:
 * Las versiones del Simulador estan numeradas de manera consecutiva
 
 [Social](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Social)
-* El archivo "Publicados.txt" contiene la informacion de la actividad en Webs, Blogs y Redes Sociales
+* Contiene la informacion de la actividad en Webs, Blogs y Redes Sociales
 
 [Software](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/tree/master/Software)
 * Contiene el software utilizado para el proyecto
