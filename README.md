@@ -41,7 +41,7 @@ Basado en:
 [Notas sobre la versión...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/Documentacion/Firmware%20-%20Notas%20Sobre%20la%20Version.md)
 
 * Compatible con Hardware v0.7
-* 
+
 ![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Initial.PNG)
 
 * Navegación desde encoder de fácil acceso e intuitivo
@@ -55,10 +55,15 @@ Basado en:
 
 ![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Options.PNG)
 
+* Control DMX Unitary, permite seleccionar 8 canales especificos ademas de mostrar el valor actual
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Control%20Unitary.PNG)
+
+
 * Bancos de memoria para almacenar 8 universos DMX
 
 
-* Control DMX Unitary, permite seleccionar un canal especifico, ademas de mostrar los valores de los canales anterior y siguiente
+
 * Control DMX Matrix, muestra una matriz de 3 x 5 con los valores de los canales mostrados
 * Control DMX Chaser, permite secuenciar canales seleccionados, con un tiempo seleccionado
 * Control DMX Secuencer, permite secuenciar entre los universos guardados en la memoria EEPROM con un tiempo seleccionado
