@@ -18,7 +18,6 @@ Basado en:
 * [Arduino Mega 2560 Rev-3](http://www.arduino.cc/en/Main/ArduinoBoardMega2560)
 * [Librería Arduino cuatro universos DMX v0.3 - Deskontrol](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 * [Libreria LCD v1.2.1 - Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
-* [Simulacion de Arduino desde Proteus - Microcontrolandos](http://microcontrolandos.blogspot.mx/2012/12/arduino-componentes-para-o-proteus.html)
 
 ***
 ### Hardware v0.4
@@ -37,15 +36,14 @@ Basado en:
 
 ***
 
-### Firmware v1.2
+### Firmware v1.9
 
 [Notas sobre la versión...](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/Documentacion/Firmware%20-%20Notas%20Sobre%20la%20Version.md)
-* Compatible con Hardware v0.3 - v0.4
-* Navegación desde cursor de fácil acceso e intuitivo
-* Inserción rápida de valores desde el teclado numérico
-* Inserción de valores desde potenciometro análogo
+* Compatible con Hardware v0.7
+* Navegación desde encoder de fácil acceso e intuitivo
+* Inserción rápida de valores desde el teclado numérico y encoder
 * Bancos de memoria para almacenar 8 universos DMX
-* Lectura desde la EEPROM al arranque de universo DMX preseleccionado
+* Lectura desde la EEPROM al arranque del universo DMX preseleccionado
 * Seleccion de opciones de memoria al arranque 
 * Control DMX Unitary, permite seleccionar un canal especifico, ademas de mostrar los valores de los canales anterior y siguiente
 * Control DMX Matrix, muestra una matriz de 3 x 5 con los valores de los canales mostrados
