@@ -2711,7 +2711,7 @@ void GUI_Control_Options()
 
 			// Multiply
 		case 8:
-			//GUI_Control_Multiply();
+			GUI_Control_Multiply();
 			Cursor_Index_Pos = 8;
 			break;
 	}
@@ -3432,12 +3432,11 @@ void GUI_Config()
 	Cursor_Index_Pos = 5;
 }
 
-/*
 void GUI_Control_Multiply()
 {
   	int  First_Channel = 1;
-  	long Multiply 	   = 0;
-  	long Quantity 	   = 0;
+  	long Multiply 	   = 1;
+  	long Quantity 	   = 512;
   	int  Value         = 255;
 
 	iniciar:
@@ -3463,181 +3462,229 @@ void GUI_Control_Multiply()
   	lcd.print ("Multiply      Memory");
   	lcd.setCursor (0, 3);
   	lcd.print ("Quantity      Apply");
-  	Numerico_Write (Value, 		   9, 0);
-  	Numerico_Write (First_Channel, 9, 1);
-  	Numerico_Write (Multiply,      9, 2);
-  	Numerico_Write (Quantity,      9, 3);
 
-  		// Cursor
-  	LCD_Col_Pos = 8;			// posicion de cursor
-  	LCD_Row_Pos = 0;
+  	Numerico_Print(9, 0, Value, 		255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+  	Numerico_Print(9, 1, First_Channel, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+  	Numerico_Print(9, 2, Multiply, 		255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+  	Numerico_Print(9, 3, Quantity, 		255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
 
-	Siguiente:
+		// borrar datos previos en el indice
+	Cursor_Index_Clear();
 
-  		// configuracion de cursor
-  	Cursor_Conf_Clear();		// limpiar array
+		// establecer el indice
+	Cursor_Index[8][0]   = 1;	// Value  	// y x
+	Cursor_Index[8][1]   = 2;	// First Channel
+	Cursor_Index[8][2]   = 3;	// Multiply
+	Cursor_Index[8][3]   = 4;	// Quantity
+	Cursor_Index[13][1]  = 7;	// Exit
+	Cursor_Index[13][2]  = 6;	// Memory
+	Cursor_Index[13][3]  = 5;	// Apply
 
-  		// Acciones
-  	Cursor_Conf[1][8]   = 1;	// first Channel
-  	Cursor_Conf[3][8]   = 1; 	// quantity
-  	Cursor_Conf[2][8]   = 1; 	// Multiply
-  	Cursor_Conf[1][13]  = 1; 	// control
-  	Cursor_Conf[2][13]  = 1; 	// Memory
-  	Cursor_Conf[3][13]  = 1; 	// apply
-  	Cursor_Conf[0][8]   = 1; 	// value
+	int  valor_nuevo 	= 0;
+	long valid 			= 0;
+	long canal 			= 0;
 
-  		// navegar
-  	GUI_Navegar(0, 0);
+	Cursor_Index_Pos = 1;
 
-  	// Acciones
-  		// Exit
-  	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 1)
-  	{
-    	GUI_Control_Options();
-  	}
+	navegacion:
 
-  		// Memory
-  	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 2)
-  	{
-    	GUI_Memory();
-    	goto iniciar;
-  	}
+		// iniciar navegacion y evaluar el index seleccionado
+	Navegar(0, 0);	// actualiza Cursor_Index_Pos
 
-  		// Apply
-  	if (LCD_Col_Pos == 13 && LCD_Row_Pos == 3)
-  	{
-    		// Validar datos
-    	long valid = Multiply * Quantity;
-    
-    	if (valid > 512)	// si no es valido
-    	{
-      		lcd.setCursor(13, 0);
-      		lcd.print("Error! ");
-      		goto Siguiente;
-    	}
+	switch (Cursor_Index_Pos)
+	{
+			// Value
+		case 1:
+			valor_nuevo = Numerico_Write(1, 255, 9, 0, 1, Value);
 
-    		// calcular
-    	lcd.setCursor(13, 0);
-    	lcd.print("       ");
-    	lcd.setCursor(14, 3);
-    	lcd.print("Calc..");
-    	long canal;
+				// menor o igual al limites
+			if (valor_nuevo <= 255)			// poner limite max
+			{
+				Value = valor_nuevo;
+			}
 
-    	for (long conteo = 1; conteo <= Quantity; conteo++)
-    	{
-      		if (conteo == 1)
-      		{
-        		canal = First_Channel;
-      		}
+				// mayor al limite
+			if (valor_nuevo > 255)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 255, 9, 0, 1, Value);
+					
+					if (valor_nuevo > 255)	// poner limite max
+					{
+						break; // enter
+					}
 
-      		if (conteo != 1)
-      		{
-        		canal = canal + Multiply;
-      		}
+					Value = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 0, Value, 255, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 
-      		if (canal > 512)
-      		{
-        		canal = canal - Multiply;
-       	 		conteo = Quantity;
-      		}
+			break;
 
-      		lcd.setCursor(17, 0);
-      		lcd.print(canal);
-      		delay (5);
-      		ArduinoDmx0.TxBuffer[canal - 1] = Value;
-      		DMX_Values[canal] = Value;
-    	}
+			// First Channel
+		case 2:
+			valor_nuevo = Numerico_Write(1, 512, 9, 1, 1, First_Channel);
 
-    	lcd.setCursor(13, 0);
-    	lcd.print("Ok!");
-    	lcd.setCursor(14, 3);
-    	lcd.print("Apply ");
-    	goto Siguiente;
-  	}
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				First_Channel = valor_nuevo;
+			}
 
-  		// First Channel
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 1)
-  	{
-    	Num_Row_Pos = 1;
-    	Num_Col_Pos = 9;
-    	Num_Val = First_Channel;	// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc(0);
-    	First_Channel = Num_Val;
-    
-    	if (First_Channel == 0)
-    	{
-      		First_Channel = 1;
-      		Numerico_Write (First_Channel, 9, 1);
-    	}
-    
-    	if (First_Channel > 512)
-    	{
-      		First_Channel = 512;
-      		Numerico_Write (First_Channel, 9, 1);
-    	}
-  	}
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 1, 1, First_Channel);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
 
-  		// Multiply
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 2)
-  	{
-    	Num_Row_Pos = 2;
-   	 	Num_Col_Pos = 9;
-    	Num_Val = Multiply;			// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc(0);
-    	Multiply = Num_Val;
-    	if (Multiply == 0)
-    	{
-      		Multiply = 1;
-      		Numerico_Write (Multiply, 9, 2);
-    	}
-    
-    	if (Multiply > 512)
-    	{
-      		Multiply = 512;
-      		Numerico_Write (Multiply, 9, 2);
-    	}
-  	}
+					First_Channel = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 1, First_Channel, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
 
-  		// Quantity
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 3)
-  	{
-    	Num_Row_Pos = 3;
-    	Num_Col_Pos = 9;
-    	Num_Val = Quantity;			// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc(0);
-    	Quantity = Num_Val;
-    
-    	if (Quantity == 0)
-    	{
-      		Quantity = 1;
-      		Numerico_Write (Quantity, 9, 3);
-    	}
-    
-    	if (Quantity > 512)
-    	{
-      		Quantity = 512;
-      		Numerico_Write (Quantity, 9, 3);
-    	}
-  	}
+			break;
 
-  		// Value
-  	if (LCD_Col_Pos == 8 && LCD_Row_Pos == 0)
-  	{
-    	Num_Row_Pos = 0;
-    	Num_Col_Pos = 9;
-    	Num_Val = Value;			// para dejar el numero que estaba si no se cambia
-    	Numerico_Calc(1);
-    	Value = Num_Val;
+			// Multiply
+		case 3:
+			valor_nuevo = Numerico_Write(1, 512, 9, 2, 1, Multiply);
 
-    	if (Value > 255)
-    	{
-      		Value = 255;
-      		Numerico_Write (Value, 9, 0);
-    	}
-  	}
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Multiply = valor_nuevo;
+			}
 
-  	goto Siguiente;
-}*/
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 2, 1, Multiply);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Multiply = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 2, Multiply, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+
+			break;
+
+			// Quantity
+		case 4:
+			valor_nuevo = Numerico_Write(1, 512, 9, 3, 1, Quantity);
+
+				// menor o igual al limites
+			if (valor_nuevo <= 512)			// poner limite max
+			{
+				Quantity = valor_nuevo;
+			}
+
+				// mayor al limite
+			if (valor_nuevo > 512)			// poner limite max
+			{
+				while(1)
+				{
+					valor_nuevo = Numerico_Enc_Write(1, 512, 9, 3, 1, Quantity);
+					
+					if (valor_nuevo > 512)	// poner limite max
+					{
+						break; // enter
+					}
+
+					Quantity = valor_nuevo;
+		
+				}
+					// acomodar numero 	
+				Numerico_Print(9, 3, Quantity, 512, 1);	// poner max 	// Numerico_Print(byte LCD_x, byte LCD_y, int valor, int max, byte Dec_Hex)
+			}
+			break;
+
+			// Apply
+		case 5:
+				// Validar datos
+	    	valid = Multiply * Quantity;
+	    
+	    	if (valid > 512)	// si no es valido
+	    	{
+	      		lcd.setCursor(13, 0);
+	      		lcd.print("Error! ");
+	      		break;
+	    	}
+
+	    		// calcular
+	    	lcd.setCursor(13, 0);
+	    	lcd.print("       ");
+	    	lcd.setCursor(14, 3);
+	    	lcd.print("Calc..");
+
+	    	for (long conteo = 1; conteo <= Quantity; conteo++)
+	    	{
+	      		if (conteo == 1)
+	      		{
+	        		canal = First_Channel;
+	      		}
+
+	      		if (conteo != 1)
+	      		{
+	        		canal = canal + Multiply;
+	      		}
+
+	      		if (canal > 512)
+	      		{
+	        		canal = canal - Multiply;
+	       	 		conteo = Quantity;
+	      		}
+
+	      		lcd.setCursor(17, 0);
+	      		lcd.print(canal);
+	      		delay (5);
+	      		ArduinoDmx0.TxBuffer[canal - 1] = Value;
+	      		DMX_Values[canal] = Value;
+	    	}
+
+	    	lcd.setCursor(13, 0);
+	    	lcd.print("Ok!");
+	    	lcd.setCursor(14, 3);
+	    	lcd.print("Apply ");
+
+			break;
+
+			// Memory
+		case 6:
+			GUI_Memory();
+			Cursor_Index_Pos = 6;
+			goto iniciar;
+			break;
+
+			// Exit
+		case 7:
+			goto salir;
+
+			break;
+	}
+
+	goto navegacion;
+
+	salir: {}
+
+}
 
 void GUI_Control_Chaser()
 {
