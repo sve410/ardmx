@@ -46,6 +46,7 @@ Basado en:
 
 * Navegación desde encoder de fácil acceso e intuitivo
 * Inserción rápida de valores desde el teclado numérico y encoder
+* Función para ubicar luminaria desde el canal seleccionado
 * Arranque con universo DMX preseleccionado
 * Seleccion de opciones de memoria al arranque 
 
@@ -83,18 +84,14 @@ Basado en:
 
 ![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Memory.PNG)
 
-* 8 Bancos de memoria para almacenar, cargar y borrar los valores actuales, accesoble desde el memu Memory
+* 8 Bancos de memoria para almacenar, cargar y borrar los valores actuales, accesible desde el memu Memory
 
 ![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Memory%20Bank.PNG)
 
-* Función para ubicar luminaria desde el canal seleccionado
-* Acceso rápido a opciones de memoria
-* Opciones de memoria Save, Load, Clear, Clear All (para los bancos de memoria y empty RAM
-* Opciones de memoria para los 8 bancos de universos DMX
-* Función de Black Out
-* Control de iluminación de LCD back light
-* Control de contraste de LCD
-* Acceso rápido desde el teclado LCD back light
+* Config, permite asignar el valor del Backlight, Key Light, Contraste y Bank Init
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Config.PNG)
+
 * Compilado en [Arduino IDE v1.0.6](http://www.arduino.cc/en/Main/OldSoftwareReleases)
 * Librería Arduino cuatro universos DMX v0.3 - [Deskontrol.net](http://www.deskontrol.net/blog/libreria-arduino-cuatro-universos-dmx/)
 * Libreria LCD v1.2.1 - [Francisco Malpartida](https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home)
