@@ -59,15 +59,34 @@ Basado en:
 
 ![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Control%20Unitary.PNG)
 
+* Control DMX Matrix, muestra una matriz de 3 x 5 con los valores de los canales mostrados, canal inicial y final seleccionable
 
-* Bancos de memoria para almacenar 8 universos DMX
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Control%20Matrix.PNG)
 
+* Control DMX Chaser, permite secuenciar canales de forma automatica, el canal inicial, canal final y tiempo son seleccionables, permite secuenciar canales manualmente desde el encoder
 
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Control%20Chaser.PNG)
 
-* Control DMX Matrix, muestra una matriz de 3 x 5 con los valores de los canales mostrados
-* Control DMX Chaser, permite secuenciar canales seleccionados, con un tiempo seleccionado
 * Control DMX Secuencer, permite secuenciar entre los universos guardados en la memoria EEPROM con un tiempo seleccionado
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Control%20Secuencer.PNG)
+
 * Control DMX Multiply, permite llenar valores multiplicando los canales seleccionados
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Control%20Multiply.PNG)
+
+* Convert, permite convertir entre numeros decimales y binarios que representan los sistemas con dip switch
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Convert.PNG)
+
+* Memory, opciones de memoria EEPROM y RAM, accesible desde cualquier control
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Memory.PNG)
+
+* 8 Bancos de memoria para almacenar, cargar y borrar los valores actuales, accesoble desde el memu Memory
+
+![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Firmware/v1.9/LCD%20media/Memory%20Bank.PNG)
+
 * Función para ubicar luminaria desde el canal seleccionado
 * Acceso rápido a opciones de memoria
 * Opciones de memoria Save, Load, Clear, Clear All (para los bancos de memoria y empty RAM
