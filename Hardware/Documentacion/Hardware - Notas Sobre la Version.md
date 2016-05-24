@@ -12,7 +12,9 @@
 			
 ***
 
-**v0.7 - Beta - Firm v1.8**
+**v0.8 - Beta - Firm v1.8 - v1.9**
+
+**v0.7 - Beta - Firm v1.8 - v1.9**
 - AGREGADO   - SW para Key Light
 - AGREGADO   - SW para Ext Light
 - AGREGADO   - Espaciadores para fijación
@@ -21,7 +23,7 @@
 - CORREGIR   - marcar en board edge los agujeros de los XLR
 - CORREGIR   - los XLR quedan chuecos
 - CORREGIR   - Encoder, separar los agujeros están muy juntos
-- CORREGIR   - separar born era de key light de lcd, esta muy junta
+- CORREGIR   - separar bornera de key light de lcd, esta muy junta
 - CORREGIR   - pads de puentes muy chicos
 - CORREGIR   - pads de botón de reset muy chicos
 - CORREGIR   - subir logo de Open Hardware
