@@ -13,6 +13,8 @@
 ***
 
 **v0.8 - Beta - Firm v1.8 - v1.9**
+- AGREGADO   - agregados los bordes para la union del acrílico
+- ELIMINADO  - base de teclado, queda sobre el acrílico 
 
 **v0.7 - Beta - Firm v1.8 - v1.9**
 - AGREGADO   - SW para Key Light
