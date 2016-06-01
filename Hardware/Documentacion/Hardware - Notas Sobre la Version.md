@@ -1,4 +1,4 @@
-﻿**Hardware**
+**Hardware**
 
 **Notas sobre la versión**
 
@@ -17,6 +17,10 @@
 - AGREGADO   - los bordes para la union del acrílico
 - ELIMINADO  - base de teclado, queda sobre el acrílico
 - AGREGADO   - jack de DC para alimentacion
+- AGREGADO   - tornillo entre los conectores para agregar soporte
+- CORREGIDO  - bornera de voltaje lateral metera mas
+- CORREGIDO  - posición de SW esta al revés, cambiar leyenda en pcb
+
 
 **v0.7 - Beta - Firm v1.8 - v1.9**
 - AGREGADO   - SW para Key Light
