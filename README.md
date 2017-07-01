@@ -1,4 +1,4 @@
-### **Arduino DMX 512 Tester and Controller**
+### ** Arduino DMX 512 Tester and Controller **
 
 ![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.3/media/IMG_9399.JPG)
 [![Arduino DMX-512 Tester and Controller](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Hardware/v0.0/media/youtube.JPG)](https://www.youtube.com/watch?v=TxBHMpAWDSY)
@@ -14,6 +14,16 @@ Nos mudamos a Bitbucket...
 https://bitbucket.org/daniel3514/0066-arduino-dmx-512-tester-controller/wiki/Home
 
 ![](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/Github%20to%20Bitbucket.jpg)
+
+***
+
+![](https://bytebucket.org/daniel3514/0066-arduino-dmx-512-tester-controller/raw/d30550981509dc89a050d3633af97093fef2db77/Social/Logos/GPLv3.png)
+
+[GNU General Public Licence Version 3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/GPLv3.png)
+
+![](https://bytebucket.org/daniel3514/0066-arduino-dmx-512-tester-controller/raw/d30550981509dc89a050d3633af97093fef2db77/Social/Logos/oshw.png)
+
+[Open Source Hardware (OSHW) v1.0](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/oshw.png)
 
 ***
 
