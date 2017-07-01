@@ -17,6 +17,8 @@ https://bitbucket.org/daniel3514/0066-arduino-dmx-512-tester-controller/wiki/Hom
 
 ***
 
+## Licenciamiento
+
 ![](https://bytebucket.org/daniel3514/0066-arduino-dmx-512-tester-controller/raw/d30550981509dc89a050d3633af97093fef2db77/Social/Logos/GPLv3.png)
 
 [GNU General Public Licence Version 3](https://github.com/daniel3514/Arduino-DMX-512-Tester-Controller/blob/master/Social/logos/GPLv3.png)
